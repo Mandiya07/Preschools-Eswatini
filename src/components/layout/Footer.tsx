@@ -23,6 +23,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-slate-900 mb-4">For Parents</h4>
             <ul className="space-y-3 text-sm text-slate-500">
+              <li><Link to="/map" className="hover:text-blue-600 border border-amber-200 bg-amber-50 text-amber-700 px-2 py-1 rounded-md text-xs font-semibold inline-block mb-1">Smart Map Locator</Link></li>
               <li><Link to="/directory" className="hover:text-blue-600">Find a Preschool</Link></li>
               <li><Link to="/apply" className="hover:text-blue-600">Online Applications</Link></li>
               <li><Link to="/resources" className="hover:text-blue-600">Parent Resources</Link></li>
@@ -45,6 +46,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-slate-900 mb-4">Platform Features</h4>
             <ul className="space-y-3 text-sm text-slate-500">
+              <li><Link to="/insights" className="hover:text-blue-600 border border-blue-200 bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-xs font-semibold inline-block mb-1">National Data Platform</Link></li>
               <li><Link to="/marketplace" className="hover:text-blue-600">Marketplace</Link></li>
               <li><Link to="/learning" className="hover:text-blue-600">Learning Ecosystem</Link></li>
               <li><Link to="/community" className="hover:text-blue-600">Community</Link></li>

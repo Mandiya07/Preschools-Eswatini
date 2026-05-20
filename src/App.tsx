@@ -52,6 +52,8 @@ import { AIMatchingPage } from "@/pages/AIMatchingPage";
 import { AdvancedWebsiteFeaturesPage } from "@/pages/AdvancedWebsiteFeaturesPage";
 
 import { PerformanceInfrastructurePage } from "@/pages/PerformanceInfrastructurePage";
+import { NationalInsightsPage } from "@/pages/NationalInsightsPage";
+import { MapSearchPage } from "@/pages/GeolocationMapPage";
 import { MarketingToolsPage } from "@/pages/MarketingToolsPage";
 import { ApplyPage } from "@/pages/ApplyPage";
 import { ParentResourcesPage } from "@/pages/ParentResourcesPage";
@@ -95,6 +97,8 @@ export default function App() {
             <Route path="ai-matching" element={<AIMatchingPage />} />
             <Route path="advanced-features" element={<AdvancedWebsiteFeaturesPage />} />
             <Route path="infrastructure" element={<PerformanceInfrastructurePage />} />
+            <Route path="insights" element={<NationalInsightsPage />} />
+            <Route path="map" element={<MapSearchPage />} />
             <Route path="marketing" element={<MarketingToolsPage />} />
             <Route path="apply" element={<ApplyPage />} />
             <Route path="register" element={<RegisterSchoolPage />} />

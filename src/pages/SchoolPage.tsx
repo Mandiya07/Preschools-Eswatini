@@ -53,6 +53,17 @@ export function SchoolPage() {
   const [loading, setLoading] = useState(true);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
+  const [showFacilityModal, setShowFacilityModal] = useState(false);
+  const [newFacilityName, setNewFacilityName] = useState("");
+  const [selectedStaff, setSelectedStaff] = useState<any | null>(null);
+
+  const handleAddFacility = () => {
+    if (newFacilityName.trim() && school) {
+        setSchool({...school, facilities: [...school.facilities, newFacilityName]});
+        setNewFacilityName("");
+        setShowFacilityModal(false);
+    }
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -204,30 +215,42 @@ export function SchoolPage() {
                   <TabsTrigger value="team" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Team</TabsTrigger>
                   <TabsTrigger value="gallery" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Gallery</TabsTrigger>
                   <TabsTrigger value="video" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Video</TabsTrigger>
+                  <TabsTrigger value="contact" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Contact</TabsTrigger>
+                  <TabsTrigger value="student-life" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Student Life</TabsTrigger>
+                  <TabsTrigger value="news" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">News & Events</TabsTrigger>
+                  <TabsTrigger value="parent-portal" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Parent Portal</TabsTrigger>
                 </TabsList>
               </div>
 
               <TabsContent value="about" className="space-y-12">
                  {/* Trust & Verification */}
-                <section className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                    <h2 className="text-2xl font-bold text-slate-900 mb-6">Trust & Verification</h2>
+                <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 bg-blue-50 rounded-2xl text-blue-600">
+                      <ShieldCheck className="h-8 w-8" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-bold text-slate-900">Trust & Verification</h2>
+                      <p className="text-slate-500">How we ensure quality & safety.</p>
+                    </div>
+                  </div>
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
                             <CheckCircle2 className={`h-8 w-8 mb-2 ${school.verified ? 'text-blue-600' : 'text-slate-300'}`} />
                             <span className="font-bold text-slate-900">{school.verified ? 'Verified' : 'Unverified'}</span>
                             <span className="text-xs text-slate-500">Ministry Approved</span>
                         </div>
-                        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
                             <Star className="h-8 w-8 text-yellow-400 mb-2 fill-current" />
                             <span className="font-bold text-slate-900">{school.rating} / 5</span>
                             <span className="text-xs text-slate-500">{school.reviews} Reviews</span>
                         </div>
-                        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
                             <ShieldCheck className="h-8 w-8 text-emerald-500 mb-2" />
                             <span className="font-bold text-slate-900">High</span>
                             <span className="text-xs text-slate-500">Safety Score</span>
                         </div>
-                        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
                             <Award className="h-8 w-8 text-amber-500 mb-2" />
                             <span className="font-bold text-slate-900">A+</span>
                             <span className="text-xs text-slate-500">Accreditation</span>
@@ -237,28 +260,35 @@ export function SchoolPage() {
 
                 <section className="grid md:grid-cols-3 gap-6">
                   <div className="md:col-span-2">
-                    <h2 className="text-2xl font-bold text-slate-900 mb-4">About Our School</h2>
-                    <div className="text-lg text-slate-600 leading-relaxed bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-4">
+                    <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                      <Info className="h-6 w-6 text-blue-600" /> About Our School
+                    </h2>
+                    <div className="text-lg text-slate-700 leading-relaxed bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
                       <p>{school.description}</p>
-                      <div>
-                        <strong className="text-slate-900">Mission:</strong> {school.mission}
+                      <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <strong className="text-slate-900 block mb-2">Our Mission:</strong> 
+                        <p className="text-slate-600 italic">"{school.mission}"</p>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 className="font-bold text-slate-900 mb-4">Quick Facts</h3>
+                  <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                    <h3 className="font-bold text-slate-900 mb-6 text-lg">Quick Facts</h3>
                     <div className="space-y-4 text-sm">
-                      <div className="flex justify-between">
+                      <div className="flex justify-between pb-2 border-b">
                          <span className="text-slate-500">Type</span>
                          <span className="font-medium text-slate-900">{school.boarding}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between pb-2 border-b">
                          <span className="text-slate-500">Curriculum</span>
                          <span className="font-medium text-slate-900">{school.curriculum}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between pb-2 border-b">
                          <span className="text-slate-500">Age Groups</span>
                          <span className="font-medium text-slate-900">{school.ageGroups.join(', ')}</span>
+                      </div>
+                      <div className="flex justify-between pb-2 border-b">
+                         <span className="text-slate-500">Termly Fee</span>
+                         <span className="font-medium text-slate-900">E{school.feePerTerm}</span>
                       </div>
                     </div>
                   </div>
@@ -288,21 +318,26 @@ export function SchoolPage() {
                 )}
               </TabsContent>
 
-              <TabsContent value="facilities">
-                {school.facilities.length > 0 && (
-                  <section>
-                    <h2 className="text-2xl font-bold text-slate-900 mb-6">Campus Facilities</h2>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                      {school.facilities.map((facility, i) => (
-                        <div key={i} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex items-center gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
-                          <span className="font-medium text-slate-700">{facility}</span>
-                        </div>
-                      ))}
+               <TabsContent value="facilities">
+                 <section>
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-2xl font-bold text-slate-900">Campus Facilities</h2>
+                      <Button variant="outline" onClick={() => setShowFacilityModal(true)}>Add Facility</Button>
                     </div>
-                  </section>
-                )}
-              </TabsContent>
+                    {school.facilities.length > 0 ? (
+                      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {school.facilities.map((facility, i) => (
+                          <div key={i} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex items-center gap-3">
+                            <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
+                            <span className="font-medium text-slate-700">{facility}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-slate-500">No facilities listed.</p>
+                    )}
+                 </section>
+               </TabsContent>
 
               <TabsContent value="admissions">
                 {school.admissionsDetails.length > 0 && (
@@ -335,8 +370,8 @@ export function SchoolPage() {
                     <h2 className="text-2xl font-bold text-slate-900 mb-6">Meet the Team</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                       {school.staff.map((member, i) => (
-                        <div key={i} className="text-center group">
-                          <div className="mx-auto h-24 w-24 rounded-full bg-slate-100 border-2 border-slate-200 overflow-hidden mb-3">
+                        <div key={i} className="text-center group cursor-pointer" onClick={() => setSelectedStaff(member)}>
+                          <div className="mx-auto h-24 w-24 rounded-full bg-slate-100 border-2 border-slate-200 overflow-hidden mb-3 hover:border-blue-400 transition-colors">
                              {member.image ? (
                                <img src={member.image} alt={member.name} className="h-full w-full object-cover" />
                              ) : (
@@ -371,13 +406,65 @@ export function SchoolPage() {
 
               <TabsContent value="video">
                 <section>
-                  <h2 className="text-2xl font-bold text-slate-900 mb-6">School Video</h2>
-                  <div className="rounded-2xl border border-slate-200 bg-slate-100 aspect-video flex flex-col items-center justify-center text-slate-500 shadow-inner group cursor-pointer hover:bg-slate-200 transition-colors">
-                     <PlayCircle className="h-16 w-16 text-slate-400 group-hover:text-blue-500 transition-colors mb-4" />
-                     <span className="font-medium">Watch Tour Video</span>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-6">School Video Tour</h2>
+                  {school.videoUrl ? (
+                    <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-inner">
+                        <iframe src={school.videoUrl} className="w-full aspect-video" title="School Video" allowFullScreen />
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 flex flex-col items-center justify-center text-slate-500 shadow-inner group">
+                        <PlayCircle className="h-16 w-16 text-slate-400 group-hover:text-blue-500 transition-colors mb-4" />
+                        <span className="font-medium">Video tour not available</span>
+                    </div>
+                  )}
+                </section>
+              </TabsContent>
+
+              <TabsContent value="contact">
+                <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                  <h2 className="text-2xl font-bold text-slate-900 mb-6">Get in Touch</h2>
+                  <div className="grid md:grid-cols-2 gap-8">
+                     <div>
+                        <p className="text-slate-600 mb-6">Have questions for {school.name}? Reach out to our admissions team directly.</p>
+                         <ul className="space-y-4">
+                            <li className="flex items-center gap-4">
+                              <Phone className="h-5 w-5 text-blue-600" />
+                              <a href={`tel:${school.phone}`} className="font-medium text-slate-900 hover:text-blue-600">{school.phone}</a>
+                            </li>
+                            <li className="flex items-center gap-4">
+                              <Mail className="h-5 w-5 text-blue-600" />
+                              <a href={`mailto:${school.email}`} className="font-medium text-slate-900 hover:text-blue-600">{school.email}</a>
+                            </li>
+                          </ul>
+                    </div>
+                    <Button onClick={() => setShowInquiryModal(true)} className="w-full h-12">
+                      Send a Message
+                    </Button>
                   </div>
                 </section>
               </TabsContent>
+
+              <TabsContent value="student-life">
+                 <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                   <h2 className="text-2xl font-bold text-slate-900 mb-6">Student Life at {school.name}</h2>
+                   <p className="text-slate-600">Discover our vibrant daily activities, play areas, and extracurricular programs designed to foster creativity, social skills, and early development.</p>
+                 </section>
+               </TabsContent>
+
+               <TabsContent value="news">
+                 <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                   <h2 className="text-2xl font-bold text-slate-900 mb-6">News & Events</h2>
+                   <p className="text-slate-600">Stay updated with the latest news, school announcements, and upcoming events from our preschool community.</p>
+                 </section>
+               </TabsContent>
+
+               <TabsContent value="parent-portal">
+                 <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                   <h2 className="text-2xl font-bold text-slate-900 mb-6">Parent Portal</h2>
+                   <p className="text-slate-600">Access secure information regarding your child's progress, school notices, and fees. Login to get started.</p>
+                   <Button className="mt-4">Login to Parent Portal</Button>
+                 </section>
+               </TabsContent>
             </Tabs>
             
           </div>
@@ -564,6 +651,76 @@ export function SchoolPage() {
                 onSuccess={() => setShowApplyModal(false)}
                 onCancel={() => setShowApplyModal(false)}
               />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showFacilityModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowFacilityModal(false)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl"
+            >
+               <button onClick={() => setShowFacilityModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                  <X className="h-6 w-6" />
+               </button>
+               <h3 className="text-2xl font-bold mb-6">Add New Facility</h3>
+               <div className="space-y-4">
+                 <input 
+                    type="text" 
+                    value={newFacilityName} 
+                    onChange={(e) => setNewFacilityName(e.target.value)} 
+                    placeholder="Facility name (e.g. Playground)" 
+                    className="w-full p-3 border rounded-lg"
+                 />
+                 <Button onClick={handleAddFacility} className="w-full">Add Facility</Button>
+               </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedStaff && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedStaff(null)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white rounded-3xl p-8 flex flex-col items-center"
+            >
+               <button onClick={() => setSelectedStaff(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                  <X className="h-6 w-6" />
+               </button>
+               <div className="h-32 w-32 rounded-full overflow-hidden mb-6 bg-slate-100">
+                  {selectedStaff.image ? (
+                     <img src={selectedStaff.image} alt={selectedStaff.name} className="h-full w-full object-cover" />
+                  ) : (
+                     <div className="h-full w-full flex items-center justify-center text-slate-400">
+                       <Users className="h-16 w-16" />
+                     </div>
+                  )}
+               </div>
+               <h3 className="text-2xl font-bold mb-1">{selectedStaff.name}</h3>
+               <p className="text-blue-600 font-medium mb-4">{selectedStaff.role}</p>
+               <p className="text-slate-500 text-center">No further information is available for this team member at the moment.</p>
             </motion.div>
           </div>
         )}

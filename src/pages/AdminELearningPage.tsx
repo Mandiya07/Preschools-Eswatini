@@ -18,15 +18,45 @@ const MOCK_COURSES = [
   { id: "C04", title: "Creative Arts", level: "Grade 1", modules: 5, students: 45, status: "Published", progress: 89 },
 ];
 
+const MOCK_STUDENT_PROGRESS = [
+  { id: "P01", studentName: "Alice Smith", course: "Introduction to Phonics", progress: 85, status: "In Progress" },
+  { id: "P02", studentName: "Bob Johnson", course: "Introduction to Phonics", progress: 100, status: "Completed" },
+  { id: "P03", studentName: "Alice Smith", course: "Basic Numeracy & Forms", progress: 40, status: "In Progress" },
+];
+
 const MOCK_DOCUMENTS: LearningDocument[] = [
   { id: "doc1", schoolId: "sch1", title: "Phonics Worksheet 1", type: "worksheet", url: "#", status: "private", createdAt: "2026-05-19", updatedAt: "2026-05-19" },
   { id: "doc2", schoolId: "sch1", title: "Lesson Plan: Science", type: "lesson_plan", url: "#", status: "pending_approval", createdAt: "2026-05-20", updatedAt: "2026-05-20" },
   { id: "doc3", schoolId: "sch1", title: "School Presentation", type: "presentation", url: "#", status: "shared_to_network", createdAt: "2026-05-15", updatedAt: "2026-05-15" },
 ];
 
+const MOCK_LESSONS = [
+  { id: "L01", title: "Phonics A-E", course: "Introduction to Phonics", videoUrl: "" },
+  { id: "L02", title: "Phonics F-J", course: "Introduction to Phonics", videoUrl: "" },
+  { id: "L03", title: "Numbers 1-5", course: "Basic Numeracy & Forms", videoUrl: "" },
+];
+
 export function AdminELearningPage() {
   const [activeTab, setActiveTab] = useState("courses");
   const [documents, setDocuments] = useState<LearningDocument[]>(MOCK_DOCUMENTS);
+  const [lessons, setLessons] = useState(MOCK_LESSONS);
+  const [progress] = useState(MOCK_STUDENT_PROGRESS);
+  const [filterStudent, setFilterStudent] = useState("");
+  const [filterCourse, setFilterCourse] = useState("");
+
+  const filteredProgress = progress.filter(p => 
+    p.studentName.toLowerCase().includes(filterStudent.toLowerCase()) &&
+    p.course.toLowerCase().includes(filterCourse.toLowerCase())
+  );
+
+  // Simulated video upload
+  const handleVideoUpload = (lessonId: string, file: File | null) => {
+    if (!file) return;
+    // In production, this would upload to Firebase Storage or a dedicated video service.
+    // For now, we simulate success.
+    console.log(`Uploading ${file.name} for lesson ${lessonId}`);
+    setLessons(prev => prev.map(l => l.id === lessonId ? { ...l, videoUrl: URL.createObjectURL(file) } : l));
+  };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -98,9 +128,10 @@ export function AdminELearningPage() {
       </div>
 
       <Tabs defaultValue="courses" className="w-full mt-8" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-5 lg:w-[750px] h-12 bg-slate-100 rounded-xl p-1 mb-8">
+        <TabsList className="grid w-full grid-cols-6 lg:w-[900px] h-12 bg-slate-100 rounded-xl p-1 mb-8">
           <TabsTrigger value="courses" className="rounded-lg font-bold data-[state=active]:shadow-sm">All Courses</TabsTrigger>
           <TabsTrigger value="management" className="rounded-lg font-bold data-[state=active]:shadow-sm">Management</TabsTrigger>
+          <TabsTrigger value="progress" className="rounded-lg font-bold data-[state=active]:shadow-sm">Progress</TabsTrigger>
           <TabsTrigger value="assignments" className="rounded-lg font-bold data-[state=active]:shadow-sm">Assignments</TabsTrigger>
           <TabsTrigger value="ai-grading" className="rounded-lg font-bold data-[state=active]:shadow-sm">AI Grading</TabsTrigger>
           <TabsTrigger value="library" className="rounded-lg font-bold data-[state=active]:shadow-sm">Resource Library</TabsTrigger>
@@ -181,6 +212,72 @@ export function AdminELearningPage() {
                  <CardDescription>View class progress analytics.</CardDescription>
                  <Button variant="outline" className="mt-4 w-full"><BarChart className="mr-2 h-4 w-4"/> View Report</Button>
               </Card>
+           </div>
+
+           <Card className="p-6">
+              <CardHeader className="px-0 pt-0">
+                <CardTitle>Lesson Materials</CardTitle>
+                <CardDescription>Manage files for each lesson.</CardDescription>
+              </CardHeader>
+              <div className="space-y-4">
+                {lessons.map(lesson => (
+                  <div key={lesson.id} className="flex items-center justify-between p-4 border rounded-lg">
+                     <div className="flex-1 mr-4">
+                        <p className="font-semibold text-slate-900">{lesson.title}</p>
+                        <p className="text-sm text-slate-500 mb-2">{lesson.course}</p>
+                        {lesson.videoUrl ? (
+                           <div className="mt-4 rounded-xl overflow-hidden border border-slate-200 bg-slate-900 max-w-sm">
+                             <video src={lesson.videoUrl} controls className="w-full aspect-video" />
+                           </div>
+                        ) : (
+                           <div className="mt-4 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 max-w-sm aspect-video flex flex-col items-center justify-center text-slate-400">
+                             <PlayCircle className="h-8 w-8 mb-2 opacity-50" />
+                             <span className="text-xs font-medium">No video uploaded</span>
+                           </div>
+                        )}
+                     </div>
+                     <div className="flex flex-col items-end gap-2 shrink-0">
+                       {lesson.videoUrl && (
+                          <Badge variant="secondary" className="bg-emerald-50 text-emerald-600 border-emerald-200">
+                            <CheckCircle2 className="h-3 w-3 mr-1" />
+                            Hosted on Cloud
+                          </Badge>
+                       )}
+                       <label className="cursor-pointer mt-2">
+                          <input type="file" accept="video/*" className="hidden" onChange={(e) => handleVideoUpload(lesson.id, (e.target as HTMLInputElement).files?.[0] || null)} />
+                          <div className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2 border border-slate-200 bg-white hover:bg-slate-100">
+                             <Upload className="h-4 w-4 mr-2" /> {lesson.videoUrl ? 'Replace Video' : 'Upload to Cloud Storage'}
+                          </div>
+                       </label>
+                     </div>
+                  </div>
+                ))}
+              </div>
+           </Card>
+        </TabsContent>
+
+        <TabsContent value="progress" className="space-y-6">
+           <div className="flex gap-4">
+              <Input placeholder="Filter by student..." value={filterStudent} onChange={e => setFilterStudent(e.target.value)} className="max-w-xs" />
+              <Input placeholder="Filter by course..." value={filterCourse} onChange={e => setFilterCourse(e.target.value)} className="max-w-xs" />
+           </div>
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProgress.map((p) => (
+                 <Card key={p.id}>
+                    <CardContent className="p-6">
+                        <h4 className="font-semibold">{p.studentName}</h4>
+                        <p className="text-sm text-slate-500 mb-4">{p.course}</p>
+                        <div className="flex justify-between text-xs font-medium text-slate-500 mb-2">
+                           <span>Progress</span>
+                           <span>{p.progress}%</span>
+                        </div>
+                        <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                           <div className={`h-full rounded-full ${p.status === 'Completed' ? 'bg-green-500' : 'bg-blue-500'}`} style={{ width: `${p.progress}%` }}></div>
+                        </div>
+                        <Badge className="mt-4">{p.status}</Badge>
+                    </CardContent>
+                 </Card>
+              ))}
            </div>
         </TabsContent>
 

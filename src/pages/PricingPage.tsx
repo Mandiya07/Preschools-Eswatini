@@ -72,7 +72,7 @@ export function PricingPage() {
               <p className="text-slate-600 mb-4">Available for Professional & Enterprise plans.</p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> AI Learning Assistant</li>
-                <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> E-Learning Course Builder</li>
+                <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> Learning Management System (LMS)</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> Digital Document Management</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> Content & Media Hub</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> Advanced Financial Management</li>
@@ -296,6 +296,7 @@ const pricingPlans = [
       "Unlimited Student Records",
       "Billing, Invoicing & Financials",
       "Digital Document Archive",
+      "E-Learning Course & Video Management",
       "Community Marketplace",
       "Custom Domain Support",
       "Priority WhatsApp & Live Support"
@@ -315,6 +316,7 @@ const pricingPlans = [
       "Full Trust, Verification & Accreditation",
       "Multiple Staff Admin Accounts",
       "24/7 AI Support Assistant",
+      "Unlimited Video & Content Hosting",
       "Dedicated Account Manager",
       "Full API & Custom Integrations"
     ]

@@ -21,6 +21,11 @@ type Event = {
   endDate: string;
   location: string;
   type: "Academic" | "Holiday" | "Activity" | "Meeting";
+  requiresRsvp?: boolean;
+  maxAttendees?: number;
+  ticketPrice?: number;
+  isOnline?: boolean;
+  streamingLink?: string;
 };
 
 export function AdminEventsPage() {
@@ -39,7 +44,12 @@ export function AdminEventsPage() {
     startDate: new Date().toISOString().slice(0, 16),
     endDate: new Date().toISOString().slice(0, 16),
     location: "",
-    type: "Academic"
+    type: "Academic",
+    requiresRsvp: false,
+    maxAttendees: 0,
+    ticketPrice: 0,
+    isOnline: false,
+    streamingLink: "",
   });
 
   useEffect(() => {
@@ -69,7 +79,12 @@ export function AdminEventsPage() {
         startDate: new Date().toISOString().slice(0, 16),
         endDate: new Date().toISOString().slice(0, 16),
         location: "",
-        type: "Academic"
+        type: "Academic",
+        requiresRsvp: false,
+        maxAttendees: 0,
+        ticketPrice: 0,
+        isOnline: false,
+        streamingLink: "",
       });
     }
     setIsModalOpen(true);
@@ -196,7 +211,25 @@ export function AdminEventsPage() {
               <CardContent className="space-y-3">
                 <p className="text-xs text-slate-500 line-clamp-2">{ev.description || "No description provided."}</p>
                 
-                <div className="space-y-2 pt-2">
+                <div className="flex flex-wrap gap-2 pt-1 pb-1">
+                  {ev.isOnline && (
+                    <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-[10px] font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                      Online Streaming
+                    </span>
+                  )}
+                  {ev.requiresRsvp && (
+                    <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-[10px] font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
+                      RSVP Required {ev.maxAttendees ? `(Max ${ev.maxAttendees})` : ''}
+                    </span>
+                  )}
+                  {ev.ticketPrice ? (
+                    <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-[10px] font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                      Tickets: E{ev.ticketPrice}
+                    </span>
+                  ) : null}
+                </div>
+
+                <div className="space-y-2 pt-2 border-t border-slate-100">
                    <div className="flex items-center text-xs text-slate-600">
                     <Calendar className="h-3 w-3 mr-2 text-slate-400" />
                     {new Date(ev.startDate).toLocaleDateString(undefined, { dateStyle: 'medium' })}
@@ -310,6 +343,65 @@ export function AdminEventsPage() {
                     onChange={e => setFormData({...formData, description: e.target.value})}
                   />
                 </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2">
+                    <input 
+                      type="checkbox" 
+                      id="requiresRsvp" 
+                      checked={formData.requiresRsvp || false}
+                      onChange={e => setFormData({...formData, requiresRsvp: e.target.checked})}
+                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-600"
+                    />
+                    <label htmlFor="requiresRsvp" className="text-sm font-medium text-slate-700">Requires RSVP</label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input 
+                      type="checkbox" 
+                      id="isOnline" 
+                      checked={formData.isOnline || false}
+                      onChange={e => setFormData({...formData, isOnline: e.target.checked})}
+                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-600"
+                    />
+                    <label htmlFor="isOnline" className="text-sm font-medium text-slate-700">Online Streaming</label>
+                  </div>
+                </div>
+
+                {formData.requiresRsvp && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="maxAttendees">Max Attendees</label>
+                      <Input 
+                        id="maxAttendees"
+                        type="number" 
+                        value={formData.maxAttendees || 0} 
+                        onChange={e => setFormData({...formData, maxAttendees: parseInt(e.target.value) || 0})} 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="ticketPrice">Ticket Price (Optional)</label>
+                      <Input 
+                        id="ticketPrice"
+                        type="number" 
+                        value={formData.ticketPrice || 0} 
+                        onChange={e => setFormData({...formData, ticketPrice: parseFloat(e.target.value) || 0})} 
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {formData.isOnline && (
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="streamingLink">Streaming Link</label>
+                    <Input 
+                      id="streamingLink"
+                      type="url" 
+                      placeholder="e.g. https://zoom.us/j/..."
+                      value={formData.streamingLink || ""} 
+                      onChange={e => setFormData({...formData, streamingLink: e.target.value})} 
+                    />
+                  </div>
+                )}
               </form>
             </div>
             

@@ -30,7 +30,7 @@ import { generateAIContent } from "@/services/geminiService";
 
 export function AdminAdmissionsPage() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<"inquiries" | "applications">("applications");
+  const [activeTab, setActiveTab] = useState<"inquiries" | "applications" | "waitlist" | "analytics">("applications");
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
@@ -198,7 +198,7 @@ export function AdminAdmissionsPage() {
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 space-y-6">
            {/* Tabs and Search */}
-           <div className="bg-white p-1 rounded-xl border border-slate-200 flex items-center shadow-sm">
+           <div className="bg-white p-1 rounded-xl border border-slate-200 flex flex-wrap items-center shadow-sm gap-1">
               <button 
                 onClick={() => setActiveTab("applications")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -208,7 +208,7 @@ export function AdminAdmissionsPage() {
                 <ClipboardList className="h-4 w-4" />
                 Applications
                 <span className={`ml-1 px-1.5 py-0.5 rounded-full text-[10px] ${activeTab === 'applications' ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-500'}`}>
-                  {applications.length}
+                  {applications.filter(a => a.status !== 'waitlisted').length}
                 </span>
               </button>
               <button 
@@ -223,7 +223,28 @@ export function AdminAdmissionsPage() {
                   {inquiries.length}
                 </span>
               </button>
-              <div className="ml-auto pr-2 relative hidden sm:block">
+              <button 
+                onClick={() => setActiveTab("waitlist")}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === 'waitlist' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <AlertCircle className="h-4 w-4" />
+                Waitlist
+                 <span className={`ml-1 px-1.5 py-0.5 rounded-full text-[10px] ${activeTab === 'waitlist' ? 'bg-amber-500 text-white' : 'bg-amber-100 text-amber-700'}`}>
+                  {applications.filter(a => a.status === 'waitlisted').length}
+                </span>
+              </button>
+              <button 
+                onClick={() => setActiveTab("analytics")}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === 'analytics' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Sparkles className="h-4 w-4" />
+                Forecasting
+              </button>
+              <div className="ml-auto pr-2 relative hidden lg:block">
                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                  <Input 
                    placeholder="Search..." 
@@ -235,6 +256,71 @@ export function AdminAdmissionsPage() {
            </div>
 
            {/* Main List */}
+           {activeTab === 'analytics' ? (
+             <Card className="border-slate-200 overflow-hidden p-8 space-y-8 animate-in fade-in duration-300">
+               <div>
+                 <h3 className="text-lg font-bold text-slate-900 mb-1">Enrollment Forecasting & Analytics</h3>
+                 <p className="text-sm text-slate-500 mb-6">Predict demand based on waitlist and historical application data.</p>
+                 
+                 <div className="grid sm:grid-cols-3 gap-4 mb-8">
+                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                     <p className="text-sm font-medium text-slate-500">Predicted Capacity</p>
+                     <h4 className="text-2xl font-black text-slate-900 mt-1">94%</h4>
+                     <p className="text-xs text-amber-600 mt-1 font-medium">+12% vs last term</p>
+                   </div>
+                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                     <p className="text-sm font-medium text-slate-500">Waitlist Conversion</p>
+                     <h4 className="text-2xl font-black text-slate-900 mt-1">68%</h4>
+                     <p className="text-xs text-green-600 mt-1 font-medium">High intent likelihood</p>
+                   </div>
+                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                     <p className="text-sm font-medium text-slate-500">Highest Demand</p>
+                     <h4 className="text-2xl font-black text-slate-900 mt-1">Grade R</h4>
+                     <p className="text-xs text-blue-600 mt-1 font-medium">15 slots short</p>
+                   </div>
+                 </div>
+
+                 <div className="space-y-4">
+                   <h4 className="font-bold text-slate-900 text-sm">Waitlist Priority Queues</h4>
+                   <div className="space-y-3">
+                     <div className="p-4 border border-emerald-100 bg-emerald-50 rounded-xl relative overflow-hidden flex justify-between items-center">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
+                        <div>
+                          <p className="font-bold text-emerald-900 text-sm">Tier 1: Siblings Enrolled</p>
+                          <p className="text-xs text-emerald-700 mt-1">Automatically prioritized per policy.</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-lg font-bold text-emerald-900">4</span>
+                          <p className="text-[10px] text-emerald-600 uppercase">Applicants</p>
+                        </div>
+                     </div>
+                     <div className="p-4 border border-blue-100 bg-blue-50 rounded-xl relative overflow-hidden flex justify-between items-center">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-blue-400"></div>
+                        <div>
+                          <p className="font-bold text-blue-900 text-sm">Tier 2: Early Registrations</p>
+                          <p className="text-xs text-blue-700 mt-1">Waitlisted for over 6 months.</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-lg font-bold text-blue-900">12</span>
+                          <p className="text-[10px] text-blue-600 uppercase">Applicants</p>
+                        </div>
+                     </div>
+                     <div className="p-4 border border-slate-200 bg-white rounded-xl relative overflow-hidden flex justify-between items-center">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-slate-300"></div>
+                        <div>
+                          <p className="font-bold text-slate-700 text-sm">Tier 3: Standard Waitlist</p>
+                          <p className="text-xs text-slate-500 mt-1">Recent waitlist additions.</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-lg font-bold text-slate-700">8</span>
+                          <p className="text-[10px] text-slate-400 uppercase">Applicants</p>
+                        </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </Card>
+           ) : (
            <Card className="border-slate-200 overflow-hidden">
              <CardContent className="p-0">
                <div className="overflow-x-auto">
@@ -249,8 +335,10 @@ export function AdminAdmissionsPage() {
                      </tr>
                    </thead>
                    <tbody className="divide-y divide-slate-100">
-                     {activeTab === 'applications' ? (
-                       filteredApps.map(app => (
+                     {activeTab === 'applications' || activeTab === 'waitlist' ? (
+                       filteredApps
+                         .filter(app => activeTab === 'waitlist' ? app.status === 'waitlisted' : app.status !== 'waitlisted')
+                         .map(app => (
                         <tr 
                           key={app.id} 
                           className={`hover:bg-blue-50/30 transition-colors cursor-pointer ${selectedAppId === app.id ? 'bg-blue-50' : ''}`}
@@ -316,7 +404,7 @@ export function AdminAdmissionsPage() {
                           </tr>
                         ))
                      )}
-                     {(activeTab === 'applications' ? filteredApps : filteredInquiries).length === 0 && (
+                     {((activeTab === 'applications' ? filteredApps.filter(app => app.status !== 'waitlisted') : activeTab === 'waitlist' ? filteredApps.filter(app => app.status === 'waitlisted') : filteredInquiries).length === 0) && (
                        <tr>
                          <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
                             No records found.
@@ -328,9 +416,11 @@ export function AdminAdmissionsPage() {
                </div>
              </CardContent>
            </Card>
+           )}
         </div>
 
         {/* Sidebar Detail / Actions */}
+        {activeTab !== 'analytics' && (
         <div className="w-full lg:w-96 space-y-6">
            {selectedApp ? (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
@@ -452,6 +542,7 @@ export function AdminAdmissionsPage() {
               </div>
            )}
         </div>
+        )}
       </div>
     </div>
   );

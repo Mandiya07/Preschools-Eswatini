@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   CreditCard, Search, Download, ArrowUpRight, ArrowDownRight, 
   Wallet, DollarSign, FileText, CheckCircle2, ChevronRight, History, 
-  Settings, Users, Briefcase, Percent, Bell
+  Settings, Users, Briefcase, Percent, Bell, Smartphone, CalendarClock, Repeat, Globe, BarChart3, AlertTriangle
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
@@ -104,16 +104,111 @@ export function AdminFinancePage() {
         </Card>
       </div>
 
-      <Tabs defaultValue="transactions" className="w-full mt-8" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-5 lg:w-[800px]">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="transactions">Transactions</TabsTrigger>
-          <TabsTrigger value="invoices">Invoices & Reminders</TabsTrigger>
-          <TabsTrigger value="management">Management</TabsTrigger>
-          <TabsTrigger value="operations">Operations</TabsTrigger>
+      <Tabs defaultValue="ecosystem" className="w-full mt-8" onValueChange={setActiveTab}>
+        <TabsList className="grid w-full grid-cols-6 lg:w-[900px] h-12 bg-slate-100 rounded-xl p-1 mb-6">
+          <TabsTrigger value="overview" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs sm:text-sm">Overview</TabsTrigger>
+          <TabsTrigger value="ecosystem" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs sm:text-sm">Payment Ecosystem</TabsTrigger>
+          <TabsTrigger value="transactions" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs sm:text-sm">Transactions</TabsTrigger>
+          <TabsTrigger value="invoices" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs sm:text-sm">Invoices</TabsTrigger>
+          <TabsTrigger value="management" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs sm:text-sm">Management</TabsTrigger>
+          <TabsTrigger value="operations" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs sm:text-sm">Operations</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="transactions" className="space-y-6 mt-6">
+        <TabsContent value="ecosystem" className="space-y-6">
+           <Card className="rounded-[2rem] border-blue-100 shadow-sm overflow-hidden bg-gradient-to-br from-slate-900 to-blue-900 text-white">
+              <div className="p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center justify-between relative">
+                <div className="absolute inset-0 bg-blue-500/10 mix-blend-overlay"></div>
+                <div className="relative z-10 max-w-2xl">
+                  <Badge className="bg-blue-500/20 text-blue-200 border border-blue-500/30 mb-4 px-3 py-1">Advanced Payment Ecosystem</Badge>
+                  <h3 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Modernize your school fee collections</h3>
+                  <p className="text-blue-100 text-lg mb-6">Built specifically for African markets. Offer parents flexible payment options, reduce outstanding debt, and gain crystal-clear financial oversight.</p>
+                  <Button className="bg-white text-blue-900 hover:bg-blue-50 rounded-xl font-bold shadow-xl shadow-blue-900/50">
+                    Enable Digital Payments <ArrowUpRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="relative z-10 shrink-0 hidden md:block">
+                   <div className="h-40 w-40 bg-blue-500/20 rounded-full flex items-center justify-center border-4 border-white/10 shadow-[0_0_50px_rgba(37,99,235,0.3)]">
+                      <Wallet className="h-16 w-16 text-blue-300" />
+                   </div>
+                </div>
+              </div>
+           </Card>
+
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card className="rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-colors bg-white">
+                 <div className="p-6">
+                    <div className="h-12 w-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-6">
+                       <Smartphone className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Mobile Money Integration</h4>
+                    <p className="text-sm text-slate-500 mb-4">Accept payments instantly via MTN Mobile Money, Airtel Money, and local telco wallets. Funds settle directly into your school account.</p>
+                    <div className="flex gap-2">
+                       <Badge variant="secondary" className="bg-slate-100 text-slate-600">MTN MoMo</Badge>
+                       <Badge variant="secondary" className="bg-slate-100 text-slate-600">eMali</Badge>
+                    </div>
+                 </div>
+              </Card>
+
+              <Card className="rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-colors bg-white">
+                 <div className="p-6">
+                    <div className="h-12 w-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6">
+                       <CalendarClock className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Installment Plans</h4>
+                    <p className="text-sm text-slate-500 mb-4">Allow parents to split large tuition fees over 3, 6, or 9 months. The system automatically tracks portions and sends receipts.</p>
+                    <Badge variant="outline" className="text-purple-600 border-purple-200 bg-purple-50">High conversion</Badge>
+                 </div>
+              </Card>
+
+              <Card className="rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-colors bg-white">
+                 <div className="p-6">
+                    <div className="h-12 w-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-6">
+                       <Repeat className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Recurring Billing</h4>
+                    <p className="text-sm text-slate-500 mb-4">Auto-charge parent bank cards or mobile wallets for monthly transport fees, meal plans, or regular tuition.</p>
+                    <div className="flex items-center text-xs font-semibold text-emerald-600">
+                      <CheckCircle2 className="h-3 w-3 mr-1" /> Reduces defaults by 40%
+                    </div>
+                 </div>
+              </Card>
+
+              <Card className="rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-colors bg-white">
+                 <div className="p-6">
+                    <div className="flex justify-between items-start mb-6">
+                       <div className="h-12 w-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center">
+                          <Bell className="h-6 w-6" />
+                       </div>
+                       <Badge className="bg-slate-900">SMS & WhatsApp</Badge>
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Automated Smart Reminders</h4>
+                    <p className="text-sm text-slate-500 mb-4">Set up triggered notifications for upcoming fees and overdue balances with 1-click secure payment links embedded.</p>
+                 </div>
+              </Card>
+
+              <Card className="rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-colors bg-white">
+                 <div className="p-6">
+                    <div className="h-12 w-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                       <BarChart3 className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Advanced Financial Analytics</h4>
+                    <p className="text-sm text-slate-500">Visualize cash flow trends, predict seasonal revenue drops, and easily identify highest defaulting age groups or classes.</p>
+                 </div>
+              </Card>
+
+              <Card className="rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-colors bg-white">
+                 <div className="p-6">
+                    <div className="h-12 w-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                       <Globe className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-2">Multi-Currency & Cross-border</h4>
+                    <p className="text-sm text-slate-500">Easily support parents working abroad (e.g. South Africa). Process payments in ZAR and auto-settle in SZL without hidden fees.</p>
+                 </div>
+              </Card>
+           </div>
+        </TabsContent>
+
+        <TabsContent value="transactions" className="space-y-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-4">
               <div>

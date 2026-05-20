@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SEO } from "@/components/SEO";
-import { Search, MapPin, Star, GraduationCap, CheckCircle2, Loader2 } from "lucide-react";
+import { Search, MapPin, Star, GraduationCap, CheckCircle2, Loader2, PlayCircle, Sparkles } from "lucide-react";
 import { fetchCollection } from "@/lib/firestoreUtils";
 import { School } from "@/types";
+import kidsImg from '@/assets/images/kids_playing_blocks_1779268580565.png';
 
 export function DirectoryPage() {
   const [schools, setSchools] = useState<School[]>([]);
@@ -77,27 +78,40 @@ export function DirectoryPage() {
         description="Search through a comprehensive database of preschools and early education centers across Mbabane, Manzini, and all of Eswatini."
       />
       {/* Header */}
-      <div className="bg-blue-600 py-12 sm:py-16 px-4">
-        <div className="mx-auto max-w-7xl text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl leading-tight">
+      <div className="relative py-16 sm:py-24 px-4 overflow-hidden rounded-b-[3rem] lg:rounded-b-[5rem] bg-blue-600 shadow-sm">
+        <div className="absolute inset-0 z-0">
+           <img src={kidsImg} alt="Kids playing" className="w-full h-full object-cover opacity-20" />
+           <div className="absolute inset-0 bg-blue-900/60 mix-blend-multiply" />
+        </div>
+        <div className="mx-auto max-w-7xl text-center relative z-10">
+          <div className="inline-flex items-center rounded-full bg-white/20 backdrop-blur-sm px-4 py-1.5 text-sm font-bold text-white mb-6 shadow-sm border border-white/20">
+            <Sparkles className="h-4 w-4 mr-2 text-yellow-300" />
+            Discover Early Education
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
             Find the perfect preschool
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg sm:text-xl text-blue-100 italic font-medium">
-            Browse verified preschools, daycares, and ECCDE centres across Eswatini.
+          <p className="mx-auto mt-6 max-w-2xl text-xl text-blue-50 font-medium">
+            Browse verified preschools, daycares, and ECCDE centres across Eswatini. 
           </p>
           
           {/* Search Box */}
-          <div className="mx-auto mt-8 sm:mt-10 max-w-xl">
-            <div className="relative flex items-center bg-white rounded-2xl shadow-xl p-1.5">
-              <Search className="absolute left-5 h-5 w-5 text-slate-400" />
+          <div className="mx-auto mt-10 max-w-3xl flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div className="relative flex-1 flex items-center bg-white rounded-2xl shadow-2xl p-2 border-4 border-white/20 w-full">
+              <Search className="absolute left-6 h-6 w-6 text-slate-400" />
               <Input 
-                className="pl-14 border-0 bg-transparent py-7 text-base focus-visible:ring-0 shadow-none font-medium"
-                placeholder="Search by name or town..."
+                className="pl-16 border-0 bg-transparent py-8 text-lg focus-visible:ring-0 shadow-none font-medium h-full w-full"
+                placeholder="Search by school name or town..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Button className="h-11 px-8 rounded-xl bg-blue-600 font-bold shadow-lg shadow-blue-200">Search</Button>
+              <Button className="h-14 px-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-lg font-bold shadow-lg shadow-blue-200 ml-2">Search</Button>
             </div>
+            <Link to="/map" className="shrink-0">
+               <Button className="h-14 px-8 rounded-2xl bg-amber-500 hover:bg-amber-600 text-lg font-bold shadow-xl shadow-amber-500/30 flex items-center gap-2 border-4 border-white/20">
+                  <MapPin className="h-5 w-5" /> Smart Map locator
+               </Button>
+            </Link>
           </div>
         </div>
       </div>
