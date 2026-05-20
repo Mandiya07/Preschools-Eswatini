@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Menu, X, LayoutDashboard, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -8,6 +8,32 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
   const { user, logout } = useAuth();
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  const getLinkClass = (path: string) => {
+    const active = isActive(path);
+    return `text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3.5 py-2 rounded-xl ${
+      active 
+        ? "text-blue-600 bg-blue-50/70 shadow-sm shadow-blue-500/5 font-bold" 
+        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+    }`;
+  };
+
+  const getMobileLinkClass = (path: string) => {
+    const active = isActive(path);
+    return `text-sm font-semibold py-3 px-4 block rounded-xl transition-all ${
+      active 
+        ? "text-blue-600 bg-blue-50/80 font-bold" 
+        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+    }`;
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-md overflow-x-hidden">
@@ -23,19 +49,19 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:gap-6 xl:gap-8">
-            <Link to="/" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Home</Link>
-            <Link to="/directory" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Find a School</Link>
+          <div className="hidden lg:flex lg:items-center lg:gap-1.5 xl:gap-2">
+            <Link to="/" className={getLinkClass("/")}>Home</Link>
+            <Link to="/directory" className={getLinkClass("/directory")}>Find a School</Link>
             {(!user || user.role === 'User' || user.role === 'Parent') && (
               <>
-                <Link to="/features" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">For Schools</Link>
-                <Link to="/pricing" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Pricing</Link>
+                <Link to="/features" className={getLinkClass("/features")}>For Schools</Link>
+                <Link to="/pricing" className={getLinkClass("/pricing")}>Pricing</Link>
               </>
             )}
-            <Link to="/resources" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Resources</Link>
-            <Link to="/marketplace" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Marketplace</Link>
-            <Link to="/learning" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Learning</Link>
-            <Link to="/community" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap">Community</Link>
+            <Link to="/resources" className={getLinkClass("/resources")}>Resources</Link>
+            <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
+            <Link to="/learning" className={getLinkClass("/learning")}>Learning</Link>
+            <Link to="/community" className={getLinkClass("/community")}>Community</Link>
           </div>
         </div>
 
@@ -94,19 +120,19 @@ export function Navbar() {
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300 overflow-x-hidden">
-          <div className="flex flex-col space-y-2">
-            <Link to="/" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-            <Link to="/directory" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Find a School</Link>
+          <div className="flex flex-col space-y-1.5">
+            <Link to="/" className={getMobileLinkClass("/")} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link to="/directory" className={getMobileLinkClass("/directory")} onClick={() => setIsMobileMenuOpen(false)}>Find a School</Link>
             {(!user || user.role === 'User' || user.role === 'Parent') && (
               <>
-                <Link to="/features" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>For Schools</Link>
-                <Link to="/pricing" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
+                <Link to="/features" className={getMobileLinkClass("/features")} onClick={() => setIsMobileMenuOpen(false)}>For Schools</Link>
+                <Link to="/pricing" className={getMobileLinkClass("/pricing")} onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
               </>
             )}
-            <Link to="/resources" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
-            <Link to="/marketplace" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Marketplace</Link>
-            <Link to="/learning" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Learning</Link>
-            <Link to="/community" className="text-sm font-medium text-slate-600 py-3 block hover:text-slate-900" onClick={() => setIsMobileMenuOpen(false)}>Community</Link>
+            <Link to="/resources" className={getMobileLinkClass("/resources")} onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
+            <Link to="/marketplace" className={getMobileLinkClass("/marketplace")} onClick={() => setIsMobileMenuOpen(false)}>Marketplace</Link>
+            <Link to="/learning" className={getMobileLinkClass("/learning")} onClick={() => setIsMobileMenuOpen(false)}>Learning</Link>
+            <Link to="/community" className={getMobileLinkClass("/community")} onClick={() => setIsMobileMenuOpen(false)}>Community</Link>
             <div className="flex flex-col space-y-2 pt-4 border-t border-slate-100">
                   {user ? (
                     <>
