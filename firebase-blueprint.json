@@ -1,0 +1,691 @@
+{
+  "entities": {
+    "School": {
+      "title": "School",
+      "description": "Information about an educational institution",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "institutionType": { "type": "string", "enum": ["Preschool", "Primary School", "High School", "College", "E-Learning Center", "Other"] },
+        "country": { "type": "string" },
+        "region": { "type": "string" },
+        "town": { "type": "string" },
+        "address": { "type": "string" },
+        "type": { "type": "string" },
+        "curriculum": { "type": "string" },
+        "boarding": { "type": "string", "enum": ["Day", "Boarding", "Both"] },
+        "feePerTerm": { "type": "number" },
+        "ageGroups": { "type": "array", "items": { "type": "string" } },
+        "heroImage": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviews": { "type": "number" },
+        "description": { "type": "string" },
+        "mission": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "hours": { "type": "string" },
+        "programs": { "type": "array" },
+        "facilities": { "type": "array" },
+        "staff": { "type": "array" },
+        "gallery": { "type": "array" },
+        "videoUrl": { "type": "string" },
+        "admissionsDetails": { "type": "array" },
+        "socialMedia": { "type": "object" },
+        "featured": { "type": "boolean" },
+        "verified": { "type": "boolean" },
+        "tags": { "type": "array" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "region", "town", "ownerId"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Admissions inquiry from a parent",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "parentName": { "type": "string" },
+        "parentEmail": { "type": "string" },
+        "parentPhone": { "type": "string" },
+        "childName": { "type": "string" },
+        "childAge": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "responded", "closed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "parentName", "parentEmail"]
+    },
+    "WebsiteConfig": {
+      "title": "WebsiteConfig",
+      "description": "Customization settings for a school's website",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "template": { "type": "string" },
+        "primaryColor": { "type": "string" },
+        "secondaryColor": { "type": "string" },
+        "fontFamily": { "type": "string" },
+        "headline": { "type": "string" },
+        "subheadline": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "images": { "type": "array" },
+        "newsItems": { "type": "array" },
+        "seoTitle": { "type": "string" },
+        "seoDescription": { "type": "string" },
+        "customDomain": { "type": "string" },
+        "published": { "type": "boolean" }
+      },
+      "required": ["schoolId"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student enrolled in the school",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "name": { "type": "string" },
+        "dateOfBirth": { "type": "string", "format": "date" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "class": { "type": "string" },
+        "parentId": { "type": "string" },
+        "medicalInfo": { "type": "string" },
+        "allergyInfo": { "type": "string" },
+        "enrollmentDate": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["Active", "Inactive", "Graduated"] },
+        "photoUrl": { "type": "string" }
+      },
+      "required": ["schoolId", "name", "class"]
+    },
+    "Staff": {
+      "title": "Staff",
+      "description": "School staff member or teacher",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "specialization": { "type": "string" },
+        "joinDate": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["Active", "On Leave", "Former"] },
+        "photoUrl": { "type": "string" }
+      },
+      "required": ["schoolId", "name", "role"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record for a student",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["Present", "Absent", "Late", "Excused"] },
+        "remarks": { "type": "string" },
+        "recordedBy": { "type": "string" }
+      },
+      "required": ["schoolId", "studentId", "date", "status"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "School event or calendar item",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string", "format": "date-time" },
+        "allDay": { "type": "boolean" },
+        "location": { "type": "string" },
+        "type": { "type": "string", "enum": ["Academic", "Holiday", "Activity", "Meeting"] }
+      },
+      "required": ["schoolId", "title", "startDate"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "School announcement or news post",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "priority": { "type": "string", "enum": ["Low", "Normal", "High", "Urgent"] },
+        "targetAudience": { "type": "string", "enum": ["All", "Parents", "Staff"] },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["schoolId", "title", "content", "date"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Formal admission application from a parent",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "parentId": { "type": "string" },
+        "childName": { "type": "string" },
+        "childDateOfBirth": { "type": "string", "format": "date" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "proposedStartDate": { "type": "string", "format": "date" },
+        "gradeApplyingFor": { "type": "string" },
+        "parentName": { "type": "string" },
+        "parentEmail": { "type": "string" },
+        "parentPhone": { "type": "string" },
+        "address": { "type": "string" },
+        "documents": { "type": "array" },
+        "medicalInfo": { "type": "string" },
+        "status": { "type": "string", "enum": ["submitted", "under_review", "interview_scheduled", "waitlisted", "accepted", "rejected", "enrolled"] },
+        "interviewDate": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "parentId", "childName"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Notification for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title"]
+    },
+    "StudentProgress": {
+      "title": "StudentProgress",
+      "description": "Progress update for a student",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string", "enum": ["Academic", "Social", "Physical", "Medical"] },
+        "date": { "type": "string", "format": "date" }
+      },
+      "required": ["studentId", "schoolId", "title", "content", "date"]
+    },
+    "FeeStatement": {
+      "title": "FeeStatement",
+      "description": "Billing statement for a student",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "parentId": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["Paid", "Unpaid", "Partial"] },
+        "dueDate": { "type": "string", "format": "date" }
+      },
+      "required": ["studentId", "parentId", "schoolId", "amount", "status"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Internal message",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "subject": { "type": "string" },
+        "body": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "senderId", "receiverId", "subject", "body"]
+    },
+    "Newsletter": {
+      "title": "Newsletter",
+      "description": "Periodic school newsletter",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "thumbnailUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["Draft", "Published"] }
+      },
+      "required": ["schoolId", "title", "content", "status"]
+    },
+    "CommunicationLog": {
+      "title": "CommunicationLog",
+      "description": "Log of multi-channel communication sent",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "type": { "type": "string", "enum": ["Email", "SMS", "WhatsApp", "Push"] },
+        "target": { "type": "string", "enum": ["All", "Class", "Individual"] },
+        "recipientIds": { "type": "array", "items": { "type": "string" } },
+        "subject": { "type": "string" },
+        "content": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Sent", "Failed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "senderId", "type", "content", "status"]
+    },
+    "TransportRoute": {
+      "title": "TransportRoute",
+      "description": "School transport tracking route and vehicle details",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "routeName": { "type": "string" },
+        "driverName": { "type": "string" },
+        "vehiclePlate": { "type": "string" },
+        "currentLocation": { "type": "object" },
+        "students": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["Active", "Completed", "Delayed", "Scheduled"] }
+      },
+      "required": ["schoolId", "routeName"]
+    },
+    "ReportCard": {
+      "title": "ReportCard",
+      "description": "Digital report card for a student across different subjects and grade levels",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "term": { "type": "string" },
+        "academicYear": { "type": "string" },
+        "subjects": { "type": "array" },
+        "teacherRemarks": { "type": "string" },
+        "principalRemarks": { "type": "string" },
+        "published": { "type": "boolean" },
+        "issuedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "studentId", "term", "academicYear"]
+    },
+    "PaymentTransaction": {
+      "title": "PaymentTransaction",
+      "description": "Online fee payment transaction",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "parentId": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "paymentMethod": { "type": "string", "enum": ["Card", "MobileMoney", "BankTransfer", "Cash"] },
+        "status": { "type": "string", "enum": ["Pending", "Successful", "Failed", "Refunded"] },
+        "reference": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "parentId", "amount", "status"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "E-Learning course or curriculum module",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "instructorId": { "type": "string" },
+        "modules": { "type": "array" },
+        "gradeLevel": { "type": "string" },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "title"]
+    },
+    "AIAssistantSession": {
+      "title": "AIAssistantSession",
+      "description": "AI learning assistant chat session for a student or teacher",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "subject": { "type": "string" },
+        "messages": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "schoolId"]
+    },
+    "PlatformSubscription": {
+      "title": "PlatformSubscription",
+      "description": "Subscription revenue tracking for the platform",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "planId": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Canceled", "PastDue", "Trailing"] },
+        "currentPeriodEnd": { "type": "string", "format": "date-time" },
+        "amount": { "type": "number" }
+      },
+      "required": ["schoolId", "planId", "status"]
+    },
+    "MarketplaceTheme": {
+      "title": "MarketplaceTheme",
+      "description": "Premium themes available for purchase",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "previewUrl": { "type": "string" },
+        "isPremium": { "type": "boolean" }
+      },
+      "required": ["name", "price"]
+    },
+    "PlatformModule": {
+      "title": "PlatformModule",
+      "description": "Add-on modules (e.g., advanced transport, e-learning)",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "monthlyPrice": { "type": "number" }
+      },
+      "required": ["name", "monthlyPrice"]
+    },
+    "FeaturedListing": {
+      "title": "FeaturedListing",
+      "description": "Featured school listing for increased directory visibility",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["Active", "Expired", "Pending"] },
+        "amountPaid": { "type": "number" }
+      },
+      "required": ["schoolId", "startDate", "endDate", "status"]
+    },
+    "Advertisement": {
+      "title": "Advertisement",
+      "description": "Advertising space purchased on the platform",
+      "type": "object",
+      "properties": {
+        "advertiserName": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "targetUrl": { "type": "string" },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["Active", "Expired", "Pending"] },
+        "amountPaid": { "type": "number" }
+      },
+      "required": ["advertiserName", "startDate", "endDate"]
+    },
+    "VerificationRequest": {
+      "title": "VerificationRequest",
+      "description": "School verification fee payment and status",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "InReview", "Verified", "Rejected"] },
+        "feePaid": { "type": "boolean" },
+        "submittedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "status", "feePaid"]
+    },
+    "ServiceRequest": {
+      "title": "ServiceRequest",
+      "description": "Upsell services like digital marketing, photography, video",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "serviceType": { "type": "string", "enum": ["Digital Marketing", "Photography", "Video Production", "SEO Audit"] },
+        "status": { "type": "string", "enum": ["Requested", "QuoteProvided", "InProgress", "Completed"] },
+        "requestedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "serviceType", "status"]
+    },
+    "HealthRecord": {
+      "title": "HealthRecord",
+      "description": "Student health records including immunizations and allergies",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "allergies": { "type": "array", "items": { "type": "string" } },
+        "medicalConditions": { "type": "array", "items": { "type": "string" } },
+        "immunizations": { "type": "array", "items": { "type": "object" } },
+        "bloodGroup": { "type": "string" },
+        "emergencyContacts": { "type": "array", "items": { "type": "object" } }
+      },
+      "required": ["schoolId", "studentId"]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "Daily activities, meals, naps, incidents, behavior, and pickup authorization",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "logType": { "type": "string", "enum": ["Meal", "Nap", "Activity", "Incident", "Behavior", "Pickup", "Assessment"] },
+        "details": { "type": "object" },
+        "loggedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "studentId", "logType", "date"]
+    },
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "Inventory, asset tracking, and procurement",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "itemName": { "type": "string" },
+        "category": { "type": "string", "enum": ["Asset", "Consumable", "ProcurementRequest"] },
+        "quantity": { "type": "number" },
+        "status": { "type": "string" },
+        "location": { "type": "string" },
+        "assignedTo": { "type": "string" }
+      },
+      "required": ["schoolId", "itemName", "category"]
+    },
+    "StaffHR": {
+      "title": "StaffHR",
+      "description": "Staff payroll, leave management, and timetables",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "staffId": { "type": "string" },
+        "payrollIntegrationId": { "type": "string" },
+        "leaveBalance": { "type": "number" },
+        "department": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["schoolId", "staffId"]
+    },
+    "ComplianceRecord": {
+      "title": "ComplianceRecord",
+      "description": "Ministry compliance, licensing, and inspection records",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "type": { "type": "string", "enum": ["Inspection", "License", "Checklist", "HealthSafety", "TeacherQualification", "ReportExport"] },
+        "title": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Valid", "Expired", "Failed", "Passed"] },
+        "issuedDate": { "type": "string", "format": "date" },
+        "expiryDate": { "type": "string", "format": "date" },
+        "documentUrl": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["schoolId", "type", "title", "status"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Application user profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "school_owner", "parent", "superadmin"] },
+        "schoolId": { "type": "string" },
+        "subscriptionPlan": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Enterprise security audit log",
+      "type": "object",
+      "properties": {
+        "action": { "type": "string" },
+        "resourceType": { "type": "string" },
+        "resourceId": { "type": "string" },
+        "details": { "type": "object" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "ipAddress": { "type": "string" }
+      },
+      "required": ["action", "resourceType", "userId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "audit_logs": {
+      "schema": "AuditLog",
+      "description": "Enterprise audit logs, append-only"
+    },
+    "schools": {
+      "schema": "School",
+      "description": "Collection of all preschools"
+    },
+    "inquiries": {
+      "schema": "Inquiry",
+      "description": "Collection of admissions inquiries"
+    },
+    "websites": {
+      "schema": "WebsiteConfig",
+      "description": "Custom website configurations for schools"
+    },
+    "users": {
+      "schema": "User",
+      "description": "User profiles and subscription data"
+    },
+    "students": {
+      "schema": "Student",
+      "description": "Student records for schools"
+    },
+    "staff": {
+      "schema": "Staff",
+      "description": "Staff and teacher records"
+    },
+    "attendance": {
+      "schema": "Attendance",
+      "description": "Student attendance logs"
+    },
+    "events": {
+      "schema": "Event",
+      "description": "School events and calendar items"
+    },
+    "announcements": {
+      "schema": "Announcement",
+      "description": "School announcements and news"
+    },
+    "applications": {
+      "schema": "Application",
+      "description": "Formal admission applications"
+    },
+    "notifications": {
+      "schema": "Notification",
+      "description": "User notifications"
+    },
+    "progress": {
+      "schema": "StudentProgress",
+      "description": "Student progress reports"
+    },
+    "fees": {
+      "schema": "FeeStatement",
+      "description": "School fee statements"
+    },
+    "messages": {
+      "schema": "Message",
+      "description": "Direct messages between parents and school"
+    },
+    "newsletters": {
+      "schema": "Newsletter",
+      "description": "Periodic school newsletters"
+    },
+    "communication_logs": {
+      "schema": "CommunicationLog",
+      "description": "Logs of outgoing multi-channel communication"
+    },
+    "transport_routes": {
+      "schema": "TransportRoute",
+      "description": "School transport tracking routes"
+    },
+    "report_cards": {
+      "schema": "ReportCard",
+      "description": "Digital report cards"
+    },
+    "payment_transactions": {
+      "schema": "PaymentTransaction",
+      "description": "Online fee payment transactions"
+    },
+    "courses": {
+      "schema": "Course",
+      "description": "E-Learning courses and modules"
+    },
+    "ai_assistant_sessions": {
+      "schema": "AIAssistantSession",
+      "description": "AI learning assistant sessions"
+    },
+    "platform_subscriptions": {
+      "schema": "PlatformSubscription",
+      "description": "Platform subscriptions tracker"
+    },
+    "marketplace_themes": {
+      "schema": "MarketplaceTheme",
+      "description": "Available premium themes"
+    },
+    "platform_modules": {
+      "schema": "PlatformModule",
+      "description": "Add-on modules available"
+    },
+    "featured_listings": {
+      "schema": "FeaturedListing",
+      "description": "Featured school listings"
+    },
+    "advertisements": {
+      "schema": "Advertisement",
+      "description": "Platform advertisements"
+    },
+    "verification_requests": {
+      "schema": "VerificationRequest",
+      "description": "Requests for school verification"
+    },
+    "service_requests": {
+      "schema": "ServiceRequest",
+      "description": "Upsell service requests"
+    },
+    "health_records": {
+      "schema": "HealthRecord",
+      "description": "Student health and medical records"
+    },
+    "daily_logs": {
+      "schema": "DailyLog",
+      "description": "Daily activities, meals, and naps"
+    },
+    "inventory": {
+      "schema": "InventoryItem",
+      "description": "School inventory and assets"
+    },
+    "staff_hr": {
+      "schema": "StaffHR",
+      "description": "Staff HR, payroll, and leave management"
+    },
+    "compliance_records": {
+      "schema": "ComplianceRecord",
+      "description": "Digital compliance, ministry support, and inspection records"
+    }
+  }
+}
