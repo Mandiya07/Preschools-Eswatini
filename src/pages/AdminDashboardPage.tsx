@@ -16,8 +16,7 @@ import {
   Calendar
 } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
-import { fetchDocument, fetchCollection, createDocument, subscribeToCollection } from "@/lib/firestoreUtils";
-import { MOCK_SCHOOLS } from "@/data/schools";
+import { fetchDocument, subscribeToCollection } from "@/lib/firestoreUtils";
 import { School, Inquiry, Application, Student } from "@/types";
 import { where } from "firebase/firestore";
 
@@ -86,15 +85,6 @@ export function AdminDashboardPage() {
     }
   }, [inquiries, lastInquiryId]);
 
-  const handleSeedData = async () => {
-    setSeeding(true);
-    for (const mock of MOCK_SCHOOLS) {
-      await createDocument('schools', mock.id, { ...mock, ownerId: user?.uid || 'system' });
-    }
-    setSeeding(false);
-    window.location.reload();
-  };
-
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center">
@@ -115,10 +105,6 @@ export function AdminDashboardPage() {
           <div className="flex flex-col gap-3">
             <Button size="lg" className="h-12 text-base">
               <Plus className="mr-2 h-5 w-5" /> Register Your School
-            </Button>
-            <Button variant="outline" onClick={handleSeedData} disabled={seeding}>
-              {seeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              {seeding ? 'Seeding...' : 'Seed with Mock Data (Dev)'}
             </Button>
           </div>
         </div>

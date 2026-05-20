@@ -150,40 +150,40 @@ export function FeaturesPage() {
             <p className="mt-4 text-slate-600">A comprehensive set of tools to power every aspect of your institution.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-              <MessageSquare className="h-8 w-8 text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Parent Portal</h3>
-              <p className="text-slate-600">Secure access for parents to view student progress, attendance, and communicate with teachers.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group">
+              <MessageSquare className="h-10 w-10 text-blue-600 mb-6 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-bold mb-3 text-slate-900">Parent Portal</h3>
+              <p className="text-slate-600 font-medium">Secure access for parents to view student progress, attendance, and communicate with teachers.</p>
             </div>
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-              <BarChart3 className="h-8 w-8 text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Finance Management</h3>
-              <p className="text-slate-600">Advanced financial module for fee management, invoicing, expense tracking, and payroll.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group">
+              <BarChart3 className="h-10 w-10 text-emerald-600 mb-6 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-bold mb-3 text-slate-900">Finance Management</h3>
+              <p className="text-slate-600 font-medium">Advanced financial module for fee management, invoicing, expense tracking, and payroll.</p>
             </div>
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-              <FileText className="h-8 w-8 text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Document Management</h3>
-              <p className="text-slate-600">Centralized secure archive for school records, student documents, and certificates.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group">
+              <FileText className="h-10 w-10 text-amber-600 mb-6 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-bold mb-3 text-slate-900">Document Management</h3>
+              <p className="text-slate-600 font-medium">Centralized secure archive for school records, student documents, and certificates.</p>
             </div>
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-              <Laptop className="h-8 w-8 text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Content & Media Hub</h3>
-              <p className="text-slate-600">Publish news, share photo galleries, event streams, and school media.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group">
+              <Laptop className="h-10 w-10 text-purple-600 mb-6 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-bold mb-3 text-slate-900">Content & Publishing</h3>
+              <p className="text-slate-600 font-medium">Publish school blogs, digital magazines, event streams, and comprehensive newsletters.</p>
             </div>
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-               <Laptop className="h-8 w-8 text-blue-600 mb-4" />
-               <h3 className="text-xl font-semibold mb-2">E-Learning & AI Tools</h3>
-               <p className="text-slate-600">Empower learning with digital resources and AI-driven insights for automated grading and feedback.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group">
+               <Laptop className="h-10 w-10 text-indigo-600 mb-6 group-hover:scale-110 transition-transform" />
+               <h3 className="text-xl font-bold mb-3 text-slate-900">E-Learning & AI Tools</h3>
+               <p className="text-slate-600 font-medium">Empower learning with digital resources and AI-driven insights for automated grading and feedback.</p>
             </div>
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-               <Smartphone className="h-8 w-8 text-blue-600 mb-4" />
-               <h3 className="text-xl font-semibold mb-2">CRM & Transport Management</h3>
-               <p className="text-slate-600">Track prospective admissions effectively, and orchestrate school transport routes and bus schedules seamlessly.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group">
+               <Smartphone className="h-10 w-10 text-pink-600 mb-6 group-hover:scale-110 transition-transform" />
+               <h3 className="text-xl font-bold mb-3 text-slate-900">Health & Compliance</h3>
+               <p className="text-slate-600 font-medium">Track strict daily health logs, manage HR incidents, and ensure national compliance efficiently.</p>
             </div>
-            <div className="p-6 border border-slate-200 rounded-xl bg-slate-50">
-              <Building2 className="h-8 w-8 text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Supplier Marketplace</h3>
-              <p className="text-slate-600">Discover verified educational suppliers, issue tenders, and request quotes for your school's needs.</p>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group md:col-span-3 lg:col-span-1 lg:col-start-2">
+              <Building2 className="h-10 w-10 text-orange-600 mb-6 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-bold mb-3 text-slate-900">Supplier Marketplace</h3>
+              <p className="text-slate-600 font-medium">Discover verified educational suppliers, issue tenders, and request quotes for your school's needs.</p>
             </div>
           </div>
         </div>

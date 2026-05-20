@@ -24,7 +24,6 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { MOCK_SCHOOLS } from "@/data/schools";
 import { fetchCollection, updateDocument, createDocument, subscribeToCollection } from "@/lib/firestoreUtils";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -103,7 +102,7 @@ export function SuperAdminSchoolsPage() {
     }
   };
 
-  const filteredSchools = (schools.length > 0 ? schools : MOCK_SCHOOLS).filter(school => 
+  const filteredSchools = schools.filter(school => 
     school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (school.town && school.town.toLowerCase().includes(searchTerm.toLowerCase()))
   );

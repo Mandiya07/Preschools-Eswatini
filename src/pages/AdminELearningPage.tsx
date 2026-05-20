@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,57 +6,88 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BookOpen, Search, Plus, PlayCircle, 
-  FileText, CheckCircle2, Copy, BarChart, Upload
+  FileText, CheckCircle2, Copy, BarChart, Upload, Loader2
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import type { LearningDocument } from "@/types";
-
-const MOCK_COURSES = [
-  { id: "C01", title: "Introduction to Phonics", level: "Grade 1", modules: 8, students: 45, status: "Published", progress: 68 },
-  { id: "C02", title: "Basic Numeracy & Forms", level: "Grade 1", modules: 6, students: 45, status: "Published", progress: 42 },
-  { id: "C03", title: "Environmental Studies", level: "Grade 2", modules: 10, students: 38, status: "Draft", progress: 0 },
-  { id: "C04", title: "Creative Arts", level: "Grade 1", modules: 5, students: 45, status: "Published", progress: 89 },
-];
-
-const MOCK_STUDENT_PROGRESS = [
-  { id: "P01", studentName: "Alice Smith", course: "Introduction to Phonics", progress: 85, status: "In Progress" },
-  { id: "P02", studentName: "Bob Johnson", course: "Introduction to Phonics", progress: 100, status: "Completed" },
-  { id: "P03", studentName: "Alice Smith", course: "Basic Numeracy & Forms", progress: 40, status: "In Progress" },
-];
-
-const MOCK_DOCUMENTS: LearningDocument[] = [
-  { id: "doc1", schoolId: "sch1", title: "Phonics Worksheet 1", type: "worksheet", url: "#", status: "private", createdAt: "2026-05-19", updatedAt: "2026-05-19" },
-  { id: "doc2", schoolId: "sch1", title: "Lesson Plan: Science", type: "lesson_plan", url: "#", status: "pending_approval", createdAt: "2026-05-20", updatedAt: "2026-05-20" },
-  { id: "doc3", schoolId: "sch1", title: "School Presentation", type: "presentation", url: "#", status: "shared_to_network", createdAt: "2026-05-15", updatedAt: "2026-05-15" },
-];
-
-const MOCK_LESSONS = [
-  { id: "L01", title: "Phonics A-E", course: "Introduction to Phonics", videoUrl: "" },
-  { id: "L02", title: "Phonics F-J", course: "Introduction to Phonics", videoUrl: "" },
-  { id: "L03", title: "Numbers 1-5", course: "Basic Numeracy & Forms", videoUrl: "" },
-];
+import { useAuth } from "@/lib/AuthContext";
+import { subscribeToCollection, createDocument, updateDocument } from "@/lib/firestoreUtils";
+import { where, orderBy } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+import { toast } from "sonner";
 
 export function AdminELearningPage() {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("courses");
-  const [documents, setDocuments] = useState<LearningDocument[]>(MOCK_DOCUMENTS);
-  const [lessons, setLessons] = useState(MOCK_LESSONS);
-  const [progress] = useState(MOCK_STUDENT_PROGRESS);
+  const [documents, setDocuments] = useState<LearningDocument[]>([]);
+  const [lessons, setLessons] = useState<any[]>([]);
+  const [progress, setProgress] = useState<any[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
   const [filterStudent, setFilterStudent] = useState("");
   const [filterCourse, setFilterCourse] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user?.schoolId) return;
+
+    const unsubCourses = subscribeToCollection(
+      'courses',
+      (data) => setCourses(data),
+      where('schoolId', '==', user.schoolId)
+    );
+
+    const unsubProgress = subscribeToCollection(
+      'student_progress',
+      (data) => setProgress(data),
+      where('schoolId', '==', user.schoolId)
+    );
+
+    const unsubDocs = subscribeToCollection(
+      'learning_documents',
+      (data) => setDocuments(data as LearningDocument[]),
+      where('schoolId', '==', user.schoolId)
+    );
+
+    const unsubLessons = subscribeToCollection(
+      'lessons',
+      (data) => setLessons(data),
+      where('schoolId', '==', user.schoolId)
+    );
+
+    setLoading(false);
+
+    return () => {
+      unsubCourses();
+      unsubProgress();
+      unsubDocs();
+      unsubLessons();
+    };
+  }, [user?.schoolId]);
 
   const filteredProgress = progress.filter(p => 
-    p.studentName.toLowerCase().includes(filterStudent.toLowerCase()) &&
-    p.course.toLowerCase().includes(filterCourse.toLowerCase())
+    p.studentName?.toLowerCase().includes(filterStudent.toLowerCase()) &&
+    p.course?.toLowerCase().includes(filterCourse.toLowerCase())
   );
 
-  // Simulated video upload
-  const handleVideoUpload = (lessonId: string, file: File | null) => {
+  const handleVideoUpload = async (lessonId: string, file: File | null) => {
     if (!file) return;
-    // In production, this would upload to Firebase Storage or a dedicated video service.
-    // For now, we simulate success.
-    console.log(`Uploading ${file.name} for lesson ${lessonId}`);
-    setLessons(prev => prev.map(l => l.id === lessonId ? { ...l, videoUrl: URL.createObjectURL(file) } : l));
+    try {
+      toast.loading("Uploading video...", { id: "video-upload" });
+      const fileRef = ref(storage, `schools/${user?.schoolId}/lessons/${lessonId}/${file.name}`);
+      await uploadBytes(fileRef, file);
+      const url = await getDownloadURL(fileRef);
+      await updateDocument('lessons', lessonId, { videoUrl: url });
+      toast.success("Video uploaded successfully!", { id: "video-upload" });
+    } catch(err) {
+      console.error("Upload error", err);
+      toast.error("Failed to upload video.", { id: "video-upload" });
+    }
   };
+
+  if (loading) {
+     return <div className="flex h-64 items-center justify-center border rounded-xl"><Loader2 className="w-8 h-8 animate-spin text-blue-600"/></div>;
+  }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -147,7 +178,7 @@ export function AdminELearningPage() {
            </div>
 
            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {MOCK_COURSES.map((course) => (
+              {courses.length > 0 ? courses.map((course) => (
                  <Card key={course.id} className="rounded-2xl border-slate-200 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-all">
                     <div className="h-32 bg-slate-100 relative">
                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-blue-500/20 mix-blend-multiply"></div>
@@ -191,7 +222,9 @@ export function AdminELearningPage() {
                        </Button>
                     </CardFooter>
                  </Card>
-              ))}
+              )) : (
+                <div className="col-span-full py-12 text-center text-slate-500">No courses available.</div>
+              )}
            </div>
         </TabsContent>
 

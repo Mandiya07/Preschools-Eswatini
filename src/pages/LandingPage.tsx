@@ -444,33 +444,33 @@ export function LandingPage() {
 const features = [
   {
     icon: <Globe className="h-7 w-7" />,
-    title: "Instant Website Builder",
-    description: "Launch a beautiful, mobile-friendly website for your school in minutes using our specialized preschool templates."
+    title: "Instant Website & Content Publishing",
+    description: "Launch a beautiful website and publish blogs, magazines, and newsletters to your community seamlessly."
   },
   {
     icon: <Users className="h-7 w-7" />,
-    title: "Online Admissions",
-    description: "Accept applications online, manage waiting lists, and completely digitize your enrollment process."
+    title: "Smart Admissions & Waitlists",
+    description: "Accept applications online, automatically prioritize waitlists, and completely digitize your enrollment process."
   },
   {
     icon: <MessageSquare className="h-7 w-7" />,
-    title: "Parent Communication",
-    description: "Send updates, newsletters, and direct messages to parents through a single, professional channel."
+    title: "Learning Ecosystem",
+    description: "Distribute educational resources, curriculum guides, and media directly to parents and students."
   },
   {
     icon: <Laptop className="h-7 w-7" />,
-    title: "Admin Dashboard",
-    description: "Manage students, classes, attendance, and staff configurations from an easy-to-use central dashboard."
-  },
-  {
-    icon: <Smartphone className="h-7 w-7" />,
-    title: "Mobile First",
-    description: "Everything is designed to work perfectly on mobile phones, ensuring parents can access info anywhere."
+    title: "Finance & Fee Management",
+    description: "Generate fee statements, manage petty cash, process digital payments, and project financial revenue."
   },
   {
     icon: <Building2 className="h-7 w-7" />,
-    title: "Directory Listing",
-    description: "Get discovered automatically on our national preschool directory, increasing your school's visibility."
+    title: "B2B Marketplace & Partnerships",
+    description: "Connect with accredited suppliers for bulk purchasing and negotiate partnerships with local brands."
+  },
+  {
+    icon: <Smartphone className="h-7 w-7" />,
+    title: "Mobile First HR & Daily Health",
+    description: "Manage staff payroll, track daily student health logs, and monitor compliance—all from your mobile device."
   }
 ];
 

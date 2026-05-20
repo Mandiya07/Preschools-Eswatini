@@ -32,7 +32,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { fetchDocument } from "@/lib/firestoreUtils";
-import { MOCK_SCHOOLS } from "@/data/schools";
 import { School } from "@/types";
 import { InquiryForm } from "@/components/InquiryForm";
 import { AdmissionForm } from "@/components/admissions/AdmissionForm";
@@ -86,10 +85,6 @@ export function SchoolPage() {
           schoolData = allSchools.find((s: School) => s.id === id) || null;
         } catch(e) {
           console.error("Error fetching from API", e);
-        }
-        
-        if (!schoolData) {
-          schoolData = MOCK_SCHOOLS.find((s: School) => s.id === id) || null;
         }
       }
 

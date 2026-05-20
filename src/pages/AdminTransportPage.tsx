@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,23 +6,41 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Bus, MapPin, Search, Plus, Navigation, 
-  Map as MapIcon, Users, Clock, AlertTriangle, CheckCircle2
+  Map as MapIcon, Users, Clock, AlertTriangle, CheckCircle2, Loader2
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { motion } from "motion/react";
-
-const MOCK_ROUTES = [
-  { id: "R01", name: "Morning Route A (Mbabane City)", driver: "Sipho Dlamini", plate: "ESD 123 CH", students: 24, status: "Active" },
-  { id: "R02", name: "Morning Route B (Ezulwini)", driver: "Musa Zwane", plate: "ESD 456 CH", students: 18, status: "Completed" },
-  { id: "R03", name: "Afternoon Route A (Mbabane)", driver: "Sipho Dlamini", plate: "ESD 123 CH", students: 24, status: "Scheduled" },
-  { id: "R04", name: "Special Needs Van", driver: "Zodwa Mamba", plate: "ESD 789 CH", students: 5, status: "Delayed" },
-];
+import { useAuth } from "@/lib/AuthContext";
+import { subscribeToCollection } from "@/lib/firestoreUtils";
+import { where } from "firebase/firestore";
 
 export function AdminTransportPage() {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("live");
   const [searchQuery, setSearchQuery] = useState("");
+  const [routes, setRoutes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const activeRoute = MOCK_ROUTES[0];
+  useEffect(() => {
+    if (!user?.schoolId) return;
+
+    const unsubRoutes = subscribeToCollection(
+      'transport_routes',
+      (data) => {
+        setRoutes(data);
+        setLoading(false);
+      },
+      where('schoolId', '==', user.schoolId)
+    );
+
+    return () => unsubRoutes();
+  }, [user?.schoolId]);
+
+  const activeRoute = routes.length > 0 ? routes[0] : null;
+
+  if (loading) {
+     return <div className="flex h-64 items-center justify-center border rounded-xl"><Loader2 className="w-8 h-8 animate-spin text-blue-600"/></div>;
+  }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -239,7 +257,7 @@ export function AdminTransportPage() {
                        </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                       {MOCK_ROUTES.map((route) => (
+                       {routes.length > 0 ? routes.map((route) => (
                           <tr key={route.id} className="hover:bg-slate-50 transition-colors">
                              <td className="px-6 py-4">
                                <p className="font-bold text-slate-900">{route.name}</p>
@@ -260,7 +278,13 @@ export function AdminTransportPage() {
                                 <Button variant="ghost" size="sm" className="text-blue-600">Edit</Button>
                              </td>
                           </tr>
-                       ))}
+                       )) : (
+                          <tr>
+                             <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
+                               No active or scheduled routes found.
+                             </td>
+                          </tr>
+                       )}
                     </tbody>
                  </table>
               </div>

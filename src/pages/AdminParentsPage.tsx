@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Mail, MessageSquare, Phone, Plus } from "lucide-react";
+import { Search, Mail, MessageSquare, Phone, Plus, Loader2 } from "lucide-react";
+import { useAuth } from "@/lib/AuthContext";
+import { subscribeToCollection } from "@/lib/firestoreUtils";
+import { where } from "firebase/firestore";
 
 type Parent = {
   id: string;
@@ -13,20 +16,58 @@ type Parent = {
   lastActive: string;
 };
 
-const MOCK_PARENTS: Parent[] = [
-  { id: "P1", name: "Zodwa Dlamini", email: "zodwa@example.com", phone: "+268 7600 1111", children: ["Sipho Dlamini"], lastActive: "Today" },
-  { id: "P2", name: "Bheki Maseko", email: "bheki@example.com", phone: "+268 7600 2222", children: ["Thandiwe Maseko"], lastActive: "Yesterday" },
-  { id: "P3", name: "Sanele Nxumalo", email: "sanele@example.com", phone: "+268 7600 3333", children: ["Bandile Nxumalo"], lastActive: "3 days ago" },
-];
-
 export function AdminParentsPage() {
-  const [parents, setParents] = useState<Parent[]>(MOCK_PARENTS);
+  const { user } = useAuth();
+  const [parents, setParents] = useState<Parent[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user?.schoolId) return;
+
+    // Getting students to group by parent
+    const unsubStudents = subscribeToCollection(
+      'students',
+      (studentsData) => {
+        const parentsMap = new Map<string, Parent>();
+        
+        studentsData.forEach((student: any) => {
+          if (student.parentEmail) {
+            const parentKey = student.parentEmail;
+            if (parentsMap.has(parentKey)) {
+              parentsMap.get(parentKey)!.children.push(student.name);
+            } else {
+              parentsMap.set(parentKey, {
+                id: parentKey, // using email as ID for grouped view
+                name: student.parentName || 'Parent of ' + student.name,
+                email: student.parentEmail,
+                phone: student.parentPhone || 'N/A',
+                children: [student.name],
+                lastActive: "Via Student Portal"
+              });
+            }
+          }
+        });
+        
+        setParents(Array.from(parentsMap.values()));
+        setLoading(false);
+      },
+      where('schoolId', '==', user.schoolId)
+    );
+
+    return () => {
+      unsubStudents();
+    };
+  }, [user?.schoolId]);
 
   const filteredParents = parents.filter(parent => 
     parent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     parent.children.some(child => child.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+  if (loading) {
+     return <div className="flex h-64 items-center justify-center border rounded-xl"><Loader2 className="w-8 h-8 animate-spin text-blue-600"/></div>;
+  }
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">

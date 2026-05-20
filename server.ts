@@ -4,7 +4,6 @@ import { createServer as createViteServer } from "vite";
 import helmet from "helmet";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
-import { MOCK_SCHOOLS } from "./src/data/schools";
 
 async function startServer() {
   const app = express();
@@ -152,8 +151,8 @@ async function startServer() {
         httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
       });
 
-      // In production this would fetch from Firestore collection 'schools'
-      const schools = MOCK_SCHOOLS;
+      // In a real production environment this would fetch from Firestore using firebase-admin
+      const schools: any[] = [];
 
       const model = "gemini-3-flash-preview";
 
@@ -210,10 +209,9 @@ async function startServer() {
     }
   });
 
-  // Example API routes for SaaS components
   app.get("/api/schools", (req, res) => {
-    // Return sample schools for the directory
-    res.json(MOCK_SCHOOLS);
+    // Deprecated. Return sample schools for the directory
+    res.json([]);
   });
 
   // Additional mock backend routes can be defined here...
