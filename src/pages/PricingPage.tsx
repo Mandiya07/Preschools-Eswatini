@@ -2,6 +2,7 @@ import { CheckCircle2, Sparkles, Building2, TrendingUp, MonitorSmartphone, Camer
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
+import { Badge } from "@/components/ui/badge";
 
 export function PricingPage() {
   return (
@@ -178,29 +179,65 @@ export function PricingPage() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Supplier Pricing */}
-            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-[2rem] p-8 border border-blue-100 shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-6 opacity-10">
-                <Building2 className="w-24 h-24 text-blue-900" />
+            {/* Supplier Pricing - Subscription Plans for Sellers */}
+            <div className="md:col-span-2 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-[2.5rem] p-8 md:p-12 border border-blue-100 shadow-sm relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-6 opacity-5">
+                <Building2 className="w-48 h-48 text-blue-900" />
               </div>
               <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">School Suppliers</h3>
-                <p className="text-slate-600 mb-6 min-h-[3rem]">Sell educational resources, furniture, uniforms, and services directly to schools.</p>
-                
-                <div className="mb-6 flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-slate-900">10%</span>
-                  <span className="text-slate-500 font-medium">commission on sales</span>
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-6 border-b border-blue-100/50">
+                  <div>
+                    <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 border-none mb-3 font-bold">New Seller Subscriptions</Badge>
+                    <h3 className="text-3xl font-extrabold text-slate-900">Marketplace Seller Plans</h3>
+                    <p className="text-slate-600 mt-2 max-w-xl">Choose a seller model that aligns with your volume. List uniforms, resources, toys, food, and furniture directly to early childhood institutions.</p>
+                  </div>
+                  <Button className="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-700 rounded-xl py-6 font-bold" asChild>
+                    <Link to="/register-supplier">Become a Supplier</Link>
+                  </Button>
                 </div>
-                
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-5 w-5 text-blue-600" /> Free to list products</li>
-                  <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-5 w-5 text-blue-600" /> Access to school procurement</li>
-                  <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-5 w-5 text-blue-600" /> Tender & Quote management</li>
-                  <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-5 w-5 text-blue-600" /> Analytics & Reporting</li>
-                </ul>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-                  <Link to="/register-supplier">Become a Supplier</Link>
-                </Button>
+
+                <div className="grid sm:grid-cols-3 gap-6">
+                  {[
+                    {
+                      name: "Basic Supplier",
+                      price: "E0",
+                      period: "/mo",
+                      features: ["10% Sales Commission", "Up to 15 listings", "Standard support", "Standard listing placement"]
+                    },
+                    {
+                      name: "Growth Seller",
+                      price: "E199",
+                      period: "/mo",
+                      popular: true,
+                      features: ["5% Sales Commission", "Up to 100 listings", "WhatsApp support", "Featured seller ribbon", "Access to school quotes"]
+                    },
+                    {
+                      name: "Elite Partner",
+                      price: "E499",
+                      period: "/mo",
+                      features: ["0% Sales Commission", "Unlimited listings", "Dedicated account manager", "Top search ranking", "Real-time SMS alerts for bids"]
+                    }
+                  ].map((tier, idx) => (
+                    <div key={idx} className={`bg-white rounded-2xl p-6 border flex flex-col justify-between ${tier.popular ? "border-blue-500 shadow-md ring-2 ring-blue-500/20" : "border-slate-200"}`}>
+                      <div>
+                        {tier.popular && <span className="text-[10px] bg-blue-600 text-white font-extrabold px-2.5 py-0.5 rounded-full inline-block uppercase mb-1">Best Value</span>}
+                        <h4 className="font-bold text-slate-900 text-base">{tier.name}</h4>
+                        <div className="my-3 flex items-baseline gap-1">
+                          <span className="text-2xl font-extrabold text-slate-900">{tier.price}</span>
+                          <span className="text-xs text-slate-500">{tier.period}</span>
+                        </div>
+                        <ul className="space-y-2 mt-4">
+                          {tier.features.map((feat, fidx) => (
+                            <li key={fidx} className="flex items-start gap-2 text-xs text-slate-600">
+                              <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
