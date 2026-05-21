@@ -10,7 +10,7 @@ import { SEO } from "@/components/SEO";
 export function SuperAdminScalabilityPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-      <SEO title="Scalability & Platform | Sikolo SuperAdmin" />
+      <SEO title="Scalability & Platform | Preschools Eswatini SuperAdmin" />
 
       <div>
         <h1 className="text-3xl font-black tracking-tight text-slate-900">Scalability & Platform</h1>

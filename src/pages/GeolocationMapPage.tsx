@@ -202,7 +202,7 @@ function MapContent({ schools }: { schools: School[] }) {
          <Map
            defaultCenter={ESWATINI_CENTER}
            defaultZoom={11}
-           mapId="SIKOLO_DEMO_MAP_ID"
+           mapId="PRESCHOOL_ESWATINI_DEMO_MAP_ID"
            internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
            style={{width: '100%', height: '100%'}}
            disableDefaultUI={true}
@@ -307,7 +307,7 @@ export function MapSearchPage() {
 
   return (
     <div className="w-full">
-      <SEO title="Smart Map Locator | Sikolo" />
+      <SEO title="Smart Map Locator | Preschools Eswatini" />
       <APIProvider apiKey={API_KEY} version="weekly">
          <MapContent schools={schools} />
       </APIProvider>

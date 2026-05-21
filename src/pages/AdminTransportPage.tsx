@@ -44,7 +44,7 @@ export function AdminTransportPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
-      <SEO title="Transport Tracking | Sikolo Admin" />
+      <SEO title="Transport Tracking | Preschools Eswatini Admin" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

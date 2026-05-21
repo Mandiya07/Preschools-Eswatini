@@ -26,7 +26,7 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 export function NationalInsightsPage() {
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
-      <SEO title="National Insights | Sikolo" description="National ECCDE data, preschool statistics and insights platform." />
+      <SEO title="National Insights | Preschools Eswatini" description="National ECCDE data, preschool statistics and insights platform." />
       
       {/* Header */}
       <div className="bg-slate-900 border-b border-slate-800 text-white">

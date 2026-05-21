@@ -12,7 +12,7 @@ export function ParentResourcesPage() {
 
   return (
     <div className="space-y-12 pb-20">
-      <SEO title="Parent Resources & Articles | Sikolo Platform" />
+      <SEO title="Parent Resources & Articles | Preschools Eswatini Platform" />
       
       {/* Hero Section */}
       <section className="bg-slate-900 pt-20 pb-24 text-center px-4 relative overflow-hidden">

@@ -1,5 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
+const HelmetComponent = Helmet as any;
+
 interface SEOProps {
   title?: string;
   description?: string;
@@ -34,7 +36,7 @@ export function SEO({
   };
 
   return (
-    <Helmet>
+    <HelmetComponent>
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
@@ -59,6 +61,6 @@ export function SEO({
       <script type="application/ld+json">
         {JSON.stringify(schema || orgSchema)}
       </script>
-    </Helmet>
+    </HelmetComponent>
   );
 }

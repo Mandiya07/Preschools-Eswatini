@@ -25,7 +25,7 @@ const SUPPORT_CATEGORIES = [
 export function AdminSupportPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-      <SEO title="Support Ecosystem | Sikolo" />
+      <SEO title="Support Ecosystem | Preschools Eswatini" />
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -89,7 +89,7 @@ export function AdminSupportPage() {
                     <CardTitle>AI Support Agent</CardTitle>
                     <CardDescription className="text-slate-400">Get instant answers to your questions.</CardDescription>
                 </CardHeader>
-                <AIChatBot schoolName="Sikolo" />
+                <AIChatBot schoolName="Preschools Eswatini" />
                 <Button className="w-full mt-4 bg-white text-slate-900 hover:bg-slate-100 rounded-xl">
                    Start Chat
                 </Button>

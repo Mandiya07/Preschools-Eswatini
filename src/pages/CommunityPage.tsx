@@ -38,7 +38,7 @@ export function CommunityPage() {
 
   return (
     <div className="space-y-16 pb-24">
-      <SEO title="Community & Social | Sikolo" />
+      <SEO title="Community & Social | Preschools Eswatini" />
       
       {/* Hero Section */}
       <section className="bg-slate-900 pt-20 pb-24 text-center px-4 relative overflow-hidden">

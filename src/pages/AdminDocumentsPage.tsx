@@ -40,7 +40,8 @@ export function AdminDocumentsPage() {
   }, [user?.schoolId]);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.[0];
     if (!file || !user?.schoolId) return;
     
     try {
@@ -67,7 +68,7 @@ export function AdminDocumentsPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12">
-      <SEO title="Document Management | Sikolo" />
+      <SEO title="Document Management | Preschools Eswatini" />
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

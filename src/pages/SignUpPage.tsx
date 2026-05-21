@@ -71,7 +71,7 @@ export function SignUpPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-50 px-4 py-12">
-      <SEO title="Sign Up | Sikolo Platform" />
+      <SEO title="Sign Up | Preschools Eswatini Platform" />
       <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-md w-full">
         <h1 className="text-2xl font-bold mb-2 text-center">Create Account</h1>
         <p className="text-slate-600 mb-8 text-center text-sm">Join the ecosystem and start exploring.</p>

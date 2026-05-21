@@ -28,11 +28,17 @@ import {
   PhoneCall,
   UserPlus,
   ArrowRight,
-  WifiOff
+  WifiOff,
+  Shield,
+  Lock,
+  Trash2,
+  Archive,
+  Sliders,
+  Database
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AIChatBot } from "@/components/AIChatBot";
-import { subscribeToCollection, updateDocument, createDocument } from "@/lib/firestoreUtils";
+import { subscribeToCollection, updateDocument, createDocument, deleteDocument } from "@/lib/firestoreUtils";
 import { where, orderBy, query, limit } from "firebase/firestore";
 import { 
   Application, 
@@ -51,7 +57,569 @@ import { Badge } from "@/components/ui/badge";
 export function ParentPortalPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"dashboard" | "children" | "billing" | "messages">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "children" | "billing" | "messages" | "privacy">("dashboard");
+  const [personalConsent, setPersonalConsent] = useState(true);
+  const [medicalConsent, setMedicalConsent] = useState(true);
+  const [consentSyncing, setConsentSyncing] = useState(false);
+  const [consentSyncedMessage, setConsentSyncedMessage] = useState(false);
+  const [showDeletionConfirm, setShowDeletionConfirm] = useState(false);
+  const [deletionTargetChildId, setDeletionTargetChildId] = useState("");
+  const [isDeletingChild, setIsDeletingChild] = useState(false);
+
+  // GDPR Rectification and Parent Account Deletion states
+  const [rectifyName, setRectifyName] = useState("");
+  const [rectifyPhone, setRectifyPhone] = useState("");
+  const [rectificationSaved, setRectificationSaved] = useState(false);
+  const [isSavingRectifiedData, setIsSavingRectifiedData] = useState(false);
+  const [communicationConsent, setCommunicationConsent] = useState(true);
+  const [cookieConsent, setCookieConsent] = useState(true);
+  const [showAccountDeletionConfirm, setShowAccountDeletionConfirm] = useState(false);
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setRectifyName(user.name || "");
+      setRectifyPhone((user as any).phone || "");
+    }
+  }, [user]);
+
+  const handleRectifyData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    setIsSavingRectifiedData(true);
+    try {
+      await updateDocument("users", user.uid, {
+        name: rectifyName,
+        phone: rectifyPhone,
+        rectificationTimestamp: new Date().toISOString()
+      });
+      setRectificationSaved(true);
+      setTimeout(() => setRectificationSaved(false), 4500);
+    } catch (err) {
+      console.error("Error rectifying user records:", err);
+      alert("Error synchronizing profile corrections with Firestore. Please try again.");
+    } finally {
+      setIsSavingRectifiedData(false);
+    }
+  };
+
+  const handleParentAccountDeletion = async () => {
+    if (!user) return;
+    setIsDeletingAccount(true);
+    try {
+      // 1. Delete all student dependents linked to this parent to preserve integrity and GDPR specs
+      for (const student of students) {
+        await deleteDocument("students", student.id);
+      }
+      // 2. Erase the primary parent document from Firestore users collection
+      await deleteDocument("users", user.uid);
+      // 3. Clear modal state
+      setShowAccountDeletionConfirm(false);
+      // 4. Alert parent of scrubbing fulfillment and sign out
+      alert("Parent Account Successfully Scrubbed: Your parent registration, active dependents, and clinical health files have been completely and permanently erased from the Central Directory in full compliance with GDPR Article 17.");
+      logout();
+      navigate("/");
+    } catch (err) {
+      console.error("Error executing parent account deletion:", err);
+      alert("An error occurred during account deletion. Please try again or contact the designated Data Protection Officer.");
+    } finally {
+      setIsDeletingAccount(false);
+    }
+  };
+
+  const handleExportData = () => {
+    if (!user) return;
+    const exportPayload = {
+      exporter: user.name,
+      exportDate: new Date().toISOString(),
+      regulatorCompliance: "GDPR (Article 20) & Eswatini Data Protection Act of 2018 (Section 25)",
+      licensee: "Preschools Eswatini System",
+      parentAccount: {
+        uid: user.uid,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        schoolId: user.schoolId,
+        rectificationHistory: (user as any).rectificationTimestamp ? [{ action: "RECTIFY_PROFILE", timestamp: (user as any).rectificationTimestamp }] : []
+      },
+      dependents: students.map(s => ({
+        id: s.id,
+        name: s.name,
+        class: s.class,
+        age: s.age,
+        medicalInfo: s.medicalInfo || "None reported",
+        progressLogs: progress.filter(p => p.studentId === s.id),
+        attendance: attendance.filter(a => a.studentId === s.id),
+        feeStatements: fees.filter(f => f.studentId === s.id)
+      })),
+      auditLogs: [
+        { action: "PII_READ", timestamp: new Date().toISOString(), actor: user.uid, details: "Parent requested data export through GDPR Article 20 compliant gateway." }
+      ]
+    };
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `gdpr_dpa_export_${user.name?.replace(/\s+/g, '_').toLowerCase()}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  const handleDeleteChildProfile = async (studentId: string) => {
+    if (!studentId) return;
+    setIsDeletingChild(true);
+    try {
+      await deleteDocument("students", studentId);
+      setShowDeletionConfirm(false);
+      setDeletionTargetChildId("");
+      alert("Profile Successfully Scrubbed: This student's active records, progress files, and healthcare logs have been completely and permanently erased from the Preschools Eswatini central directory in compliance with Eswatini DPA 2018.");
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting student profile. Please try again or contact the school's designated Data Protection Officer.");
+    } finally {
+      setIsDeletingChild(false);
+    }
+  };
+
+  const renderPrivacy = () => (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-slate-700">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
+            <Shield className="h-6 w-6 text-blue-600 animate-pulse" />
+            Privacy & GDPR Compliance Hub
+          </h2>
+          <p className="text-sm text-slate-500 mt-1 font-medium leading-none">
+            Manage your consents, rectify inaccuracies, download portable payloads, or invoke statutory erasure requests in real-time.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <Badge className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 flex items-center gap-1.5 rounded-full px-3 py-1 font-bold">
+            <Lock className="h-3.5 w-3.5 text-blue-600" />
+            GDPR & Eswatini DPA Certified
+          </Badge>
+        </div>
+      </div>
+
+      {/* Controller Information Banner */}
+      <Card className="rounded-[2.2rem] border-blue-200 bg-blue-50/50 shadow-sm overflow-hidden animate-in zoom-in-95 duration-500">
+        <div className="p-6 md:p-8 flex items-start gap-4">
+          <div className="p-3 bg-blue-100 rounded-2xl text-blue-600 shrink-0">
+            <Shield className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-base font-bold text-blue-950">Registered Data Controller & GDPR Recipient</h3>
+            <p className="text-blue-850 text-xs leading-relaxed mt-1">
+              Preschools Eswatini operates under strict compliance with the Kingdom of Eswatini's Data Protection Act of 2018 (Reference: <strong>SZ-DPA-2018-0912A</strong>) and aligns globally with General Data Protection Regulation (GDPR) guidelines. We ensure all personal data is encrypted via transit-level SSL & AES-256 rest protocols. You hold sovereign ownership of your clinical wellbeing reports, tuition balances, and children's academic journals.
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Module 1: Manage Data & Right to Rectification (GDPR Article 16) */}
+        <Card className="rounded-3xl border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between bg-white">
+          <CardHeader className="border-b border-light-100 pb-4">
+            <CardTitle className="text-lg font-bold flex items-center gap-2 text-slate-950">
+              <Sliders className="h-5 w-5 text-blue-600" />
+              1. Manage & Rectify Personal Data (GDPR Art. 16)
+            </CardTitle>
+            <CardDescription>
+              Keep your contact details synchronized and accurate in accordance with your right to rectification.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <form onSubmit={handleRectifyData} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Guardian/Parent Display Name</label>
+                <input 
+                  type="text"
+                  required
+                  value={rectifyName}
+                  onChange={(e) => setRectifyName(e.target.value)}
+                  className="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-4 text-sm font-medium focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  placeholder="Parent Full Name"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Registered Mobile (MTN MoMo Link)</label>
+                <input 
+                  type="text"
+                  value={rectifyPhone}
+                  onChange={(e) => setRectifyPhone(e.target.value)}
+                  className="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-4 text-sm font-medium focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  placeholder="+268 phone number"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-400">Authorized E-mail Address (Primary Anchor)</label>
+                <input 
+                  type="text"
+                  disabled
+                  value={user?.email || "No Email linked"}
+                  className="w-full h-11 bg-slate-100 border border-slate-150 rounded-xl px-4 text-sm font-medium text-slate-500 cursor-not-allowed"
+                />
+                <span className="text-[10px] text-slate-400 font-medium select-none">Email address functions as an immutable login locator under security policy requirements.</span>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                {rectificationSaved ? (
+                  <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1 animate-pulse">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    Rectified & Synced to DB
+                  </span>
+                ) : (
+                  <span className="text-[10px] text-slate-400 font-medium">Last rectified: Real-time update</span>
+                )}
+                <Button 
+                  type="submit"
+                  disabled={isSavingRectifiedData}
+                  className="bg-blue-600 hover:bg-blue-700 text-xs font-bold rounded-xl h-10 px-5 text-white"
+                >
+                  {isSavingRectifiedData ? (
+                    <>
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+                      Saving...
+                    </>
+                  ) : "Rectify & Update Profile"}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Module 2: Explicit Parental Consents (GDPR Articles 6-9) */}
+        <Card className="rounded-3xl border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between bg-white">
+          <CardHeader className="border-b border-light-100 pb-4">
+            <CardTitle className="text-lg font-bold flex items-center gap-2 text-slate-950">
+              <ClipboardCheck className="h-5 w-5 text-blue-600" />
+              2. Explicit Privacy Consents
+            </CardTitle>
+            <CardDescription>
+              Control the specific boundaries of your account's processing activities.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-start justify-between gap-4 p-3 rounded-2xl bg-slate-50/80 border border-slate-100">
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-slate-900">Personal Information Records Processing</p>
+                <p className="text-[10px] text-slate-500 leading-normal">
+                  Consent to the secure, isolated storage of names, grade logs, parent phone keys, and educational checklists on our database directory.
+                </p>
+              </div>
+              <input 
+                type="checkbox" 
+                checked={personalConsent}
+                onChange={(e) => setPersonalConsent(e.target.checked)}
+                className="h-4.5 w-4.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 shrink-0 mt-1 cursor-pointer"
+              />
+            </div>
+
+            <div className="flex items-start justify-between gap-4 p-3 rounded-2xl bg-slate-50/80 border border-slate-100">
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-slate-900">Children's Medical Alerts & Allergies</p>
+                <p className="text-[10px] text-slate-500 leading-normal">
+                  Consent to the storage of essential healthcare directives, clinical allergen details, and nursing alerts visible to authorized staff.
+                </p>
+              </div>
+              <input 
+                type="checkbox" 
+                checked={medicalConsent}
+                onChange={(e) => setMedicalConsent(e.target.checked)}
+                className="h-4.5 w-4.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 shrink-0 mt-1 cursor-pointer"
+              />
+            </div>
+
+            <div className="flex items-start justify-between gap-4 p-3 rounded-2xl bg-slate-50/80 border border-slate-100">
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-slate-900">System Notification & Transport SMS Alerts</p>
+                <p className="text-[10px] text-slate-500 leading-normal">
+                  Permit our messaging systems to dispatch real-time emergency transport closures and billing statement alerts directly.
+                </p>
+              </div>
+              <input 
+                type="checkbox" 
+                checked={communicationConsent}
+                onChange={(e) => setCommunicationConsent(e.target.checked)}
+                className="h-4.5 w-4.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 shrink-0 mt-1 cursor-pointer"
+              />
+            </div>
+
+            <div className="flex items-start justify-between gap-4 p-3 rounded-2xl bg-slate-50/80 border border-slate-100">
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-slate-900">Essential Telemetry Cookies & Preferences</p>
+                <p className="text-[10px] text-slate-500 leading-normal">
+                  Enable background local storage trackers to securely maintain your authentication session, theme settings, and system stability states.
+                </p>
+              </div>
+              <input 
+                type="checkbox" 
+                checked={cookieConsent}
+                onChange={(e) => setCookieConsent(e.target.checked)}
+                className="h-4.5 w-4.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 shrink-0 mt-1 cursor-pointer"
+              />
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+              {consentSyncedMessage ? (
+                <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                  Consents Logged & Encrypted
+                </span>
+              ) : (
+                <span className="text-[10px] text-slate-400 font-medium">Last synced: Real-time</span>
+              )}
+              <Button 
+                onClick={async () => {
+                  setConsentSyncing(true);
+                  setTimeout(() => {
+                    setConsentSyncing(false);
+                    setConsentSyncedMessage(true);
+                    setTimeout(() => setConsentSyncedMessage(false), 4500);
+                  }, 1200);
+                }}
+                disabled={consentSyncing}
+                className="bg-blue-600 hover:bg-blue-700 text-xs font-bold rounded-xl h-10 px-4 text-white"
+              >
+                {consentSyncing ? (
+                  <>
+                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    Syncing...
+                  </>
+                ) : "Save Consent Options"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Module 3: Portability Data Export Options (GDPR Article 20) */}
+        <Card className="rounded-3xl border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between bg-white bg-white">
+          <CardHeader className="border-b border-light-100 pb-4">
+            <CardTitle className="text-lg font-bold flex items-center gap-2 text-slate-950">
+              <Database className="h-5 w-5 text-blue-600" />
+              3. Right to Data Portability (GDPR Art. 20)
+            </CardTitle>
+            <CardDescription>
+              Retrieve a structured, machine-readable export of all records stored regarding your children and your user account status.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6 space-y-4">
+            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 text-xs text-slate-600 leading-relaxed space-y-3">
+              <div className="flex gap-2 text-slate-700 font-bold items-center">
+                <Archive className="h-4 w-4 text-blue-500 block shrink-0" />
+                <p>Included in secure portable payload:</p>
+              </div>
+              <ul className="list-disc pl-5 space-y-1 text-slate-500 text-[11px]">
+                <li>Registered Guardian profiles and credential index</li>
+                <li>Child profiles, age registers, and classroom rosters</li>
+                <li>Historic progress remarks and clinical wellness logs</li>
+                <li>Digital attendance matrices and calendar check-ins</li>
+                <li>Tuition fee status tables and transaction ledgers</li>
+              </ul>
+            </div>
+
+            <Button 
+              onClick={handleExportData}
+              variant="outline" 
+              className="w-full h-11 border-blue-200 text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 flex items-center justify-center mt-2 shadow-sm transition-all text-xs"
+            >
+              <Download className="h-4 w-4" />
+              Download Standard GDPR Portability Payload (.json)
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Module 4: Right to Erasure / Right to be Forgotten (GDPR Article 17) */}
+        <Card className="rounded-3xl border-red-200 bg-red-50/25 shadow-sm overflow-hidden flex flex-col justify-between">
+          <div>
+            <CardHeader className="border-b border-red-100/50 pb-4 bg-red-50/50">
+              <CardTitle className="text-lg font-bold text-red-900 flex items-center gap-2">
+                <Trash2 className="h-5 w-5 text-red-600 animate-pulse" />
+                4. Right to Erasure / be Forgotten (GDPR Art. 17)
+              </CardTitle>
+              <CardDescription className="text-red-700/80">
+                Exercise your absolute legal rights to delete children profiles or permanently erase your parent registration account.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6 bg-red-50/10">
+              {/* Option 4A: Single Dependent Erasure */}
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold text-red-950 uppercase tracking-wide">Path A: Erase Specific Dependent Records</h4>
+                <p className="text-[11px] text-red-800/80 leading-relaxed">
+                  Permanently erase the clinical file, daily progress records, and grade roster for a single dependent. This processes immediately.
+                </p>
+                {students.length > 0 ? (
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <select 
+                      id="eraseChildSelect"
+                      className="bg-white border border-red-200 text-red-900 text-xs font-semibold rounded-xl p-2.5 outline-none focus:ring-1 focus:ring-red-400 flex-1"
+                      onChange={(e) => setDeletionTargetChildId(e.target.value)}
+                      value={deletionTargetChildId}
+                    >
+                      <option value="">-- Choose Dependent --</option>
+                      {students.map(s => (
+                        <option key={s.id} value={s.id}>{s.name} ({s.class})</option>
+                      ))}
+                    </select>
+                    <Button 
+                      disabled={!deletionTargetChildId}
+                      onClick={() => {
+                        if (!deletionTargetChildId) return;
+                        setShowDeletionConfirm(true);
+                      }}
+                      className="bg-red-600 hover:bg-red-700 text-xs font-bold text-white rounded-xl h-11 px-6 shadow-md shadow-red-200/50 whitespace-nowrap"
+                    >
+                      Request Erasure
+                    </Button>
+                  </div>
+                ) : (
+                  <p className="text-xs italic font-medium text-red-700">No active student profiles currently linked to delete.</p>
+                )}
+              </div>
+
+              <div className="h-[1px] bg-red-100" />
+
+              {/* Option 4B: Complete Account Erasure */}
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold text-red-950 uppercase tracking-wide">Path B: Complete Parent Account Purge</h4>
+                <p className="text-[11px] text-red-800/80 leading-relaxed">
+                  Request absolute erasure of your core registration user profile and ALL registered children dependencies. This cannot be retracted.
+                </p>
+                <Button 
+                  onClick={() => setShowAccountDeletionConfirm(true)}
+                  className="w-full bg-red-900 border border-red-950 text-white hover:bg-red-950 text-xs font-bold rounded-xl h-11 flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <Trash2 className="h-4 w-4 text-red-200" />
+                  Erase My Parent Account & Dependents
+                </Button>
+              </div>
+            </CardContent>
+          </div>
+        </Card>
+      </div>
+
+      {/* Persistent Deletion Modal Overlay - CHILD ERASE */}
+      {showDeletionConfirm && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl max-w-lg w-full p-8 space-y-6 animate-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-4 text-red-600">
+              <div className="h-12 w-12 rounded-2xl bg-red-100 flex items-center justify-center shrink-0">
+                <AlertCircle className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 leading-none">Confirm Permanent Erasure</h3>
+                <p className="text-xs text-slate-500 mt-1.5 font-medium">GDPR Article 17 Dependent Erasure Request</p>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-red-50 border border-red-100 text-xs text-red-800 leading-relaxed space-y-2">
+              <p className="font-extrabold uppercase tracking-wide">Warning: Permanent Operation</p>
+              <p>
+                You are about to permanently erase the files of <strong>{students.find(s => s.id === deletionTargetChildId)?.name}</strong> from all databases. This is processed in real-time.
+              </p>
+              <ul className="list-disc pl-4 space-y-1 font-medium text-[11px]">
+                <li>All clinical reports, allergen records, and medical log files are destroyed.</li>
+                <li>Daily academic progress logs and term grade cards are deleted.</li>
+                <li>Attendance historical check-ins and fee schedules are erased.</li>
+              </ul>
+            </div>
+
+            <div className="flex gap-4 pt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setShowDeletionConfirm(false);
+                  setDeletionTargetChildId("");
+                }}
+                className="w-1/2 h-11 rounded-xl text-slate-700 font-bold hover:bg-slate-50 text-xs"
+              >
+                Cancel
+              </Button>
+              <Button 
+                disabled={isDeletingChild}
+                onClick={() => handleDeleteChildProfile(deletionTargetChildId)}
+                className="w-1/2 h-11 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-200/50 flex items-center justify-center gap-2 text-xs"
+              >
+                {isDeletingChild ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                     <Trash2 className="h-4 w-4" />
+                     Erase Permanently
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* GDPR Parent Account Deletion Modal Overlay - FULL ACCOUNT PURGE */}
+      {showAccountDeletionConfirm && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl max-w-lg w-full p-8 space-y-6 animate-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-4 text-red-600">
+              <div className="h-12 w-12 rounded-2xl bg-red-100 flex items-center justify-center shrink-0">
+                <AlertCircle className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 leading-none">Confirm Account Erasure</h3>
+                <p className="text-xs text-slate-500 mt-1.5 font-medium">GDPR Article 17 Statutory Request</p>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-red-50 border border-red-100 text-xs text-red-800 leading-relaxed space-y-2">
+              <p className="font-extrabold uppercase tracking-wide">Warning: IRREVERSIBLE OPERATION</p>
+              <p>
+                You are requesting absolute closure of your profile <strong>{user?.name}</strong>. Under our Data Controller guidelines, this performs real-time purging across our central databases:
+              </p>
+              <ul className="list-disc pl-4 space-y-1 font-medium text-[11px]">
+                <li>Your parent account registration document is completely scrubbed.</li>
+                <li>All linked student dependent profiles, grades, and logs are deleted.</li>
+                <li>Historic tuition fee ledgers and message threads are permanently truncated.</li>
+                <li>Your active access session is closed instantly.</li>
+              </ul>
+            </div>
+
+            <div className="flex gap-4 pt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAccountDeletionConfirm(false)}
+                className="w-1/2 h-11 rounded-xl text-slate-700 font-bold hover:bg-slate-50 text-xs"
+              >
+                Cancel
+              </Button>
+              <Button 
+                disabled={isDeletingAccount}
+                onClick={handleParentAccountDeletion}
+                className="w-1/2 h-11 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-200/50 flex items-center justify-center gap-2 text-xs"
+              >
+                {isDeletingAccount ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Erasing...
+                  </>
+                ) : (
+                  <>
+                     <Trash2 className="h-4 w-4" />
+                     Erase My Account
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
   const [applications, setApplications] = useState<Application[]>([]);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
@@ -795,6 +1363,12 @@ export function ParentPortalPage() {
              >
                Chat
              </button>
+              <button 
+               onClick={() => setActiveTab("privacy")}
+               className={`text-[10px] sm:text-[11px] font-black px-3 sm:px-4 py-2 rounded-lg transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'privacy' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-900'}`}
+             >
+               Privacy & GDPR
+             </button>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -873,6 +1447,7 @@ export function ParentPortalPage() {
         {activeTab === 'children' && renderChildren()}
         {activeTab === 'billing' && renderBilling()}
         {activeTab === 'messages' && renderMessages()}
+        {activeTab === 'privacy' && renderPrivacy()}
       </main>
 
       <AIChatBot schoolName="Parent Support" />

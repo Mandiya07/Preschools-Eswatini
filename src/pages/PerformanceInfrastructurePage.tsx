@@ -21,7 +21,7 @@ const FEATURES = [
 export function PerformanceInfrastructurePage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
-      <SEO title="Performance & Infrastructure | Sikolo" />
+      <SEO title="Performance & Infrastructure | Preschools Eswatini" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

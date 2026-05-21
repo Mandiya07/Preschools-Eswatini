@@ -22,7 +22,7 @@ const FEATURES = [
 export function AdvancedWebsiteFeaturesPage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
-      <SEO title="Advanced Features | Sikolo" />
+      <SEO title="Advanced Features | Preschools Eswatini" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

@@ -6,7 +6,7 @@ import kidsImg from "@/assets/images/kids_playing_blocks_1779268580565.png";
 export function AboutPage() {
   return (
     <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8 space-y-16">
-      <SEO title="About | Sikolo Platform" />
+      <SEO title="About | Preschools Eswatini Platform" />
       
       <div className="text-center max-w-3xl mx-auto">
         <motion.div 
@@ -16,7 +16,7 @@ export function AboutPage() {
         >
           Our Story
         </motion.div>
-        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl mb-6">About Sikolo</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl mb-6">About Preschools Eswatini</h1>
         <p className="text-2xl text-slate-600 font-medium leading-relaxed">
           Empowering early learning institutions, enabling brighter futures.
         </p>
@@ -34,7 +34,7 @@ export function AboutPage() {
         <div className="prose prose-slate prose-lg max-w-none text-slate-700">
           <h2 className="text-3xl font-extrabold text-slate-900 mb-6">Bridging the Gap</h2>
           <p className="font-medium leading-relaxed">
-            Sikolo is a cutting-edge platform designed to bridge the digital gap in early childhood education. 
+            Preschools Eswatini is a cutting-edge platform designed to bridge the digital gap in early childhood education. 
             Our mission is to provide daycares and preschools with the tools they 
             need to excel in a modern, connected world.
           </p>

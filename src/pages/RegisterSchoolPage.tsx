@@ -51,7 +51,7 @@ export function RegisterSchoolPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-4">
-      <SEO title="Register School | Sikolo Platform" />
+      <SEO title="Register School | Preschools Eswatini Platform" />
       
       {submitted ? (
         <div className="text-center bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
@@ -63,7 +63,7 @@ export function RegisterSchoolPage() {
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
           <div>
             <h1 className="text-3xl font-bold text-slate-900">Register Your School</h1>
-            <p className="text-slate-600 mt-2">Join the Sikolo platform and start digitizing your preschool's operations.</p>
+            <p className="text-slate-600 mt-2">Join the Preschools Eswatini platform and start digitizing your preschool's operations.</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">

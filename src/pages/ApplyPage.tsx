@@ -119,7 +119,7 @@ export function ApplyPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-4">
-      <SEO title="Apply for Admission | Sikolo" />
+      <SEO title="Apply for Admission | Preschools Eswatini" />
       
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
@@ -225,7 +225,7 @@ export function ApplyPage() {
           <div className="p-6 bg-amber-50 border border-amber-100 rounded-2xl text-xs text-amber-900 space-y-3">
              <h4 className="font-bold uppercase tracking-widest text-[10px]">Important Information</h4>
              <p>Schools typically respond within 3-5 working days. Ensure your contact details are correct as they may call you for a tour.</p>
-             <p>Applying through Sikolo is free. Schools should not ask for 'application fees' without a formal invoice.</p>
+             <p>Applying through Preschools Eswatini is free. Schools should not ask for 'application fees' without a formal invoice.</p>
           </div>
         </div>
       </div>

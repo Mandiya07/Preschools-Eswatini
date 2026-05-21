@@ -29,7 +29,7 @@ export function AIMatchingPage() {
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4 space-y-8">
-      <SEO title="AI Preschool Match | Sikolo Platform" />
+      <SEO title="AI Preschool Match | Preschools Eswatini Platform" />
       
       <div className="text-center">
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">AI Preschool Match</h1>

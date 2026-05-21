@@ -49,7 +49,7 @@ export function RegisterAdvertiserPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-50 p-4">
-      <SEO title="Advertiser Registration | Sikolo Platform" />
+      <SEO title="Advertiser Registration | Preschools Eswatini Platform" />
       <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl text-center max-w-md w-full relative overflow-hidden">
         <div className="absolute top-0 right-0 p-6 opacity-5">
           <MonitorSmartphone className="w-48 h-48 text-purple-900" />

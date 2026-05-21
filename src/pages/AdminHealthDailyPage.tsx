@@ -28,7 +28,7 @@ export function AdminHealthDailyPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
-      <SEO title="Health & Daily Logs | Sikolo Admin" />
+      <SEO title="Health & Daily Logs | Preschools Eswatini Admin" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

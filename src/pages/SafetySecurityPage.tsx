@@ -20,7 +20,7 @@ const FEATURES = [
 export function SafetySecurityPage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
-      <SEO title="Safety & Security | Sikolo" />
+      <SEO title="Safety & Security | Preschools Eswatini" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

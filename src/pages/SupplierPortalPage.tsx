@@ -235,7 +235,7 @@ export function SupplierPortalPage() {
               <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm mb-2">Commission & Royalty Agreement</h4>
-                  <p className="text-xs text-slate-500 mb-4 font-medium font-medium">A standard SLA is applicable on all B2B tenders received through the Sikolo procurement workspace.</p>
+                  <p className="text-xs text-slate-500 mb-4 font-medium font-medium">A standard SLA is applicable on all B2B tenders received through the Preschools Eswatini procurement workspace.</p>
                   <ul className="space-y-2.5 text-xs text-slate-600 font-medium">
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-slate-400" /> Automated invoice generation on procurement matching</li>
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-slate-400" /> Transparent auditing for school compliance</li>

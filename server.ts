@@ -235,7 +235,7 @@ async function startServer() {
         const resend = new Resend(process.env.RESEND_API_KEY);
         
         await resend.emails.send({
-          from: 'Sikolo <notifications@sikolo.com>',
+          from: 'Preschools Eswatini <notifications@preschoolseswatini.com>',
           to: adminEmail || 'admin@school.com',
           subject: `New Inquiry: ${schoolName}`,
           html: `

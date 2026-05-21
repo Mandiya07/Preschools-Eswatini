@@ -14,7 +14,7 @@ export function AdminCompliancePage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
-      <SEO title="Ministry Compliance | Sikolo Admin" />
+      <SEO title="Ministry Compliance | Preschools Eswatini Admin" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

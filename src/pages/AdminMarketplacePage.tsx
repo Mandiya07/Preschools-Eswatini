@@ -147,7 +147,7 @@ export function AdminMarketplacePage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
-      <SEO title="Marketplace | Sikolo Admin" />
+      <SEO title="Marketplace | Preschools Eswatini Admin" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground p-8 rounded-[2rem] shadow-lg overflow-hidden relative">
         <div className="absolute top-0 right-0 opacity-10">

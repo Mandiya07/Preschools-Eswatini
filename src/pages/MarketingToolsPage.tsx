@@ -20,7 +20,7 @@ const FEATURES = [
 export function MarketingToolsPage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
-      <SEO title="Marketing Tools | Sikolo" />
+      <SEO title="Marketing Tools | Preschools Eswatini" />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

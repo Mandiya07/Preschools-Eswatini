@@ -71,7 +71,7 @@ const FEATURES = [
 export function DigitalLearningEcosystemPage() {
   return (
     <div className="space-y-12 max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-      <SEO title="Digital Learning Ecosystem | Sikolo" />
+      <SEO title="Digital Learning Ecosystem | Preschools Eswatini" />
       
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-12 items-center pt-8">

@@ -8,7 +8,7 @@ export function PricingPage() {
   return (
     <div className="bg-slate-50 pb-24 min-h-screen">
       <SEO 
-        title="Pricing | Sikolo Platform"
+        title="Pricing | Preschools Eswatini Platform"
         description="Simple, transparent pricing for preschools, daycares, and early childhood centers to manage admissions, marketing, and parent communications."
       />
       {/* Header */}
@@ -312,7 +312,7 @@ const pricingPlans = [
     popular: false,
     cta: "Start Free Trial",
     features: [
-      "Custom Preschool Website (.sikolo.com)",
+      "Custom Preschool Website (.preschoolseswatini.com)",
       "Listed in National Directory",
       "Up to 50 Student Records",
       "Basic Announcements",
