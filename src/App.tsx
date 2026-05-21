@@ -34,6 +34,7 @@ import { SuperAdminModerationPage } from "./pages/super/SuperAdminModerationPage
 import { SuperAdminSupportPage } from "./pages/super/SuperAdminSupportPage";
 import { SuperAdminScalabilityPage } from "./pages/super/SuperAdminScalabilityPage";
 import { SuperAdminCMSPage } from "./pages/super/SuperAdminCMSPage";
+import { SuperAdminSocialPage } from "./pages/super/SuperAdminSocialPage";
 import { FeaturesPage } from "@/pages/FeaturesPage";
 import { PricingPage } from "@/pages/PricingPage";
 import { MarketplacePage } from "@/pages/MarketplacePage";
@@ -57,6 +58,7 @@ import { MapSearchPage } from "@/pages/GeolocationMapPage";
 import { MarketingToolsPage } from "@/pages/MarketingToolsPage";
 import { ApplyPage } from "@/pages/ApplyPage";
 import { ParentResourcesPage } from "@/pages/ParentResourcesPage";
+import { BlogHubPage } from "@/pages/BlogHubPage";
 import { FaqPage } from "@/pages/FaqPage";
 import { ContactUsPage } from "@/pages/ContactUsPage";
 import { AboutPage } from "@/pages/AboutPage";
@@ -107,6 +109,7 @@ export default function App() {
             <Route path="register-advertiser" element={<RegisterAdvertiserPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="resources" element={<ParentResourcesPage />} />
+            <Route path="blog" element={<BlogHubPage />} />
             <Route path="faq" element={<FaqPage />} />
             <Route path="contact" element={<ContactUsPage />} />
             <Route path="about" element={<AboutPage />} />
@@ -190,6 +193,7 @@ export default function App() {
             <Route path="support" element={<SuperAdminSupportPage />} />
             <Route path="scalability" element={<SuperAdminScalabilityPage />} />
             <Route path="cms" element={<SuperAdminCMSPage />} />
+            <Route path="social" element={<SuperAdminSocialPage />} />
             <Route path="*" element={<div className="p-8 text-center"><h1 className="text-slate-500">Super Admin Feature coming soon</h1></div>} />
           </Route>
         </Routes>

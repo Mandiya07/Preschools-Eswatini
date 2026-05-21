@@ -59,6 +59,7 @@ export function Navbar() {
               </>
             )}
             <Link to="/resources" className={getLinkClass("/resources")}>Resources</Link>
+            <Link to="/blog" className={getLinkClass("/blog")}>Guides</Link>
             <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
             <Link to="/learning" className={getLinkClass("/learning")}>Learning</Link>
             <Link to="/community" className={getLinkClass("/community")}>Community</Link>
@@ -130,6 +131,7 @@ export function Navbar() {
               </>
             )}
             <Link to="/resources" className={getMobileLinkClass("/resources")} onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
+            <Link to="/blog" className={getMobileLinkClass("/blog")} onClick={() => setIsMobileMenuOpen(false)}>Guides</Link>
             <Link to="/marketplace" className={getMobileLinkClass("/marketplace")} onClick={() => setIsMobileMenuOpen(false)}>Marketplace</Link>
             <Link to="/learning" className={getMobileLinkClass("/learning")} onClick={() => setIsMobileMenuOpen(false)}>Learning</Link>
             <Link to="/community" className={getMobileLinkClass("/community")} onClick={() => setIsMobileMenuOpen(false)}>Community</Link>

@@ -26,7 +26,8 @@ export function Footer() {
               <li><Link to="/map" className="hover:text-blue-600 border border-amber-200 bg-amber-50 text-amber-700 px-2 py-1 rounded-md text-xs font-semibold inline-block mb-1">Smart Map Locator</Link></li>
               <li><Link to="/directory" className="hover:text-blue-600">Find a Preschool</Link></li>
               <li><Link to="/apply" className="hover:text-blue-600">Online Applications</Link></li>
-              <li><Link to="/resources" className="hover:text-blue-600">Parent Resources</Link></li>
+              <li><Link to="/blog" className="text-blue-600 font-semibold hover:text-blue-700">How Parents Benefit</Link></li>
+              <li><Link to="/blog" className="hover:text-blue-600">Choose a Preschool</Link></li>
               <li><Link to="/faq" className="hover:text-blue-600">Parent FAQ</Link></li>
             </ul>
           </div>
@@ -37,8 +38,8 @@ export function Footer() {
               <li><Link to="/features" className="hover:text-blue-600">Platform Features</Link></li>
               <li><Link to="/pricing" className="hover:text-blue-600">Pricing Plans</Link></li>
               <li><Link to="/website-builder" className="hover:text-blue-600">Website Builder</Link></li>
-              <li><Link to="/applications" className="hover:text-blue-600">Online Applications</Link></li>
-              <li><Link to="/parent-resources" className="hover:text-blue-600">Parent Resources</Link></li>
+              <li><Link to="/blog" className="text-blue-600 font-semibold hover:text-blue-700">How to Register</Link></li>
+              <li><Link to="/blog" className="hover:text-blue-600">Teacher Benefits</Link></li>
               <li><Link to="/admin" className="hover:text-blue-600">School Admin</Link></li>
             </ul>
           </div>
@@ -52,7 +53,7 @@ export function Footer() {
               <li><Link to="/community" className="hover:text-blue-600">Community</Link></li>
               <li><Link to="/safety" className="hover:text-blue-600">Safety & Security</Link></li>
               <li><Link to="/advanced-features" className="hover:text-blue-600">Advanced Features</Link></li>
-              <li><Link to="/infrastructure" className="hover:text-blue-600">Performance & Infrastructure</Link></li>
+              <li><Link to="/blog" className="hover:text-blue-600">Supplier Onboarding</Link></li>
               <li><Link to="/marketing" className="hover:text-blue-600">Marketing Tools</Link></li>
             </ul>
           </div>
@@ -60,6 +61,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-slate-900 mb-4">Connect</h4>
             <ul className="space-y-3 text-sm text-slate-500">
+              <li><Link to="/blog" className="font-bold text-blue-600 hover:text-blue-700">Guides & Articles</Link></li>
               <li><Link to="/contact" className="hover:text-blue-600">Contact Us</Link></li>
               <li><Link to="/about" className="hover:text-blue-600">About the Platform</Link></li>
               <li><Link to="/privacy" className="hover:text-blue-600">Privacy Policy</Link></li>
