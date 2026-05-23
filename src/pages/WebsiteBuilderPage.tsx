@@ -43,6 +43,7 @@ export function WebsiteBuilderPage() {
   const [suggesting, setSuggesting] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("theme");
   const [previewMode, setPreviewMode] = useState("desktop");
+  const [isPreviewing, setIsPreviewing] = useState(false);
   const [images, setImages] = useState<UploadedImage[]>([
     { id: 'img-1', url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', target: 'Hero Background', name: 'hero-banner.jpg', caption: 'Welcome to our school' }
   ]);
@@ -53,6 +54,7 @@ export function WebsiteBuilderPage() {
   const [fontFamily, setFontFamily] = useState("Inter, sans-serif");
   const [selectedTemplate, setSelectedTemplate] = useState("Montessori Premium");
   const [themeName, setThemeName] = useState('Classic');
+  const [publishSuccess, setPublishSuccess] = useState(false);
 
   const THEMES = {
     'Classic': { primary: '#2563eb', secondary: '#f59e0b', font: 'Inter, sans-serif' },
@@ -117,34 +119,133 @@ export function WebsiteBuilderPage() {
   }, [user]);
 
   const handlePublish = async () => {
-    if (!user?.schoolId) return;
     setSaving(true);
-    const config = {
-      schoolId: user.schoolId,
-      headline,
-      subheadline,
-      primaryColor,
-      secondaryColor,
-      fontFamily,
-      template: selectedTemplate,
-      theme: themeName,
-      images,
-      newsItems,
-      seoTitle,
-      customDomain,
-      contactEmail,
-      contactPhone,
-      contactAddress,
-      operatingHours,
-      contactMessage,
-      publishedAt: new Date().toISOString()
-    };
-    
-    // Using schoolId as document ID for the website config
-    await createDocument('websites', user.schoolId, config);
-    setSaving(false);
-    alert("Website published successfully!");
+    try {
+      const config = {
+        schoolId: user?.schoolId || 'demo-school',
+        headline,
+        subheadline,
+        primaryColor,
+        secondaryColor,
+        fontFamily,
+        template: selectedTemplate,
+        theme: themeName,
+        images,
+        newsItems,
+        seoTitle,
+        customDomain,
+        contactEmail,
+        contactPhone,
+        contactAddress,
+        operatingHours,
+        contactMessage,
+        publishedAt: new Date().toISOString()
+      };
+      
+      if (user?.schoolId) {
+        await createDocument('websites', user.schoolId, config);
+      } else {
+        // Simulate save delay for guest users
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
+      setPublishSuccess(true);
+      setTimeout(() => setPublishSuccess(false), 3000);
+    } catch (error) {
+      console.error("Publish error:", error);
+      alert("Failed to publish changes.");
+    } finally {
+      setSaving(false);
+    }
   };
+
+  const PreviewComponent = () => (
+    <div className={`flex-1 mx-auto bg-white border border-slate-200 shadow-xl rounded-t-xl overflow-hidden transition-all duration-300 ease-in-out w-full ${previewMode === 'mobile' ? 'max-w-[375px]' : 'max-w-4xl'}`}>
+      {/* Fake browser header */}
+      <div className="h-10 bg-slate-100 flex items-center px-4 gap-2 border-b border-slate-200">
+        <div className="h-3 w-3 rounded-full bg-slate-300"></div>
+        <div className="h-3 w-3 rounded-full bg-slate-300"></div>
+        <div className="h-3 w-3 rounded-full bg-slate-300"></div>
+        <div className="mx-4 flex-1 h-6 bg-white rounded-md border border-slate-200 flex items-center px-3">
+          <span className="text-[10px] text-slate-400">littlestars.preschoolseswatini.com</span>
+        </div>
+      </div>
+      
+      {/* Preview Content */}
+      <div className="h-full overflow-y-auto no-scrollbar pointer-events-none" style={{ fontFamily }}>
+        <div className="relative min-h-[16rem] bg-slate-900 group flex flex-col justify-center">
+          {images.find(i => i.target === 'Hero Background') ? (
+            <img src={images.find(i => i.target === 'Hero Background')?.url} className="absolute inset-0 h-full w-full object-cover opacity-60" alt="hero" />
+          ) : (
+            <div className="absolute inset-0 bg-slate-800 opacity-60"></div>
+          )}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center p-6">
+            {images.find(i => i.target === 'School Logo') ? (
+            <img src={images.find(i => i.target === 'School Logo')?.url} alt="Logo" className="w-16 h-16 rounded mb-4 object-contain bg-white p-1" />
+          ) : null}
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2" style={{ color: primaryColor }}>{headline}</h1>
+            <p className="text-lg text-slate-200 max-w-lg">{subheadline}</p>
+          </div>
+          {/* Overlay edit dashed lines */}
+          <div className="absolute inset-0 border-2 border-dashed border-blue-500/50 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded shadow-sm">
+                Edit Hero Section
+              </div>
+          </div>
+        </div>
+        <div className="p-8 pb-32">
+            <h2 className="text-2xl font-bold text-center mb-6" style={{ color: primaryColor }}>
+            {selectedTemplate.includes("Christian") ? "Our Ministries & Programs" : "Our Programs"}
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+            <div className={`h-40 ${selectedTemplate === "Budget Preschool" ? "bg-white border-2 border-slate-200" : "bg-slate-100"} rounded-lg border border-slate-200 flex flex-col items-center justify-center font-medium shadow-sm overflow-hidden relative`} style={{ color: secondaryColor }}>
+                {images.filter(i => i.target === 'Programs Section')[0] ? (
+                <img src={images.filter(i => i.target === 'Programs Section')[0].url} className="absolute inset-0 w-full h-full object-cover opacity-80" alt="Program" />
+                ) : null}
+                <span className="relative z-10 bg-white/80 px-2 py-1 rounded text-sm">Program 1</span>
+            </div>
+            <div className={`h-40 ${selectedTemplate === "Budget Preschool" ? "bg-white border-2 border-slate-200" : "bg-slate-100"} rounded-lg border border-slate-200 flex flex-col items-center justify-center font-medium shadow-sm overflow-hidden relative`} style={{ color: secondaryColor }}>
+            {images.filter(i => i.target === 'Programs Section')[1] ? (
+                <img src={images.filter(i => i.target === 'Programs Section')[1].url} className="absolute inset-0 w-full h-full object-cover opacity-80" alt="Program" />
+                ) : null}
+                <span className="relative z-10 bg-white/80 px-2 py-1 rounded text-sm">Program 2</span>
+            </div>
+            </div>
+            
+            {images.filter(i => i.target === 'Photo Gallery').length > 0 && (
+            <div className="mt-12">
+                <h2 className="text-2xl font-bold text-center mb-6" style={{ color: primaryColor }}>Photo Gallery</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {images.filter(i => i.target === 'Photo Gallery').map(img => (
+                    <div key={img.id} className={`aspect-square shadow-sm overflow-hidden border border-slate-200 relative group ${selectedTemplate === "Modern Kindergarten" ? "rounded-3xl" : "rounded"}`}>
+                    <img src={img.url} alt={img.name} className="w-full h-full object-cover" />
+                        {img.caption && (
+                        <div className="absolute inset-x-0 bottom-0 bg-black/60 p-2 text-white text-[10px] leading-tight">
+                            {img.caption}
+                        </div>
+                        )}
+                    </div>
+                ))}
+                </div>
+            </div>
+            )}
+
+            {newsItems.length > 0 && (
+            <div className="mt-12 bg-slate-50 -mx-8 px-8 py-8 border-t border-slate-200">
+                <h2 className="text-2xl font-bold text-center mb-6" style={{ color: primaryColor }}>Latest News</h2>
+                <div className="space-y-4 max-w-lg mx-auto">
+                    {newsItems.map(item => (
+                    <div key={item.id} className="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                        <p className="text-sm font-medium text-slate-900">{item.title}</p>
+                        <p className="text-xs text-slate-500">{item.date}</p>
+                    </div>
+                    ))}
+                </div>
+            </div>
+            )}
+        </div>
+      </div>
+    </div>
+  );
 
   const handleAISuggest = async (field: 'headline' | 'subheadline') => {
     setSuggesting(field);
@@ -175,6 +276,17 @@ export function WebsiteBuilderPage() {
   const logoInputRef = useRef<HTMLInputElement>(null);
   const heroBgInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      images.forEach(img => {
+        if (img.url.startsWith('blob:')) {
+          URL.revokeObjectURL(img.url);
+        }
+      });
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return (
@@ -219,6 +331,17 @@ export function WebsiteBuilderPage() {
         name: file.name
       }));
       
+      // Revoke old object URLs for images being replaced
+      const oldImages = targetArea === 'Hero Background' 
+        ? images.filter(img => img.target === 'Hero Background') 
+        : [];
+      
+      oldImages.forEach(img => {
+        if (img.url.startsWith('blob:')) {
+          URL.revokeObjectURL(img.url);
+        }
+      });
+
       if (targetArea === 'Hero Background') {
          setImages(prev => [...prev.filter(img => img.target !== 'Hero Background'), ...newImages]);
       } else {
@@ -226,6 +349,7 @@ export function WebsiteBuilderPage() {
       }
     }
   };
+
 
   const moveImage = (index: number, direction: 'up' | 'down') => {
     const newImages = [...images];
@@ -251,20 +375,21 @@ export function WebsiteBuilderPage() {
           <p className="text-sm text-slate-500">Customize your school's public website</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="bg-white">
+          <Button variant="outline" className="bg-white" onClick={() => setIsPreviewing(true)}>
             <Eye className="mr-2 h-4 w-4" /> Live Preview
           </Button>
           <Button onClick={handlePublish} disabled={saving}>
-            {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-            {saving ? 'Publishing...' : 'Publish Changes'}
+            {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : publishSuccess ? <CheckCircle2 className="mr-2 h-4 w-4" /> : <Save className="mr-2 h-4 w-4" />}
+            {saving ? 'Publishing...' : publishSuccess ? 'Published!' : 'Publish Changes'}
           </Button>
         </div>
       </div>
 
+      {/* Editor Main Content */}
       <div className="flex flex-1 gap-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         {/* Editor Sidebar */}
         <div className="w-80 border-r border-slate-200 flex flex-col bg-slate-50/50">
-          <div className="flex border-b border-slate-200 bg-white p-2 gap-1 overflow-x-auto no-scrollbar">
+          <div className="flex border-b border-slate-200 bg-white p-2 gap-1 overflow-x-auto flex-nowrap">
             {[
               { id: 'theme', icon: Palette, label: 'Theme' },
               { id: 'content', icon: Layout, label: 'Content' },
@@ -286,7 +411,7 @@ export function WebsiteBuilderPage() {
             ))}
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-6 h-[calc(100vh-14rem)]">
             {activeTab === 'theme' && (
               <div className="space-y-6">
                 <div>
@@ -720,8 +845,8 @@ export function WebsiteBuilderPage() {
         </div>
 
         {/* Live Preview Area */}
-        <div className="flex-1 flex flex-col bg-slate-200/50 p-6">
-          <div className="flex justify-center mb-4 gap-2">
+        <div className={`flex-1 flex flex-col bg-slate-200/50 p-6 ${isPreviewing ? 'fixed inset-0 z-50 bg-slate-100 overflow-y-auto' : 'overflow-hidden'}`}>
+          <div className="flex justify-center mb-4 gap-2 shrink-0">
             <Button 
               variant={previewMode === 'desktop' ? 'default' : 'outline'} 
               size="sm" 
@@ -738,13 +863,18 @@ export function WebsiteBuilderPage() {
             >
               <Smartphone className="h-4 w-4 mr-2" /> Mobile
             </Button>
+            {isPreviewing && (
+              <Button size="sm" variant="destructive" onClick={() => setIsPreviewing(false)}>
+                Close Preview
+              </Button>
+            )}
           </div>
 
-          <div className={`flex-1 mx-auto bg-white border border-slate-200 shadow-xl rounded-t-xl overflow-hidden transition-all duration-300 ease-in-out w-full ${
+          <div className={`flex flex-col flex-1 mx-auto bg-white border border-slate-200 shadow-xl rounded-t-xl overflow-hidden transition-all duration-300 ease-in-out w-full ${
             previewMode === 'mobile' ? 'max-w-[375px]' : 'max-w-4xl'
           }`}>
             {/* Fake browser header */}
-            <div className="h-10 bg-slate-100 flex items-center px-4 gap-2 border-b border-slate-200">
+            <div className="h-10 shrink-0 bg-slate-100 flex items-center px-4 gap-2 border-b border-slate-200">
               <div className="h-3 w-3 rounded-full bg-slate-300"></div>
               <div className="h-3 w-3 rounded-full bg-slate-300"></div>
               <div className="h-3 w-3 rounded-full bg-slate-300"></div>
@@ -754,7 +884,7 @@ export function WebsiteBuilderPage() {
             </div>
             
             {/* Preview Content */}
-            <div className="h-full overflow-y-auto no-scrollbar pointer-events-none" style={{ fontFamily }}>
+            <div className="flex-1 overflow-y-auto pointer-events-auto" style={{ fontFamily }}>
               <div className="relative min-h-[16rem] bg-slate-900 group flex flex-col justify-center">
                 {images.find(i => i.target === 'Hero Background') ? (
                   <img src={images.find(i => i.target === 'Hero Background')?.url} className="absolute inset-0 h-full w-full object-cover opacity-60" alt="hero" />
@@ -777,7 +907,7 @@ export function WebsiteBuilderPage() {
               </div>
                             <div className="p-8 pb-32">
                  <h2 className="text-2xl font-bold text-center mb-6" style={{ color: primaryColor }}>
-                   {selectedTemplate.includes("Christian") ? "Our Ministries & Programs" : "Our Programs"}
+                   {selectedTemplate?.includes("Christian") ? "Our Ministries & Programs" : "Our Programs"}
                  </h2>
                  <div className="grid grid-cols-2 gap-4">
                    <div className={`h-40 ${selectedTemplate === "Budget Preschool" ? "bg-white border-2 border-slate-200" : "bg-slate-100"} rounded-lg border border-slate-200 flex flex-col items-center justify-center font-medium shadow-sm overflow-hidden relative`} style={{ color: secondaryColor }}>

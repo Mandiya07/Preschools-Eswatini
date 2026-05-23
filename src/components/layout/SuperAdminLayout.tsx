@@ -101,21 +101,24 @@ export function SuperAdminLayout() {
            {!sidebarOpen && <ShieldCheck className="h-8 w-8 text-blue-600 mx-auto" />}
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
-          {navigation.map((item) => {
+        <nav className="sidebar-nav flex-1 overflow-y-auto py-4 px-2 space-y-0.5">
+          {navigation.map((item, index) => {
             const isActive = location.pathname === item.href;
+            
+            // Add a subtle divider before Support or Analytics-related if needed? 
+            // The user requested simplification, let's keep it clean.
             return (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-bold transition-all group ${
+                className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-bold transition-all group ${
                   isActive 
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-100" 
-                    : "text-slate-600 hover:bg-slate-50"
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-100" 
+                    : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
-                <div className={`shrink-0 transition-transform group-hover:scale-110 ${isActive ? "text-white" : "text-slate-400 group-hover:text-blue-600"}`}>
-                   <item.icon className="h-5 w-5" />
+                <div className={`shrink-0 transition-transform ${isActive ? "text-white" : "text-slate-400 group-hover:text-blue-600"}`}>
+                   <item.icon className="h-4 w-4" />
                 </div>
                 {sidebarOpen && <span className="truncate">{item.name}</span>}
               </Link>

@@ -1,0 +1,6 @@
+{
+  "name": "node-domexception",
+  "version": "1.0.0",
+  "description": "Mock node-domexception that returns native DOMException to prevent deprecation warnings.",
+  "main": "index.js"
+}

@@ -36,6 +36,17 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from "motion/react";
+import { AnalyticsCard } from "@/components/AnalyticsCard";
+
+const socialAnalyticsData = [
+  { date: "2026-05-01", label: "May 01", impressions: 12000, engagementRate: 4.8, clicks: 580 },
+  { date: "2026-05-04", label: "May 04", impressions: 15400, engagementRate: 5.2, clicks: 800 },
+  { date: "2026-05-08", label: "May 08", impressions: 14200, engagementRate: 4.9, clicks: 690 },
+  { date: "2026-05-11", label: "May 11", impressions: 18900, engagementRate: 6.1, clicks: 1150 },
+  { date: "2026-05-15", label: "May 15", impressions: 22000, engagementRate: 5.8, clicks: 1280 },
+  { date: "2026-05-18", label: "May 18", impressions: 24500, engagementRate: 6.5, clicks: 1590 },
+  { date: "2026-05-21", label: "May 21", impressions: 27800, engagementRate: 7.2, clicks: 1980 },
+];
 
 interface SocialPost {
   id: string;
@@ -786,6 +797,35 @@ export function SuperAdminSocialPage() {
           </Card>
         </section>
 
+      </div>
+
+      {/* Campaign Outreach & Performance Analytics Hub */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <AnalyticsCard
+          title="Outreach Campaign Reach & Impressions"
+          description="Aggregate impressions and visibility across Facebook, Instagram, LinkedIn, and Twitter/X."
+          data={socialAnalyticsData}
+          xAxisKey="label"
+          dateKey="date"
+          metrics={[
+            { key: "impressions", label: "Outreach Impressions", color: "#3b82f6", type: "area" },
+          ]}
+          id="social-impressions-analytics"
+          defaultRange="ALL"
+        />
+        <AnalyticsCard
+          title="Engagement & Conversion Clicks"
+          description="Click-through conversions and average platform engagement rate progression."
+          data={socialAnalyticsData}
+          xAxisKey="label"
+          dateKey="date"
+          metrics={[
+            { key: "clicks", label: "Link Clicks", color: "#10b981", type: "bar" },
+            { key: "engagementRate", label: "Engagement Rate (%)", color: "#f59e0b", type: "line" }
+          ]}
+          id="social-interaction-analytics"
+          defaultRange="ALL"
+        />
       </div>
 
       {/* Connected Channels & Accounts Section */}

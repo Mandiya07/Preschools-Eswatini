@@ -115,22 +115,22 @@ export function SchoolAdminLayout() {
         </div>
 
         <div className="flex-1 overflow-y-auto py-6 px-3 flex flex-col justify-between">
-          <nav className="space-y-1">
+        <nav className="sidebar-nav space-y-0.5">
             {navigation.map((item) => {
               const isActive = location.pathname === item.href || (location.pathname.startsWith(item.href) && item.href !== '/admin');
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`group flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+                  className={`group flex items-center justify-between rounded px-3 py-1.5 text-xs font-medium transition-colors ${
                     isActive 
-                      ? 'bg-blue-600 text-white' 
-                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                      ? 'bg-blue-700 text-white' 
+                      : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                   }`}
                   onClick={() => setSidebarOpen(false)}
                 >
                   <div className="flex items-center">
-                    <item.icon className={`mr-3 h-5 w-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                    <item.icon className={`mr-2.5 h-4 w-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-white'}`} />
                     {item.name}
                   </div>
                 </Link>

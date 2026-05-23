@@ -15,24 +15,17 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell
-} from 'recharts';
+import { AnalyticsCard } from "@/components/AnalyticsCard";
 
 const revenueData = [
-  { month: 'Jan', revenue: 45000, subscriptions: 12 },
-  { month: 'Feb', revenue: 52000, subscriptions: 15 },
-  { month: 'Mar', revenue: 48000, subscriptions: 18 },
-  { month: 'Apr', revenue: 61000, subscriptions: 22 },
-  { month: 'May', revenue: 75000, subscriptions: 25 },
-  { month: 'Jun', revenue: 89000, subscriptions: 28 },
+  { date: "2026-01-15", month: "Jan", revenue: 45000, subscriptions: 120 },
+  { date: "2026-02-15", month: "Feb", revenue: 52000, subscriptions: 154 },
+  { date: "2026-03-15", month: "Mar", revenue: 48000, subscriptions: 182 },
+  { date: "2026-04-15", month: "Apr", revenue: 61000, subscriptions: 220 },
+  { date: "2026-05-01", month: "May 01", revenue: 75000, subscriptions: 250 },
+  { date: "2026-05-08", month: "May 08", revenue: 79500, subscriptions: 262 },
+  { date: "2026-05-15", month: "May 15", revenue: 84000, subscriptions: 275 },
+  { date: "2026-05-21", month: "May 21", revenue: 89000, subscriptions: 284 },
 ];
 
 export function SuperAdminRevenuePage() {
@@ -97,42 +90,22 @@ export function SuperAdminRevenuePage() {
 
       <div className="grid lg:grid-cols-3 gap-8">
          {/* Monthly Revenue Chart */}
-         <Card className="lg:col-span-2 border-none shadow-sm">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-slate-50">
-               <div>
-                  <CardTitle className="text-sm font-black uppercase tracking-widest text-slate-900">Revenue Performance</CardTitle>
-                  <CardDescription>Income breakdown over the last 6 months.</CardDescription>
-               </div>
-               <Calendar className="h-5 w-5 text-slate-400" />
-            </CardHeader>
-            <CardContent className="pt-8">
-               <div className="h-[350px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                     <BarChart data={revenueData}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                        <XAxis 
-                           dataKey="month" 
-                           axisLine={false} 
-                           tickLine={false} 
-                           tick={{fontSize: 10, fill: '#94a3b8', fontWeight: 600}}
-                           dy={10}
-                        />
-                        <YAxis 
-                           axisLine={false} 
-                           tickLine={false} 
-                           tick={{fontSize: 10, fill: '#94a3b8', fontWeight: 600}}
-                           dx={-10}
-                        />
-                        <Tooltip 
-                           cursor={{fill: '#f8fafc'}}
-                           contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                        />
-                        <Bar dataKey="revenue" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                     </BarChart>
-                  </ResponsiveContainer>
-               </div>
-            </CardContent>
-         </Card>
+         <div className="lg:col-span-2">
+            <AnalyticsCard
+               title="Revenue Performance & Growth"
+               description="Income indicators combined with active paid school accounts progression."
+               data={revenueData}
+               xAxisKey="month"
+               dateKey="date"
+               metrics={[
+                 { key: "revenue", label: "Monthly Revenue (E)", color: "#3b82f6", type: "area" },
+                 { key: "subscriptions", label: "Paid Subscriptions", color: "#8b5cf6", type: "line" }
+               ]}
+               prefix="E"
+               id="revenue-analytics"
+               defaultRange="ALL"
+            />
+         </div>
 
          {/* Plan Distribution */}
          <Card className="border-none shadow-sm">
