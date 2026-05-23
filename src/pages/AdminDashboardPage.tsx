@@ -13,10 +13,11 @@ import {
   Plus,
   Loader2,
   AlertCircle,
-  Calendar
+  Calendar,
+  Database
 } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
-import { fetchDocument, subscribeToCollection } from "@/lib/firestoreUtils";
+import { fetchDocument, subscribeToCollection, fetchCollection } from "@/lib/firestoreUtils";
 import { School, Inquiry, Application, Student } from "@/types";
 import { where } from "firebase/firestore";
 
@@ -84,6 +85,36 @@ export function AdminDashboardPage() {
       setLastInquiryId(newestInquiry.id);
     }
   }, [inquiries, lastInquiryId]);
+
+  const handleDatabaseBackup = async () => {
+    if (!user?.schoolId) return;
+    
+    try {
+      const dbSchools = await fetchCollection('schools');
+      const dbStudents = await fetchCollection('students');
+      const dbApplications = await fetchCollection('applications');
+      
+      const backupData = {
+        timestamp: new Date().toISOString(),
+        schools: dbSchools,
+        students: dbStudents,
+        applications: dbApplications,
+      };
+      
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `backup_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Backup failed:', error);
+      alert('Backup failed.');
+    }
+  };
 
   if (loading) {
     return (
@@ -245,6 +276,9 @@ export function AdminDashboardPage() {
                <Link to="/admin/website">
                  <Globe className="mr-3 h-4 w-4 text-blue-600" /> Update Website Notice
                </Link>
+            </Button>
+            <Button variant="outline" className="justify-start h-12 px-4 shadow-sm border-slate-200" onClick={handleDatabaseBackup}>
+              <Database className="mr-3 h-4 w-4 text-emerald-600" /> Backup Database (JSON)
             </Button>
             <div className="mt-auto pt-6">
               <div className="rounded-lg bg-blue-50 p-4 border border-blue-100">
