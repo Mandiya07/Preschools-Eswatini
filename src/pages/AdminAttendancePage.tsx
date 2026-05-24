@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, CheckCircle2, XCircle, Clock, CalendarIcon, ChevronLeft, ChevronRight, WifiOff } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle, Clock, CalendarIcon, ChevronLeft, ChevronRight, WifiOff, RefreshCw } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import { subscribeToCollection, createDocument, updateDocument, fetchCollection } from "@/lib/firestoreUtils";
 import { where, query, collection, getDocs, orderBy } from "firebase/firestore";
@@ -30,10 +30,27 @@ export function AdminAttendancePage() {
   const [saving, setSaving] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [offlineQueue, setOfflineQueue] = useState<{ studentId: string; status: AttendanceRecord["status"]; date: string }[]>([]);
+  const [syncing, setSyncing] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+
+  useEffect(() => {
+    const queue = localStorage.getItem('attendance_offline_queue');
+    if (queue) {
+      try {
+        setOfflineQueue(JSON.parse(queue));
+      } catch (e) {
+        console.error("Failed to parse offline queue", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('attendance_offline_queue', JSON.stringify(offlineQueue));
+  }, [offlineQueue]);
 
   const toggleSelectStudent = (id: string) => {
     setSelectedStudents(prev => 
@@ -66,7 +83,9 @@ export function AdminAttendancePage() {
   };
 
   useEffect(() => {
-    const handleOnline = () => setIsOffline(false);
+    const handleOnline = async () => {
+      setIsOffline(false);
+    };
     const handleOffline = () => setIsOffline(true);
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
@@ -75,6 +94,53 @@ export function AdminAttendancePage() {
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
+  useEffect(() => {
+    const processQueue = async () => {
+      if (!isOffline && offlineQueue.length > 0 && user?.schoolId && !syncing) {
+        setSyncing(true);
+        try {
+          const queueToProcess = [...offlineQueue];
+          setOfflineQueue([]); // Clear immediately so we don't re-enter if more trigger
+          for (const item of queueToProcess) {
+            await processOfflineRecord(item);
+          }
+        } catch (error) {
+          console.error("Failed to sync offline records", error);
+        } finally {
+          setSyncing(false);
+        }
+      }
+    };
+    processQueue();
+  }, [isOffline, offlineQueue, user?.schoolId]);
+
+  const processOfflineRecord = async (item: { studentId: string; status: AttendanceRecord["status"]; date: string }) => {
+    if (!user?.schoolId) return;
+    try {
+      // Find existing record in firestore for that date to be safe
+      const existingData = await fetchCollection('attendance', 
+        where('schoolId', '==', user.schoolId),
+        where('date', '==', item.date),
+        where('studentId', '==', item.studentId)
+      ) as AttendanceRecord[];
+
+      if (existingData.length > 0) {
+        await updateDocument('attendance', existingData[0].id, { status: item.status });
+      } else {
+        await createDocument('attendance', null, {
+          schoolId: user.schoolId,
+          studentId: item.studentId,
+          date: item.date,
+          status: item.status,
+          recordedBy: user?.uid || 'offline-sync',
+          createdAt: new Date().toISOString()
+        });
+      }
+    } catch (err) {
+      console.error("Error processing offline record", err);
+    }
+  };
 
   useEffect(() => {
     if (!user?.schoolId) return;
@@ -105,15 +171,39 @@ export function AdminAttendancePage() {
   const toggleAttendance = async (studentId: string, status: AttendanceRecord["status"]) => {
     if (!user?.schoolId) return;
     
+    if (isOffline) {
+      // Optimistically update UI
+      const existingRecord = attendance[studentId];
+      if (existingRecord) {
+        setAttendance(prev => ({
+          ...prev,
+          [studentId]: { ...existingRecord, status }
+        }));
+      } else {
+        const tempId = `temp-${Date.now()}`;
+        setAttendance(prev => ({
+          ...prev,
+          [studentId]: { id: tempId, studentId, date: selectedDate, status, schoolId: user.schoolId! }
+        }));
+      }
+      
+      // Update queue
+      setOfflineQueue(prev => {
+        const filtered = prev.filter(q => !(q.studentId === studentId && q.date === selectedDate));
+        return [...filtered, { studentId, status, date: selectedDate }];
+      });
+      return;
+    }
+
     setSaving(studentId);
     try {
       const existingRecord = attendance[studentId];
-      if (existingRecord) {
+      if (existingRecord && !existingRecord.id.startsWith('temp-')) {
         if (existingRecord.status === status) {
-          // If already marked the same, do nothing or toggle off? 
-          // Usually better to just update.
+          // Do nothing if same
+        } else {
+          await updateDocument('attendance', existingRecord.id, { status });
         }
-        await updateDocument('attendance', existingRecord.id, { status });
         setAttendance(prev => ({
           ...prev,
           [studentId]: { ...existingRecord, status }
@@ -145,13 +235,41 @@ export function AdminAttendancePage() {
     setSaving(`bulk-${className}`);
     
     try {
-      const promises = classStudents.map(async (student) => {
-        const existingRecord = attendance[student.id];
-        if (!existingRecord || existingRecord.status !== 'Present') {
-          return toggleAttendance(student.id, 'Present');
-        }
-      });
-      await Promise.all(promises);
+      if (isOffline) {
+        setOfflineQueue(prev => {
+          let updatedQueue = [...prev];
+          classStudents.forEach(student => {
+            const existingRecord = attendance[student.id];
+            if (!existingRecord || existingRecord.status !== 'Present') {
+              updatedQueue = updatedQueue.filter(q => !(q.studentId === student.id && q.date === selectedDate));
+              updatedQueue.push({ studentId: student.id, status: 'Present', date: selectedDate });
+            }
+          });
+          return updatedQueue;
+        });
+
+        // Optimistically update
+        setAttendance(prev => {
+          const newAttendance = { ...prev };
+          classStudents.forEach(student => {
+            const existingRecord = newAttendance[student.id];
+            if (!existingRecord || existingRecord.status !== 'Present') {
+              newAttendance[student.id] = existingRecord 
+                ? { ...existingRecord, status: 'Present' }
+                : { id: `temp-${Date.now()}-${student.id}`, studentId: student.id, date: selectedDate, status: 'Present', schoolId: user.schoolId! };
+            }
+          });
+          return newAttendance;
+        });
+      } else {
+        const promises = classStudents.map(async (student) => {
+          const existingRecord = attendance[student.id];
+          if (!existingRecord || existingRecord.status !== 'Present') {
+            return toggleAttendance(student.id, 'Present');
+          }
+        });
+        await Promise.all(promises);
+      }
     } finally {
       setSaving(null);
     }
@@ -273,10 +391,29 @@ export function AdminAttendancePage() {
           <div className="bg-amber-100 p-2 rounded-full mt-0.5">
             <WifiOff className="h-4 w-4 text-amber-700" />
           </div>
-          <div>
+          <div className="flex-1 text-left">
             <h4 className="text-sm font-bold text-amber-900">Offline Attendance Mode Active</h4>
             <p className="text-xs text-amber-700 mt-1">
               You are currently offline. Records will automatically sync when your connection returns.
+            </p>
+            {offlineQueue.length > 0 && (
+              <p className="text-xs font-semibold text-amber-800 mt-2">
+                • {offlineQueue.length} record{offlineQueue.length === 1 ? '' : 's'} pending sync
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {!isOffline && syncing && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-4">
+          <div className="bg-blue-100 p-2 rounded-full mt-0.5">
+            <RefreshCw className="h-4 w-4 text-blue-700 animate-spin" />
+          </div>
+          <div className="flex-1 text-left">
+            <h4 className="text-sm font-bold text-blue-900">Background Syncing</h4>
+            <p className="text-xs text-blue-700 mt-1">
+              Synchronizing attendance records to Firebase...
             </p>
           </div>
         </div>

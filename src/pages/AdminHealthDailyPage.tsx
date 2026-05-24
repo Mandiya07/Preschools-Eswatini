@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   HeartPulse, Pill, Activity, ShieldAlert,
   Moon, Coffee, ClipboardList, CheckCircle2,
-  CalendarDays, UserCheck, WifiOff
+  CalendarDays, UserCheck, WifiOff, AlertCircle
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
@@ -25,6 +25,55 @@ export function AdminHealthDailyPage() {
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
+  const [students, setStudents] = useState([
+    { id: '1', name: 'Sipho Dlamini', healthStatus: 'Healthy', incidentFlag: false },
+    { id: '2', name: 'Bandile Nxumalo', healthStatus: 'Healthy', incidentFlag: false },
+    { id: '3', name: 'Tenele Gama', healthStatus: 'Monitoring', incidentFlag: false },
+    { id: '4', name: 'Musa Zwane', healthStatus: 'Healthy', incidentFlag: false },
+    { id: '5', name: 'Thabo M.', healthStatus: 'Monitoring', incidentFlag: true },
+    { id: '6', name: 'Zinhle N.', healthStatus: 'Healthy', incidentFlag: true },
+  ]);
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+
+  const toggleSelectStudent = (id: string) => {
+    setSelectedStudents(prev => 
+      prev.includes(id) ? prev.filter(sid => sid !== id) : [...prev, id]
+    );
+  };
+
+  const selectAll = () => {
+    if (selectedStudents.length === students.length) {
+      setSelectedStudents([]);
+    } else {
+      setSelectedStudents(students.map(s => s.id));
+    }
+  };
+
+  const handleBatchToggleHealth = () => {
+    setStudents(prev => prev.map(s => {
+      if (selectedStudents.includes(s.id)) {
+        return { ...s, healthStatus: s.healthStatus === 'Healthy' ? 'Monitoring' : 'Healthy' };
+      }
+      return s;
+    }));
+    setSelectedStudents([]);
+  };
+
+  const handleBatchToggleIncident = () => {
+    setStudents(prev => prev.map(s => {
+      if (selectedStudents.includes(s.id)) {
+        return { ...s, incidentFlag: !s.incidentFlag };
+      }
+      return s;
+    }));
+    setSelectedStudents([]);
+  };
+
+  const recentCriticalIncidents = [
+    { id: 1, time: "10:15 AM", student: "Thabo M.", type: "Medical", description: "Allergic reaction, administered EpiPen" },
+    { id: 2, time: "09:30 AM", student: "Zinhle N.", type: "Injury", description: "Fell off swing, referred to clinic" }
+  ];
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -63,6 +112,33 @@ export function AdminHealthDailyPage() {
           </div>
         </div>
       </div>
+
+      {recentCriticalIncidents.length > 0 && (
+        <Card className="border-rose-200 bg-rose-50/50">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-rose-800 flex items-center text-sm font-bold uppercase tracking-wider">
+              <ShieldAlert className="w-4 h-4 mr-2" />
+              Critical Incidents (Last 24 Hours)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+             {recentCriticalIncidents.map(incident => (
+               <div key={incident.id} className="flex justify-between items-center bg-white p-3 rounded-xl border border-rose-100 shadow-sm">
+                 <div className="flex items-center gap-3">
+                   <div className="bg-rose-100 text-rose-700 p-2 rounded-full">
+                     <AlertCircle className="w-4 h-4" />
+                   </div>
+                   <div>
+                     <p className="font-bold text-sm text-slate-900">{incident.student} <span className="text-slate-500 font-normal ml-1">({incident.type})</span></p>
+                     <p className="text-xs text-slate-600">{incident.description}</p>
+                   </div>
+                 </div>
+                 <div className="text-xs font-bold text-slate-500 bg-slate-50 px-2 py-1 rounded-md">{incident.time}</div>
+               </div>
+             ))}
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
@@ -176,11 +252,80 @@ export function AdminHealthDailyPage() {
         </TabsContent>
 
         <TabsContent value="health" className="space-y-6">
-           <Card className="rounded-[2rem] border-slate-200 p-8 text-center bg-slate-50 flex flex-col items-center justify-center">
-              <Pill className="h-12 w-12 text-slate-300 mb-4" />
-              <h3 className="text-lg font-bold text-slate-700 mb-2">Immunization & Health Tracking</h3>
-              <p className="text-slate-500 max-w-sm mb-6">Track allergies, medical conditions, and stay compliant with immunization records.</p>
-              <Button variant="outline" className="bg-white shadow-sm">View Medical Records</Button>
+           <Card className="rounded-[2rem] border-slate-200">
+             <CardHeader className="border-b border-slate-100 pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <CardTitle>Health Records & Tracking</CardTitle>
+                    <CardDescription>Monitor student health status and mark incidents.</CardDescription>
+                  </div>
+                  {selectedStudents.length > 0 && (
+                    <div className="flex items-center gap-2">
+                       <span className="text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                         {selectedStudents.length} selected
+                       </span>
+                       <Button size="sm" onClick={handleBatchToggleHealth} variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50">
+                         Toggle Status
+                       </Button>
+                       <Button size="sm" onClick={handleBatchToggleIncident} variant="outline" className="border-rose-200 text-rose-700 hover:bg-rose-50">
+                         Toggle Incident Flag
+                       </Button>
+                    </div>
+                  )}
+                </div>
+             </CardHeader>
+             <div className="p-4 overflow-x-auto">
+                <table className="w-full text-sm text-left text-slate-600">
+                   <thead className="text-xs text-slate-500 uppercase bg-slate-50 rounded-xl">
+                      <tr>
+                         <th className="px-6 py-4 font-medium rounded-l-xl w-16">
+                           <div className="flex items-center">
+                             <input 
+                               type="checkbox" 
+                               checked={students.length > 0 && selectedStudents.length === students.length} 
+                               onChange={selectAll}
+                               className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-600"
+                             />
+                           </div>
+                         </th>
+                         <th className="px-6 py-4 font-medium">Student</th>
+                         <th className="px-6 py-4 font-medium">Health Status</th>
+                         <th className="px-6 py-4 font-medium rounded-r-xl">Incident Flag</th>
+                      </tr>
+                   </thead>
+                   <tbody className="divide-y divide-slate-100">
+                      {students.map(student => (
+                         <tr key={student.id} className="hover:bg-slate-50">
+                            <td className="px-6 py-4">
+                              <div className="flex items-center">
+                                <input 
+                                  type="checkbox" 
+                                  checked={selectedStudents.includes(student.id)} 
+                                  onChange={() => toggleSelectStudent(student.id)}
+                                  className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-600"
+                                />
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 font-bold text-slate-900">{student.name}</td>
+                            <td className="px-6 py-4">
+                               <Badge variant={student.healthStatus === 'Healthy' ? 'secondary' : 'default'} className={student.healthStatus === 'Healthy' ? 'bg-emerald-100 text-emerald-700 w-24 justify-center' : 'bg-amber-100 text-amber-700 hover:bg-amber-200 w-24 justify-center'}>
+                                 {student.healthStatus}
+                               </Badge>
+                            </td>
+                            <td className="px-6 py-4">
+                               {student.incidentFlag ? (
+                                 <Badge className="bg-rose-100 text-rose-700 hover:bg-rose-200 pointer-events-none">
+                                   <ShieldAlert className="w-3 h-3 mr-1" /> Flagged
+                                 </Badge>
+                               ) : (
+                                 <span className="text-sm text-slate-400">None</span>
+                               )}
+                            </td>
+                         </tr>
+                      ))}
+                   </tbody>
+                </table>
+             </div>
            </Card>
         </TabsContent>
       </Tabs>

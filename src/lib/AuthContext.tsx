@@ -32,6 +32,7 @@ interface AuthContextType {
   register: (email: string, pass: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
   sendEmailVerification: () => Promise<void>;
+  devLogin?: (role: Role) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -41,6 +42,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (localStorage.getItem('dev_role')) {
+      setUser({
+        uid: 'dev-123',
+        name: 'Dev SuperAdmin',
+        email: 'siphom.yati@gmail.com',
+        role: localStorage.getItem('dev_role') as Role,
+        emailVerified: true
+      });
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
         // Fetch additional user data from Firestore
@@ -137,7 +150,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = async () => {
+    localStorage.removeItem('dev_role');
     await signOut(auth);
+  };
+
+  const devLogin = (role: Role) => {
+    localStorage.setItem('dev_role', role);
+    setUser({
+      uid: 'dev-123',
+      name: 'Dev SuperAdmin',
+      email: 'siphom.yati@gmail.com',
+      role: role,
+      emailVerified: true
+    });
   };
 
   const sendVerification = async () => {
@@ -154,6 +179,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       loginWithEmail, 
       register, 
       logout,
+      devLogin,
       sendEmailVerification: sendVerification
     }}>
       {!loading && children}

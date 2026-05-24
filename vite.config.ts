@@ -12,22 +12,30 @@ export default defineConfig(({mode}) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
         manifest: {
           name: 'Star Montessori & Preschools',
           short_name: 'StarPrep',
           description: 'Unified management platform for preschools in Eswatini',
           theme_color: '#2563eb',
+          background_color: '#ffffff',
+          display: 'standalone',
+          start_url: '/',
           icons: [
             {
-              src: 'pwa-192x192.png',
+              src: 'pwa-192x192.svg',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/svg+xml'
             },
             {
-              src: 'pwa-512x512.png',
+              src: 'pwa-512x512.svg',
               sizes: '512x512',
-              type: 'image/png'
+              type: 'image/svg+xml'
+            },
+            {
+              src: 'pwa-192x192.svg',
+              sizes: '192x192',
+              type: 'image/svg+xml',
+              purpose: 'any maskable'
             }
           ]
         },
