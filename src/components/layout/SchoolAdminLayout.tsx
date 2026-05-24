@@ -164,7 +164,13 @@ export function SchoolAdminLayout() {
             })}
           </nav>
           
-          <div className="mt-8 px-3">
+          <div className="mt-8 px-3 flex flex-col gap-2">
+             <Button variant="outline" size="sm" asChild className="w-full justify-start text-slate-300 border-slate-700 bg-slate-800 hover:bg-slate-700 hover:text-white">
+              <Link to="/">
+                <Globe className="h-4 w-4 mr-2" />
+                Return to Website
+              </Link>
+             </Button>
              <Button variant="outline" size="sm" onClick={switchToParent} className="w-full justify-start text-slate-800 bg-slate-100 hover:bg-slate-200 border-none">
               <LogOut className="h-4 w-4 mr-2" />
               Test Parent Portal

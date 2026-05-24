@@ -38,7 +38,7 @@ export function AdvertiserPortalPage() {
             </button>
           ))}
         </nav>
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4 border-t border-slate-800 flex flex-col gap-1">
           <div className="flex items-center gap-3 mb-4 px-3">
             <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-purple-400">
               {user?.name?.charAt(0) || 'A'}
@@ -48,6 +48,9 @@ export function AdvertiserPortalPage() {
               <p className="text-xs text-slate-400 truncate">{user?.email}</p>
             </div>
           </div>
+          <button onClick={() => navigate('/')} className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-colors text-sm font-medium border border-slate-800">
+            <BarChart3 className="h-4 w-4" /> Return to Website
+          </button>
           <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors text-sm font-medium">
             <Settings className="h-5 w-5" /> Settings
           </button>

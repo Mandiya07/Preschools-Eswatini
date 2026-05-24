@@ -34,7 +34,8 @@ import {
   Trash2,
   Archive,
   Sliders,
-  Database
+  Database,
+  Globe
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AIChatBot } from "@/components/AIChatBot";
@@ -1339,6 +1340,13 @@ export function ParentPortalPage() {
           </div>
 
           <nav className="flex items-center bg-slate-50 rounded-xl p-1 gap-1 border border-slate-100 overflow-x-auto no-scrollbar max-w-[50vw] sm:max-w-none">
+             <button 
+               onClick={() => navigate("/")}
+               className="text-[10px] sm:text-[11px] font-black px-3 sm:px-4 py-2 rounded-lg transition-all whitespace-nowrap uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-slate-200"
+             >
+               <Globe className="h-3 w-3 inline-block -mt-0.5 mr-1" />
+               Website
+             </button>
              <button 
                onClick={() => setActiveTab("dashboard")}
                className={`text-[10px] sm:text-[11px] font-black px-3 sm:px-4 py-2 rounded-lg transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'dashboard' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-900'}`}

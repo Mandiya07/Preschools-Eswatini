@@ -79,7 +79,12 @@ export function SuperAdminLayout() {
                 );
               })}
             </nav>
-            <div className="p-4 border-t border-slate-100">
+            <div className="p-4 border-t border-slate-100 flex flex-col gap-2">
+               <Button variant="outline" className="w-full justify-start gap-3 text-slate-700 bg-slate-50 border-slate-200 rounded-xl" asChild>
+                 <Link to="/">
+                   <LayoutDashboard className="h-4 w-4" /> Return to Website
+                 </Link>
+               </Button>
                <Button variant="ghost" className="w-full justify-start gap-3 text-slate-600 rounded-xl" onClick={handleLogout}>
                  <LogOut className="h-5 w-5" /> Logout
                </Button>
@@ -126,7 +131,17 @@ export function SuperAdminLayout() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-100">
+        <div className="p-4 border-t border-slate-100 flex flex-col gap-2">
+          <Button 
+            variant="outline" 
+            className={`w-full gap-3 text-slate-700 bg-slate-50 hover:bg-slate-100 border-slate-200 rounded-xl transition-all ${sidebarOpen ? "justify-start" : "justify-center p-0"}`}
+            asChild
+          >
+            <Link to="/">
+              <LayoutDashboard className="h-4 w-4" />
+              {sidebarOpen && <span>Return to Website</span>}
+            </Link>
+          </Button>
           <Button 
             variant="ghost" 
             className={`w-full gap-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all ${sidebarOpen ? "justify-start" : "justify-center p-0"}`}

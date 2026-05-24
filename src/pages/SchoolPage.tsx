@@ -135,6 +135,22 @@ export function SchoolPage() {
     }
   };
 
+  const handleNativeShare = async () => {
+    if (navigator.share && school) {
+      try {
+        await navigator.share({
+          title: `${school.name} | Preschools Eswatini`,
+          text: `Check out ${school.name} on Preschools Eswatini!`,
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      setShowShareModal(true); // Fallback to custom modal
+    }
+  };
+
   const handleAddFacility = () => {
     if (newFacilityName.trim() && school) {
         setSchool({...school, facilities: [...school.facilities, newFacilityName]});
@@ -235,13 +251,21 @@ export function SchoolPage() {
             <span className="text-slate-300">/</span>
             <span className="text-slate-900 font-semibold truncate max-w-[150px] sm:max-w-[280px]">{school.name}</span>
           </div>
-          <Link 
-            to="/directory" 
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors bg-blue-50/80 hover:bg-blue-100/80 px-4 py-2 rounded-xl border border-blue-100/50 shadow-xs"
-            id="nav-back-directory-link"
-          >
-            <ChevronLeft className="h-4 w-4" /> Back to Directory
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleNativeShare}
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors bg-white hover:bg-slate-50 px-3 sm:px-4 py-2 rounded-xl border border-slate-200 shadow-xs"
+            >
+              <Share2 className="h-4 w-4" /> <span className="hidden sm:inline">Share Profile</span>
+            </button>
+            <Link 
+              to="/directory" 
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors bg-blue-50/80 hover:bg-blue-100/80 px-3 sm:px-4 py-2 rounded-xl border border-blue-100/50 shadow-xs"
+              id="nav-back-directory-link"
+            >
+              <ChevronLeft className="h-4 w-4" /> <span className="hidden sm:inline">Back to Directory</span><span className="sm:hidden">Back</span>
+            </Link>
+          </div>
         </div>
       </div>
 

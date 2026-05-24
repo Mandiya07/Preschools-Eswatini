@@ -22,19 +22,19 @@ export default defineConfig(({mode}) => {
           start_url: '/',
           icons: [
             {
-              src: 'logo-192.svg',
+              src: 'logo-192.png',
               sizes: '192x192',
-              type: 'image/svg+xml'
+              type: 'image/png'
             },
             {
-              src: 'logo-512.svg',
+              src: 'logo-512.png',
               sizes: '512x512',
-              type: 'image/svg+xml'
+              type: 'image/png'
             },
             {
-              src: 'logo-192.svg',
+              src: 'logo-192.png',
               sizes: '192x192',
-              type: 'image/svg+xml',
+              type: 'image/png',
               purpose: 'any maskable'
             }
           ]
