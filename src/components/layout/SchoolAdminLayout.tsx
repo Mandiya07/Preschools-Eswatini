@@ -25,7 +25,11 @@ import {
   BookOpen,
   HeartPulse,
   WifiOff,
-  ShieldCheck
+  ShieldCheck,
+  Cloud,
+  CheckCircle2,
+  RefreshCw,
+  CloudOff
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +40,7 @@ import { Badge } from "@/components/ui/badge";
 export function SchoolAdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [pendingSync, setPendingSync] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, login } = useAuth();
@@ -49,6 +54,27 @@ export function SchoolAdminLayout() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
+  }, []);
+
+  useEffect(() => {
+    const checkSyncStatus = () => {
+      try {
+        let totalPending = 0;
+        // Check for specific known queues, or we can iterate localStorage if they have a known suffix
+        const attQueue = JSON.parse(localStorage.getItem('attendance_offline_queue') || '[]');
+        if (Array.isArray(attQueue)) {
+          totalPending += attQueue.length;
+        }
+        setPendingSync(totalPending);
+      } catch (e) {
+        // ignore
+      }
+    };
+    
+    checkSyncStatus();
+    // Poll every 2 seconds to keep it updated globally
+    const interval = setInterval(checkSyncStatus, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   // If we are currently simulating Parent, this layout isn't strictly for us, but for demo we can handle it or just let the router be.
@@ -181,12 +207,24 @@ export function SchoolAdminLayout() {
           </div>
           
           <div className="flex items-center gap-4">
-            {isOffline && (
-              <Badge variant="secondary" className="bg-amber-100 text-amber-800 border-none hidden sm:flex items-center gap-1.5 animate-pulse">
-                <WifiOff className="h-3.5 w-3.5" />
-                Offline Mode (Syncing Paused)
-              </Badge>
-            )}
+            <div className="hidden sm:flex">
+              {isOffline ? (
+                <Badge variant="secondary" className="bg-amber-100 text-amber-800 border-none flex items-center gap-1.5 animate-pulse">
+                  <WifiOff className="h-3.5 w-3.5" />
+                  Offline Mode ({pendingSync > 0 ? `${pendingSync} pending` : 'Syncing Paused'})
+                </Badge>
+              ) : pendingSync > 0 ? (
+                <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-none flex items-center gap-1.5 animate-pulse">
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                  Syncing {pendingSync} item{pendingSync !== 1 ? 's' : ''}...
+                </Badge>
+              ) : (
+                <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-none flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
+                  <Cloud className="h-3.5 w-3.5" />
+                  All data synced
+                </Badge>
+              )}
+            </div>
             <Link to="/school/1" target="_blank" className="text-sm font-medium text-blue-600 hover:text-blue-700 hidden sm:block">
               View Website
             </Link>

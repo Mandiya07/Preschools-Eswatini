@@ -61,7 +61,8 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-slate-900 mb-4">Connect</h4>
             <ul className="space-y-3 text-sm text-slate-500">
-              <li><Link to="/blog" className="font-bold text-blue-600 hover:text-blue-700">Guides & Articles</Link></li>
+              <li><Link to="/install" className="font-bold text-blue-600 hover:text-blue-700">App Install Guide</Link></li>
+              <li><Link to="/blog" className="hover:text-blue-600">Guides & Articles</Link></li>
               <li><Link to="/contact" className="hover:text-blue-600">Contact Us</Link></li>
               <li><Link to="/about" className="hover:text-blue-600">About the Platform</Link></li>
               <li><Link to="/privacy" className="hover:text-blue-600">Privacy Policy</Link></li>

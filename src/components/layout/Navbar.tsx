@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Menu, X, LayoutDashboard, ShieldCheck } from "lucide-react";
+import { GraduationCap, Menu, X, LayoutDashboard, ShieldCheck, Download } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
 
@@ -122,6 +122,21 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300 overflow-x-hidden">
           <div className="flex flex-col space-y-1.5">
+            <div className="bg-blue-50/50 rounded-xl p-4 mb-2 border border-blue-100/50 flex flex-col gap-2">
+              <div className="flex items-center gap-2 text-blue-700 font-semibold text-sm">
+                <Download className="h-4 w-4" />
+                Install the App
+              </div>
+              <p className="text-xs text-blue-600/80 leading-relaxed mb-1">
+                Add Preschools Eswatini to your home screen for quick access and offline features.
+              </p>
+              <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700 text-white h-8 rounded-lg text-xs" asChild>
+                <Link to="/install" onClick={() => setIsMobileMenuOpen(false)}>
+                  View Install Guide
+                </Link>
+              </Button>
+            </div>
+            
             <Link to="/" className={getMobileLinkClass("/")} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             <Link to="/directory" className={getMobileLinkClass("/directory")} onClick={() => setIsMobileMenuOpen(false)}>Find a School</Link>
             {(!user || user.role === 'User' || user.role === 'Parent') && (

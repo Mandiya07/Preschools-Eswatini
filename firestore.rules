@@ -161,8 +161,12 @@ service cloud.firestore {
     }
 
     match /school_registrations/{regId} {
-      allow create: if isSignedIn();
-      allow read, update, delete: if isSuperAdmin();
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+
+    match /dashboard_notes/{noteId} {
+      allow read, create, update, delete: if isSignedIn();
     }
 
     match /inquiries/{inquiryId} {

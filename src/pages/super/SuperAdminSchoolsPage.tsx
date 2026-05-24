@@ -210,10 +210,8 @@ export function SuperAdminSchoolsPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                        <DropdownMenu>
-                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-400">
-                               <MoreHorizontal className="h-4 w-4" />
-                            </Button>
+                         <DropdownMenuTrigger className="inline-flex items-center justify-center shrink-0 h-8 w-8 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-900 transition-colors outline-none cursor-pointer">
+                            <MoreHorizontal className="h-4 w-4" />
                          </DropdownMenuTrigger>
                          <DropdownMenuContent align="end" className="w-48 rounded-xl border-slate-200 shadow-xl p-1">
                             <DropdownMenuLabel className="text-[10px] font-black text-slate-400 uppercase tracking-widest Ital px-2 py-1.5">Management</DropdownMenuLabel>

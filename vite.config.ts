@@ -13,8 +13,8 @@ export default defineConfig(({mode}) => {
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          name: 'Star Montessori & Preschools',
-          short_name: 'StarPrep',
+          name: 'Preschools Eswatini',
+          short_name: 'Preschools SZ',
           description: 'Unified management platform for preschools in Eswatini',
           theme_color: '#2563eb',
           background_color: '#ffffff',
