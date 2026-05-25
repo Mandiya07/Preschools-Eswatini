@@ -33,9 +33,9 @@ export function LoginPage() {
   const handleGoogleLogin = async () => {
     try {
       await login();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login failed:", error);
-      setError("Failed to sign in with Google");
+      setError(error.message || "Failed to sign in with Google");
     }
   };
 
