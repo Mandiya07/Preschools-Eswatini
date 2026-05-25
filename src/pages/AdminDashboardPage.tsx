@@ -184,7 +184,7 @@ export function AdminDashboardPage() {
 
   const totalStudents = students.length;
   const chartData = Object.entries(classEnrollment)
-    .map(([name, count]) => ({
+    .map(([name, count]: [string, number]) => ({
       name,
       students: count,
       percentage: totalStudents > 0 ? ((count / totalStudents) * 100).toFixed(1) : '0.0'

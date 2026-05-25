@@ -297,9 +297,9 @@ const ARTICLES: Article[] = [
     readTime: "3 min read",
     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&auto=format&fit=crop&q=80&ixlib=rb-4.0.3",
     summary: "A quick and simple guide on how to install the Preschools Eswatini Progressive Web App (PWA) onto your smartphone, tablet, or desktop computer.",
-    content: [
+    sections: [
       {
-        section: "Install on Your Device",
+        heading: "Install on Your Device",
         paragraphs: [
           "Preschools Eswatini is built as a Progressive Web App (PWA). This means you don't have to go through the App Store or Google Play Store to download it. You can install it directly from your web browser, which saves data and storage space.",
           "Our app provides instant access to the early education ecosystem across the kingdom, offering a seamless experience on any device you choose."
@@ -307,18 +307,9 @@ const ARTICLES: Article[] = [
       }
     ],
     highlights: [
-        {
-            title: "Data Efficient",
-            description: "No massive App Store downloads required."
-        },
-        {
-            title: "Offline Syncing",
-            description: "Certain school admin tools operate completely offline once installed."
-        },
-        {
-            title: "Cross Platform",
-            description: "Works flawlessly on iOS, Android, macOS, and Windows."
-        }
+        "Data Efficient: No massive App Store downloads required.",
+        "Offline Syncing: Certain school admin tools operate completely offline once installed.",
+        "Cross Platform: Works flawlessly on iOS, Android, macOS, and Windows."
     ],
     cta: {
         text: "View Installation Steps",
