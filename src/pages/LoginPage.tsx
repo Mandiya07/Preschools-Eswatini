@@ -35,7 +35,11 @@ export function LoginPage() {
       await login();
     } catch (error: any) {
       console.error("Login failed:", error);
-      setError(error.message || "Failed to sign in with Google");
+      if (error && error.code === "auth/unauthorized-domain") {
+        setError("This domain is not authorized in Firebase. Please go to your Firebase Console > Authentication > Settings > Authorized Domains and add this domain.");
+      } else {
+        setError(error.message || "Failed to sign in with Google");
+      }
     }
   };
 

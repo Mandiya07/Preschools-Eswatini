@@ -43,7 +43,11 @@ export function SignUpPage() {
       setSuccess(true);
     } catch (err: any) {
       console.error("Registration failed:", err);
-      setError(err.message || "Failed to create account");
+      if (err && err.code === "auth/unauthorized-domain") {
+        setError("This domain is not authorized in Firebase. Please go to your Firebase Console > Authentication > Settings > Authorized Domains and add this domain.");
+      } else {
+        setError(err.message || "Failed to create account");
+      }
     } finally {
       setLoading(false);
     }

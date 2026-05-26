@@ -216,7 +216,7 @@ export function AnalyticsCard({
                   "text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider transition-all",
                   rangePreset === pr && !customStartDate && !customEndDate
                     ? "bg-white text-slate-900 shadow-sm"
-                    : "text-slate-550 hover:text-slate-900"
+                    : "text-slate-500 hover:text-slate-900"
                 )}
                 type="button"
               >

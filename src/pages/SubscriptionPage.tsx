@@ -201,7 +201,7 @@ export function SubscriptionPage() {
                    <p className="text-xs text-slate-600 mb-4 leading-relaxed font-semibold">
                      Home-based au pairs, travel nannies, and informal backyard daycares require E0.00 subscriptions or commission fees.
                    </p>
-                   <Button variant="outline" className="w-full text-xs font-bold border-amber-350 text-amber-900 hover:bg-amber-100" asChild>
+                   <Button variant="outline" className="w-full text-xs font-bold border-amber-300 text-amber-900 hover:bg-amber-100" asChild>
                      <a href="/flatlets">Discover Registries</a>
                    </Button>
                 </CardContent>
@@ -219,7 +219,7 @@ export function SubscriptionPage() {
                 🎁 Free Grassroots Programs Guarantee
               </span>
               <h3 className="text-lg font-extrabold text-slate-950">Are you a Backyard Flatlet Daycare or Parent looking for Home Nannies?</h3>
-              <p className="text-slate-750 text-sm leading-relaxed font-semibold">
+              <p className="text-slate-700 text-sm leading-relaxed font-semibold">
                 You do NOT need a formal platform subscription. Registration for informal micro-nurseries, digital child-minding guides, and regional matchmaking with professional nanny placement networks is <strong>100% platform-free (E0.00 search &amp; listing fees)</strong>.
               </p>
             </div>

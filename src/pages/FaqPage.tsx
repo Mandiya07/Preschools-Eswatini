@@ -166,7 +166,7 @@ export function FaqPage() {
                   isOpen ? "max-h-[500px] border-t border-slate-100 p-6 pt-5 bg-white/70 rounded-b-2xl" : "max-h-0"
                 }`}
               >
-                <div className="text-slate-650 text-sm font-medium leading-relaxed leading-7">
+                <div className="text-slate-600 text-sm font-medium leading-relaxed leading-7">
                   {faq.answer}
                 </div>
               </div>

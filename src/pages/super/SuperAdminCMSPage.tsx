@@ -373,15 +373,15 @@ export function SuperAdminCMSPage() {
               {/* Search & Statistics Filter Bar */}
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white p-4 rounded-2xl border border-slate-200">
                 <div className="relative w-full sm:max-w-xs">
-                  <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-450 text-slate-400" />
+                  <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
                   <Input 
                     placeholder="Search Guides articles..." 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 rounded-xl border-slate-250 w-full"
+                    className="pl-10 rounded-xl border-slate-200 w-full"
                   />
                 </div>
-                <div className="flex items-center gap-4 text-xs font-semibold text-slate-550 shrink-0 text-slate-500">
+                <div className="flex items-center gap-4 text-xs font-semibold shrink-0 text-slate-500">
                   <span>Showing {filteredArticles.length} of {articles.length} Active Guides</span>
                   <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl" onClick={handleCreateNew}>
                     <Plus className="h-3.5 w-3.5 mr-1" /> Add Article
@@ -393,7 +393,7 @@ export function SuperAdminCMSPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {filteredArticles.map((article) => {
                   return (
-                    <Card key={article.slug} className="border border-slate-250 hover:border-slate-300 shadow-sm transition-all flex flex-col justify-between">
+                    <Card key={article.slug} className="border border-slate-200 hover:border-slate-300 shadow-sm transition-all flex flex-col justify-between">
                       <div className="p-5 space-y-4">
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">

@@ -11,6 +11,7 @@ export function RegisterSupplierPage() {
   const { login, user, loading } = useAuth();
   const navigate = useNavigate();
   const [isRegistering, setIsRegistering] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const handleRole = async () => {
@@ -40,10 +41,16 @@ export function RegisterSupplierPage() {
   }, [user, loading, navigate]);
 
   const handleLogin = async () => {
+    setError(null);
     try {
       await login();
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (err: any) {
+      console.error("Login failed:", err);
+      if (err && err.code === "auth/unauthorized-domain") {
+        setError("This domain is not authorized in Firebase. Please go to your Firebase Console > Authentication > Settings > Authorized Domains and add this domain.");
+      } else {
+        setError(err.message || "Failed to sign in with Google");
+      }
     }
   };
 
@@ -61,6 +68,12 @@ export function RegisterSupplierPage() {
            <h1 className="text-3xl font-extrabold mb-4 text-slate-900">Become a Supplier</h1>
            <p className="text-slate-600 mb-8 font-medium">Join our marketplace to sell your educational products and services directly to schools.</p>
            
+           {error && (
+             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm mb-6 text-left">
+               {error}
+             </div>
+           )}
+
            <Button onClick={handleLogin} disabled={loading || isRegistering} className="w-full bg-blue-600 hover:bg-blue-700 h-14 text-lg rounded-xl">
               {(loading || isRegistering) ? <Loader2 className="h-6 w-6 animate-spin" /> : "Sign Up with Google"}
            </Button>

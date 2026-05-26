@@ -66,17 +66,17 @@ export function PricingPage() {
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 No Subscriptions for Home-Based Care or Backyard Flatlets
               </h2>
-              <p className="text-slate-650 text-sm leading-relaxed font-semibold">
+              <p className="text-slate-600 text-sm leading-relaxed font-semibold">
                 Our platform believes in digital equity for Eswatini&apos;s early educators & parents. We charge <span className="text-amber-700 font-extrabold">E0.00 search and registry fees</span> for parents seeking child minders, travel au pairs, and on-demand home helpers. Furthermore, peri-urban informal backyard daycare flatlets can join our directory with zero platform costs or listing fees.
               </p>
               <div className="flex flex-wrap gap-x-6 gap-y-2 pt-1.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-705 text-slate-700">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Zero Registry Subscriptions
                 </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-705 text-slate-700">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Zero Client Matching Fees
                 </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-705 text-slate-700">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Free Flatlet Dual-Intent Listing
                 </div>
               </div>

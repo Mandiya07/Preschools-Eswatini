@@ -328,7 +328,7 @@ export function SuperAdminSocialPage() {
                       className={`text-left p-3 rounded-xl border transition-all flex flex-col justify-between h-20 ${
                         aiTemplate === tmpl.id 
                           ? "bg-blue-600 border-blue-400 text-white shadow-md shadow-blue-500/20" 
-                          : "bg-slate-850 border-slate-705 text-slate-300 hover:bg-slate-800 hover:text-white"
+                          : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
                       }`}
                       id={`ai-temp-btn-${tmpl.id}`}
                     >
@@ -346,7 +346,7 @@ export function SuperAdminSocialPage() {
                   <select
                     value={aiTone}
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => setAiTone(e.target.value)}
-                    className="w-full bg-slate-850 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                     id="ai-tone-select"
                   >
                     <option value="excited">🎉 Excited & Growth-Oriented (Emojis, viral)</option>
@@ -360,7 +360,7 @@ export function SuperAdminSocialPage() {
                   <label className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Custom context or specific text details (Optional):</label>
                   <Input
                     placeholder="E.g. Mention free signup before Friday, or Dr. Nxumalo's review..."
-                    className="h-10 text-xs border-slate-700 bg-slate-850 placeholder:text-slate-500 rounded-xl text-white focus-visible:ring-1 focus-visible:ring-blue-500"
+                    className="h-10 text-xs border-slate-700 bg-slate-800 placeholder:text-slate-500 rounded-xl text-white focus-visible:ring-1 focus-visible:ring-blue-500"
                     value={aiCustomContext}
                     onChange={(e) => setAiCustomContext(e.target.value)}
                     id="ai-custom-context-input"
@@ -374,7 +374,7 @@ export function SuperAdminSocialPage() {
               <Button 
                 onClick={generatePostWithAI} 
                 disabled={isLoadingAi}
-                className="bg-blue-500 hover:bg-blue-650 text-white rounded-xl h-10 px-5 text-xs font-extrabold shadow-lg shadow-blue-500/10"
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-xl h-10 px-5 text-xs font-extrabold shadow-lg shadow-blue-500/10"
                 id="ai-generate-post-btn"
               >
                 {isLoadingAi ? (
@@ -453,7 +453,7 @@ export function SuperAdminSocialPage() {
                             </div>
                           </div>
                           <div className="mt-3">
-                            <span className="text-xs font-extrabold text-slate-850 block">{platform.label}</span>
+                            <span className="text-xs font-extrabold text-slate-800 block">{platform.label}</span>
                             <span className="text-[9px] font-medium text-slate-400 block break-all">{platform.subtitle}</span>
                           </div>
                         </button>
@@ -737,17 +737,17 @@ export function SuperAdminSocialPage() {
                   )}
 
                   {/* Stats counts */}
-                  <div className="text-[10px] text-slate-450 font-semibold border-b border-slate-100 pb-2 flex justify-between">
+                  <div className="text-[10px] text-slate-400 font-semibold border-b border-slate-100 pb-2 flex justify-between">
                      <span>💡 14 reactions</span>
                      <span>2 comments</span>
                   </div>
 
                   {/* Actions */}
                   <div className="grid grid-cols-4 text-center text-[11px] font-extrabold text-slate-500 pt-1">
-                    <span className="hover:text-blue-650 transition-colors">Like</span>
-                    <span className="hover:text-blue-650 transition-colors">Comment</span>
-                    <span className="hover:text-blue-650 transition-colors">Repost</span>
-                    <span className="hover:text-blue-650 transition-colors">Send</span>
+                    <span className="hover:text-blue-600 transition-colors">Like</span>
+                    <span className="hover:text-blue-600 transition-colors">Comment</span>
+                    <span className="hover:text-blue-600 transition-colors">Repost</span>
+                    <span className="hover:text-blue-600 transition-colors">Send</span>
                   </div>
                 </div>
               )}
@@ -769,13 +769,13 @@ export function SuperAdminSocialPage() {
                       </div>
 
                       {/* Content text */}
-                      <p className="text-xs text-slate-850 whitespace-pre-wrap leading-relaxed mt-1">
+                      <p className="text-xs text-slate-800 whitespace-pre-wrap leading-relaxed mt-1">
                         {content || "Your Twitter/X post guidelines display here dynamically..."}
                       </p>
 
                       {/* Graphic attachment */}
                       {(customImage || image) && (
-                        <div className="aspect-video bg-slate-50 rounded-xl overflow-hidden mt-3.5 border border-slate-150">
+                        <div className="aspect-video bg-slate-50 rounded-xl overflow-hidden mt-3.5 border border-slate-200">
                           <img src={customImage || image} className="w-full h-full object-cover" alt="Twitter Media Card" />
                         </div>
                       )}

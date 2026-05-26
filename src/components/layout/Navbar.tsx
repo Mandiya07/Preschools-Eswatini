@@ -59,7 +59,7 @@ export function Navbar() {
             <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
             <Link to="/learning" className={getLinkClass("/learning")}>Learning</Link>
             <Link to="/community" className={getLinkClass("/community")}>Community</Link>
-            <Link to="/flatlets" className="text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3.5 py-2 rounded-xl text-indigo-650 hover:text-indigo-900 bg-indigo-50/50 hover:bg-indigo-50">
+            <Link to="/flatlets" className="text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3.5 py-2 rounded-xl text-indigo-700 hover:text-indigo-900 bg-indigo-50/50 hover:bg-indigo-50">
               ♥ Flatlets Care
             </Link>
           </div>

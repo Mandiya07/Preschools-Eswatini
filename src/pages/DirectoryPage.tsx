@@ -208,11 +208,11 @@ export function DirectoryPage() {
                       <label key={item.value} className="flex items-center gap-2 cursor-pointer">
                         <input 
                           type="checkbox" 
-                          className="rounded text-indigo-600 focus:ring-indigo-650 border-slate-300"
+                          className="rounded text-indigo-600 focus:ring-indigo-600 border-slate-300"
                           checked={selectedTypes.includes(item.value)}
                           onChange={() => handleCheckboxChange(setSelectedTypes, item.value)}
                         />
-                        <span className={`text-sm ${item.value === "Neighborhood Flatlet" ? "text-indigo-650 font-bold" : "text-slate-600"}`}>{item.label}</span>
+                        <span className={`text-sm ${item.value === "Neighborhood Flatlet" ? "text-indigo-600 font-bold" : "text-slate-600"}`}>{item.label}</span>
                       </label>
                     ))}
                   </div>

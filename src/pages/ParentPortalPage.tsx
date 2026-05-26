@@ -211,7 +211,7 @@ export function ParentPortalPage() {
           </div>
           <div className="space-y-1">
             <h3 className="text-base font-bold text-blue-950">Registered Data Controller & GDPR Recipient</h3>
-            <p className="text-blue-850 text-xs leading-relaxed mt-1">
+            <p className="text-blue-800 text-xs leading-relaxed mt-1">
               Preschools Eswatini operates under strict compliance with the Kingdom of Eswatini's Data Protection Act of 2018 (Reference: <strong>SZ-DPA-2018-0912A</strong>) and aligns globally with General Data Protection Regulation (GDPR) guidelines. We ensure all personal data is encrypted via transit-level SSL & AES-256 rest protocols. You hold sovereign ownership of your clinical wellbeing reports, tuition balances, and children's academic journals.
             </p>
           </div>
@@ -261,7 +261,7 @@ export function ParentPortalPage() {
                   type="text"
                   disabled
                   value={user?.email || "No Email linked"}
-                  className="w-full h-11 bg-slate-100 border border-slate-150 rounded-xl px-4 text-sm font-medium text-slate-500 cursor-not-allowed"
+                  className="w-full h-11 bg-slate-100 border border-slate-200 rounded-xl px-4 text-sm font-medium text-slate-500 cursor-not-allowed"
                 />
                 <span className="text-[10px] text-slate-400 font-medium select-none">Email address functions as an immutable login locator under security policy requirements.</span>
               </div>
