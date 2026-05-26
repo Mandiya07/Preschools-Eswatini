@@ -52,12 +52,8 @@ export function Navbar() {
           <div className="hidden lg:flex lg:items-center lg:gap-1.5 xl:gap-2">
             <Link to="/" className={getLinkClass("/")}>Home</Link>
             <Link to="/directory" className={getLinkClass("/directory")}>Find a School</Link>
-            {(!user || user.role === 'User' || user.role === 'Parent') && (
-              <>
-                <Link to="/features" className={getLinkClass("/features")}>For Schools</Link>
-                <Link to="/pricing" className={getLinkClass("/pricing")}>Pricing</Link>
-              </>
-            )}
+            <Link to="/features" className={getLinkClass("/features")}>For Schools</Link>
+            <Link to="/pricing" className={getLinkClass("/pricing")}>Pricing</Link>
             <Link to="/resources" className={getLinkClass("/resources")}>Resources</Link>
             <Link to="/blog" className={getLinkClass("/blog")}>Guides</Link>
             <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
@@ -142,12 +138,8 @@ export function Navbar() {
             
             <Link to="/" className={getMobileLinkClass("/")} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             <Link to="/directory" className={getMobileLinkClass("/directory")} onClick={() => setIsMobileMenuOpen(false)}>Find a School</Link>
-            {(!user || user.role === 'User' || user.role === 'Parent') && (
-              <>
-                <Link to="/features" className={getMobileLinkClass("/features")} onClick={() => setIsMobileMenuOpen(false)}>For Schools</Link>
-                <Link to="/pricing" className={getMobileLinkClass("/pricing")} onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
-              </>
-            )}
+            <Link to="/features" className={getMobileLinkClass("/features")} onClick={() => setIsMobileMenuOpen(false)}>For Schools</Link>
+            <Link to="/pricing" className={getMobileLinkClass("/pricing")} onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
             <Link to="/resources" className={getMobileLinkClass("/resources")} onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
             <Link to="/blog" className={getMobileLinkClass("/blog")} onClick={() => setIsMobileMenuOpen(false)}>Guides</Link>
             <Link to="/marketplace" className={getMobileLinkClass("/marketplace")} onClick={() => setIsMobileMenuOpen(false)}>Marketplace</Link>
