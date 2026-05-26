@@ -6,6 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Search, MapPin, Star, GraduationCap, CheckCircle2, Loader2, PlayCircle, Sparkles } from "lucide-react";
 import { fetchCollection } from "@/lib/firestoreUtils";
 import { School } from "@/types";
+import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
 import kidsImg from '@/assets/images/kids_playing_blocks_1779268580565.png';
 
 export function DirectoryPage() {
@@ -35,9 +36,14 @@ export function DirectoryPage() {
         try {
           const response = await fetch('/api/schools');
           const apiData = await response.json();
-          setSchools(apiData);
+          if (apiData && apiData.length > 0) {
+            setSchools(apiData);
+          } else {
+            setSchools(PRELOADED_SCHOOLS);
+          }
         } catch(e) {
           console.error("Error fetching from API", e);
+          setSchools(PRELOADED_SCHOOLS);
         }
       }
       setLoading(false);

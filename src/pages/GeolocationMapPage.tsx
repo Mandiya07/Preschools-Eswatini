@@ -3,6 +3,7 @@ import { SEO } from "@/components/SEO";
 import { APIProvider, Map, AdvancedMarker, Pin, useMap, useMapsLibrary, useAdvancedMarkerRef, InfoWindow } from '@vis.gl/react-google-maps';
 import { School } from "@/types";
 import { fetchCollection } from "@/lib/firestoreUtils";
+import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
 import { Search, MapPin, Navigation, Car, BellRing, Loader2, Star, CheckCircle2, ChevronRight, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -265,6 +266,9 @@ export function MapSearchPage() {
           const res = await fetch('/api/schools');
           data = await res.json();
         } catch (e) {}
+      }
+      if (!data || data.length === 0) {
+        data = PRELOADED_SCHOOLS;
       }
       
       // Assign mock coordinates around Eswatini to schools that don't have them

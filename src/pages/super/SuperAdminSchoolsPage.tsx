@@ -10,7 +10,9 @@ import {
   ChevronRight,
   MapPin,
   Calendar,
-  CreditCard
+  CreditCard,
+  Database,
+  Sparkles
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,6 +30,8 @@ import { fetchCollection, updateDocument, createDocument, subscribeToCollection 
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
+import { auth } from "@/lib/firebase";
 
 export function SuperAdminSchoolsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,6 +39,56 @@ export function SuperAdminSchoolsPage() {
   const [schools, setSchools] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
+  const [seeding, setSeeding] = useState(false);
+
+  const handleSeedRegistry = async () => {
+    setSeeding(true);
+    let successCount = 0;
+    let skipCount = 0;
+    let failCount = 0;
+
+    try {
+      // Prompt confirm first (standard browser confirm)
+      const confirmSeed = window.confirm(
+        "Are you sure you want to pre-load all basic school registry listings into your Firestore database? This will skip any schools already matching by ID."
+      );
+      if (!confirmSeed) {
+        setSeeding(false);
+        return;
+      }
+
+      for (const school of PRELOADED_SCHOOLS) {
+        const exists = schools.some((s) => s.id === school.id);
+        if (!exists) {
+          try {
+            await createDocument("schools", school.id, {
+              ...school,
+              ownerId: auth.currentUser?.uid || "super_admin_seed",
+            });
+            successCount++;
+          } catch (err: any) {
+            console.error(`Failed to pre-load ${school.name}:`, err);
+            failCount++;
+          }
+        } else {
+          skipCount++;
+        }
+      }
+
+      if (successCount > 0) {
+        toast.success(`Successfully pre-loaded ${successCount} Swati preschools onto the public directory!`);
+      } else if (failCount > 0) {
+        toast.error(`Import partially failed with ${failCount} errors.`);
+      } else {
+        toast.info("All public registry preschools are already present in your database.");
+      }
+    } catch (e) {
+      console.error("Critical seeding failure:", e);
+      toast.error("An error occurred while attempting directory sync.");
+    } finally {
+      setSeeding(false);
+    }
+  };
 
   useEffect(() => {
     const unsubRegs = subscribeToCollection("school_registrations", (data) => {
@@ -117,6 +171,19 @@ export function SuperAdminSchoolsPage() {
           <p className="text-slate-500 italic text-sm">Manage all registered preschools and verify their documents.</p>
         </div>
         <div className="flex items-center gap-3">
+           <Button 
+             variant="outline" 
+             className="rounded-xl border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 cursor-pointer" 
+             onClick={handleSeedRegistry} 
+             disabled={seeding}
+           >
+              {seeding ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Database className="h-4 w-4 mr-2 text-emerald-600" />
+              )}
+              {seeding ? "Importing..." : "Pre-load Public Registry"}
+           </Button>
            <Button variant="outline" className="rounded-xl border-slate-200">
               <Filter className="h-4 w-4 mr-2" /> Filters
            </Button>

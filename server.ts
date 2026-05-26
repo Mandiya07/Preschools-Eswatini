@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import helmet from "helmet";
 import compression from "compression";
@@ -210,8 +211,14 @@ async function startServer() {
   });
 
   app.get("/api/schools", (req, res) => {
-    // Deprecated. Return sample schools for the directory
-    res.json([]);
+    try {
+      const dataPath = path.join(process.cwd(), "src/data/preloadedSchools.json");
+      const fileData = fs.readFileSync(dataPath, "utf-8");
+      res.json(JSON.parse(fileData));
+    } catch (e) {
+      console.error("Failed to load preloaded schools:", e);
+      res.json([]);
+    }
   });
 
   // Additional mock backend routes can be defined here...
