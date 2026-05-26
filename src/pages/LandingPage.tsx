@@ -338,6 +338,30 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* 8.5 Grassroots Peri-Urban Flatlet Section */}
+      <section className="py-20 bg-indigo-900 text-white rounded-[3rem] lg:rounded-[5rem] overflow-hidden my-16 mx-4 sm:mx-6 lg:mx-8 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:32px_32px] opacity-10" />
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row gap-8 items-center justify-between">
+          <div className="max-w-2xl space-y-4 text-left">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm px-3.5 py-1 text-xs font-bold text-amber-300 border border-white/10 uppercase tracking-widest">
+              Grassroots Advocacy & Care
+            </span>
+            <span className="inline-flex items-center gap-1 bg-amber-400 text-slate-900 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase ml-3">No Subscription</span>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+              Supporting Informal Daycare Flatlets & Home Nannies
+            </h2>
+            <p className="text-slate-200 text-lg leading-relaxed">
+              We are committed to digital equity with <strong className="text-amber-300">E0.00 platform search &amp; registration fees</strong>. Backyard pre-primary nurseries can join our free micro-directory, and parents can instantly connect with verified independent nanny networks (like Grace Nannies and END Network) with zero subscription fees or matching commissions.
+            </p>
+          </div>
+          <Button size="lg" className="bg-amber-400 hover:bg-amber-500 text-slate-900 font-extrabold h-14 px-8 rounded-2xl flex items-center gap-2 group whitespace-nowrap" asChild>
+            <Link to="/flatlets">
+              Explore Free Registries <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
       {/* 9. Contact Section - Redesigned to be warmer */}
       <section className="py-24 bg-white border-y border-slate-200 rounded-t-[3rem] lg:rounded-t-[5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

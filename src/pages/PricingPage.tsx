@@ -56,6 +56,44 @@ export function PricingPage() {
           ))}
         </div>
 
+        {/* Free Home-Based Care & Flatlets Offer Section */}
+        <div className="mt-20 max-w-5xl mx-auto font-sans">
+          <div className="bg-amber-50/60 border-2 border-dashed border-amber-300 rounded-[2.5rem] p-8 sm:p-10 flex flex-col md:flex-row gap-8 items-center justify-between text-left">
+            <div className="max-w-2xl space-y-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 uppercase tracking-wide">
+                🎁 100% Platform-Free Offers
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                No Subscriptions for Home-Based Care or Backyard Flatlets
+              </h2>
+              <p className="text-slate-650 text-sm leading-relaxed font-semibold">
+                Our platform believes in digital equity for Eswatini&apos;s early educators & parents. We charge <span className="text-amber-700 font-extrabold">E0.00 search and registry fees</span> for parents seeking child minders, travel au pairs, and on-demand home helpers. Furthermore, peri-urban informal backyard daycare flatlets can join our directory with zero platform costs or listing fees.
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2 pt-1.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-705 text-slate-700">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Zero Registry Subscriptions
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-705 text-slate-700">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Zero Client Matching Fees
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-705 text-slate-700">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Free Flatlet Dual-Intent Listing
+                </div>
+              </div>
+            </div>
+            <div className="shrink-0 w-full md:w-auto text-left">
+              <div className="bg-white px-6 py-5 rounded-2xl border border-amber-200 shadow-sm text-center md:text-left min-w-[200px]">
+                <div className="text-4xl font-extrabold text-amber-600">E0</div>
+                <div className="text-xs font-bold text-slate-800 uppercase mt-1">Platform In-Home Support Fees</div>
+                <div className="text-[10px] text-slate-400 mt-1">Direct contact numbers provided free</div>
+                <Button size="sm" className="mt-4 bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold w-full rounded-xl" asChild>
+                  <Link to="/flatlets">Discover Registries</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Add-ons and Extensibility */}
         <div className="mt-32 max-w-6xl mx-auto">
           <div className="text-center mb-16">

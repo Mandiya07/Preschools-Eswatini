@@ -63,6 +63,9 @@ export function Navbar() {
             <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
             <Link to="/learning" className={getLinkClass("/learning")}>Learning</Link>
             <Link to="/community" className={getLinkClass("/community")}>Community</Link>
+            <Link to="/flatlets" className="text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3.5 py-2 rounded-xl text-indigo-650 hover:text-indigo-900 bg-indigo-50/50 hover:bg-indigo-50">
+              ♥ Flatlets Care
+            </Link>
           </div>
         </div>
 
@@ -120,7 +123,7 @@ export function Navbar() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300 overflow-x-hidden">
+        <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden">
           <div className="flex flex-col space-y-1.5">
             <div className="bg-blue-50/50 rounded-xl p-4 mb-2 border border-blue-100/50 flex flex-col gap-2">
               <div className="flex items-center gap-2 text-blue-700 font-semibold text-sm">
@@ -150,6 +153,9 @@ export function Navbar() {
             <Link to="/marketplace" className={getMobileLinkClass("/marketplace")} onClick={() => setIsMobileMenuOpen(false)}>Marketplace</Link>
             <Link to="/learning" className={getMobileLinkClass("/learning")} onClick={() => setIsMobileMenuOpen(false)}>Learning</Link>
             <Link to="/community" className={getMobileLinkClass("/community")} onClick={() => setIsMobileMenuOpen(false)}>Community</Link>
+            <Link to="/flatlets" className="text-sm font-semibold py-3 px-4 block rounded-xl transition-all text-indigo-700 bg-indigo-50/50 hover:bg-indigo-50" onClick={() => setIsMobileMenuOpen(false)}>
+              ♥ Flatlets Care
+            </Link>
             <div className="flex flex-col space-y-2 pt-4 border-t border-slate-100">
                   {user ? (
                     <>

@@ -76,6 +76,22 @@ export function AboutPage() {
         </div>
       </div>
 
+      {/* Digital Equity & Backyard Daycare Flatlet Relief */}
+      <div className="bg-amber-50/50 border border-amber-200 rounded-[2.5rem] p-8 sm:p-12 mt-16 text-left">
+        <div className="max-w-3xl space-y-4">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 uppercase tracking-wider">
+            💝 Grassroots Advocacy &amp; Digital Equity
+          </span>
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">Supporting Backyard Daycare Flatlets &amp; Home Carers</h2>
+          <p className="text-slate-700 text-base leading-relaxed font-semibold">
+            In the peri-urban corridors around Mbabane, Ezulwini, Matsapha, and Manzini, informal backyard nurseries and private childminders protect a high fraction of the country&apos;s labor workforce infants. 
+          </p>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Preschools Eswatini is deeply loyal to Eswatini&apos;s grassroots early-educators. We guarantee <strong>E0.00 platform search &amp; registry fees</strong>, meaning parents seeking travel au pairs or full-time nannies face zero pricing barriers. Furthermore, our <strong>Network Adoption Framework</strong> matches verified professional schools with nearby informal pre-primary flatlets to share wooden puzzles, syllabus charts, and essential nutrition porridge.
+          </p>
+        </div>
+      </div>
+
     </div>
   );
 }

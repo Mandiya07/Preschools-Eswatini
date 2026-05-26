@@ -51,6 +51,7 @@ export function Footer() {
               <li><Link to="/marketplace" className="hover:text-blue-600">Marketplace</Link></li>
               <li><Link to="/learning" className="hover:text-blue-600">Learning Ecosystem</Link></li>
               <li><Link to="/community" className="hover:text-blue-600">Community</Link></li>
+              <li><Link to="/flatlets" className="hover:text-indigo-600 text-indigo-600 font-bold">♥ Neighborhood Flatlets</Link></li>
               <li><Link to="/safety" className="hover:text-blue-600">Safety & Security</Link></li>
               <li><Link to="/advanced-features" className="hover:text-blue-600">Advanced Features</Link></li>
               <li><Link to="/blog" className="hover:text-blue-600">Supplier Onboarding</Link></li>

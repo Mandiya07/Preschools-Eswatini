@@ -52,6 +52,7 @@ import { SafetySecurityPage } from "@/pages/SafetySecurityPage";
 import { AIMatchingPage } from "@/pages/AIMatchingPage";
 import { AdvancedWebsiteFeaturesPage } from "@/pages/AdvancedWebsiteFeaturesPage";
 import { InstallGuidePage } from "@/pages/InstallGuidePage";
+import { InformalFlatletsPage } from "@/pages/InformalFlatletsPage";
 
 import { PerformanceInfrastructurePage } from "@/pages/PerformanceInfrastructurePage";
 import { NationalInsightsPage } from "@/pages/NationalInsightsPage";
@@ -117,6 +118,7 @@ export default function App() {
             <Route path="privacy" element={<PrivacyPolicyPage />} />
             <Route path="terms" element={<TermsOfServicePage />} />
             <Route path="install" element={<InstallGuidePage />} />
+            <Route path="flatlets" element={<InformalFlatletsPage />} />
             <Route path="applications" element={<SchoolApplicationsPage />} />
             <Route path="parent-resources" element={<ParentResourcesPage />} />
             <Route path="website-builder" element={<WebsiteBuilderPage />} />

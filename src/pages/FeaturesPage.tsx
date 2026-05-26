@@ -8,7 +8,8 @@ import {
   Shield, 
   BarChart3, 
   FileText,
-  Calendar
+  Calendar,
+  Heart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -179,6 +180,13 @@ export function FeaturesPage() {
                <Smartphone className="h-10 w-10 text-pink-600 mb-6 group-hover:scale-110 transition-transform" />
                <h3 className="text-xl font-bold mb-3 text-slate-900">Health & Compliance</h3>
                <p className="text-slate-600 font-medium">Track strict daily health logs, manage HR incidents, and ensure national compliance efficiently.</p>
+            </div>
+            <div className="p-8 border border-slate-200 rounded-3xl bg-amber-50/50 hover:bg-white hover:shadow-xl transition-all group border-dashed border-amber-300">
+               <Heart className="h-10 w-10 text-amber-600 mb-6 group-hover:scale-110 transition-transform" />
+               <h3 className="text-xl font-bold mb-3 text-slate-900 flex items-center gap-2">
+                 Neighborhood Care <span className="bg-amber-100 text-amber-800 text-[10px] uppercase px-1.5 py-0.5 rounded-full font-black">Free</span>
+               </h3>
+               <p className="text-slate-600 font-medium">Access zero-subscription matching for home-based carers, au pairs, and registered backyard pre-primary daycare flatlets in Eswatini corridors.</p>
             </div>
             <div className="p-8 border border-slate-200 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all group md:col-span-3 lg:col-span-1 lg:col-start-2">
               <Building2 className="h-10 w-10 text-orange-600 mb-6 group-hover:scale-110 transition-transform" />

@@ -189,12 +189,45 @@ export function SubscriptionPage() {
                    </Button>
                 </CardContent>
               </Card>
+
+              <Card className="border-amber-200 bg-amber-50/40">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-1.5 text-amber-800 font-extrabold text-xs uppercase tracking-wide">
+                    🎁 Platform-Free Care
+                  </div>
+                  <CardTitle className="text-base font-extrabold text-slate-900 mt-1">Nannies &amp; Flatlets Option</CardTitle>
+                </CardHeader>
+                <CardContent>
+                   <p className="text-xs text-slate-600 mb-4 leading-relaxed font-semibold">
+                     Home-based au pairs, travel nannies, and informal backyard daycares require E0.00 subscriptions or commission fees.
+                   </p>
+                   <Button variant="outline" className="w-full text-xs font-bold border-amber-350 text-amber-900 hover:bg-amber-100" asChild>
+                     <a href="/flatlets">Discover Registries</a>
+                   </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </TabsContent>
 
         {/* PLANS TAB */}
         <TabsContent value="plans" className="mt-6">
+          {/* Zero-Subscription and Free Home Care Notification */}
+          <div className="mb-10 bg-amber-50 border border-amber-200 rounded-3xl p-6 flex flex-col md:flex-row gap-6 items-center justify-between text-left">
+            <div className="space-y-1.5">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-black text-amber-800 uppercase tracking-wide">
+                🎁 Free Grassroots Programs Guarantee
+              </span>
+              <h3 className="text-lg font-extrabold text-slate-950">Are you a Backyard Flatlet Daycare or Parent looking for Home Nannies?</h3>
+              <p className="text-slate-750 text-sm leading-relaxed font-semibold">
+                You do NOT need a formal platform subscription. Registration for informal micro-nurseries, digital child-minding guides, and regional matchmaking with professional nanny placement networks is <strong>100% platform-free (E0.00 search &amp; listing fees)</strong>.
+              </p>
+            </div>
+            <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold rounded-xl shrink-0 border-none" asChild>
+              <a href="/flatlets">Discover Free Registries</a>
+            </Button>
+          </div>
+
           <div className="mb-8 flex flex-col items-center justify-center space-y-4">
             <h2 className="text-2xl font-bold tracking-tight">Choose the perfect plan for your school</h2>
             <div className="flex items-center gap-3 bg-slate-100 p-1 rounded-lg">

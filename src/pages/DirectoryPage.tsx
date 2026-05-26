@@ -17,6 +17,7 @@ export function DirectoryPage() {
   const [selectedCurriculum, setSelectedCurriculum] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
   const [selectedBoarding, setSelectedBoarding] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [maxFee, setMaxFee] = useState<number>(10000);
 
   useEffect(() => {
@@ -65,14 +66,32 @@ export function DirectoryPage() {
   const filteredSchools = (schools || []).filter(school => {
     if (!school) return false;
     const matchesSearch = (school.name || "").toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          (school.town || "").toLowerCase().includes(searchTerm.toLowerCase());
+                          (school.town || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (school.description || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (school.tags || []).some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesRegion = selectedRegion === "All" || school.region === selectedRegion;
     const matchesCurriculum = selectedCurriculum.length === 0 || selectedCurriculum.includes(school.curriculum);
     const matchesAges = selectedAges.length === 0 || school.ageGroups?.some(age => selectedAges.includes(age));
     const matchesBoarding = selectedBoarding.length === 0 || selectedBoarding.includes(school.boarding);
     const matchesFee = (school.feePerTerm || 0) <= maxFee;
+    
+    const matchesType = selectedTypes.length === 0 || selectedTypes.some(type => {
+      const typeLower = type.toLowerCase();
+      const schoolTypeLower = (school.type || "").toLowerCase();
+      
+      if (typeLower === "neighborhood flatlet") {
+        return schoolTypeLower.includes("flatlet") || 
+               schoolTypeLower.includes("minding") ||
+               schoolTypeLower.includes("daycare") ||
+               schoolTypeLower.includes("care point") ||
+               schoolTypeLower.includes("nursery") ||
+               school.tags?.some(tag => tag.toLowerCase().includes("flatlet") || tag.toLowerCase().includes("minding") || tag.toLowerCase().includes("daycare") || tag.toLowerCase().includes("subsidized"));
+      }
+      
+      return schoolTypeLower === typeLower || schoolTypeLower.includes(typeLower);
+    });
 
-    return matchesSearch && matchesRegion && matchesCurriculum && matchesAges && matchesBoarding && matchesFee;
+    return matchesSearch && matchesRegion && matchesCurriculum && matchesAges && matchesBoarding && matchesFee && matchesType;
   });
 
    const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -137,7 +156,7 @@ export function DirectoryPage() {
 
           {/* Filters Sidebar */}
           <div className={`${isFilterOpen ? 'block' : 'hidden'} md:block w-full md:w-64 flex-shrink-0 animate-in fade-in slide-in-from-top-4 md:slide-in-from-left-4 duration-300`}>
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm sticky top-24">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">
               <div className="flex justify-between items-center mb-6">
                  <h3 className="font-black text-slate-900 uppercase tracking-widest text-xs Ital">Refine Search</h3>
                  <button 
@@ -147,6 +166,7 @@ export function DirectoryPage() {
                     setSelectedCurriculum([]);
                     setSelectedAges([]);
                     setSelectedBoarding([]);
+                    setSelectedTypes([]);
                     setMaxFee(10000);
                   }}
                  >
@@ -159,7 +179,7 @@ export function DirectoryPage() {
                   <h4 className="text-sm font-medium text-slate-700 mb-2">Region</h4>
                   <div className="space-y-2">
                     {["All", "Hhohho", "Manzini", "Lubombo", "Shiselweni"].map(region => (
-                      <label key={region} className="flex items-center gap-2 cursor-pointer">
+                       <label key={region} className="flex items-center gap-2 cursor-pointer">
                         <input 
                           type="radio" 
                           name="region" 
@@ -168,6 +188,31 @@ export function DirectoryPage() {
                           onChange={() => setSelectedRegion(region)}
                         />
                         <span className="text-sm text-slate-600">{region}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100">
+                  <h4 className="text-sm font-medium text-slate-700 mb-2 text-indigo-700 flex items-center gap-1 font-bold">
+                    <span>🏠 Institution Type</span>
+                  </h4>
+                  <div className="space-y-2">
+                    {[
+                      { label: "Private Schools", value: "Private" },
+                      { label: "Community-Based / NCP", value: "Community-Based" },
+                      { label: "Religious & Mission", value: "Religious/Mission" },
+                      { label: "Government Subsidized", value: "Government-Subsidized" },
+                      { label: "Neighborhood Flatlet ♥", value: "Neighborhood Flatlet" }
+                    ].map(item => (
+                      <label key={item.value} className="flex items-center gap-2 cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          className="rounded text-indigo-600 focus:ring-indigo-650 border-slate-300"
+                          checked={selectedTypes.includes(item.value)}
+                          onChange={() => handleCheckboxChange(setSelectedTypes, item.value)}
+                        />
+                        <span className={`text-sm ${item.value === "Neighborhood Flatlet" ? "text-indigo-650 font-bold" : "text-slate-600"}`}>{item.label}</span>
                       </label>
                     ))}
                   </div>
@@ -249,8 +294,24 @@ export function DirectoryPage() {
           </div>
 
           {/* Results Grid */}
-          <div className="flex-1">
-            <div className="mb-6 flex items-center justify-between">
+          <div className="flex-1 space-y-6">
+            {/* Free In-Home Care & Flatlet Matching Alert Banner */}
+            <div className="bg-amber-50/80 border border-amber-200 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row gap-5 items-center justify-between text-left font-sans">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1 bg-amber-100 rounded-full px-2.5 py-0.5 text-[10px] font-black text-amber-800 uppercase tracking-wide">
+                  🎁 Free In-Home & Flatlet Support
+                </div>
+                <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">Looking for Home Nannies or Backyard Daycare Flatlets?</h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-semibold">
+                  Access direct contacts of leading verified home-based nanny agencies (like Grace Nannies and END Network) and informal pre-primary backyard flatlets at <span className="text-amber-800 font-bold">E0.00 platform matching or subscription fees</span>.
+                </p>
+              </div>
+              <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold rounded-xl text-xs px-4 shrink-0" asChild>
+                <Link to="/flatlets">Discover Registries</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium text-slate-900">
                 {loading ? 'Searching...' : `Found ${filteredSchools.length} ${filteredSchools.length === 1 ? 'school' : 'schools'}`}
               </h2>
@@ -322,6 +383,7 @@ export function DirectoryPage() {
                     setSelectedCurriculum([]);
                     setSelectedAges([]);
                     setSelectedBoarding([]);
+                    setSelectedTypes([]);
                     setMaxFee(10000);
                   }}>
                   Clear all filters

@@ -41,6 +41,10 @@ interface Article {
   sections: {
     heading: string;
     paragraphs: string[];
+    table?: {
+      headers: string[];
+      rows: string[][];
+    };
   }[];
   cta: {
     text: string;
@@ -365,6 +369,58 @@ const ARTICLES: Article[] = [
       text: "Register Preschool Profile",
       link: "/register"
     }
+  },
+  {
+    slug: "eswatini-preschool-landscapes",
+    title: "Eswatini Preschool Landscapes: Fact Sheet Summary",
+    category: "parents",
+    categoryLabel: "Parents Circle",
+    author: "National Mapping Project Secretariat",
+    date: "May 25, 2026",
+    readTime: "4 min read",
+    summary: "To help you make sense of this exhaustive national mapping project, here is a macro-comparison of how early childhood education is divided across the country.",
+    image: "https://images.unsplash.com/photo-1576489922094-27a5bfac0148?auto=format&fit=crop&w=800&q=80",
+    highlights: [
+      "Comparative cost metrics by curriculum option",
+      "Features of National ECCE vs. International Tracks",
+      "Role of Community-Based Care Points (NCP) for rural access",
+      "Regional density and educational coverage corridors"
+    ],
+    sections: [
+      {
+        heading: "Understanding the Early Education Divisions",
+        paragraphs: [
+          "To help parents and administrators make sense of Eswatini's exhaustive national preschool mapping project, our research unit has compiled a concise macro-comparison. Early childhood education in the Kingdom is segmented into four primary categories designed to balance child development objectives, localized access demands, and family budget considerations."
+        ]
+      },
+      {
+        heading: "Eswatini Preschool Landscape Comparative Matrix",
+        paragraphs: [
+          "The following comparative table lists the core curriculums offered inside rural communities, high-density industrial sectors, and premium urban corridors."
+        ],
+        table: {
+          headers: ["Curriculum Framework", "Average Cost Range (Per Term)", "Key Features", "Primary Regions"],
+          rows: [
+            ["National ECCE", "E950 – E3,000", "Phonics, Siswati/English, Primary School readiness", "High density across all 4 regions"],
+            ["Montessori / Reggio Emilia", "E3,500 – E5,000", "Child-led workspace mats, tactile self-correcting blocks", "Mbabane & Malkerns Valley"],
+            ["International Tracks (IB / ACE)", "E6,000 – E8,300", "Advanced global standards, language arts, premium facilities", "Ezulwini & Mhlambanyatsi corridors"],
+            ["Community NCP Networks", "Free (E0) – E400", "Subsidized nutrition, basic socialization, NGO support", "Rural Lubombo & Shiselweni lowveld"]
+          ]
+        }
+      },
+      {
+        heading: "Key Takeaways for Families & Sponsors",
+        paragraphs: [
+          "National ECCE is the most prevalent pre-primary framework, recognized directly by governmental primary schools to assist standard transitioning. It represents the foundation of early education across general urban centers.",
+          "Alternative Models (like Montessori & Reggio Emilia) emphasize self-pacing and interactive physical materials, providing premium play-based environments targeted primarily at early cognitive independence.",
+          "Community NCP Networks & Backyard Flatlets offer essential grassroots coverage for low-income and peri-urban families. These models focus deeply on immunization, child-minding, and basic nutrition (e.g. morning porridge schedules) with zero-subscription barriers."
+        ]
+      }
+    ],
+    cta: {
+      text: "Compare Certified Schools",
+      link: "/directory"
+    }
   }
 ];
 
@@ -657,6 +713,36 @@ export function BlogHubPage() {
                         {para}
                       </p>
                     ))}
+                    {section.table && (
+                      <div className="mt-6 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm max-w-full">
+                        <table className="min-w-full divide-y divide-slate-200 text-left text-xs sm:text-sm">
+                          <thead className="bg-slate-50 text-slate-700 font-extrabold uppercase tracking-wider text-[10px] sm:text-xs">
+                            <tr>
+                              {section.table.headers.map((hdr, hIdx) => (
+                                <th key={hIdx} className="px-4 py-3 sm:px-6 sm:py-4 font-black border-b border-slate-200 text-slate-800 whitespace-nowrap">
+                                  {hdr}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100 bg-white text-slate-600 font-medium">
+                            {section.table.rows.map((row, rIdx) => (
+                              <tr key={rIdx} className="hover:bg-slate-50/50 transition-colors">
+                                {row.map((cell, cIdx) => (
+                                  <td key={cIdx} className="px-4 py-4 sm:px-6 sm:py-4 leading-relaxed">
+                                    {cIdx === 0 ? (
+                                      <span className="font-extrabold text-slate-900">{cell}</span>
+                                    ) : (
+                                      <span>{cell}</span>
+                                    )}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
