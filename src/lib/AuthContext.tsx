@@ -151,7 +151,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = async () => {
     localStorage.removeItem('dev_role');
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch (e) {
+      console.error("Sign out error", e);
+    }
+    setUser(null);
   };
 
   const devLogin = (role: Role) => {

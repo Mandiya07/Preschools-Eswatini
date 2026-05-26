@@ -19,7 +19,7 @@ export function Navbar() {
 
   const getLinkClass = (path: string) => {
     const active = isActive(path);
-    return `text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3.5 py-2 rounded-xl ${
+    return `text-[13px] font-semibold transition-all duration-200 whitespace-nowrap px-1.5 py-1.5 rounded-xl shrink-0 ${
       active 
         ? "text-blue-600 bg-blue-50/70 shadow-sm shadow-blue-500/5 font-bold" 
         : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -37,20 +37,19 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-md overflow-x-hidden">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-8 lg:gap-12">
-          <Link to="/" className="flex items-center gap-2">
+      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 sm:px-6">
+        <div className="flex items-center gap-6 xl:gap-8 flex-1 overflow-hidden">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm shadow-blue-100">
               <GraduationCap className="h-6 w-6" />
             </div>
-            <span className="text-xl font-black tracking-tight text-slate-900">
+            <span className="text-xl font-black tracking-tight text-slate-900 hidden sm:inline">
               Preschools<span className="text-blue-600"> Eswatini</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:gap-1.5 xl:gap-2">
-            <Link to="/" className={getLinkClass("/")}>Home</Link>
+          <div className="hidden xl:flex xl:items-center xl:gap-1 lg:flex-1 lg:justify-center">
             <Link to="/directory" className={getLinkClass("/directory")}>Find a School</Link>
             <Link to="/features" className={getLinkClass("/features")}>For Schools</Link>
             <Link to="/pricing" className={getLinkClass("/pricing")}>Pricing</Link>
@@ -59,13 +58,13 @@ export function Navbar() {
             <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
             <Link to="/learning" className={getLinkClass("/learning")}>Learning</Link>
             <Link to="/community" className={getLinkClass("/community")}>Community</Link>
-            <Link to="/flatlets" className="text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3.5 py-2 rounded-xl text-indigo-700 hover:text-indigo-900 bg-indigo-50/50 hover:bg-indigo-50">
+            <Link to="/flatlets" className="text-[13px] font-semibold transition-all duration-200 whitespace-nowrap px-2 py-1.5 rounded-xl text-indigo-700 hover:text-indigo-900 bg-indigo-50/50 hover:bg-indigo-50 shrink-0">
               ♥ Flatlets Care
             </Link>
           </div>
         </div>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex shrink-0 ml-4">
           {user ? (
              <>
                {user.role === 'SuperAdmin' && (
@@ -110,7 +109,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center lg:hidden">
+        <div className="flex items-center xl:hidden shrink-0 ml-4">
           <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -119,7 +118,7 @@ export function Navbar() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden">
+        <div className="xl:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden">
           <div className="flex flex-col space-y-1.5">
             <div className="bg-blue-50/50 rounded-xl p-4 mb-2 border border-blue-100/50 flex flex-col gap-2">
               <div className="flex items-center gap-2 text-blue-700 font-semibold text-sm">
