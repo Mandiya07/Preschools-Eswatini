@@ -26,7 +26,7 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { fetchCollection, updateDocument, createDocument, subscribeToCollection } from "@/lib/firestoreUtils";
+import { fetchCollection, updateDocument, createDocument, subscribeToCollection, bulkImportPreloadedSchools } from "@/lib/firestoreUtils";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -43,48 +43,29 @@ export function SuperAdminSchoolsPage() {
 
   const handleSeedRegistry = async () => {
     setSeeding(true);
-    let successCount = 0;
-    let skipCount = 0;
-    let failCount = 0;
 
     try {
       // Prompt confirm first (standard browser confirm)
       const confirmSeed = window.confirm(
-        "Are you sure you want to pre-load all basic school registry listings into your Firestore database? This will skip any schools already matching by ID."
+        "Are you sure you want to bulk-import all preloaded schools from the registry into your Firestore database? This will skip any schools already matching by ID."
       );
       if (!confirmSeed) {
         setSeeding(false);
         return;
       }
 
-      for (const school of PRELOADED_SCHOOLS) {
-        const exists = schools.some((s) => s.id === school.id);
-        if (!exists) {
-          try {
-            await createDocument("schools", school.id, {
-              ...school,
-              ownerId: auth.currentUser?.uid || "super_admin_seed",
-            });
-            successCount++;
-          } catch (err: any) {
-            console.error(`Failed to pre-load ${school.name}:`, err);
-            failCount++;
-          }
-        } else {
-          skipCount++;
-        }
-      }
+      const result = await bulkImportPreloadedSchools(auth.currentUser?.uid || "super_admin_seed");
 
-      if (successCount > 0) {
-        toast.success(`Successfully pre-loaded ${successCount} Swati preschools onto the public directory!`);
-      } else if (failCount > 0) {
-        toast.error(`Import partially failed with ${failCount} errors.`);
+      if (result.successCount > 0) {
+        toast.success(`Successfully imported ${result.successCount} Swati preschools from preloadedSchools.json!`);
+      } else if (result.failCount > 0) {
+        toast.error(`Import completed with ${result.failCount} errors.`);
       } else {
-        toast.info("All public registry preschools are already present in your database.");
+        toast.info("All preloaded registry preschools are already present in your database.");
       }
     } catch (e) {
-      console.error("Critical seeding failure:", e);
-      toast.error("An error occurred while attempting directory sync.");
+      console.error("Critical bulk import failure:", e);
+      toast.error("An error occurred while attempting bulk import.");
     } finally {
       setSeeding(false);
     }

@@ -688,7 +688,7 @@
     "hours": "07:30 AM - 01:30 PM",
     "programs": [
       { "name": "Toddler Creative Care", "age": "2-3 yrs", "desc": "Recreation mats play, tactile sandboxes learning, paint and motor skills exercises." },
-      { "name": "Preschool Prep Class", age: "4-5 yrs", "desc": "Dual language vocabulary, interactive numbering, sound coordination, and social activities." }
+      { "name": "Preschool Prep Class", "age": "4-5 yrs", "desc": "Dual language vocabulary, interactive numbering, sound coordination, and social activities." }
     ],
     "facilities": ["Safe Indoor Recreation Mats Room", "Vibrant Group Workshops", "Outdoor Adventure Sandbox", "Toddler-centric Creative Play Equipment"],
     "staff": [
@@ -804,13 +804,13 @@
     "phone": "+268 7811 9054",
     "email": "mothertouch@realnet.sz",
     "hours": "07:30 AM - 04:30 PM",
-    "programs: [
+    "programs": [
       { "name": "Motor Skills Fun", "age": "2-3 yrs", "desc": "Early painting, finger tracing, group rhythm playing." },
       { "name": "ECCE Music foundations", "age": "4-6 yrs", "desc": "Basic phonics, number songs, keyboard play, and playground socialization." }
     ],
     "facilities": ["Compact Inner-City Learning Rooms", "Musical Instrument Blocks", "Basic Drawing Spaces"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["E100 registration fee", "Fully completed indemnity waiver", "Copy of Child's Birth certificate"],
     "socialMedia": {
       "website": "https://facebook.com/mothertouch"
@@ -922,7 +922,7 @@
     ],
     "facilities": ["Early Childhood Computer Media Labs", "Swimming Pool Zones", "Customized Physical Education Courses"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Proof of immunization", "Copy of Child's Birth Certificate", "Completed enrollment forms", "Orientation readiness interview"],
     "socialMedia": {
       "facebook": "https://facebook.com/ourtinyangels"
@@ -960,7 +960,7 @@
     ],
     "facilities": ["Interactive Whiteboard Rooms", "Outdoor Climbing Apparatus", "Small-group Reading Corners"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Academic readiness screening", "Official copy of birth records", "Non-refundable space registration payment"],
     "socialMedia": {
       "facebook": "https://facebook.com/achieversschools"
@@ -998,7 +998,7 @@
     ],
     "facilities": ["Indoor Story Circles Room", "Specialized Child Security Fencing", "Interactive Toy Stations"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Completed local registry card", "Birth registration form", "Guardian emergency contact details"],
     "socialMedia": {},
     "featured": false,
@@ -1034,7 +1034,7 @@
     ],
     "facilities": ["Safe Nursery Crib Rooms", "Outdoor Grass Playgrounds", "Bible-Story Theater Space"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Parent interview", "Full childhood immunization tracking card"],
     "socialMedia": {},
     "featured": false,
@@ -1070,7 +1070,7 @@
     ],
     "facilities": ["Shared Green Botanical Plots", "Large Open-Air Assembly Halls", "Basic Learning Pods"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Agricultural sector employment proof", "Residency registration within Malkerns boundary"],
     "socialMedia": {
       "website": "https://malkerns.co.sz"
@@ -1108,13 +1108,13 @@
     ],
     "facilities": ["Shaded Multi-use Outdoor Learning Verandas", "Developmental Block Stations", "Clean Drinking Water Facilities"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["General child identity record submission", "Child health clinic card"],
     "socialMedia": {},
     "featured": false,
     "verified": true,
     "tags": ["Siteki", "Lubombo", "Affordable", "Rural Health Outreach"],
-    "coordinates": { "lat": -26.4530, lng: 31.9442 },
+    "coordinates": { "lat": -26.4530, "lng": 31.9442 },
     "subscriptionPlan": "Basic",
     "subscriptionStatus": "active",
     "createdAt": "2026-05-24T17:00:00Z"
@@ -1144,7 +1144,7 @@
     ],
     "facilities": ["Air-conditioned Modern Classrooms", "Expansive Secure Playground Park", "Children's Pool Zone", "Dedicated Creative Arts Rooms"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Estate employment verification details (for specialized corporate discounts)", "Private external entry assessment interview"],
     "socialMedia": {
       "website": "https://res.co.sz"
@@ -1182,7 +1182,7 @@
     ],
     "facilities": ["Gated Perimeter Playgrounds", "Secure Classroom Pods", "Colorful Alphabet Interior Layouts"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Fully completed parent intake book", "Child's birth registry copy", "Vaccine immunization compliance card"],
     "socialMedia": {},
     "featured": false,
@@ -1218,7 +1218,7 @@
     ],
     "facilities": ["Multi-use Rural Assembly & Nutrition Structures", "Donated Fruit Tree Plots", "Open Physical Play Areas"],
     "staff": [],
-    "gallery: [],
+    "gallery": [],
     "admissionsDetails": ["Socioeconomic vulnerability assessment clearance by local Inkhundla committee", "Proof of residency within region"],
     "socialMedia": {},
     "featured": false,

@@ -132,3 +132,42 @@ export const subscribeToCollection = (
     }
   );
 };
+
+// Bulk import preloaded schools helper from JSON
+import preloadedSchools from '../data/preloadedSchools.json';
+
+export const bulkImportPreloadedSchools = async (ownerId?: string) => {
+  const collectionName = 'schools';
+  let successCount = 0;
+  let skipCount = 0;
+  let failCount = 0;
+
+  for (const school of preloadedSchools) {
+    try {
+      const docRef = doc(db, collectionName, school.id);
+      const docSnap = await getDoc(docRef);
+      
+      if (!docSnap.exists()) {
+        await setDoc(docRef, {
+          ...school,
+          ownerId: ownerId || auth.currentUser?.uid || 'super_admin_seed',
+          createdAt: school.createdAt || new Date().toISOString()
+        });
+        successCount++;
+      } else {
+        skipCount++;
+      }
+    } catch (error) {
+      console.error(`Failed to bulk import ${school.name}:`, error);
+      failCount++;
+    }
+  }
+
+  return { 
+    successCount, 
+    skipCount, 
+    failCount, 
+    total: preloadedSchools.length 
+  };
+};
+
