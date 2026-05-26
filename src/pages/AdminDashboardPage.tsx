@@ -14,7 +14,10 @@ import {
   Loader2,
   AlertCircle,
   Calendar,
-  Database
+  Database,
+  WifiOff,
+  RefreshCw,
+  Cloud
 } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import { fetchDocument, subscribeToCollection, fetchCollection, createDocument, deleteDocument } from "@/lib/firestoreUtils";
@@ -33,6 +36,40 @@ export function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
   const [lastInquiryId, setLastInquiryId] = useState<string | null>(null);
+  
+  // Real-time offline sync states
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [offlineQueueCount, setOfflineQueueCount] = useState(0);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  useEffect(() => {
+    const checkQueue = () => {
+      try {
+        const queueObj = JSON.parse(localStorage.getItem('attendance_offline_queue') || '[]');
+        if (Array.isArray(queueObj)) {
+          setOfflineQueueCount(queueObj.length);
+        } else {
+          setOfflineQueueCount(0);
+        }
+      } catch (e) {
+        setOfflineQueueCount(0);
+      }
+    };
+    checkQueue();
+    // Re-check periodically to sync up with user changes immediately
+    const interval = setInterval(checkQueue, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     async function loadSchool() {
@@ -211,9 +248,52 @@ export function AdminDashboardPage() {
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-12">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Dashboard Overview</h1>
-        <p className="text-sm text-slate-500 mt-1">Here is what is happening at {school?.name || 'your school'} today.</p>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-100 pb-5">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Dashboard Overview</h1>
+          <p className="text-sm text-slate-500 mt-1">Here is what is happening at {school?.name || 'your school'} today.</p>
+        </div>
+
+        {/* Real-time sync status indicator mirroring the attendance page state */}
+        <div className="flex items-center self-start md:self-auto">
+          {isOffline ? (
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-2.5 flex items-center gap-3 text-left text-xs shadow-sm animate-pulse">
+              <div className="bg-amber-100 p-2 rounded-xl text-amber-700 shrink-0">
+                <WifiOff className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="font-extrabold text-amber-900 leading-tight">Offline Mode Active</p>
+                <p className="text-[10px] text-amber-700 font-semibold mt-0.5">
+                  {offlineQueueCount > 0 
+                    ? `• ${offlineQueueCount} record${offlineQueueCount === 1 ? '' : 's'} pending sync` 
+                    : "• Syncing suspended (Offline)"}
+                </p>
+              </div>
+            </div>
+          ) : offlineQueueCount > 0 ? (
+            <div className="bg-blue-50 border border-blue-200 rounded-2xl px-4 py-2.5 flex items-center gap-3 text-left text-xs shadow-sm">
+              <div className="bg-blue-100 p-2 rounded-xl text-blue-700 animate-spin shrink-0">
+                <RefreshCw className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="font-extrabold text-blue-900 leading-tight font-sans">Background Syncing</p>
+                <p className="text-[10px] text-blue-700 font-semibold mt-0.5">
+                  Synchronizing {offlineQueueCount} cached update{offlineQueueCount !== 1 ? 's' : ''}...
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-emerald-50/80 border border-emerald-100 rounded-2xl px-4 py-2.5 flex items-center gap-3 text-left text-xs shadow-xs opacity-90 hover:opacity-100 transition-opacity">
+              <div className="bg-emerald-100/80 p-2 rounded-xl text-emerald-600 shrink-0">
+                <Cloud className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="font-extrabold text-emerald-900 leading-tight">Cloud Synchronized</p>
+                <p className="text-[10px] text-emerald-600 font-semibold mt-0.5">All offline logs pushed</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Stats row */}
