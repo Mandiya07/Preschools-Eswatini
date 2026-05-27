@@ -23,7 +23,8 @@ type AttendanceRecord = {
 };
 
 export function AdminAttendancePage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [students, setStudents] = useState<Student[]>([]);
   const [attendance, setAttendance] = useState<Record<string, AttendanceRecord>>({});
   const [loading, setLoading] = useState(true);
@@ -68,7 +69,7 @@ export function AdminAttendancePage() {
   };
 
   const handleBulkStatusChange = async (status: AttendanceRecord["status"]) => {
-    if (!user?.schoolId || selectedStudents.length === 0) return;
+    if (!effectiveSchoolId || selectedStudents.length === 0) return;
     
     setSaving("bulk-selection");
     try {
@@ -97,7 +98,7 @@ export function AdminAttendancePage() {
 
   useEffect(() => {
     const processQueue = async () => {
-      if (!isOffline && offlineQueue.length > 0 && user?.schoolId && !syncing) {
+      if (!isOffline && offlineQueue.length > 0 && effectiveSchoolId && !syncing) {
         setSyncing(true);
         try {
           const queueToProcess = [...offlineQueue];
@@ -113,14 +114,14 @@ export function AdminAttendancePage() {
       }
     };
     processQueue();
-  }, [isOffline, offlineQueue, user?.schoolId]);
+  }, [isOffline, offlineQueue, effectiveSchoolId]);
 
   const processOfflineRecord = async (item: { studentId: string; status: AttendanceRecord["status"]; date: string }) => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
     try {
       // Find existing record in firestore for that date to be safe
       const existingData = await fetchCollection('attendance', 
-        where('schoolId', '==', user.schoolId),
+        where('schoolId', '==', effectiveSchoolId),
         where('date', '==', item.date),
         where('studentId', '==', item.studentId)
       ) as AttendanceRecord[];
@@ -129,7 +130,7 @@ export function AdminAttendancePage() {
         await updateDocument('attendance', existingData[0].id, { status: item.status });
       } else {
         await createDocument('attendance', null, {
-          schoolId: user.schoolId,
+          schoolId: effectiveSchoolId,
           studentId: item.studentId,
           date: item.date,
           status: item.status,
@@ -143,17 +144,17 @@ export function AdminAttendancePage() {
   };
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const loadData = async () => {
       setLoading(true);
       // Fetch students
-      const studentsData = await fetchCollection('students', where('schoolId', '==', user.schoolId)) as Student[];
+      const studentsData = await fetchCollection('students', where('schoolId', '==', effectiveSchoolId)) as Student[];
       setStudents(studentsData);
 
       // Fetch attendance for selected date
       const attendanceData = await fetchCollection('attendance', 
-        where('schoolId', '==', user.schoolId),
+        where('schoolId', '==', effectiveSchoolId),
         where('date', '==', selectedDate)
       ) as AttendanceRecord[];
       
@@ -166,10 +167,10 @@ export function AdminAttendancePage() {
     };
 
     loadData();
-  }, [user, selectedDate]);
+  }, [effectiveSchoolId, selectedDate]);
 
   const toggleAttendance = async (studentId: string, status: AttendanceRecord["status"]) => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
     
     if (isOffline) {
       // Optimistically update UI
@@ -183,7 +184,7 @@ export function AdminAttendancePage() {
         const tempId = `temp-${Date.now()}`;
         setAttendance(prev => ({
           ...prev,
-          [studentId]: { id: tempId, studentId, date: selectedDate, status, schoolId: user.schoolId! }
+          [studentId]: { id: tempId, studentId, date: selectedDate, status, schoolId: effectiveSchoolId! }
         }));
       }
       
@@ -210,7 +211,7 @@ export function AdminAttendancePage() {
         }));
       } else {
         const newDocId = await createDocument('attendance', null, {
-          schoolId: user.schoolId,
+          schoolId: effectiveSchoolId,
           studentId,
           date: selectedDate,
           status,
@@ -219,7 +220,7 @@ export function AdminAttendancePage() {
         });
         setAttendance(prev => ({
           ...prev,
-          [studentId]: { id: newDocId as string, studentId, date: selectedDate, status, schoolId: user.schoolId }
+          [studentId]: { id: newDocId as string, studentId, date: selectedDate, status, schoolId: effectiveSchoolId }
         }));
       }
     } catch (error) {
@@ -230,7 +231,7 @@ export function AdminAttendancePage() {
   };
 
   const markAllPresent = async (className: string) => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
     const classStudents = students.filter(s => s.class === className);
     setSaving(`bulk-${className}`);
     
@@ -256,7 +257,7 @@ export function AdminAttendancePage() {
             if (!existingRecord || existingRecord.status !== 'Present') {
               newAttendance[student.id] = existingRecord 
                 ? { ...existingRecord, status: 'Present' }
-                : { id: `temp-${Date.now()}-${student.id}`, studentId: student.id, date: selectedDate, status: 'Present', schoolId: user.schoolId! };
+                : { id: `temp-${Date.now()}-${student.id}`, studentId: student.id, date: selectedDate, status: 'Present', schoolId: effectiveSchoolId! };
             }
           });
           return newAttendance;

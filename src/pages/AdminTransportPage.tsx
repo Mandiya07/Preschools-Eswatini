@@ -15,14 +15,15 @@ import { subscribeToCollection } from "@/lib/firestoreUtils";
 import { where } from "firebase/firestore";
 
 export function AdminTransportPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("live");
   const [searchQuery, setSearchQuery] = useState("");
   const [routes, setRoutes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubRoutes = subscribeToCollection(
       'transport_routes',
@@ -30,11 +31,11 @@ export function AdminTransportPage() {
         setRoutes(data);
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => unsubRoutes();
-  }, [user?.schoolId]);
+  }, [effectiveSchoolId]);
 
   const activeRoute = routes.length > 0 ? routes[0] : null;
 
@@ -69,7 +70,7 @@ export function AdminTransportPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Active Vehicles</p>
-              <h3 className="text-2xl font-bold text-slate-900">4 / 6</h3>
+              <h3 className="text-2xl font-bold text-slate-900">{routes.filter(r => r.status === 'active').length} / {routes.length}</h3>
             </div>
           </CardContent>
         </Card>
@@ -81,7 +82,7 @@ export function AdminTransportPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Students in Transit</p>
-              <h3 className="text-2xl font-bold text-slate-900">42</h3>
+              <h3 className="text-2xl font-bold text-slate-900">{routes.reduce((acc, r) => acc + (r.studentCount || 0), 0)}</h3>
             </div>
           </CardContent>
         </Card>
@@ -93,7 +94,7 @@ export function AdminTransportPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Completed Routes</p>
-              <h3 className="text-2xl font-bold text-slate-900">12</h3>
+              <h3 className="text-2xl font-bold text-slate-900">{routes.filter(r => r.status === 'completed').length}</h3>
             </div>
           </CardContent>
         </Card>

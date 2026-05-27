@@ -13,7 +13,11 @@ import {
   Calendar,
   CreditCard,
   Database,
-  Sparkles
+  Sparkles,
+  Users,
+  UserCheck,
+  GraduationCap,
+  LayoutDashboard
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,9 +37,11 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
 import { auth } from "@/lib/firebase";
+import { useAuth } from "@/lib/AuthContext";
 
 export function SuperAdminSchoolsPage() {
   const navigate = useNavigate();
+  const { setActiveSchoolId } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [registrations, setRegistrations] = useState<any[]>([]);
   const [schools, setSchools] = useState<any[]>([]);
@@ -44,6 +50,7 @@ export function SuperAdminSchoolsPage() {
   const [seeding, setSeeding] = useState(false);
   const [editSchool, setEditSchool] = useState<any | null>(null);
   const [suspendSchool, setSuspendSchool] = useState<any | null>(null);
+  const [viewSchoolDetails, setViewSchoolDetails] = useState<any | null>(null);
   const [seedConfirmOpen, setSeedConfirmOpen] = useState(false);
 
   const handleSeedRegistry = async () => {
@@ -262,8 +269,17 @@ export function SuperAdminSchoolsPage() {
                          </DropdownMenuTrigger>
                          <DropdownMenuContent align="end" className="w-48 rounded-xl border-slate-200 shadow-xl p-1">
                             <DropdownMenuLabel className="text-[10px] font-black text-slate-400 uppercase tracking-widest Ital px-2 py-1.5">Management</DropdownMenuLabel>
+                             <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => {
+                               setActiveSchoolId(school.id);
+                               navigate("/admin");
+                            }}>
+                               <LayoutDashboard className="h-3 w-3" /> Admin Dashboard
+                            </DropdownMenuItem>
+                             <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => setViewSchoolDetails(school)}>
+                               <Building2 className="h-3 w-3" /> Quick Profile
+                            </DropdownMenuItem>
                              <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => navigate(`/school/${school.id}`)}>
-                               <ExternalLink className="h-3 w-3" /> View Website
+                               <ExternalLink className="h-3 w-3" /> Public Website
                             </DropdownMenuItem>
                             <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={async () => {
                                try {
@@ -419,6 +435,82 @@ export function SuperAdminSchoolsPage() {
                 Confirm Suspension
               </Button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {viewSchoolDetails && (
+        <Dialog open={true} onOpenChange={(open) => !open && setViewSchoolDetails(null)}>
+          <DialogContent className="sm:max-w-xl rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl">
+            <div className="h-32 bg-slate-900 relative">
+               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent"></div>
+               <div className="absolute -bottom-12 left-8 h-24 w-24 rounded-2xl bg-white shadow-xl flex items-center justify-center p-1">
+                  <div className="h-full w-full rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden">
+                     {viewSchoolDetails.heroImage ? (
+                        <img src={viewSchoolDetails.heroImage} className="h-full w-full object-cover" alt="" />
+                     ) : (
+                        <Building2 className="h-10 w-10 text-slate-300" />
+                     )}
+                  </div>
+               </div>
+               <div className="absolute bottom-4 right-8 flex gap-2">
+                  <Badge className={viewSchoolDetails.verified ? "bg-emerald-500" : "bg-orange-500"}>
+                     {viewSchoolDetails.verified ? "Verified Partner" : "Verification Pending"}
+                  </Badge>
+               </div>
+            </div>
+            
+            <div className="pt-16 pb-8 px-8 space-y-6">
+               <div>
+                  <h2 className="text-2xl font-black text-slate-900 tracking-tight">{viewSchoolDetails.name}</h2>
+                  <div className="flex items-center gap-4 mt-2 text-slate-500 text-sm">
+                     <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> {viewSchoolDetails.town}, {viewSchoolDetails.region}</span>
+                     <span className="flex items-center gap-1.5 font-bold text-slate-900"><CreditCard className="h-3.5 w-3.5" /> {viewSchoolDetails.subscriptionPlan} Plan</span>
+                  </div>
+               </div>
+
+               <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                     <Users className="h-4 w-4 text-blue-600 mb-2" />
+                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Students</p>
+                     <p className="text-xl font-black text-slate-900">--</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                     <GraduationCap className="h-4 w-4 text-purple-600 mb-2" />
+                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Faculty</p>
+                     <p className="text-xl font-black text-slate-900">--</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                     <UserCheck className="h-4 w-4 text-emerald-600 mb-2" />
+                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admissions</p>
+                     <p className="text-xl font-black text-slate-900">--</p>
+                  </div>
+               </div>
+
+               <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                     <span className="text-slate-500">Contact Email</span>
+                     <span className="font-bold text-slate-900">{viewSchoolDetails.email || "N/A"}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                     <span className="text-slate-500">Subscription Status</span>
+                     <Badge variant="outline" className="capitalize border-slate-200">{viewSchoolDetails.subscriptionStatus}</Badge>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                     <span className="text-slate-500">Registered On</span>
+                     <span className="font-medium text-slate-900">{new Date(viewSchoolDetails.createdAt).toLocaleDateString()}</span>
+                  </div>
+               </div>
+
+               <div className="pt-4 flex gap-3">
+                  <Button onClick={() => navigate(`/school/${viewSchoolDetails.id}`)} className="flex-1 bg-blue-600 hover:bg-blue-700 h-11 rounded-xl font-bold font-white shadow-lg shadow-blue-100">
+                     Visit Website
+                  </Button>
+                  <Button variant="outline" onClick={() => setViewSchoolDetails(null)} className="h-11 px-6 rounded-xl font-bold border-slate-200">
+                     Close
+                  </Button>
+               </div>
+            </div>
           </DialogContent>
         </Dialog>
       )}

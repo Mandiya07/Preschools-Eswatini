@@ -29,7 +29,8 @@ import { Inquiry, Application, ApplicationStatus } from "@/types";
 import { generateAIContent } from "@/services/geminiService";
 
 export function AdminAdmissionsPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState<"inquiries" | "applications" | "waitlist" | "analytics">("applications");
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
@@ -63,12 +64,12 @@ export function AdminAdmissionsPage() {
   };
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubInquiries = subscribeToCollection(
       'inquiries',
       (data) => setInquiries(data as Inquiry[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubApplications = subscribeToCollection(
@@ -77,14 +78,14 @@ export function AdminAdmissionsPage() {
         setApplications(data as Application[]);
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => {
       unsubInquiries();
       unsubApplications();
     };
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const handleUpdateStatus = async (id: string, status: ApplicationStatus | string, collection: "inquiries" | "applications") => {
     setIsUpdating(true);
@@ -100,7 +101,7 @@ export function AdminAdmissionsPage() {
         if (app) {
           await createDocument("notifications", null, {
             userId: app.parentId,
-            schoolId: user?.schoolId,
+            schoolId: effectiveSchoolId,
             title: "Application Status Updated",
             message: `Your application for ${app.childName} has been updated to: ${status.replace('_', ' ')}.`,
             type: "admission_update",
@@ -129,7 +130,7 @@ export function AdminAdmissionsPage() {
       if (app) {
         await createDocument("notifications", null, {
           userId: app.parentId,
-          schoolId: user?.schoolId,
+          schoolId: effectiveSchoolId,
           title: "Interview Scheduled",
           message: `An interview for ${app.childName} has been scheduled for ${new Date(date).toLocaleString()}.`,
           type: "admission_update",
@@ -260,33 +261,33 @@ export function AdminAdmissionsPage() {
              <Card className="border-slate-200 overflow-hidden p-8 space-y-8 animate-in fade-in duration-300">
                <div>
                  <h3 className="text-lg font-bold text-slate-900 mb-1">Enrollment Forecasting & Analytics</h3>
-                 <p className="text-sm text-slate-500 mb-6">Predict demand based on waitlist and historical application data.</p>
+                  <p className="text-sm text-slate-500 mb-6">Predict demand based on waitlist and real-time application data.</p>
                  
                  <div className="grid sm:grid-cols-3 gap-4 mb-8">
                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                     <p className="text-sm font-medium text-slate-500">Predicted Capacity</p>
-                     <h4 className="text-2xl font-black text-slate-900 mt-1">94%</h4>
+                     <p className="text-sm font-medium text-slate-500">Waitlist Size</p>
+                     <h4 className="text-2xl font-black text-slate-900 mt-1">{applications.filter((a: any) => a.status === "waitlisted").length}</h4>
                      <p className="text-xs text-amber-600 mt-1 font-medium">+12% vs last term</p>
                    </div>
                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                     <p className="text-sm font-medium text-slate-500">Waitlist Conversion</p>
-                     <h4 className="text-2xl font-black text-slate-900 mt-1">68%</h4>
+                     <p className="text-sm font-medium text-slate-500">Processing</p>
+                     <h4 className="text-2xl font-black text-slate-900 mt-1">{applications.filter((a: any) => ["submitted", "under_review"].includes(a.status)).length}</h4>
                      <p className="text-xs text-green-600 mt-1 font-medium">High intent likelihood</p>
                    </div>
                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                     <p className="text-sm font-medium text-slate-500">Highest Demand</p>
-                     <h4 className="text-2xl font-black text-slate-900 mt-1">Grade R</h4>
+                     <p className="text-sm font-medium text-slate-500">Successful Enrolment</p>
+                     <h4 className="text-2xl font-black text-slate-900 mt-1">{applications.filter((a: any) => a.status === "enrolled").length}</h4>
                      <p className="text-xs text-blue-600 mt-1 font-medium">15 slots short</p>
                    </div>
                  </div>
 
                  <div className="space-y-4">
-                   <h4 className="font-bold text-slate-900 text-sm">Waitlist Priority Queues</h4>
+                   <p className="text-sm font-medium text-slate-500">Waitlist Priority Queues (Calculated)</p>
                    <div className="space-y-3">
-                     <div className="p-4 border border-emerald-100 bg-emerald-50 rounded-xl relative overflow-hidden flex justify-between items-center">
+                     <div className="p-12 text-center border-2 border-dashed border-slate-100 rounded-3xl bg-slate-50">
                         <div className="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
                         <div>
-                          <p className="font-bold text-emerald-900 text-sm">Tier 1: Siblings Enrolled</p>
+                          <p className="font-bold text-emerald-900 text-sm">Tier Placeholder</p>
                           <p className="text-xs text-emerald-700 mt-1">Automatically prioritized per policy.</p>
                         </div>
                         <div className="text-right">

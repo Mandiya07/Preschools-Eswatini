@@ -31,7 +31,8 @@ import { where, orderBy } from "firebase/firestore";
 import { CommunicationLog, Student, Announcement, Newsletter } from "@/types";
 
 export function AdminCommunicationPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [logs, setLogs] = useState<CommunicationLog[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -46,25 +47,25 @@ export function AdminCommunicationPage() {
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubLogs = subscribeToCollection(
       'communication_logs',
       (data) => setLogs(data as CommunicationLog[]),
-      where('schoolId', '==', user.schoolId),
+      where('schoolId', '==', effectiveSchoolId),
       orderBy('createdAt', 'desc')
     );
 
     const unsubStudents = subscribeToCollection(
       'students',
       (data) => setStudents(data as Student[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubAnnouncements = subscribeToCollection(
       'announcements',
       (data) => setAnnouncements(data as Announcement[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubNewsletters = subscribeToCollection(
@@ -73,7 +74,7 @@ export function AdminCommunicationPage() {
         setNewsletters(data as Newsletter[]);
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => {
@@ -82,18 +83,18 @@ export function AdminCommunicationPage() {
       unsubAnnouncements();
       unsubNewsletters();
     };
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
-    if (!user?.schoolId || !content) return;
+    if (!effectiveSchoolId || !content) return;
 
     setIsSending(true);
     try {
       // Create log entry
       const logData: Omit<CommunicationLog, "id"> = {
-        schoolId: user.schoolId,
-        senderId: user.uid,
+        schoolId: effectiveSchoolId,
+        senderId: user?.uid || 'anonymous',
         type: messageType,
         target,
         recipientIds: target === 'All' ? students.map(s => s.parentId).filter(Boolean) as string[] : [],

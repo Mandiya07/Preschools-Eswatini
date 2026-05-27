@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,9 +9,31 @@ import {
   Settings, Clock, FileSpreadsheet, LayoutGrid
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { useAuth } from "@/lib/AuthContext";
+import { subscribeToCollection } from "@/lib/firestoreUtils";
+import { where } from "firebase/firestore";
 
 export function AdminHRInventoryPage() {
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("hr");
+  const [staff, setStaff] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!effectiveSchoolId) return;
+
+    const unsubStaff = subscribeToCollection(
+      'staff',
+      (data) => {
+        setStaff(data);
+        setLoading(false);
+      },
+      where('schoolId', '==', effectiveSchoolId)
+    );
+
+    return () => unsubStaff();
+  }, [effectiveSchoolId]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -40,7 +62,7 @@ export function AdminHRInventoryPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Staff Present</p>
-              <h3 className="text-2xl font-bold text-slate-900">32 / 34</h3>
+              <h3 className="text-2xl font-bold text-slate-900">{staff.filter((s: any) => s.status === 'Active').length} / {staff.length}</h3>
             </div>
           </CardContent>
         </Card>
@@ -64,7 +86,7 @@ export function AdminHRInventoryPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Asset Count</p>
-              <h3 className="text-2xl font-bold text-slate-900">1,245</h3>
+              <h3 className="text-2xl font-bold text-slate-900">0</h3>
             </div>
           </CardContent>
         </Card>

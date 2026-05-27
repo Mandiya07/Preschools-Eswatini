@@ -20,7 +20,8 @@ type Staff = {
 };
 
 export function AdminStaffPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [staff, setStaff] = useState<Staff[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,7 +41,7 @@ export function AdminStaffPage() {
   });
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubscribe = subscribeToCollection(
       'staff',
@@ -48,11 +49,11 @@ export function AdminStaffPage() {
         setStaff(data as Staff[]);
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => unsubscribe();
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const filteredStaff = staff.filter(s => 
     s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -79,7 +80,7 @@ export function AdminStaffPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     setSaving(true);
     try {
@@ -91,7 +92,7 @@ export function AdminStaffPage() {
       } else {
         await createDocument('staff', null, { 
           ...formData, 
-          schoolId: user.schoolId,
+          schoolId: effectiveSchoolId,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         });

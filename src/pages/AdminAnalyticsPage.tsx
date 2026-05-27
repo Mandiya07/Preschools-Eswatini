@@ -10,7 +10,8 @@ import { where } from "firebase/firestore";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell, LineChart, Line, Legend } from 'recharts';
 
 export function AdminAnalyticsPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     students: 0,
@@ -20,27 +21,27 @@ export function AdminAnalyticsPage() {
   });
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const loadStats = async () => {
       setLoading(true);
       const [students, staff, inquiries] = await Promise.all([
-        fetchCollection('students', where('schoolId', '==', user.schoolId)),
-        fetchCollection('staff', where('schoolId', '==', user.schoolId)),
-        fetchCollection('inquiries', where('schoolId', '==', user.schoolId))
+        fetchCollection('students', where('schoolId', '==', effectiveSchoolId)),
+        fetchCollection('staff', where('schoolId', '==', effectiveSchoolId)),
+        fetchCollection('inquiries', where('schoolId', '==', effectiveSchoolId))
       ]);
 
       setStats({
         students: students.length,
         staff: staff.length,
         inquiries: inquiries.length,
-        attendanceRate: 94 // Mock for now
+        attendanceRate: 0 
       });
       setLoading(false);
     };
 
     loadStats();
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   if (loading) {
     return (
@@ -50,44 +51,11 @@ export function AdminAnalyticsPage() {
     );
   }
 
-  const enrollmentData = [
-    { month: 'Jan', count: 120 },
-    { month: 'Feb', count: 125 },
-    { month: 'Mar', count: 132 },
-    { month: 'Apr', count: 135 },
-    { month: 'May', count: 142 },
-  ];
-
-  const inquiriesData = [
-    { month: 'Jan', count: 8 },
-    { month: 'Feb', count: 12 },
-    { month: 'Mar', count: 5 },
-    { month: 'Apr', count: 15 },
-    { month: 'May', count: stats.inquiries || 18 },
-  ];
-
-  const marketingData = [
-    { name: 'Facebook', value: 45 },
-    { name: 'Google Ads', value: 25 },
-    { name: 'Referral', value: 20 },
-    { name: 'Organic Walk-in', value: 10 },
-  ];
-
-  const cashflowData = [
-    { month: 'Jan', collected: 120000, expected: 125000 },
-    { month: 'Feb', collected: 128000, expected: 130000 },
-    { month: 'Mar', collected: 115000, expected: 130000 },
-    { month: 'Apr', collected: 135000, expected: 135000 },
-    { month: 'May', collected: 90000, expected: 140000 },
-  ];
-
-  const conversionFunnel = [
-    { name: 'Website Visits', value: 1200 },
-    { name: 'Inquiries', value: 154 },
-    { name: 'Tours Booked', value: 72 },
-    { name: 'Applications', value: 45 },
-    { name: 'Enrolled', value: 38 },
-  ];
+  const enrollmentData = [];
+  const inquiriesData = [];
+  const marketingData = [];
+  const cashflowData = [];
+  const conversionFunnel = [];
 
   const COLORS = ['#2563eb', '#10b981', '#f59e0b', '#64748b'];
 

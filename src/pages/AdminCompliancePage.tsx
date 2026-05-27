@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,9 +8,31 @@ import {
   Download, Building, FileSignature, GraduationCap
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { useAuth } from "@/lib/AuthContext";
+import { subscribeToCollection } from "@/lib/firestoreUtils";
+import { where } from "firebase/firestore";
 
 export function AdminCompliancePage() {
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("overview");
+  const [complianceDocs, setComplianceDocs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!effectiveSchoolId) return;
+
+    const unsubDocs = subscribeToCollection(
+      'compliance_documents',
+      (data) => {
+        setComplianceDocs(data);
+        setLoading(false);
+      },
+      where('schoolId', '==', effectiveSchoolId)
+    );
+
+    return () => unsubDocs();
+  }, [effectiveSchoolId]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -39,7 +61,7 @@ export function AdminCompliancePage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Ministry Status</p>
-              <h3 className="text-xl font-bold text-slate-900">Registered</h3>
+              <h3 className="text-xl font-bold text-slate-900">{complianceDocs.some((d: any) => d.type === 'Licence' && d.status === 'Active') ? 'Registered' : 'Pending'}</h3>
             </div>
           </CardContent>
         </Card>
@@ -51,7 +73,7 @@ export function AdminCompliancePage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">ECCDE Checks</p>
-              <h3 className="text-xl font-bold text-slate-900">92% Pass</h3>
+              <h3 className="text-xl font-bold text-slate-900">N/A</h3>
             </div>
           </CardContent>
         </Card>
@@ -63,7 +85,7 @@ export function AdminCompliancePage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Action Needed</p>
-              <h3 className="text-xl font-bold text-slate-900">2 Items</h3>
+              <h3 className="text-xl font-bold text-slate-900">{complianceDocs.filter((d: any) => d.status === 'Expired').length} Items</h3>
             </div>
           </CardContent>
         </Card>
@@ -75,7 +97,7 @@ export function AdminCompliancePage() {
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Qualified Staff</p>
-              <h3 className="text-xl font-bold text-slate-900">100%</h3>
+              <h3 className="text-xl font-bold text-slate-900">Reviewing</h3>
             </div>
           </CardContent>
         </Card>

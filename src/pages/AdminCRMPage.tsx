@@ -15,31 +15,48 @@ import { where } from "firebase/firestore";
 import { Inquiry, Application } from "@/types";
 
 export function AdminCRMPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("pipeline");
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
+  const [tasks, setTasks] = useState([]);
+  const [automations, setAutomations] = useState([]);
   
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubInquiries = subscribeToCollection(
       'inquiries',
       (data) => setInquiries(data as Inquiry[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubApplications = subscribeToCollection(
       'applications',
       (data) => setApplications(data as Application[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
+    );
+
+    const unsubTasks = subscribeToCollection(
+      'crm_tasks',
+      (data) => setTasks(data),
+      where('schoolId', '==', effectiveSchoolId)
+    );
+
+    const unsubAutomations = subscribeToCollection(
+      'crm_automations',
+      (data) => setAutomations(data),
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => {
       unsubInquiries();
       unsubApplications();
+      unsubTasks();
+      unsubAutomations();
     };
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   // Merge inquiries and apps into a unified pipeline
   const pipeline = [
@@ -131,11 +148,11 @@ export function AdminCRMPage() {
                            </div>
                            
                            <div className="mt-3 flex items-center justify-between text-[10px]">
-                              <span className="flex items-center text-slate-400">
-                                <Clock className="h-3 w-3 mr-1" />
-                                {new Date(item.createdAt).toLocaleDateString()}
-                              </span>
-                              {item.status === 'pending' && <span className="text-red-500 font-medium bg-red-50 px-1.5 rounded">Action needed</span>}
+                               <span className="flex items-center text-slate-400">
+                                 <Clock className="h-3 w-3 mr-1" />
+                                 {new Date(item.createdAt).toLocaleDateString()}
+                               </span>
+                               {item.status === 'pending' && <span className="text-red-500 font-medium bg-red-50 px-1.5 rounded">Action needed</span>}
                            </div>
                          </CardContent>
                        </Card>
@@ -149,89 +166,81 @@ export function AdminCRMPage() {
 
         <TabsContent value="tasks" className="space-y-6">
            <Card className="rounded-[2rem] border-slate-200">
-              <CardHeader className="border-b border-slate-100 pb-4 flex flex-row items-center justify-between">
-                 <div>
-                   <CardTitle>Follow-up Reminders</CardTitle>
-                   <CardDescription>Stay on top of parent communications and lead nurturing.</CardDescription>
+               <CardHeader className="border-b border-slate-100 pb-4 flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Follow-up Reminders</CardTitle>
+                    <CardDescription>Stay on top of parent communications and lead nurturing.</CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm">Sort by: Urgency</Button>
+               </CardHeader>
+               <CardContent className="p-0">
+                 <div className="divide-y divide-slate-100">
+                    {tasks.length > 0 ? tasks.map((task: any, i) => (
+                      <div key={i} className="flex p-4 hover:bg-slate-50 transition-colors items-center justify-between">
+                         <div className="flex gap-4 items-center">
+                            <div className="mt-1">
+                               {task.urgency === 'high' ? (
+                                 <div className="h-3 w-3 rounded-full bg-red-500 shadow-[0_0_0_4px_rgba(239,68,68,0.2)]"></div>
+                               ) : task.urgency === 'medium' ? (
+                                 <div className="h-3 w-3 rounded-full bg-amber-500 shadow-[0_0_0_4px_rgba(245,158,11,0.2)]"></div>
+                               ) : (
+                                 <div className="h-3 w-3 rounded-full bg-slate-300 shadow-[0_0_0_4px_rgba(203,213,225,0.2)]"></div>
+                               )}
+                            </div>
+                            <div>
+                               <p className="text-sm font-bold text-slate-900">{task.action}</p>
+                               <p className="text-xs text-slate-500">Parent: {task.parent} • Child: {task.child}</p>
+                               <p className="text-xs text-slate-500 font-mono mt-0.5">{task.phone}</p>
+                            </div>
+                         </div>
+                         <div className="flex items-center gap-3">
+                            <span className="text-xs font-semibold text-slate-500 bg-slate-100 py-1 px-2 rounded-lg">{task.due}</span>
+                            <Button size="sm" variant="outline" className="hidden sm:flex">Log Activity</Button>
+                            <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 w-8 p-0 sm:w-auto sm:px-3">
+                               <span className="hidden sm:inline">Mark Done</span>
+                               <ChevronRight className="h-4 w-4 sm:hidden" />
+                            </Button>
+                         </div>
+                      </div>
+                    )) : (
+                      <div className="p-12 text-center text-slate-500 italic text-sm">
+                        No pending follow-ups found.
+                      </div>
+                    )}
                  </div>
-                 <Button variant="outline" size="sm">Sort by: Urgency</Button>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="divide-y divide-slate-100">
-                   {[
-                     { parent: "Sarah Johnson", child: "Liam", action: "Call regarding Tour", due: "Today, 2:00 PM", urgency: "high", phone: "+268 7600 1234" },
-                     { parent: "Michael Maseko", child: "Thabo", action: "Send curriculum details", due: "Tomorrow", urgency: "medium", phone: "+268 7600 9876" },
-                     { parent: "Alice Dlamini", child: "Sihle", action: "Follow up on Waitlist", due: "In 3 Days", urgency: "low", phone: "+268 7600 4567" },
-                   ].map((task, i) => (
-                     <div key={i} className="flex p-4 hover:bg-slate-50 transition-colors items-center justify-between">
-                        <div className="flex gap-4 items-center">
-                           <div className="mt-1">
-                              {task.urgency === 'high' ? (
-                                <div className="h-3 w-3 rounded-full bg-red-500 shadow-[0_0_0_4px_rgba(239,68,68,0.2)]"></div>
-                              ) : task.urgency === 'medium' ? (
-                                <div className="h-3 w-3 rounded-full bg-amber-500 shadow-[0_0_0_4px_rgba(245,158,11,0.2)]"></div>
-                              ) : (
-                                <div className="h-3 w-3 rounded-full bg-slate-300 shadow-[0_0_0_4px_rgba(203,213,225,0.2)]"></div>
-                              )}
-                           </div>
-                           <div>
-                              <p className="text-sm font-bold text-slate-900">{task.action}</p>
-                              <p className="text-xs text-slate-500">Parent: {task.parent} • Child: {task.child}</p>
-                              <p className="text-xs text-slate-500 font-mono mt-0.5">{task.phone}</p>
-                           </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                           <span className="text-xs font-semibold text-slate-500 bg-slate-100 py-1 px-2 rounded-lg">{task.due}</span>
-                           <Button size="sm" variant="outline" className="hidden sm:flex">Log Activity</Button>
-                           <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 w-8 p-0 sm:w-auto sm:px-3">
-                              <span className="hidden sm:inline">Mark Done</span>
-                              <ChevronRight className="h-4 w-4 sm:hidden" />
-                           </Button>
-                        </div>
-                     </div>
-                   ))}
-                </div>
-              </CardContent>
-           </Card>
+               </CardContent>
+            </Card>
         </TabsContent>
 
         <TabsContent value="automations" className="space-y-6">
-           <Card className="rounded-[2rem] border-slate-200 p-8 pt-10 text-center bg-slate-50 flex flex-col items-center justify-center">
-              <Share2 className="h-12 w-12 text-slate-300 mb-4" />
-              <h3 className="text-lg font-bold text-slate-700 mb-2">Automated Nurturing Flows</h3>
-              <p className="text-slate-500 max-w-sm mx-auto mb-6">Set up automated email and WhatsApp sequences when parents inquire, book a tour, or abandon an application.</p>
-              
-              <div className="grid sm:grid-cols-2 gap-4 w-full max-w-2xl text-left mt-4 mb-6">
-                 <div className="bg-white p-4 rounded-xl border border-slate-200">
-                    <div className="flex items-center justify-between mb-2">
-                       <span className="text-xs font-bold bg-green-100 text-green-700 py-0.5 px-2 rounded-md">Active</span>
-                       <Settings className="h-4 w-4 text-slate-400 cursor-pointer" />
+            <Card className="rounded-[2rem] border-slate-200 p-8 pt-10 text-center bg-slate-50 flex flex-col items-center justify-center">
+               <Share2 className="h-12 w-12 text-slate-300 mb-4" />
+               <h3 className="text-lg font-bold text-slate-700 mb-2">Automated Nurturing Flows</h3>
+               <p className="text-slate-500 max-w-sm mx-auto mb-6">Set up automated email and WhatsApp sequences when parents inquire, book a tour, or abandon an application.</p>
+               
+               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-4xl text-left mt-4 mb-6">
+                  {automations.map((automation: any, i) => (
+                    <div key={i} className="bg-white p-4 rounded-xl border border-slate-200">
+                      <div className="flex items-center justify-between mb-2">
+                         <span className={`text-xs font-bold py-0.5 px-2 rounded-md ${
+                           automation.status === 'Active' ? 'bg-green-100 text-green-700' :
+                           automation.status === 'Draft' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'
+                         }`}>{automation.status}</span>
+                         <Settings className="h-4 w-4 text-slate-400 cursor-pointer" />
+                      </div>
+                      <p className="text-sm font-bold text-slate-900">{automation.name}</p>
+                      <p className="text-xs text-slate-500 mt-1">{automation.description}</p>
                     </div>
-                    <p className="text-sm font-bold text-slate-900">New Inquiry Welcome</p>
-                    <p className="text-xs text-slate-500 mt-1">Sends immediate welcome email + prospectus PDF.</p>
-                 </div>
-                 
-                 <div className="bg-white p-4 rounded-xl border border-slate-200">
-                    <div className="flex items-center justify-between mb-2">
-                       <span className="text-xs font-bold bg-slate-100 text-slate-700 py-0.5 px-2 rounded-md">Inactive</span>
-                       <Settings className="h-4 w-4 text-slate-400 cursor-pointer" />
+                  ))}
+                  {automations.length === 0 && (
+                    <div className="col-span-full py-12 text-slate-400 text-center italic text-sm">
+                      No custom logic flows configured yet.
                     </div>
-                    <p className="text-sm font-bold text-slate-900">Waitlist Nurture</p>
-                    <p className="text-xs text-slate-500 mt-1">Sends monthly school update to waitlisted parents.</p>
-                 </div>
-                 
-                 <div className="bg-white p-4 rounded-xl border border-slate-200">
-                    <div className="flex items-center justify-between mb-2">
-                       <span className="text-xs font-bold bg-amber-100 text-amber-700 py-0.5 px-2 rounded-md">Draft</span>
-                       <Settings className="h-4 w-4 text-slate-400 cursor-pointer" />
-                    </div>
-                    <p className="text-sm font-bold text-slate-900">Tour Follow-up</p>
-                    <p className="text-xs text-slate-500 mt-1">Sends feedback form 2 hours after a school tour.</p>
-                 </div>
-              </div>
-              
-              <Button variant="outline" className="bg-white shadow-sm mt-4 text-blue-600 border-blue-200 hover:bg-blue-50">Create New Automation</Button>
-           </Card>
+                  )}
+               </div>
+               
+               <Button variant="outline" className="bg-white shadow-sm mt-4 text-blue-600 border-blue-200 hover:bg-blue-50">Create New Automation</Button>
+            </Card>
         </TabsContent>
       </Tabs>
     </div>

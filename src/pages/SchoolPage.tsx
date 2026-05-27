@@ -51,6 +51,19 @@ const API_KEY =
 const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
 
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix generic Leaflet marker icon issue
+const DefaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
 export function SchoolPage() {
   const { id } = useParams();
   const [school, setSchool] = useState<School | null>(null);
@@ -724,12 +737,26 @@ export function SchoolPage() {
                     </Map>
                   </APIProvider>
                 ) : (
-                  <div className="h-full w-full flex flex-col items-center justify-center bg-slate-50 p-4 text-center">
-                    <MapPin className="h-8 w-8 text-slate-400 mb-2" />
-                    <p className="text-sm font-medium text-slate-600">Map unavailable</p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Google Maps API Key is required. Follow the setup instructions provided.
-                    </p>
+                  <div className="h-full w-full relative">
+                    <MapContainer 
+                      center={school.coordinates ? [school.coordinates.lat, school.coordinates.lng] : [-26.315, 31.136]} 
+                      zoom={13} 
+                      style={{ height: '100%', width: '100%' }}
+                      scrollWheelZoom={false}
+                    >
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      {school.coordinates && (
+                        <Marker position={[school.coordinates.lat, school.coordinates.lng]}>
+                          <Popup>{school.name}</Popup>
+                        </Marker>
+                      )}
+                    </MapContainer>
+                    <div className="absolute top-2 right-2 z-[500] bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md border border-slate-200 shadow-sm">
+                      <p className="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Guest Mode (OSM)</p>
+                    </div>
                   </div>
                 )}
               </div>

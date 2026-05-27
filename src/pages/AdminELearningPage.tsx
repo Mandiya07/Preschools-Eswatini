@@ -18,7 +18,8 @@ import { storage } from "@/lib/firebase";
 import { toast } from "sonner";
 
 export function AdminELearningPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("courses");
   const [documents, setDocuments] = useState<LearningDocument[]>([]);
   const [lessons, setLessons] = useState<any[]>([]);
@@ -29,30 +30,30 @@ export function AdminELearningPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubCourses = subscribeToCollection(
       'courses',
       (data) => setCourses(data),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubProgress = subscribeToCollection(
       'student_progress',
       (data) => setProgress(data),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubDocs = subscribeToCollection(
       'learning_documents',
       (data) => setDocuments(data as LearningDocument[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubLessons = subscribeToCollection(
       'lessons',
       (data) => setLessons(data),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     setLoading(false);
@@ -63,7 +64,7 @@ export function AdminELearningPage() {
       unsubDocs();
       unsubLessons();
     };
-  }, [user?.schoolId]);
+  }, [effectiveSchoolId]);
 
   const filteredProgress = progress.filter(p => 
     p.studentName?.toLowerCase().includes(filterStudent.toLowerCase()) &&
@@ -71,10 +72,10 @@ export function AdminELearningPage() {
   );
 
   const handleVideoUpload = async (lessonId: string, file: File | null) => {
-    if (!file) return;
+    if (!file || !effectiveSchoolId) return;
     try {
       toast.loading("Uploading video...", { id: "video-upload" });
-      const fileRef = ref(storage, `schools/${user?.schoolId}/lessons/${lessonId}/${file.name}`);
+      const fileRef = ref(storage, `schools/${effectiveSchoolId}/lessons/${lessonId}/${file.name}`);
       await uploadBytes(fileRef, file);
       const url = await getDownloadURL(fileRef);
       await updateDocument('lessons', lessonId, { videoUrl: url });

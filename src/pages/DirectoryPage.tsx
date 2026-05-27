@@ -8,6 +8,18 @@ import { fetchCollection, subscribeToCollection } from "@/lib/firestoreUtils";
 import { School } from "@/types";
 import kidsImg from '@/assets/images/kids_playing_blocks_1779268580565.png';
 import { APIProvider, Map, AdvancedMarker, Pin, useMap, InfoWindow } from '@vis.gl/react-google-maps';
+import { MapContainer, TileLayer, Marker, Popup, useMap as useLeafletMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix generic Leaflet marker icon issue
+const DefaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const API_KEY =
   process.env.GOOGLE_MAPS_PLATFORM_KEY ||
@@ -15,29 +27,6 @@ const API_KEY =
   (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY ||
   '';
 const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
-
-function MapPlaceholder() {
-  return (
-    <div className="flex flex-col items-center justify-center p-8 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300 h-[500px] w-full">
-      <div className="bg-white p-6 rounded-2xl shadow-sm max-w-md border border-slate-200">
-        <MapIcon className="h-10 w-10 text-blue-500 mx-auto mb-3" />
-        <h3 className="text-base font-extrabold text-slate-900 mb-2">Interactive Map Requires API Key</h3>
-        <p className="text-xs text-slate-500 leading-relaxed mb-4">
-          Enable the integrated map view by configuring a Google Maps Platform API key in your workspace configurations.
-        </p>
-        <div className="text-left bg-slate-50 p-4 rounded-xl text-[11px] border border-slate-100 space-y-2 text-slate-600">
-          <p className="font-bold text-slate-700">To add your API key:</p>
-          <ol className="list-decimal pl-4 space-y-1">
-            <li>Open <strong className="text-slate-800">Settings</strong> (⚙️ gear icon, top-right corner)</li>
-            <li>Select <strong className="text-slate-800">Secrets</strong></li>
-            <li>Add secret with name <code className="bg-slate-100 px-1.5 py-0.5 rounded text-red-600 font-mono text-[10px]">GOOGLE_MAPS_PLATFORM_KEY</code></li>
-            <li>Paste your key as value and click Save</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 interface DirectoryMapProps {
   schools: School[];
@@ -121,9 +110,71 @@ function DirectoryMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapP
   );
 }
 
+function LeafletDirectoryMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapProps) {
+  const map = useLeafletMap();
+
+  useEffect(() => {
+    if (selectedSchool && selectedSchool.coordinates) {
+      map.setView([selectedSchool.coordinates.lat, selectedSchool.coordinates.lng], 13);
+    }
+  }, [selectedSchool, map]);
+
+  return (
+    <>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {schools.map(school => {
+        if (!school.coordinates) return null;
+        return (
+          <Marker 
+            key={school.id} 
+            position={[school.coordinates.lat, school.coordinates.lng]}
+            eventHandlers={{ 
+              click: () => onSchoolSelect(school)
+            }}
+          >
+            <Popup>
+              <div className="p-1 min-w-[150px]">
+                <h4 className="font-bold text-xs text-slate-900">{school.name}</h4>
+                <p className="text-[10px] text-slate-500 mb-2">{school.town}</p>
+                <Link
+                  to={`/school/${school.id}`}
+                  className="inline-flex items-center text-[10px] font-black text-white bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded w-full justify-center"
+                >
+                  View Details
+                </Link>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
+    </>
+  );
+}
+
 function IntegratedMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapProps) {
   if (!hasValidKey) {
-    return <MapPlaceholder />;
+    return (
+      <div className="relative h-full w-full rounded-2xl overflow-hidden border border-slate-200 shadow-sm min-h-[450px] bg-slate-100 z-0">
+        <MapContainer 
+          center={selectedSchool?.coordinates ? [selectedSchool.coordinates.lat, selectedSchool.coordinates.lng] : [-26.3167, 31.1333]} 
+          zoom={9} 
+          style={{ height: '100%', width: '100%' }}
+          scrollWheelZoom={true}
+        >
+          <LeafletDirectoryMap 
+            schools={schools} 
+            selectedSchool={selectedSchool} 
+            onSchoolSelect={onSchoolSelect} 
+          />
+        </MapContainer>
+        <div className="absolute top-2 right-2 z-[500] bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md border border-slate-200 shadow-sm">
+           <p className="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Guest Mode (OSM)</p>
+        </div>
+      </div>
+    );
   }
 
   return (

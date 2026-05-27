@@ -30,16 +30,19 @@ import {
   ArrowRight,
   WifiOff,
   Shield,
+  ShieldOff,
+  Sparkles,
   Lock,
   Trash2,
   Archive,
   Sliders,
   Database,
-  Globe
+  Globe,
+  Building2
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AIChatBot } from "@/components/AIChatBot";
-import { subscribeToCollection, updateDocument, createDocument, deleteDocument } from "@/lib/firestoreUtils";
+import { subscribeToCollection, updateDocument, createDocument, deleteDocument, fetchDocument } from "@/lib/firestoreUtils";
 import { where, orderBy, query, limit } from "firebase/firestore";
 import { 
   Application, 
@@ -671,6 +674,30 @@ export function ParentPortalPage() {
   const [newMessage, setNewMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
 
+  const [schoolStatus, setSchoolStatus] = useState<string | null>(null);
+  const [checkingSchool, setCheckingSchool] = useState(false);
+
+  useEffect(() => {
+    if (user?.schoolId) {
+      checkSchoolSubscription();
+    }
+  }, [user?.schoolId]);
+
+  const checkSchoolSubscription = async () => {
+    if (!user?.schoolId) return;
+    setCheckingSchool(true);
+    try {
+      const schoolData = await fetchDocument("schools", user.schoolId) as any;
+      if (schoolData) {
+        setSchoolStatus(schoolData.subscriptionStatus || "active");
+      }
+    } catch (error) {
+      console.error("Error checking school status:", error);
+    } finally {
+      setCheckingSchool(false);
+    }
+  };
+
   useEffect(() => {
     if (!user || user.role !== 'Parent') return;
 
@@ -750,6 +777,41 @@ export function ParentPortalPage() {
     navigate("/");
   };
 
+  if (user?.schoolId && schoolStatus && schoolStatus !== 'active' && schoolStatus !== 'pending_payment') {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-slate-50 p-4 text-center">
+        <Card className="max-w-md w-full border-none shadow-2xl rounded-[2rem] overflow-hidden">
+          <div className="h-3 bg-red-500"></div>
+          <CardHeader className="pt-8">
+            <div className="h-20 w-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+               <ShieldOff className="h-10 w-10" />
+            </div>
+            <CardTitle className="text-2xl font-black text-slate-900">Portal Inaccessible</CardTitle>
+            <CardDescription className="text-slate-500 text-base mt-2">
+              Access to this school's Parent Portal has been suspended due to an inactive service subscription.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pb-8 space-y-4">
+             <div className="bg-slate-50 p-4 rounded-2xl text-left border border-slate-100">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Notice for Parents</p>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Your academic records and student data are securely preserved, but the digital portal is currently offline. Please reach out to the school's finance or administration office.
+                </p>
+             </div>
+            <div className="pt-4 flex flex-col gap-3">
+              <Button onClick={() => window.location.reload()} className="bg-blue-600 hover:bg-blue-700 h-12 rounded-xl font-bold text-white shadow-lg shadow-blue-100">
+                 Refresh Portal Status
+              </Button>
+              <Button variant="ghost" onClick={handleLogout} className="text-slate-500 font-bold h-12">
+                 Sign Out
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const markAsRead = async (notifId: string) => {
     try {
       await updateDocument("notifications", notifId, { read: true });
@@ -802,6 +864,34 @@ export function ParentPortalPage() {
       {/* Left/Main Column */}
       <div className="lg:col-span-2 space-y-8">
         
+        {/* Welcome Section */}
+        <section className="bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-[80px] -ml-24 -mb-24"></div>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest mb-4">
+                 <Sparkles className="h-3 w-3 text-yellow-400" /> Parent Portal Access
+              </div>
+              <h1 className="text-3xl font-black mb-2 leading-tight">Welcome back,<br />{user?.name?.split(' ')[0] || "Guardian"}!</h1>
+              <p className="text-slate-400 font-medium text-sm">Stay connected with your children's academic ecosystem.</p>
+            </div>
+            <div className="flex bg-white/5 backdrop-blur-md p-4 rounded-3xl border border-white/5 gap-4">
+               <div className="h-12 w-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-900/20">
+                  <Building2 className="h-6 w-6 text-white" />
+               </div>
+               <div className="text-left">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1.5">Academic Partner</p>
+                  <p className="font-black text-white text-sm truncate max-w-[150px]">{user?.schoolName || "Verified Institution"}</p>
+                  <div className="flex items-center gap-1.5 mt-1">
+                     <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                     <p className="text-[9px] font-bold text-emerald-400 uppercase">Synchronized</p>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </section>
+
         {/* Children Summary Section */}
         {students.length > 0 && (
           <section className="space-y-4">

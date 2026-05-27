@@ -33,6 +33,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   sendEmailVerification: () => Promise<void>;
   devLogin?: (role: Role) => void;
+  activeSchoolId: string | null;
+  setActiveSchoolId: (id: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -40,6 +42,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeSchoolId, setActiveSchoolId] = useState<string | null>(localStorage.getItem('active_school_id'));
+
+  useEffect(() => {
+    if (activeSchoolId) {
+      localStorage.setItem('active_school_id', activeSchoolId);
+    } else {
+      localStorage.removeItem('active_school_id');
+    }
+  }, [activeSchoolId]);
 
   useEffect(() => {
     if (localStorage.getItem('dev_role')) {
@@ -185,6 +196,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       register, 
       logout,
       devLogin,
+      activeSchoolId,
+      setActiveSchoolId,
       sendEmailVerification: sendVerification
     }}>
       {!loading && children}

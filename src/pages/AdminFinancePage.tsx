@@ -25,9 +25,11 @@ import { useAuth } from "@/lib/AuthContext";
 import { fetchDocument, updateDocument, createDocument } from "@/lib/firestoreUtils";
 
 export function AdminFinancePage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("overview");
   const [isSaving, setIsSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [momoConfig, setMomoConfig] = useState({
     merchantId: "",
@@ -44,40 +46,47 @@ export function AdminFinancePage() {
   });
 
   useEffect(() => {
-    if (user) {
+    if (effectiveSchoolId) {
       loadConfig();
+    } else {
+      setLoading(false);
     }
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const loadConfig = async () => {
     try {
-      const config = await fetchDocument("payment_configs", user?.uid as string) as any;
+      setLoading(true);
+      const config = await fetchDocument("payment_configs", effectiveSchoolId!) as any;
       if (config) {
         if (config.momo) setMomoConfig(config.momo);
         if (config.bank) setBankConfig(config.bank);
       }
     } catch (error) {
       console.error("Error loading payment config:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSave = async () => {
-    if (!user) return;
+    if (!effectiveSchoolId) return;
     setIsSaving(true);
     try {
-      await updateDocument("payment_configs", user.uid, {
+      await updateDocument("payment_configs", effectiveSchoolId, {
         momo: momoConfig,
         bank: bankConfig,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
+        schoolId: effectiveSchoolId
       });
       toast.success("Payment credentials updated successfully!");
     } catch (error) {
       // If doc doesn't exist, create it
       try {
-        await createDocument("payment_configs", user.uid, {
+        await createDocument("payment_configs", effectiveSchoolId, {
           momo: momoConfig,
           bank: bankConfig,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
+          schoolId: effectiveSchoolId
         });
         toast.success("Payment credentials saved successfully!");
       } catch (err) {

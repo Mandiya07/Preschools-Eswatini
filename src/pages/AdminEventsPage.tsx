@@ -29,7 +29,8 @@ type Event = {
 };
 
 export function AdminEventsPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -53,7 +54,7 @@ export function AdminEventsPage() {
   });
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubscribe = subscribeToCollection(
       'events',
@@ -61,11 +62,11 @@ export function AdminEventsPage() {
         setEvents(data as Event[]);
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => unsubscribe();
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const handleOpenModal = (ev?: Event) => {
     if (ev) {
@@ -97,7 +98,7 @@ export function AdminEventsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     setSaving(true);
     try {
@@ -106,7 +107,7 @@ export function AdminEventsPage() {
       } else {
         await createDocument('events', null, { 
           ...formData, 
-          schoolId: user.schoolId,
+          schoolId: effectiveSchoolId,
           createdAt: new Date().toISOString()
         });
       }

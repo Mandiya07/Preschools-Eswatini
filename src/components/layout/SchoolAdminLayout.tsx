@@ -36,14 +36,27 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { Badge } from "@/components/ui/badge";
+import { fetchDocument } from "@/lib/firestoreUtils";
+import { School } from "@/types";
 
 export function SchoolAdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [pendingSync, setPendingSync] = useState(0);
+  const [activeSchool, setActiveSchool] = useState<School | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, login } = useAuth();
+  const { user, login, activeSchoolId, setActiveSchoolId } = useAuth();
+
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
+
+  useEffect(() => {
+    if (effectiveSchoolId) {
+      fetchDocument('schools', effectiveSchoolId).then(data => {
+        if (data) setActiveSchool(data as School);
+      });
+    }
+  }, [effectiveSchoolId]);
   
   useEffect(() => {
     const handleOnline = () => setIsOffline(false);
@@ -93,15 +106,15 @@ export function SchoolAdminLayout() {
     { name: 'AI Tools', href: '/admin/ai-tools', icon: Sparkles },
     { name: 'Website Builder', href: '/admin/website', icon: Globe },
     { name: 'E-Learning', href: '/admin/e-learning', icon: BookOpen },
-    { name: 'Transport & Fleet', href: '/admin/transport', icon: Bus },
-    { name: 'Health & Daily Logs', href: '/admin/health', icon: HeartPulse },
-    { name: 'HR & Facilities', href: '/admin/hr-inventory', icon: Briefcase },
-    { name: 'Compliance & Ministry', href: '/admin/compliance', icon: ShieldCheck },
+    { name: 'Transport', href: '/admin/transport', icon: Bus },
+    { name: 'Health', href: '/admin/health', icon: HeartPulse },
+    { name: 'HR', href: '/admin/hr-inventory', icon: Briefcase },
+    { name: 'Compliance', href: '/admin/compliance', icon: ShieldCheck },
     { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-    { name: 'Student Fees', href: '/admin/finance', icon: CreditCard },
+    { name: 'Finance', href: '/admin/finance', icon: CreditCard },
     { name: 'Subscription', href: '/admin/billing', icon: Settings },
     { name: 'Marketplace', href: '/admin/marketplace', icon: Store },
-    { name: 'Supplier Portal', href: '/admin/supplier-marketplace', icon: Store },
+    { name: 'Suppliers', href: '/admin/supplier-marketplace', icon: Store },
   ];
 
   const switchToParent = () => {
@@ -129,7 +142,7 @@ export function SchoolAdminLayout() {
               <Building2 className="h-5 w-5 text-white" />
             </div>
             <span className="text-sm font-bold tracking-tight">
-              Little Stars Admin
+              {activeSchool?.name || "School Admin"}
             </span>
           </Link>
           <button 
@@ -175,6 +188,13 @@ export function SchoolAdminLayout() {
               <LogOut className="h-4 w-4 mr-2" />
               Test Parent Portal
              </Button>
+
+             {user?.role === 'SuperAdmin' && (
+                <Button variant="outline" size="sm" onClick={() => navigate('/super/schools')} className="w-full justify-start text-amber-400 border-amber-900/50 bg-amber-900/20 hover:bg-amber-900/40 hover:text-amber-300 font-bold">
+                  <ShieldCheck className="h-4 w-4 mr-2" />
+                  Exit Impersonation
+                </Button>
+             )}
           </div>
         </div>
         

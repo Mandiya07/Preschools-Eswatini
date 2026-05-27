@@ -7,13 +7,53 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   HeartPulse, Pill, Activity, ShieldAlert,
   Moon, Coffee, ClipboardList, CheckCircle2,
-  CalendarDays, UserCheck, WifiOff, AlertCircle
+  CalendarDays, UserCheck, WifiOff, AlertCircle,
+  Loader2
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { useAuth } from "@/lib/AuthContext";
+import { subscribeToCollection } from "@/lib/firestoreUtils";
+import { where } from "firebase/firestore";
 
 export function AdminHealthDailyPage() {
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [activeTab, setActiveTab] = useState("daily-logs");
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [students, setStudents] = useState([]);
+  const [recentCriticalIncidents, setRecentCriticalIncidents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!effectiveSchoolId) return;
+
+    const unsubStudents = subscribeToCollection(
+      'students',
+      (data) => {
+        setStudents(data.map((s: any) => ({
+          id: s.id,
+          name: s.name,
+          healthStatus: s.healthStatus || 'Healthy',
+          incidentFlag: s.incidentFlag || false
+        })));
+        setLoading(false);
+      },
+      where('schoolId', '==', effectiveSchoolId)
+    );
+
+    const unsubIncidents = subscribeToCollection(
+      'critical_incidents',
+      (data) => setRecentCriticalIncidents(data),
+      where('schoolId', '==', effectiveSchoolId)
+    );
+
+    return () => {
+      unsubStudents();
+      unsubIncidents();
+    };
+  }, [effectiveSchoolId]);
+
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false);
@@ -26,16 +66,6 @@ export function AdminHealthDailyPage() {
     };
   }, []);
 
-  const [students, setStudents] = useState([
-    { id: '1', name: 'Sipho Dlamini', healthStatus: 'Healthy', incidentFlag: false },
-    { id: '2', name: 'Bandile Nxumalo', healthStatus: 'Healthy', incidentFlag: false },
-    { id: '3', name: 'Tenele Gama', healthStatus: 'Monitoring', incidentFlag: false },
-    { id: '4', name: 'Musa Zwane', healthStatus: 'Healthy', incidentFlag: false },
-    { id: '5', name: 'Thabo M.', healthStatus: 'Monitoring', incidentFlag: true },
-    { id: '6', name: 'Zinhle N.', healthStatus: 'Healthy', incidentFlag: true },
-  ]);
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-
   const toggleSelectStudent = (id: string) => {
     setSelectedStudents(prev => 
       prev.includes(id) ? prev.filter(sid => sid !== id) : [...prev, id]
@@ -43,10 +73,10 @@ export function AdminHealthDailyPage() {
   };
 
   const selectAll = () => {
-    if (selectedStudents.length === students.length) {
+    if (selectedStudents.length === students.length && students.length > 0) {
       setSelectedStudents([]);
     } else {
-      setSelectedStudents(students.map(s => s.id));
+      setSelectedStudents(students.map((s: any) => s.id));
     }
   };
 
@@ -69,11 +99,6 @@ export function AdminHealthDailyPage() {
     }));
     setSelectedStudents([]);
   };
-
-  const recentCriticalIncidents = [
-    { id: 1, time: "10:15 AM", student: "Thabo M.", type: "Medical", description: "Allergic reaction, administered EpiPen" },
-    { id: 2, time: "09:30 AM", student: "Zinhle N.", type: "Injury", description: "Fell off swing, referred to clinic" }
-  ];
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">

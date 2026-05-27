@@ -37,18 +37,17 @@ type UploadedImage = {
 };
 
 export function WebsiteBuilderPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [suggesting, setSuggesting] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("theme");
   const [previewMode, setPreviewMode] = useState("desktop");
   const [isPreviewing, setIsPreviewing] = useState(false);
-  const [images, setImages] = useState<UploadedImage[]>([
-    { id: 'img-1', url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', target: 'Hero Background', name: 'hero-banner.jpg', caption: 'Welcome to our school' }
-  ]);
-  const [headline, setHeadline] = useState("Little Stars Academy");
-  const [subheadline, setSubheadline] = useState("A nurturing environment for your child's first steps in learning.");
+  const [images, setImages] = useState<UploadedImage[]>([]);
+  const [headline, setHeadline] = useState("");
+  const [subheadline, setSubheadline] = useState("");
   const [primaryColor, setPrimaryColor] = useState("#2563eb");
   const [secondaryColor, setSecondaryColor] = useState("#f59e0b");
   const [fontFamily, setFontFamily] = useState("Inter, sans-serif");
@@ -72,9 +71,7 @@ export function WebsiteBuilderPage() {
   }, [themeName]);
   
   // Blog / News State
-  const [newsItems, setNewsItems] = useState([
-    { id: 1 as any, title: "Summer Program Registration", date: "May 2026" }
-  ]);
+  const [newsItems, setNewsItems] = useState([]);
   const [newNewsTitle, setNewNewsTitle] = useState("");
 
   // Contact State
@@ -85,16 +82,16 @@ export function WebsiteBuilderPage() {
   const [contactMessage, setContactMessage] = useState("We'd love to hear from you! Please reach out with any questions.");
 
   // SEO & Domain State
-  const [seoTitle, setSeoTitle] = useState("Little Stars Academy | Preschool in Eswatini");
+  const [seoTitle, setSeoTitle] = useState("");
   const [customDomain, setCustomDomain] = useState("");
 
   useEffect(() => {
     async function loadConfig() {
-      if (!user?.schoolId) {
+      if (!effectiveSchoolId) {
         setLoading(false);
         return;
       }
-      const config = await fetchDocument('websites', user.schoolId) as any;
+      const config = await fetchDocument('websites', effectiveSchoolId) as any;
       if (config) {
         setHeadline(config.headline || "");
         setSubheadline(config.subheadline || "");
@@ -116,13 +113,13 @@ export function WebsiteBuilderPage() {
       setLoading(false);
     }
     loadConfig();
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const handlePublish = async () => {
     setSaving(true);
     try {
       const config = {
-        schoolId: user?.schoolId || 'demo-school',
+        schoolId: effectiveSchoolId || 'demo-school',
         headline,
         subheadline,
         primaryColor,
@@ -142,8 +139,8 @@ export function WebsiteBuilderPage() {
         publishedAt: new Date().toISOString()
       };
       
-      if (user?.schoolId) {
-        await createDocument('websites', user.schoolId, config);
+      if (effectiveSchoolId) {
+        await createDocument('websites', effectiveSchoolId, config);
       } else {
         // Simulate save delay for guest users
         await new Promise(resolve => setTimeout(resolve, 800));

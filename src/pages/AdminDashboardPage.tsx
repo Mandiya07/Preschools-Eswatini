@@ -17,7 +17,21 @@ import {
   Database,
   WifiOff,
   RefreshCw,
-  Cloud
+  Cloud,
+  Handshake,
+  Briefcase,
+  Megaphone,
+  Inbox,
+  BookOpen,
+  Bus,
+  HeartPulse,
+  ShieldCheck,
+  BarChart3,
+  CreditCard,
+  LayoutDashboard,
+  Store,
+  Sparkles,
+  UserCheck
 } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 import { fetchDocument, subscribeToCollection, fetchCollection, createDocument, deleteDocument, updateDocument } from "@/lib/firestoreUtils";
@@ -27,7 +41,8 @@ import { where } from "firebase/firestore";
 import { SchoolProfileModal } from "@/components/SchoolProfileModal";
 
 export function AdminDashboardPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [school, setSchool] = useState<School | null>(null);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
@@ -76,47 +91,47 @@ export function AdminDashboardPage() {
 
   useEffect(() => {
     async function loadSchool() {
-      if (user?.schoolId) {
-        const data = await fetchDocument('schools', user.schoolId) as School;
+      if (effectiveSchoolId) {
+        const data = await fetchDocument('schools', effectiveSchoolId) as School;
         setSchool(data);
       }
       setLoading(false);
     }
     loadSchool();
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
     
     // Real-time subscriptions
     const unsubInquiries = subscribeToCollection(
       'inquiries', 
       (data) => setInquiries(data as Inquiry[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubApps = subscribeToCollection(
       'applications',
       (data) => setApplications(data as Application[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubStudents = subscribeToCollection(
       'students',
       (data) => setStudents(data as Student[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubNotes = subscribeToCollection(
       'dashboard_notes',
       (data) => setNotes(data.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     const unsubFees = subscribeToCollection(
       'fees',
       (data) => setFees(data as FeeStatement[]),
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => {
@@ -126,7 +141,7 @@ export function AdminDashboardPage() {
       unsubNotes();
       unsubFees();
     };
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   // Check for new inquiries to show dashboard notification
   useEffect(() => {
@@ -144,7 +159,7 @@ export function AdminDashboardPage() {
   }, [inquiries, lastInquiryId]);
 
   const handleDatabaseBackup = async () => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
     
     try {
       const dbSchools = await fetchCollection('schools');
@@ -174,10 +189,10 @@ export function AdminDashboardPage() {
   };
 
   const handleAddNote = async () => {
-    if (!user?.schoolId || !newNote.trim()) return;
+    if (!effectiveSchoolId || !newNote.trim()) return;
     try {
       await createDocument('dashboard_notes', null, {
-        schoolId: user.schoolId,
+        schoolId: effectiveSchoolId,
         text: newNote.trim(),
         createdBy: user.name || user.email || 'Admin',
         createdAt: new Date().toISOString()
@@ -204,7 +219,7 @@ export function AdminDashboardPage() {
     );
   }
 
-  if (!user?.schoolId && !school) {
+  if (!effectiveSchoolId && !school) {
     return (
       <div className="max-w-2xl mx-auto py-12 text-center">
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl">
@@ -378,6 +393,50 @@ export function AdminDashboardPage() {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Management Hub */}
+      <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+        <h2 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+          <Building2 className="h-5 w-5 text-blue-600" />
+          School Management Hub
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {[
+            { name: 'Admissions', href: '/admin/admissions', icon: Inbox, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { name: 'Attendance', href: '/admin/attendance', icon: UserCheck, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+            { name: 'Students', href: '/admin/students', icon: GraduationCap, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+            { name: 'Staff', href: '/admin/staff', icon: Briefcase, color: 'text-slate-600', bg: 'bg-slate-50' },
+            { name: 'Parents', href: '/admin/parents', icon: Users, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+            { name: 'Finance', href: '/admin/finance', icon: CreditCard, color: 'text-rose-600', bg: 'bg-rose-50' },
+            { name: 'Partnerships', href: '/admin/partnerships', icon: Handshake, color: 'text-amber-600', bg: 'bg-amber-50' },
+            { name: 'Events', href: '/admin/events', icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-50' },
+            { name: 'Announcements', href: '/admin/announcements', icon: Megaphone, color: 'text-orange-600', bg: 'bg-orange-50' },
+            { name: 'Communication', href: '/admin/communication', icon: ShieldCheck, color: 'text-cyan-600', bg: 'bg-cyan-50' },
+            { name: 'Website Builder', href: '/admin/website', icon: Globe, color: 'text-sky-600', bg: 'bg-sky-50' },
+            { name: 'E-Learning', href: '/admin/e-learning', icon: BookOpen, color: 'text-lime-600', bg: 'bg-lime-50' },
+            { name: 'Transport', href: '/admin/transport', icon: Bus, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+            { name: 'Health', href: '/admin/health', icon: HeartPulse, color: 'text-pink-600', bg: 'bg-pink-50' },
+            { name: 'HR & Facilities', href: '/admin/hr-inventory', icon: Briefcase, color: 'text-teal-600', bg: 'bg-teal-50' },
+            { name: 'Compliance', href: '/admin/compliance', icon: ShieldCheck, color: 'text-violet-600', bg: 'bg-violet-50' },
+            { name: 'Analytics', href: '/admin/analytics', icon: BarChart3, color: 'text-green-700', bg: 'bg-green-100' },
+            { name: 'CRM', href: '/admin/crm', icon: LayoutDashboard, color: 'text-slate-700', bg: 'bg-slate-100' },
+            { name: 'AI Tools', href: '/admin/ai-tools', icon: Sparkles, color: 'text-fuchsia-600', bg: 'bg-fuchsia-50' },
+            { name: 'Marketplace', href: '/admin/marketplace', icon: Store, color: 'text-green-600', bg: 'bg-green-50' },
+            { name: 'Suppliers', href: '/admin/supplier-marketplace', icon: Store, color: 'text-orange-700', bg: 'bg-orange-100' },
+          ].map((item) => (
+            <Link 
+              key={item.name} 
+              to={item.href}
+              className="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-300 hover:bg-white hover:shadow-md transition-all group"
+            >
+              <div className={`p-3 rounded-xl ${item.bg} ${item.color} mb-3 group-hover:scale-110 transition-transform`}>
+                <item.icon className="h-5 w-5" />
+              </div>
+              <span className="text-[10px] font-extrabold uppercase tracking-tight text-slate-600 text-center">{item.name}</span>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">

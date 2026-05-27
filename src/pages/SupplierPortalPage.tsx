@@ -338,10 +338,10 @@ export function SupplierPortalPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               {[
-                { label: 'Active Orders', value: '24', icon: <Truck className="h-6 w-6 text-blue-600" />, trend: '+12% from last wk' },
-                { label: 'Total Revenue', value: 'E45,200', icon: <DollarSign className="h-6 w-6 text-emerald-600" />, trend: '+5% from last mo' },
-                { label: 'Products Listed', value: '142', icon: <Package className="h-6 w-6 text-orange-600" />, trend: '4 out of stock' },
-                { label: 'School Clients', value: '18', icon: <Users className="h-6 w-6 text-purple-600" />, trend: '+2 new this month' },
+                { label: 'Active Orders', value: '0', icon: <Truck className="h-6 w-6 text-blue-600" />, trend: 'No recent activity' },
+                { label: 'Total Revenue', value: 'E0', icon: <DollarSign className="h-6 w-6 text-emerald-600" />, trend: 'Setup payouts' },
+                { label: 'Products Listed', value: '0', icon: <Package className="h-6 w-6 text-orange-600" />, trend: 'Add first item' },
+                { label: 'School Clients', value: '0', icon: <Users className="h-6 w-6 text-purple-600" />, trend: 'Increase visibility' },
               ].map((stat, i) => (
                 <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-start justify-between mb-4">
@@ -364,44 +364,17 @@ export function SupplierPortalPage() {
                   <Button variant="ghost" size="sm" onClick={() => setActiveSection('Orders')}>View All</Button>
                 </div>
                 <div className="space-y-4">
-                  {[
-                    { school: 'Sunshine Early Learning', orderId: '#ORD-092T', date: 'Today, 09:30 AM', amount: 'E1,250', status: 'Pending Fulfillment' },
-                    { school: 'Little Stars Academy', orderId: '#ORD-091P', date: 'Yesterday, 14:15 PM', amount: 'E4,500', status: 'Shipped' },
-                    { school: 'Bambisanani Preschool', orderId: '#ORD-090L', date: 'Mon, 10:00 AM', amount: 'E850', status: 'Delivered' },
-                  ].map((order, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 hover:border-blue-100 hover:bg-blue-50/50 transition-colors">
-                      <div className="flex items-center gap-4">
-                         <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold">
-                           {order.school.charAt(0)}
-                         </div>
-                         <div>
-                           <h4 className="text-sm font-bold text-slate-900">{order.school}</h4>
-                           <p className="text-xs text-slate-500">{order.orderId} • {order.date}</p>
-                         </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-bold text-slate-900">{order.amount}</p>
-                        <p className={`text-xs font-medium ${order.status === 'Delivered' ? 'text-emerald-600' : order.status === 'Shipped' ? 'text-blue-600' : 'text-orange-600'}`}>
-                          {order.status}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                  <div className="text-center py-12 text-slate-400 italic text-sm">
+                    No school orders received yet.
+                  </div>
                 </div>
               </div>
               
               <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
                  <h3 className="text-lg font-bold text-slate-900 mb-6 font-bold">Marketplace Insights</h3>
                  <div className="space-y-6">
-                    <div className="p-4 rounded-xl bg-orange-50 border border-orange-100">
-                      <h4 className="text-sm font-bold text-orange-900 mb-1">Low Stock Alert</h4>
-                      <p className="text-xs text-orange-700 leading-relaxed">A4 Printing Paper is running low (12 boxes left). Schools frequently reorder this.</p>
-                      <Button size="sm" variant="outline" className="mt-3 bg-white hover:bg-orange-50 text-orange-700 border-orange-200 w-full" onClick={() => setActiveSection('Products')}>Update Inventory</Button>
-                    </div>
-                    <div className="p-4 rounded-xl bg-blue-50 border border-blue-100">
-                      <h4 className="text-sm font-bold text-blue-900 mb-1">New Bid Opportunity</h4>
-                      <p className="text-xs text-blue-700 leading-relaxed">Little Stars Daycare is requesting quotes for 20 classroom whiteboards.</p>
-                      <Button size="sm" variant="outline" className="mt-3 bg-white hover:bg-blue-50 text-blue-700 border-blue-200 w-full" onClick={() => setActiveSection('Tenders')}>View Tender Details</Button>
+                    <div className="p-12 text-center text-slate-400 italic text-sm border border-slate-100 rounded-xl">
+                      Setup your store profile to start receiving insights and opportunities.
                     </div>
                  </div>
               </div>

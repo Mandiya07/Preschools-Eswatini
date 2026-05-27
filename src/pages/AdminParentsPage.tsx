@@ -17,13 +17,14 @@ type Parent = {
 };
 
 export function AdminParentsPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [parents, setParents] = useState<Parent[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     // Getting students to group by parent
     const unsubStudents = subscribeToCollection(
@@ -52,13 +53,13 @@ export function AdminParentsPage() {
         setParents(Array.from(parentsMap.values()));
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => {
       unsubStudents();
     };
-  }, [user?.schoolId]);
+  }, [effectiveSchoolId]);
 
   const filteredParents = parents.filter(parent => 
     parent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -1,13 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import { SEO } from "@/components/SEO";
-import { APIProvider, Map, AdvancedMarker, Pin, useMap, useMapsLibrary, useAdvancedMarkerRef, InfoWindow } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, AdvancedMarker, Pin, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { MapContainer, TileLayer, Marker, Popup, useMap as useLeafletMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { School } from "@/types";
 import { fetchCollection } from "@/lib/firestoreUtils";
-import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
-import { Search, MapPin, Navigation, Car, BellRing, Loader2, Star, CheckCircle2, ChevronRight, X } from "lucide-react";
+import { Search, MapPin, Navigation, Car, BellRing, Loader2, Star, CheckCircle2, ChevronRight, X, AlertCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
+// Fix generic Leaflet marker icon issue
+const DefaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 }; // Mbabane roughly
 const API_KEY =
@@ -16,6 +27,45 @@ const API_KEY =
   (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY ||
   '';
 const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
+
+function LeafletMapContent({ schools, onSelectSchool, selectedSchool }: { schools: School[], onSelectSchool: (s: School) => void, selectedSchool: School | null }) {
+  const map = useLeafletMap();
+
+  useEffect(() => {
+    if (selectedSchool && selectedSchool.coordinates) {
+      map.setView([selectedSchool.coordinates.lat, selectedSchool.coordinates.lng], 14);
+    }
+  }, [selectedSchool, map]);
+
+  return (
+    <>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {schools.map(school => {
+        if (!school.coordinates) return null;
+        return (
+          <Marker 
+            key={school.id} 
+            position={[school.coordinates.lat, school.coordinates.lng]}
+            eventHandlers={{ 
+              click: () => onSelectSchool(school)
+            }}
+          >
+            <Popup>
+              <div className="p-1">
+                <p className="font-bold text-slate-900 border-b border-slate-100 pb-1 mb-1">{school.name}</p>
+                <p className="text-xs text-slate-500">{school.town}</p>
+                <Button size="sm" variant="ghost" className="h-6 text-[10px] p-0 w-full mt-2" onClick={() => onSelectSchool(school)}>View Details</Button>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
+    </>
+  );
+}
 
 function MapContent({ schools }: { schools: School[] }) {
   const map = useMap();
@@ -44,6 +94,7 @@ function MapContent({ schools }: { schools: School[] }) {
   };
 
   const getDirections = () => {
+    if (!hasValidKey) return; // Directions only available with Google Maps
     if (!routesLib || !map || !selectedSchool || !userLocation || !selectedSchool.coordinates) return;
 
     polylinesRef.current.forEach(p => p.setMap(null));
@@ -96,6 +147,15 @@ function MapContent({ schools }: { schools: School[] }) {
           <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Preschool Finder</h1>
           <p className="text-sm text-slate-500 mb-4">Find nearby schools, check transport zones, and get real-time directions.</p>
           
+          {!hasValidKey && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4 flex gap-3 items-start">
+               <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+               <p className="text-[10px] text-amber-800 leading-tight">
+                  <strong>Running in Guest Mode.</strong> Smart routing and street maps are disabled. Add a Google Maps API Key in Settings to unlock full features.
+               </p>
+            </div>
+          )}
+
           <div className="relative">
              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
              <Input 
@@ -136,8 +196,8 @@ function MapContent({ schools }: { schools: School[] }) {
              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-6">
                 <h4 className="font-semibold text-slate-900 mb-3 text-sm">Smart Navigation</h4>
                 {!routeInfo ? (
-                   <Button onClick={getDirections} className="w-full bg-blue-600 hover:bg-blue-700">
-                      <Navigation className="h-4 w-4 mr-2" /> Get Directions
+                   <Button onClick={getDirections} disabled={!hasValidKey} className="w-full bg-blue-600 hover:bg-blue-700">
+                      <Navigation className="h-4 w-4 mr-2" /> {hasValidKey ? "Get Directions" : "Routing Locked"}
                    </Button>
                 ) : (
                    <div className="space-y-3">
@@ -199,46 +259,77 @@ function MapContent({ schools }: { schools: School[] }) {
       </div>
 
       {/* Map Area */}
-      <div className="flex-1 relative bg-slate-100 h-full">
-         <Map
-           defaultCenter={ESWATINI_CENTER}
-           defaultZoom={11}
-           mapId="PRESCHOOL_ESWATINI_DEMO_MAP_ID"
-           internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
-           style={{width: '100%', height: '100%'}}
-           disableDefaultUI={true}
-           zoomControl={true}
-           gestureHandling="greedy"
-         >
-           {userLocation && (
-             <AdvancedMarker position={userLocation} title="You usually are here" zIndex={20}>
-                <div className="h-5 w-5 bg-blue-600 rounded-full border-4 border-white shadow-[0_0_0_2px_rgba(37,99,235,0.3)] animate-pulse" />
-             </AdvancedMarker>
-           )}
+      <div className="flex-1 relative bg-slate-100 h-full overflow-hidden" id="map-container">
+         {hasValidKey ? (
+            <Map
+              defaultCenter={ESWATINI_CENTER}
+              defaultZoom={11}
+              mapId="PRESCHOOL_ESWATINI_DEMO_MAP_ID"
+              internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
+              style={{width: '100%', height: '100%'}}
+              disableDefaultUI={true}
+              zoomControl={true}
+              gestureHandling="greedy"
+            >
+              {userLocation && (
+                <AdvancedMarker position={userLocation} title="You usually are here" zIndex={20}>
+                   <div className="h-5 w-5 bg-blue-600 rounded-full border-4 border-white shadow-[0_0_0_2px_rgba(37,99,235,0.3)] animate-pulse" />
+                </AdvancedMarker>
+              )}
 
-           {filteredSchools.map(school => {
-              if (!school.coordinates) return null;
-              const isSelected = selectedSchool?.id === school.id;
-              
-              return (
-                 <AdvancedMarker 
-                    key={school.id} 
-                    position={school.coordinates} 
-                    onClick={() => handleSchoolSelect(school)}
-                    zIndex={isSelected ? 10 : 1}
-                 >
-                    <Pin 
-                       background={isSelected ? "#2563eb" : "#f59e0b"} 
-                       borderColor={isSelected ? "#1d4ed8" : "#d97706"} 
-                       glyphColor="#fff" 
-                    />
-                 </AdvancedMarker>
-              )
-           })}
-         </Map>
+              {filteredSchools.map(school => {
+                 if (!school.coordinates) return null;
+                 const isSelected = selectedSchool?.id === school.id;
+                 
+                 return (
+                    <AdvancedMarker 
+                       key={school.id} 
+                       position={school.coordinates} 
+                       onClick={() => handleSchoolSelect(school)}
+                       zIndex={isSelected ? 10 : 1}
+                    >
+                       <Pin 
+                          background={isSelected ? "#2563eb" : "#f59e0b"} 
+                          borderColor={isSelected ? "#1d4ed8" : "#d97706"} 
+                          glyphColor="#fff" 
+                       />
+                    </AdvancedMarker>
+                 )
+              })}
+            </Map>
+         ) : (
+            <div className="w-full h-full relative">
+               <MapContainer 
+                  center={[ESWATINI_CENTER.lat, ESWATINI_CENTER.lng]} 
+                  zoom={11} 
+                  style={{ height: '100%', width: '100%' }}
+                  scrollWheelZoom={true}
+                >
+                  <LeafletMapContent 
+                    schools={filteredSchools} 
+                    onSelectSchool={handleSchoolSelect} 
+                    selectedSchool={selectedSchool}
+                  />
+                </MapContainer>
+                
+                {/* Floating Action Hint */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] bg-white rounded-2xl shadow-2xl p-4 border border-blue-100 flex items-center gap-4 max-w-sm whitespace-nowrap">
+                   <div className="h-10 w-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
+                      <Lock className="h-5 w-5" />
+                   </div>
+                   <div>
+                      <p className="text-xs font-bold text-slate-900">Advanced Features Locked</p>
+                      <p className="text-[10px] text-slate-500">Google Maps key required for routing.</p>
+                   </div>
+                   <Button variant="ghost" size="sm" className="h-8 text-[10px] font-bold text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+                      Get Setup
+                   </Button>
+                </div>
+            </div>
+         )}
          
          {/* Density/Heatmap toggle mock */}
-         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-xl shadow-lg border border-slate-200 p-2 flex flex-col gap-2 z-[5] max-w-xs">
+         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-xl shadow-lg border border-slate-200 p-2 flex flex-col gap-2 z-[500] md:z-[5] max-w-xs">
             <h4 className="text-sm font-bold text-slate-900 px-2 py-1">Map Layers</h4>
             <Button variant="ghost" size="sm" className="justify-start text-xs rounded-lg active:bg-blue-50">
                <Car className="h-3 w-3 mr-2" /> Transport Zones
@@ -284,24 +375,13 @@ export function MapSearchPage() {
     load();
   }, []);
 
-  if (!hasValidKey) {
+  if (hasValidKey) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center bg-slate-50">
-         <div className="bg-white p-8 rounded-3xl shadow-xl max-w-md border border-slate-100">
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">Google Maps Check</h2>
-            <p className="text-slate-600 mb-6">
-              The Smart Map System requires a valid Google Maps API key to render the interactive map, routing directions, and distance estimates. 
-            </p>
-            <div className="text-left bg-slate-50 p-4 rounded-xl text-sm border border-slate-200">
-               <h4 className="font-semibold mb-2">To test this prototype feature:</h4>
-               <ol className="list-decimal pl-5 space-y-1 text-slate-600">
-                  <li>Open <strong>Settings</strong> (⚙️) top-right.</li>
-                  <li>Click <strong>Secrets</strong>.</li>
-                  <li>Add <code>GOOGLE_MAPS_PLATFORM_KEY</code> as secret name.</li>
-                  <li>Paste your Maps API key containing Places/Routes API access.</li>
-               </ol>
-            </div>
-         </div>
+      <div className="w-full">
+        <SEO title="Smart Map Locator | Preschools Eswatini" />
+        <APIProvider apiKey={API_KEY} version="weekly">
+           <MapContent schools={schools} />
+        </APIProvider>
       </div>
     );
   }
@@ -309,9 +389,8 @@ export function MapSearchPage() {
   return (
     <div className="w-full">
       <SEO title="Smart Map Locator | Preschools Eswatini" />
-      <APIProvider apiKey={API_KEY} version="weekly">
-         <MapContent schools={schools} />
-      </APIProvider>
+      <MapContent schools={schools} />
     </div>
   );
 }
+

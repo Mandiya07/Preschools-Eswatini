@@ -12,58 +12,21 @@ import {
   Download, Calendar, Gift, Search, Smartphone, ShieldCheck, Zap
 } from "lucide-react";
 
-const PLANS = [
-  {
-    id: "starter",
-    name: "Starter",
-    description: "Perfect for small daycares and new preschools.",
-    monthlyPrice: 299,
-    annualPrice: 2490,
-    features: ["Up to 50 students", "Basic reporting", "Email support", "Standard templates", "1GB Storage"],
-    limits: { students: 50, storage: 1 }
-  },
-  {
-    id: "standard",
-    name: "Standard",
-    description: "Great for growing schools with multiple classes.",
-    monthlyPrice: 499,
-    annualPrice: 4990,
-    features: ["Up to 150 students", "Advanced reporting", "Parent Portal", "Custom domain", "5GB Storage"],
-    limits: { students: 150, storage: 5 },
-    popular: true
-  },
-  {
-    id: "professional",
-    name: "Professional",
-    description: "Full suite for established academies.",
-    monthlyPrice: 899,
-    annualPrice: 8990,
-    features: ["Up to 500 students", "Priority support", "Full integrations", "All premium templates", "20GB Storage"],
-    limits: { students: 500, storage: 20 }
-  },
-  {
-    id: "enterprise",
-    name: "Enterprise",
-    description: "Custom solutions for school networks.",
-    monthlyPrice: 1499,
-    annualPrice: 14990,
-    features: ["Unlimited students", "Dedicated account manager", "White-labeling", "Custom features", "100GB Storage"],
-    limits: { students: 9999, storage: 100 }
-  }
-];
+import { PricingTier, PRICING_TIERS } from "@/components/PricingTier";
 
 export function SubscriptionPage() {
-  const { user } = useAuth();
-  const [currentPlanId, setCurrentPlanId] = useState("professional");
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
+  const [currentPlanId, setCurrentPlanId] = useState("");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [isChangingPlan, setIsChangingPlan] = useState(false);
   
-  const currentPlan = PLANS.find(p => p.id === currentPlanId) || PLANS[2];
+  const currentPlan = PRICING_TIERS.find(p => p.id === currentPlanId) || PRICING_TIERS[0];
   
-  const studentsUsed = 342;
-  const storageUsed = 12.5; // GB
+  const studentsUsed = 0;
+  const storageUsed = 0; // GB
   
   const handleApplyCoupon = () => {
     if (couponCode.toLowerCase() === "free30") {
@@ -81,8 +44,8 @@ export function SubscriptionPage() {
         body: JSON.stringify({
           planId,
           billingCycle,
-          schoolName: "Your Preschool Name", // In reality, fetch from user profile/auth context
-          email: user?.email || "admin@preschool.sz" 
+          schoolId: effectiveSchoolId,
+          email: user?.email 
         }),
       });
 
@@ -144,8 +107,8 @@ export function SubscriptionPage() {
                       </div>
                       <p className="text-sm text-slate-600">
                         {billingCycle === "monthly" 
-                          ? `E${currentPlan.monthlyPrice} / month` 
-                          : `E${currentPlan.annualPrice} / year`}
+                          ? `E${currentPlan.price.monthly} / month` 
+                          : `E${currentPlan.price.annual} / year`}
                       </p>
                     </div>
                   </div>
@@ -198,7 +161,7 @@ export function SubscriptionPage() {
                   </div>
                   <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-between">
                      <span className="text-sm font-medium text-slate-600">Est. Upcoming Bill</span>
-                     <span className="font-bold text-slate-900">E{billingCycle === 'monthly' ? currentPlan.monthlyPrice : currentPlan.annualPrice}.00</span>
+                     <span className="font-bold text-slate-900">E{billingCycle === 'monthly' ? currentPlan.price.monthly : currentPlan.price.annual}.00</span>
                   </div>
                   <Button variant="outline" className="w-full text-xs h-8">View Full Report <TrendingUp className="h-3 w-3 ml-2" /></Button>
                 </CardContent>
@@ -256,83 +219,14 @@ export function SubscriptionPage() {
 
           <div className="mb-8 flex flex-col items-center justify-center space-y-4">
             <h2 className="text-2xl font-bold tracking-tight">Choose the perfect plan for your school</h2>
-            <div className="flex items-center gap-3 bg-slate-100 p-1 rounded-lg">
-              <button 
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${billingCycle === 'monthly' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-600 hover:text-slate-900'}`}
-                onClick={() => setBillingCycle('monthly')}
-              >
-                Monthly billing
-              </button>
-              <button 
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${billingCycle === 'annual' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-600 hover:text-slate-900'}`}
-                onClick={() => setBillingCycle('annual')}
-              >
-                Annual billing <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-none px-1.5 h-5 text-[10px]">Save 20%</Badge>
-              </button>
-            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PLANS.map((plan) => {
-              const isCurrent = plan.id === currentPlanId;
-              
-              return (
-                <Card key={plan.id} className={`relative flex flex-col ${isCurrent ? 'border-blue-500 shadow-md ring-1 ring-blue-500' : 'border-slate-200'} ${plan.popular && !isCurrent ? 'border-indigo-300' : ''}`}>
-                  {plan.popular && !isCurrent && (
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">
-                      Most Popular
-                    </div>
-                  )}
-                  {isCurrent && (
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">
-                      Current Plan
-                    </div>
-                  )}
-                  
-                  <CardHeader>
-                    <CardTitle>{plan.name}</CardTitle>
-                    <CardDescription className="h-10">{plan.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="mb-6">
-                      <span className="text-3xl font-extrabold text-slate-900">
-                        E{billingCycle === 'monthly' ? plan.monthlyPrice : Math.floor(plan.annualPrice / 12)}
-                      </span>
-                      <span className="text-slate-500 font-medium"> / mo</span>
-                      {billingCycle === 'annual' && (
-                        <p className="text-xs text-slate-400 mt-1">Billed annually (E{plan.annualPrice})</p>
-                      )}
-                    </div>
-                    
-                    <ul className="space-y-3">
-                      {plan.features.map((feature, i) => (
-                        <li key={i} className="flex gap-3 text-sm text-slate-600">
-                          <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                  <CardFooter>
-                    <Button 
-                      variant={isCurrent ? "outline" : plan.popular ? "default" : "secondary"} 
-                      className="w-full"
-                      disabled={isCurrent || isChangingPlan}
-                      onClick={() => handlePlanChange(plan.id)}
-                    >
-                      {isChangingPlan && currentPlanId !== plan.id ? (
-                        "Updating..."
-                      ) : isCurrent ? (
-                        "Current Plan"
-                      ) : (
-                        PLANS.findIndex(p => p.id === plan.id) > PLANS.findIndex(p => p.id === currentPlanId) ? "Upgrade" : "Downgrade"
-                      )}
-                    </Button>
-                  </CardFooter>
-                </Card>
-              );
-            })}
-          </div>
+          <PricingTier 
+            selectedPlan={currentPlanId}
+            onSelectPlan={(plan) => handlePlanChange(plan)}
+            billingCycle={billingCycle}
+            onBillingCycleChange={setBillingCycle}
+          />
 
           {/* Coupon Section */}
           <div className="mt-12 bg-slate-50 border border-slate-200 rounded-xl p-6 max-w-xl mx-auto">

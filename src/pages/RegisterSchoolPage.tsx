@@ -9,15 +9,17 @@ import { Link } from "react-router-dom";
 import { createDocument, fetchDocument } from "@/lib/firestoreUtils";
 import { useAuth } from "@/lib/AuthContext";
 import { toast } from "sonner";
+import { PricingTier, PRICING_TIERS } from "@/components/PricingTier";
 
 export function RegisterSchoolPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { user } = useAuth();
   
-  const [step, setStep] = useState<"details" | "plan">("details");
+  const [step, setStep] = useState<"details" | "plan">("plan");
   const [paymentMethod, setPaymentMethod] = useState<"card" | "momo" | "bank">("card");
-  const [selectedPlanId, setSelectedPlanId] = useState("standard");
+  const [selectedPlanId, setSelectedPlanId] = useState("basic");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['attendance', 'admissions', 'finance', 'communication']);
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
 
   const [platformPayment, setPlatformPayment] = useState({
@@ -68,16 +70,10 @@ export function RegisterSchoolPage() {
     }));
   };
 
-  const PLANS = [
-    { id: "starter", name: "Starter", price: billingCycle === 'annual' ? 2490 : 299 },
-    { id: "standard", name: "Standard", price: billingCycle === 'annual' ? 4990 : 499 },
-    { id: "professional", name: "Professional", price: billingCycle === 'annual' ? 8990 : 899 },
-  ];
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (step === "details") {
-      setStep("plan");
+    if (step === "plan") {
+      setStep("details");
       return;
     }
 
@@ -88,6 +84,7 @@ export function RegisterSchoolPage() {
         ...formData,
         userId: user?.uid || null,
         planId: selectedPlanId,
+        features: selectedFeatures,
         billingCycle,
         paymentMethod,
         status: paymentMethod === 'card' ? "pending_payment" : "pending_manual_verification",
@@ -148,7 +145,7 @@ export function RegisterSchoolPage() {
             <div className="mt-12 bg-slate-50 border border-slate-200 rounded-2xl p-8 text-left w-full">
               <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
                 <CreditCard className="h-5 w-5 text-blue-600" />
-                How to pay E{PLANS.find(p => p.id === selectedPlanId)?.price}:
+                How to pay E{PRICING_TIERS.find(p => p.id === selectedPlanId)?.price[billingCycle]}:
               </h3>
               
               {paymentMethod === 'momo' ? (
@@ -195,12 +192,12 @@ export function RegisterSchoolPage() {
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
           <div>
             <h1 className="text-3xl font-bold text-slate-900">
-              {step === "details" ? "Register Your School" : "Select Your Package"}
+              {step === "plan" ? "Select Your Package" : "Register Your School"}
             </h1>
             <p className="text-slate-600 mt-2">
-              {step === "details" 
-                ? "Join the Preschools Eswatini platform and start digitizing your preschool's operations."
-                : "Choose a plan that fits your school's size and needs."
+              {step === "plan" 
+                ? "Choose a plan that fits your school's size and needs."
+                : "Join the Preschools Eswatini platform and start digitizing your preschool's operations."
               }
             </p>
           </div>
@@ -233,51 +230,21 @@ export function RegisterSchoolPage() {
                   <Label htmlFor="message">Additional Information</Label>
                   <Textarea id="message" value={formData.message} onChange={handleChange} placeholder="Tell us more about your school..." />
                 </div>
+                <Button variant="ghost" type="button" className="w-full text-slate-500 h-10" onClick={() => setStep("plan")}>
+                  <ArrowLeft className="h-4 w-4 mr-2" /> Back to Packages
+                </Button>
               </div>
             ) : (
               <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 bg-slate-100 p-1.5 rounded-xl w-fit mx-auto">
-                  <button 
-                    type="button"
-                    className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all ${billingCycle === 'monthly' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
-                    onClick={() => setBillingCycle('monthly')}
-                  >
-                    Monthly
-                  </button>
-                  <button 
-                    type="button"
-                    className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all ${billingCycle === 'annual' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
-                    onClick={() => setBillingCycle('annual')}
-                  >
-                    Annual Save 20%
-                  </button>
-                </div>
-
-                <div className="grid gap-3">
-                  {PLANS.map((plan) => (
-                    <div 
-                      key={plan.id}
-                      className={`p-5 border-2 rounded-2xl cursor-pointer transition-all ${selectedPlanId === plan.id ? 'border-blue-600 bg-blue-50/50 shadow-sm' : 'border-slate-100 hover:border-slate-200 bg-white'}`}
-                      onClick={() => setSelectedPlanId(plan.id)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className={`h-4 w-4 rounded-full border flex items-center justify-center ${selectedPlanId === plan.id ? 'border-blue-600' : 'border-slate-300'}`}>
-                            {selectedPlanId === plan.id && <div className="h-2 w-2 rounded-full bg-blue-600" />}
-                          </div>
-                          <div>
-                            <h3 className="font-extrabold text-slate-900">{plan.name}</h3>
-                            <p className="text-[10px] text-slate-500 uppercase font-black tracking-tight">Eswatini School Tier</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-black text-slate-900 text-xl">E{plan.price}</p>
-                          <p className="text-[10px] text-slate-500 font-bold uppercase">{billingCycle === 'annual' ? 'Per Year' : 'Per Month'}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <PricingTier 
+                  selectedPlan={selectedPlanId}
+                  onSelectPlan={(plan, features) => {
+                    setSelectedPlanId(plan);
+                    setSelectedFeatures(features);
+                  }}
+                  billingCycle={billingCycle}
+                  onBillingCycleChange={setBillingCycle}
+                />
 
                 <div className="space-y-3 pt-4 border-t border-slate-100">
                   <Label className="text-xs font-black uppercase text-slate-400 tracking-widest">Select Payment Method</Label>
@@ -298,15 +265,11 @@ export function RegisterSchoolPage() {
                     ))}
                   </div>
                 </div>
-                
-                <Button variant="ghost" type="button" className="w-full text-slate-500 h-10" onClick={() => setStep("details")}>
-                  <ArrowLeft className="h-4 w-4 mr-2" /> Back to School details
-                </Button>
               </div>
             )}
             
             <Button type="submit" className="w-full h-12 text-lg font-bold" disabled={loading}>
-              {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : step === "details" ? "Select Package & Continue" : "Pay & Complete Registration"}
+              {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : step === "plan" ? "Select Package & Continue" : "Pay & Complete Registration"}
             </Button>
           </form>
         </div>

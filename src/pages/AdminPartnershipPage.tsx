@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { 
   FileText, 
   Send, 
@@ -20,9 +20,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/lib/AuthContext";
 import { motion, AnimatePresence } from "motion/react";
+import { fetchDocument } from "@/lib/firestoreUtils";
 
 export function AdminPartnershipPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
+  const [partnerDetails, setPartnerDetails] = useState<any>(null);
+  
   const [clientName, setClientName] = useState("");
   const [schoolName, setSchoolName] = useState("");
   const [senderTitle, setSenderTitle] = useState(user?.role || "Principal");
@@ -31,6 +35,18 @@ export function AdminPartnershipPage() {
   const [isSigned, setIsSigned] = useState(false);
   const [step, setStep] = useState(1);
   const printRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!effectiveSchoolId) return;
+    
+    async function loadData() {
+      const data = await fetchDocument('schools', effectiveSchoolId) as any;
+      if (data) {
+        setPartnerDetails(data);
+      }
+    }
+    loadData();
+  }, [effectiveSchoolId]);
 
   const handlePrint = () => {
     window.print();
@@ -162,7 +178,7 @@ export function AdminPartnershipPage() {
                      <Building2 className="h-8 w-8" />
                    </div>
                    <div>
-                     <h2 className="font-black text-2xl tracking-tight">Little Stars</h2>
+                     <h2 className="font-black text-2xl tracking-tight">{partnerDetails?.name || "Ecosystem Partner"}</h2>
                      <p className="text-sm font-semibold tracking-[0.2em] uppercase text-blue-100 mt-1">Ecosystem Partner</p>
                    </div>
                  </div>

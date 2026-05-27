@@ -27,7 +27,8 @@ type Student = {
 };
 
 export function AdminStudentsPage() {
-  const { user } = useAuth();
+  const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -55,7 +56,7 @@ export function AdminStudentsPage() {
 
   const handleBulkUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !user?.schoolId) return;
+    if (!file || !effectiveSchoolId) return;
 
     if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
       toast.error("Please upload a CSV file.");
@@ -84,7 +85,7 @@ export function AdminStudentsPage() {
               parentEmail: row.parentEmail || "",
               medicalInfo: row.medicalInfo || "",
               status: (row.status as any) || "Active",
-              schoolId: user.schoolId,
+              schoolId: effectiveSchoolId,
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString()
             });
@@ -114,7 +115,7 @@ export function AdminStudentsPage() {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !user?.schoolId) return;
+    if (!file || !effectiveSchoolId) return;
 
     // Basic validation
     if (!file.type.startsWith('image/')) {
@@ -129,7 +130,7 @@ export function AdminStudentsPage() {
 
     setUploading(true);
     try {
-      const storageRef = ref(storage, `schools/${user.schoolId}/students/${Date.now()}_${file.name}`);
+      const storageRef = ref(storage, `schools/${effectiveSchoolId}/students/${Date.now()}_${file.name}`);
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
       setFormData(prev => ({ ...prev, photoUrl: downloadURL }));
@@ -142,7 +143,7 @@ export function AdminStudentsPage() {
   };
 
   useEffect(() => {
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     const unsubscribe = subscribeToCollection(
       'students',
@@ -150,11 +151,11 @@ export function AdminStudentsPage() {
         setStudents(data as Student[]);
         setLoading(false);
       },
-      where('schoolId', '==', user.schoolId)
+      where('schoolId', '==', effectiveSchoolId)
     );
 
     return () => unsubscribe();
-  }, [user]);
+  }, [effectiveSchoolId]);
 
   const filteredStudents = students.filter(student => 
     student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -189,7 +190,7 @@ export function AdminStudentsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user?.schoolId) return;
+    if (!effectiveSchoolId) return;
 
     setSaving(true);
     try {
@@ -201,7 +202,7 @@ export function AdminStudentsPage() {
       } else {
         await createDocument('students', null, { 
           ...formData, 
-          schoolId: user.schoolId,
+          schoolId: effectiveSchoolId,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         });
