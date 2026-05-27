@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import { 
   FileText, 
   Settings, 
@@ -15,7 +15,8 @@ import {
   Search,
   BookOpen,
   ArrowLeft,
-  Sparkles
+  Sparkles,
+  Upload
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -38,44 +39,7 @@ interface AdminArticle {
   status: "Published" | "Draft";
 }
 
-const INITIAL_ARTICLES: AdminArticle[] = [
-  {
-    slug: "eswatini-preschool-landscapes",
-    title: "Eswatini Preschool Landscapes: Fact Sheet Summary",
-    category: "parents",
-    categoryLabel: "Parents Circle",
-    author: "National Mapping Project Secretariat",
-    date: "May 25, 2026",
-    readTime: "4 min read",
-    summary: "To help you make sense of this exhaustive national mapping project, here is a macro-comparison of how early childhood education is divided across the Kingdom of Eswatini.",
-    image: "https://images.unsplash.com/photo-1576489922094-27a5bfac0148?auto=format&fit=crop&w=800&q=80",
-    status: "Published"
-  },
-  {
-    slug: "how-preschools-register",
-    title: "Step-by-Step Guide: How to Register Your Preschool on our Platform",
-    category: "schools",
-    categoryLabel: "Preschool Admins",
-    author: "Platform Admissions Council",
-    date: "May 20, 2026",
-    readTime: "5 min read",
-    summary: "Learn how Eswatini preschool administrators can activate their digital profiles, configure custom school websites under their own name, list facilities, and accept verified online parent applications.",
-    image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=600&q=80",
-    status: "Published"
-  },
-  {
-    slug: "how-suppliers-register",
-    title: "Connecting with Schools: The Complete Supplier Onboarding Guide",
-    category: "suppliers",
-    categoryLabel: "Suppliers Hub",
-    author: "Procurement Operations Team",
-    date: "May 18, 2026",
-    readTime: "4 min read",
-    summary: "An in-depth guide for stationery, playground safety, uniform, and nutrition suppliers seeking to join the Preschools Eswatini digital ecosystem.",
-    image: "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80",
-    status: "Published"
-  }
-];
+const INITIAL_ARTICLES: AdminArticle[] = [];
 
 export function SuperAdminCMSPage() {
   const [articles, setArticles] = useState<AdminArticle[]>(INITIAL_ARTICLES);
@@ -87,7 +51,24 @@ export function SuperAdminCMSPage() {
   const [editSummary, setEditSummary] = useState("");
   const [editCategory, setEditCategory] = useState("");
   const [editReadTime, setEditReadTime] = useState("");
+  const [editImage, setEditImage] = useState("");
   const [editStatus, setEditStatus] = useState<"Published" | "Draft">("Published");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size should be less than 5MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const [activeTab, setActiveTab] = useState("pages");
 
@@ -103,6 +84,7 @@ export function SuperAdminCMSPage() {
     setEditSummary(article.summary);
     setEditCategory(article.category);
     setEditReadTime(article.readTime);
+    setEditImage(article.image);
     setEditStatus(article.status);
   };
 
@@ -122,6 +104,7 @@ export function SuperAdminCMSPage() {
           ...art,
           title: editTitle,
           summary: editSummary,
+          image: editImage,
           category: editCategory,
           categoryLabel: editCategory === "parents" ? "Parents Circle" : editCategory === "schools" ? "Preschool Admins" : "Suppliers Hub",
           readTime: editReadTime,
@@ -196,14 +179,7 @@ export function SuperAdminCMSPage() {
         {/* WEB PAGES TAB */}
         <TabsContent value="pages" className="space-y-6 m-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: 'Home Page', url: '/', status: 'Published', lastEdit: '2 days ago', author: 'Sipho Mati' },
-              { title: 'About the Platform', url: '/about', status: 'Published', lastEdit: '1 week ago', author: 'Sipho Mati' },
-              { title: 'Privacy Policy', url: '/privacy', status: 'Draft', lastEdit: 'Yesterday', author: 'System' },
-              { title: 'Terms of Service', url: '/terms', status: 'Published', lastEdit: '3 months ago', author: 'System' },
-              { title: 'Pricing & Plans', url: '/pricing', status: 'Published', lastEdit: '15 mins ago', author: 'Sipho Mati' },
-              { title: 'Guides & Articles', url: '/blog', status: 'Published', lastEdit: 'Just now', author: 'Sipho Mati' },
-            ].map((page, i) => (
+            {[].map((page, i) => (
               <Card key={i} className="border-none shadow-sm group hover:shadow-md transition-all">
                   <CardHeader className="p-5 border-b border-slate-50">
                      <div className="flex items-center justify-between mb-3">
@@ -302,6 +278,36 @@ export function SuperAdminCMSPage() {
                         className="rounded-xl border-slate-200"
                       />
                     </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Cover Image</label>
+                  <div className="flex flex-col gap-3">
+                     {editImage && <img src={editImage} alt="Cover preview" className="h-32 w-full max-w-sm rounded-lg object-cover bg-slate-100 flex-shrink-0" />}
+                     <div className="flex items-center gap-3">
+                       <Input 
+                         value={editImage} 
+                         onChange={(e) => setEditImage(e.target.value)} 
+                         placeholder="Enter image URL or upload..."
+                         className="rounded-xl border-slate-200"
+                       />
+                       <input 
+                         type="file" 
+                         accept="image/*" 
+                         className="hidden" 
+                         ref={fileInputRef} 
+                         onChange={handleImageUpload} 
+                       />
+                       <Button 
+                         type="button"
+                         variant="outline"
+                         className="rounded-xl border-slate-200 shrink-0"
+                         onClick={() => fileInputRef.current?.click()}
+                       >
+                         <Upload className="h-4 w-4 mr-2" /> Upload
+                       </Button>
+                     </div>
                   </div>
                 </div>
 

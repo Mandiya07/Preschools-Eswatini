@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   Building2, 
   Search, 
@@ -26,34 +27,29 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { fetchCollection, updateDocument, createDocument, subscribeToCollection, bulkImportPreloadedSchools } from "@/lib/firestoreUtils";
-import { useEffect } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
 import { auth } from "@/lib/firebase";
 
 export function SuperAdminSchoolsPage() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [registrations, setRegistrations] = useState<any[]>([]);
   const [schools, setSchools] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [seeding, setSeeding] = useState(false);
+  const [editSchool, setEditSchool] = useState<any | null>(null);
+  const [suspendSchool, setSuspendSchool] = useState<any | null>(null);
+  const [seedConfirmOpen, setSeedConfirmOpen] = useState(false);
 
   const handleSeedRegistry = async () => {
     setSeeding(true);
 
     try {
-      // Prompt confirm first (standard browser confirm)
-      const confirmSeed = window.confirm(
-        "Are you sure you want to bulk-import all preloaded schools from the registry into your Firestore database? This will skip any schools already matching by ID."
-      );
-      if (!confirmSeed) {
-        setSeeding(false);
-        return;
-      }
-
       const result = await bulkImportPreloadedSchools(auth.currentUser?.uid || "super_admin_seed");
 
       if (result.successCount > 0) {
@@ -68,6 +64,7 @@ export function SuperAdminSchoolsPage() {
       toast.error("An error occurred while attempting bulk import.");
     } finally {
       setSeeding(false);
+      setSeedConfirmOpen(false);
     }
   };
 
@@ -232,8 +229,10 @@ export function SuperAdminSchoolsPage() {
                           }`}>
                             <CreditCard className="h-3 w-3 mr-1" /> {school.subscriptionPlan}
                           </Badge>
-                          <p className={`text-[10px] font-black uppercase tracking-tighter ${school.subscriptionStatus === 'active' ? 'text-green-500' : 'text-red-500'}`}>
-                             {school.subscriptionStatus}
+                          <p className={`text-[10px] font-black uppercase tracking-tighter ${
+                            (school.subscriptionStatus === 'active' && school.ownerId !== 'super_admin_seed') ? 'text-green-500' : 'text-slate-400'
+                          }`}>
+                             {(!school.ownerId || school.ownerId === 'super_admin_seed') ? 'Unclaimed' : school.subscriptionStatus}
                           </p>
                        </div>
                     </td>
@@ -263,17 +262,24 @@ export function SuperAdminSchoolsPage() {
                          </DropdownMenuTrigger>
                          <DropdownMenuContent align="end" className="w-48 rounded-xl border-slate-200 shadow-xl p-1">
                             <DropdownMenuLabel className="text-[10px] font-black text-slate-400 uppercase tracking-widest Ital px-2 py-1.5">Management</DropdownMenuLabel>
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3">
+                             <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => navigate(`/school/${school.id}`)}>
                                <ExternalLink className="h-3 w-3" /> View Website
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3">
+                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={async () => {
+                               try {
+                                 await updateDocument("schools", school.id, { verified: !school.verified });
+                                 toast.success(school.verified ? "School verification revoked." : "School verified successfully.");
+                               } catch (err) {
+                                 toast.error("Failed to update verification status.");
+                               }
+                            }}>
                                <ShieldCheck className="h-3 w-3" /> Manage Verification
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3">
+                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => setEditSchool(school)}>
                                <CreditCard className="h-3 w-3" /> Edit Subscription
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-slate-50" />
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3 text-red-600 hover:bg-red-50 hover:text-red-700">
+                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3 text-red-600 hover:bg-red-50 hover:text-red-700" onClick={() => setSuspendSchool(school)}>
                                Suspend School
                             </DropdownMenuItem>
                          </DropdownMenuContent>
@@ -350,6 +356,92 @@ export function SuperAdminSchoolsPage() {
             </CardContent>
          </Card>
       </div>
+
+      {editSchool && (
+        <Dialog open={true} onOpenChange={(open) => !open && setEditSchool(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit Subscription for {editSchool.name}</DialogTitle>
+              <DialogDescription>
+                Change the current subscription plan for this school.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-2 py-4">
+              {['Free', 'Basic', 'Professional', 'Enterprise'].map(plan => (
+                <Button 
+                   key={plan}
+                   variant={editSchool.subscriptionPlan === plan ? "default" : "outline"}
+                   onClick={async () => {
+                     try {
+                        await updateDocument("schools", editSchool.id, { subscriptionPlan: plan });
+                        toast.success("Subscription plan updated.");
+                        setEditSchool(null);
+                     } catch (err) {
+                        toast.error("Failed to update subscription.");
+                     }
+                   }}
+                >
+                  {plan}
+                </Button>
+              ))}
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setEditSchool(null)}>Cancel</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {suspendSchool && (
+        <Dialog open={true} onOpenChange={(open) => !open && setSuspendSchool(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-red-600">Suspend School: {suspendSchool.name}</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to suspend this school? This action will set their subscription status to 'canceled'.
+                They will no longer have access to premium features.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setSuspendSchool(null)}>Cancel</Button>
+              <Button 
+                variant="destructive"
+                onClick={async () => {
+                  try {
+                    await updateDocument("schools", suspendSchool.id, { subscriptionStatus: "canceled" });
+                    toast.success("School suspended (subscription canceled).");
+                    setSuspendSchool(null);
+                  } catch (err) {
+                    toast.error("Failed to suspend school.");
+                  }
+                }}
+              >
+                Confirm Suspension
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+      
+      {seedConfirmOpen && (
+        <Dialog open={true} onOpenChange={(open) => !open && setSeedConfirmOpen(false)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Confirm Bulk Import</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to bulk-import all preloaded schools from the registry into your Firestore database? This will skip any schools already matching by ID.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setSeedConfirmOpen(false)}>Cancel</Button>
+              <Button onClick={handleSeedRegistry} disabled={seeding}>
+                {seeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                {seeding ? "Importing..." : "Run Import"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }

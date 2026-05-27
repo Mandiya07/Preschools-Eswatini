@@ -75,13 +75,9 @@ export function LandingPage() {
               </div>
               <div className="mt-10 flex items-center gap-4 text-sm text-slate-500 font-bold">
                 <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className={`h-10 w-10 rounded-full border-2 border-white bg-slate-${200 + i*100} flex items-center justify-center text-[10px] shadow-sm font-bold text-white`}>
-                      S{i}
-                    </div>
-                  ))}
+                   <div className="h-10 w-10 rounded-full border-2 border-white bg-blue-600 flex items-center justify-center text-[10px] shadow-sm font-bold text-white">SZ</div>
                 </div>
-                Trusted by 50+ preschools across Eswatini
+                Connecting preschools across the Kingdom of Eswatini
               </div>
             </motion.div>
             
@@ -238,40 +234,6 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 4. Testimonials */}
-      <section className="py-24 bg-slate-900 text-white rounded-[3rem] lg:rounded-[5rem] mx-4 sm:mx-6 lg:mx-8 mb-12 shadow-2xl">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold sm:text-4xl tracking-tight">Loved by School Leaders</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { text: "This platform completely transformed how we communicate with parents. The online admissions saved us weeks of sorting through paper forms.", author: "Zandi Thwala", role: "Principal, Little Explorers" },
-              { text: "Having a professional website made a huge difference. We filled our enrollment capacity for next year in record time because parents could easily find us and apply online.", author: "Siphesihle Dlamini", role: "Owner, Tiny Tots Center" },
-              { text: "The parent portal is fantastic. Parents loved being able to log in, see fee statements, and read updates without having to scroll through noisy WhatsApp groups.", author: "Nomsa Mkhonta", role: "Administrator, Bright Minds" },
-            ].map((testimonial, i) => (
-              <motion.div 
-                whileHover={{ y: -5 }}
-                key={i} 
-                className="bg-slate-800/80 rounded-[2rem] p-8 border border-slate-700 relative backdrop-blur-sm"
-              >
-                <Quote className="absolute top-8 right-8 h-8 w-8 text-slate-600 opacity-50" />
-                <div className="flex gap-1 mb-6 text-secondary">
-                  <Star className="h-5 w-5 fill-current" /><Star className="h-5 w-5 fill-current" /><Star className="h-5 w-5 fill-current" /><Star className="h-5 w-5 fill-current" /><Star className="h-5 w-5 fill-current" />
-                </div>
-                <p className="text-slate-200 mb-8 text-base leading-relaxed font-medium">"{testimonial.text}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-slate-700 flex items-center justify-center font-bold text-white text-lg">{testimonial.author.charAt(0)}</div>
-                  <div>
-                    <p className="font-bold text-white text-base">{testimonial.author}</p>
-                    <p className="text-sm text-slate-400 font-medium">{testimonial.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 5. Directory CTA Section */}
       <section className="py-24 bg-white overflow-hidden mb-12">

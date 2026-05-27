@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/lib/AuthContext";
+import { toast } from "sonner";
 import { 
   CheckCircle2, CreditCard, AlertCircle, TrendingUp, Users, HardDrive, 
   Download, Calendar, Gift, Search, Smartphone, ShieldCheck, Zap
@@ -51,6 +53,7 @@ const PLANS = [
 ];
 
 export function SubscriptionPage() {
+  const { user } = useAuth();
   const [currentPlanId, setCurrentPlanId] = useState("professional");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
   const [couponCode, setCouponCode] = useState("");
@@ -68,10 +71,33 @@ export function SubscriptionPage() {
     }
   };
 
-  const handlePlanChange = (planId: string) => {
-    setCurrentPlanId(planId);
+  const handlePlanChange = async (planId: string) => {
     setIsChangingPlan(true);
-    setTimeout(() => setIsChangingPlan(false), 800);
+    
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planId,
+          billingCycle,
+          schoolName: "Your Preschool Name", // In reality, fetch from user profile/auth context
+          email: user?.email || "admin@preschool.sz" 
+        }),
+      });
+
+      const session = await response.json();
+      
+      if (session.url) {
+        window.location.href = session.url;
+      } else {
+        throw new Error(session.error || "Failed to create checkout session");
+      }
+    } catch (err: any) {
+      console.error("Payment error:", err);
+      toast.error(err.message || "An error occurred while initiating payment.");
+      setIsChangingPlan(false);
+    }
   };
 
   return (

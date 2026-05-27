@@ -29,6 +29,7 @@ export interface Staff {
 export interface School {
   id: string;
   name: string;
+  ownerId?: string;
   institutionType?: string;
   country?: string;
   region: string;
@@ -66,6 +67,7 @@ export interface School {
   subscriptionPlan: "Free" | "Basic" | "Professional" | "Enterprise";
   subscriptionStatus: "active" | "past_due" | "canceled" | "trialing";
   createdAt: string;
+  claimed?: boolean;
 }
 
 export interface TransportRoute {

@@ -260,15 +260,8 @@ export function MapSearchPage() {
       let data: School[] = [];
       try {
         data = await fetchCollection('schools') as School[];
-      } catch (err) { }
-      if (!data || data.length === 0) {
-        try {
-          const res = await fetch('/api/schools');
-          data = await res.json();
-        } catch (e) {}
-      }
-      if (!data || data.length === 0) {
-        data = PRELOADED_SCHOOLS;
+      } catch (err) { 
+        console.error("Firestore fetch error:", err);
       }
       
       // Assign mock coordinates around Eswatini to schools that don't have them
@@ -282,7 +275,11 @@ export function MapSearchPage() {
          return s;
       });
       
-      setSchools(enhancedData);
+      const publicSchools = enhancedData.filter(s => 
+        !s.ownerId || s.ownerId === 'super_admin_seed' || s.subscriptionStatus === 'active'
+      );
+      
+      setSchools(publicSchools);
     }
     load();
   }, []);

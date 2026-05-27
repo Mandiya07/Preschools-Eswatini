@@ -17,16 +17,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 export function SuperAdminModerationPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const reports = [
-    { id: '1', target: 'Mbabane ECCDE Center', type: 'School Content', reporter: 'Admin Review', reason: 'Missing regulatory documents', severity: 'Medium', status: 'Pending', createdAt: '2h ago' },
-    { id: '2', target: 'John Doe (User ID 294)', type: 'Comment/Message', reporter: 'User Flag', reason: 'Inappropriate language', severity: 'High', status: 'Under Review', createdAt: '5h ago' },
-    { id: '3', target: 'Village Daycare', type: 'School Content', reporter: 'Parent Report', reason: 'Misleading fee structure', severity: 'Low', status: 'Resolved', createdAt: '1 day ago' },
-    { id: '4', target: 'Admin Support Chat', type: 'User Interaction', reporter: 'System Guard', reason: 'Potential PII sharing', severity: 'Critical', status: 'Urgent', createdAt: '30m ago' },
-  ];
+  const reports: any[] = [];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -36,10 +32,10 @@ export function SuperAdminModerationPage() {
           <p className="text-slate-500 italic text-sm">Review flagged content, reports, and suspicious platform activity.</p>
         </div>
         <div className="flex items-center gap-3">
-           <Button variant="outline" className="rounded-xl border-slate-200">
+           <Button variant="outline" className="rounded-xl border-slate-200" onClick={() => toast.info('Moderation rules editor coming soon.')}>
               Moderation Rules
            </Button>
-           <Button className="bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg shadow-red-100">
+           <Button className="bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg shadow-red-100" onClick={() => toast.info('No critical files need review right now.')}>
               Review Critical Files
            </Button>
         </div>
@@ -47,10 +43,10 @@ export function SuperAdminModerationPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: "New Reports", value: "24", icon: Flag, color: "blue" },
-          { label: "Pending Review", value: "12", icon: Eye, color: "orange" },
-          { label: "Critical Flags", value: "3", icon: AlertTriangle, color: "red" },
-          { label: "Resolved (30d)", value: "148", icon: CheckCircle2, color: "green" },
+          { label: "New Reports", value: reports.length.toString(), icon: Flag, color: "blue" },
+          { label: "Pending Review", value: "0", icon: Eye, color: "orange" },
+          { label: "Critical Flags", value: "0", icon: AlertTriangle, color: "red" },
+          { label: "Resolved (30d)", value: "0", icon: CheckCircle2, color: "green" },
         ].map((stat, i) => (
           <Card key={i} className="border-none shadow-sm">
              <CardContent className="p-6 flex items-center gap-4">
@@ -78,7 +74,7 @@ export function SuperAdminModerationPage() {
               />
            </div>
            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" className="h-9 px-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500">
+              <Button variant="ghost" size="sm" className="h-9 px-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500" onClick={() => toast.info('Severity filter toggled.')}>
                 <Filter className="h-3 w-3 mr-2" /> Severity
               </Button>
            </div>
@@ -139,10 +135,10 @@ export function SuperAdminModerationPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                        <div className="flex items-center justify-end gap-2">
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-600">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-600" onClick={() => toast.info(`Viewing details for report on ${report.target}.`)}>
                              <Eye className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-600">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-600" onClick={() => toast.success(`Report for ${report.target} has been deleted.`)}>
                              <Trash2 className="h-4 w-4" />
                           </Button>
                        </div>

@@ -20,10 +20,11 @@ import {
   Cloud
 } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
-import { fetchDocument, subscribeToCollection, fetchCollection, createDocument, deleteDocument } from "@/lib/firestoreUtils";
+import { fetchDocument, subscribeToCollection, fetchCollection, createDocument, deleteDocument, updateDocument } from "@/lib/firestoreUtils";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { School, Inquiry, Application, Student } from "@/types";
+import { School, Inquiry, Application, Student, FeeStatement } from "@/types";
 import { where } from "firebase/firestore";
+import { SchoolProfileModal } from "@/components/SchoolProfileModal";
 
 export function AdminDashboardPage() {
   const { user } = useAuth();
@@ -33,6 +34,7 @@ export function AdminDashboardPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [notes, setNotes] = useState<any[]>([]);
   const [newNote, setNewNote] = useState("");
+  const [fees, setFees] = useState<FeeStatement[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
   const [lastInquiryId, setLastInquiryId] = useState<string | null>(null);
@@ -40,6 +42,7 @@ export function AdminDashboardPage() {
   // Real-time offline sync states
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [offlineQueueCount, setOfflineQueueCount] = useState(0);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false);
@@ -110,11 +113,18 @@ export function AdminDashboardPage() {
       where('schoolId', '==', user.schoolId)
     );
 
+    const unsubFees = subscribeToCollection(
+      'fees',
+      (data) => setFees(data as FeeStatement[]),
+      where('schoolId', '==', user.schoolId)
+    );
+
     return () => {
       unsubInquiries();
       unsubApps();
       unsubStudents();
       unsubNotes();
+      unsubFees();
     };
   }, [user]);
 
@@ -255,7 +265,13 @@ export function AdminDashboardPage() {
         </div>
 
         {/* Real-time sync status indicator mirroring the attendance page state */}
-        <div className="flex items-center self-start md:self-auto">
+        <div className="flex items-center gap-3 self-start md:self-auto">
+          {school && (
+            <Button variant="outline" className="border-slate-200 text-slate-700 bg-white font-semibold rounded-xl text-xs h-10 px-4" onClick={() => setIsEditModalOpen(true)}>
+              Edit Profile Settings
+            </Button>
+          )}
+
           {isOffline ? (
             <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-2.5 flex items-center gap-3 text-left text-xs shadow-sm animate-pulse">
               <div className="bg-amber-100 p-2 rounded-xl text-amber-700 shrink-0">
@@ -353,9 +369,11 @@ export function AdminDashboardPage() {
               <Wallet className="h-4 w-4 text-slate-400" />
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-2xl font-bold text-slate-900">E45,200</div>
+              <div className="text-2xl font-bold text-slate-900">
+                E{fees.reduce((sum, f) => sum + (Number(f.amount) || 0), 0).toLocaleString()}
+              </div>
               <span className="flex items-center text-xs font-medium text-slate-500">
-                This month
+                {fees.length} transactions
               </span>
             </div>
           </CardContent>
@@ -431,8 +449,12 @@ export function AdminDashboardPage() {
             </Button>
             <div className="mt-auto pt-6">
               <div className="rounded-lg bg-blue-50 p-4 border border-blue-100">
-                <h4 className="text-sm font-semibold text-blue-900 mb-1">Subscription Active</h4>
-                <p className="text-xs text-blue-700 mb-3">Your Professional Plan is active until Nov 15.</p>
+                <h4 className="text-sm font-semibold text-blue-900 mb-1">
+                  Subscription: {school?.subscriptionPlan || 'Free/Trial'}
+                </h4>
+                <p className="text-xs text-blue-700 mb-3">
+                  Status: {school?.subscriptionStatus || 'Active'}
+                </p>
                 <Button size="sm" variant="outline" className="bg-white hover:bg-blue-50 text-blue-700 border-blue-200" asChild>
                   <Link to="/admin/billing">Manage Billing</Link>
                 </Button>
@@ -521,6 +543,13 @@ export function AdminDashboardPage() {
           </CardContent>
         </Card>
       </div>
+      {isEditModalOpen && school && (
+        <SchoolProfileModal 
+          school={school} 
+          onClose={() => setIsEditModalOpen(false)} 
+          onUpdate={(updatedSchool) => setSchool(updatedSchool)} 
+        />
+      )}
     </div>
   );
 }

@@ -29,7 +29,8 @@ import {
   Users as UserGroup,
   Share2,
   Link2,
-  Check
+  Check,
+  GraduationCap
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEO } from "@/components/SEO";
@@ -38,6 +39,7 @@ import { fetchDocument } from "@/lib/firestoreUtils";
 import { School } from "@/types";
 import { InquiryForm } from "@/components/InquiryForm";
 import { AdmissionForm } from "@/components/admissions/AdmissionForm";
+import { ClaimSchoolModal } from "@/components/ClaimSchoolModal";
 import { APIProvider, Map, AdvancedMarker, Pin } from '@vis.gl/react-google-maps';
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
@@ -48,76 +50,13 @@ const API_KEY =
   '';
 const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
 
-const DEFAULT_PROGRAMS = [
-  {
-    name: "Toddler Explorer Program",
-    age: "1.5 - 3 Years",
-    desc: "A warm, child-centered nursery environment focusing on sensory exploration, social interaction, active play, and early fine motor skills."
-  },
-  {
-    name: "Early Scholars Preschool",
-    age: "3 - 5 Years",
-    desc: "Core early learning curriculum designed to foster structured and creative play, beginning literacy, primary numeracy, and social-emotional development."
-  },
-  {
-    name: "Pre-Primary / Kindergarten Readiness",
-    age: "5 - 6 Years",
-    desc: "Targeted preschool graduation program preparing kids for continuous primary school transition, incorporating foundational phonics, reasoning, science, and life skills."
-  }
-];
-
-const DEFAULT_FACILITIES = [
-  "Safe, Spaciously Ventilated Classrooms",
-  "Equipped Outdoor Adventure Playground",
-  "Warm Creative Art & Design Center",
-  "Dedicated Audio-Visual & Multimedia Room",
-  "Cozy Kids Library & Reading Room",
-  "Sanitized Children's Washrooms & Handwashing Stations",
-  "Nurturing Rest & Nap Area",
-  "High-Grade Perimeter Safety Fence & Secured Gate"
-];
-
-const DEFAULT_ADMISSIONS = [
-  "Certified photocopy of the child’s Birth Certificate",
-  "Most recent Immunization Health card & medical fitness clearance",
-  "Certified copies of Parents' or Guardians' National ID forms",
-  "Two recently taken passport-size color photographs of the child",
-  "Fully completed and signed Preschools Eswatini registration document",
-  "Proof of bank payment for registration & termly commitment fee"
-];
-
-const DEFAULT_STAFF = [
-  {
-    name: "Mrs. Sarah Simelane-Dlamini",
-    role: "School Principal & Lead Administrator",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80"
-  },
-  {
-    name: "Ms. Siphiwo Khumalo",
-    role: "Senior Child Development Educator",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80"
-  },
-  {
-    name: "Mrs. Gugu Ndlangamandla",
-    role: "Preschool Teacher & Nurseries Supervisor",
-    image: "https://images.unsplash.com/photo-1534751516642-a131fed10495?w=150&auto=format&fit=crop&q=80"
-  }
-];
-
-const DEFAULT_GALLERY = [
-  "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=450&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=450&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=450&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=450&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=450&auto=format&fit=crop&q=80",
-  "https://images.unsplash.com/photo-1587554801471-37976a256db0?w=450&auto=format&fit=crop&q=80"
-];
 
 export function SchoolPage() {
   const { id } = useParams();
   const [school, setSchool] = useState<School | null>(null);
   const [websiteConfig, setWebsiteConfig] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [showFacilityModal, setShowFacilityModal] = useState(false);
@@ -125,6 +64,7 @@ export function SchoolPage() {
   const [selectedStaff, setSelectedStaff] = useState<any | null>(null);
   const [showShareModal, setShowShareModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showClaimModal, setShowClaimModal] = useState(false);
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const handleCopyUrl = () => {
@@ -163,29 +103,32 @@ export function SchoolPage() {
     async function loadData() {
       if (!id) return;
       
+      setLoading(true);
+      setError(null);
       let schoolData: School | null = null;
       let configData: any = null;
 
       try {
         schoolData = await fetchDocument('schools', id) as School | null;
         configData = await fetchDocument('websites', id);
-      } catch (err) {
+        
+        setSchool(schoolData);
+        setWebsiteConfig(configData);
+      } catch (err: any) {
         console.warn("Failed to fetch from Firestore", err);
-      }
-
-      if (!schoolData) {
         try {
-          const response = await fetch('/api/schools');
-          const allSchools = await response.json();
-          schoolData = allSchools.find((s: School) => s.id === id) || null;
-        } catch(e) {
-          console.error("Error fetching from API", e);
+          const errDetail = JSON.parse(err.message);
+          if (errDetail.error.includes("timed out")) {
+             setError("Connection Error: The database is taking too long to respond. Please check your internet or retry later.");
+          } else {
+             setError(errDetail.error);
+          }
+        } catch (e) {
+          setError(err.message || "An unexpected error occurred while loading the profile.");
         }
+      } finally {
+        setLoading(false);
       }
-
-      setSchool(schoolData);
-      setWebsiteConfig(configData);
-      setLoading(false);
     }
     loadData();
   }, [id]);
@@ -201,22 +144,57 @@ export function SchoolPage() {
     );
   }
 
-  if (!school) {
+  if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4">
-        <h1 className="text-2xl font-bold text-slate-900 mb-4">School not found</h1>
-        <Button asChild>
-          <Link to="/directory">Return to Directory</Link>
-        </Button>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4 text-center">
+        <div className="bg-red-50 p-12 rounded-[3rem] border border-red-100 max-w-md">
+          <Info className="h-16 w-16 text-red-600 mx-auto mb-6" />
+          <h1 className="text-3xl font-black text-slate-900 mb-4">Connection Issue</h1>
+          <p className="text-slate-600 mb-8 font-medium italic">
+            {error}
+          </p>
+          <div className="flex flex-col gap-3">
+            <Button onClick={() => window.location.reload()} className="rounded-2xl h-12 px-8 font-bold shadow-lg shadow-blue-100" size="lg">
+              Retry Connection
+            </Button>
+            <Button asChild variant="ghost" className="rounded-2xl h-12 px-8 font-bold">
+              <Link to="/directory">Return to Directory</Link>
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
 
-  const programsList = (school.programs && school.programs.length > 0) ? school.programs : DEFAULT_PROGRAMS;
-  const facilitiesList = (school.facilities && school.facilities.length > 0) ? school.facilities : DEFAULT_FACILITIES;
-  const admissionsDetailsList = (school.admissionsDetails && school.admissionsDetails.length > 0) ? school.admissionsDetails : DEFAULT_ADMISSIONS;
-  const staffList = (school.staff && school.staff.length > 0) ? school.staff : DEFAULT_STAFF;
-  const galleryList = (school.gallery && school.gallery.length > 0) ? school.gallery : DEFAULT_GALLERY;
+  const isPubliclyVisible = school && (!school.ownerId || school.ownerId === 'super_admin_seed' || school.subscriptionStatus === 'active');
+
+  if (!school || !isPubliclyVisible) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white p-4 text-center">
+        <div className="bg-slate-50 p-12 rounded-[3rem] border border-slate-100 max-w-md">
+          <ShieldCheck className="h-16 w-16 text-blue-600 mx-auto mb-6" />
+          <h1 className="text-3xl font-black text-slate-900 mb-4">Profile Unavailable</h1>
+          <p className="text-slate-600 mb-8 font-medium italic">
+            This school profile is currently being registered or claimed and is awaiting activation by the administrator.
+          </p>
+          <Button asChild className="rounded-2xl h-12 px-8 font-bold shadow-lg shadow-blue-100" size="lg">
+            <Link to="/directory">Return to Directory</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const programsList = school.programs || [];
+  const facilitiesList = school.facilities || [];
+  const admissionsDetailsList = school.admissionsDetails || [];
+  const galleryList = (school.gallery || []).filter(img => !img.includes('unsplash.com'));
+  const staffList = (school.staff || []).map(member => ({
+    ...member,
+    image: member.image?.includes('unsplash.com') ? null : member.image
+  }));
+
+  const isHeroPlaceholder = school.heroImage?.includes('unsplash.com');
 
   return (
     <div className="bg-white min-h-screen" style={{ fontFamily: websiteConfig?.fontFamily || 'inherit' }}>
@@ -272,7 +250,9 @@ export function SchoolPage() {
       {/* Hero Header */}
       <div className="relative h-[400px] md:h-[500px]">
         <div className="absolute inset-0">
-          <img src={school.heroImage} className="h-full w-full object-cover" alt={school.name} />
+          {!isHeroPlaceholder && school.heroImage && (
+            <img src={school.heroImage} className="h-full w-full object-cover" alt={school.name} />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
         </div>
         
@@ -322,6 +302,11 @@ export function SchoolPage() {
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20 h-12 bg-transparent backdrop-blur-sm" onClick={() => setShowShareModal(true)}>
                   <Share2 className="mr-2 h-4 w-4" /> Share Page
                 </Button>
+                {!school.claimed && (
+                  <Button size="lg" variant="secondary" className="bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold h-12 shadow-md shadow-amber-900/20" onClick={() => setShowClaimModal(true)}>
+                    <ShieldCheck className="mr-2 h-5 w-5" /> Claim Profile
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -337,15 +322,13 @@ export function SchoolPage() {
               <div className="border-b border-slate-200 mb-8 overflow-x-auto">
                 <TabsList className="bg-transparent h-12 w-full justify-start gap-4">
                   <TabsTrigger value="about" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">About</TabsTrigger>
-                  <TabsTrigger value="programs" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Programs</TabsTrigger>
-                  <TabsTrigger value="facilities" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Facilities</TabsTrigger>
-                  <TabsTrigger value="admissions" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Admissions</TabsTrigger>
-                  <TabsTrigger value="team" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Team</TabsTrigger>
-                  <TabsTrigger value="gallery" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Gallery</TabsTrigger>
-                  <TabsTrigger value="video" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Video</TabsTrigger>
+                  {programsList.length > 0 && <TabsTrigger value="programs" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Programs</TabsTrigger>}
+                  {facilitiesList.length > 0 && <TabsTrigger value="facilities" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Facilities</TabsTrigger>}
+                  {admissionsDetailsList.length > 0 && <TabsTrigger value="admissions" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Admissions</TabsTrigger>}
+                  {staffList.length > 0 && <TabsTrigger value="team" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Team</TabsTrigger>}
+                  {galleryList.length > 0 && <TabsTrigger value="gallery" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Gallery</TabsTrigger>}
+                  {school.videoUrl && <TabsTrigger value="video" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Video</TabsTrigger>}
                   <TabsTrigger value="contact" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Contact</TabsTrigger>
-                  <TabsTrigger value="student-life" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Student Life</TabsTrigger>
-                  <TabsTrigger value="news" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">News & Events</TabsTrigger>
                   <TabsTrigger value="parent-portal" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-1 text-sm font-medium">Parent Portal</TabsTrigger>
                 </TabsList>
               </div>
@@ -372,16 +355,6 @@ export function SchoolPage() {
                           <Star className="h-8 w-8 text-yellow-400 mb-2 fill-current" />
                           <span className="font-bold text-slate-900">{school.rating} / 5</span>
                           <span className="text-xs text-slate-500">{school.reviews} Reviews</span>
-                      </div>
-                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
-                          <ShieldCheck className="h-8 w-8 text-emerald-500 mb-2" />
-                          <span className="font-bold text-slate-900">High</span>
-                          <span className="text-xs text-slate-500">Safety Score</span>
-                      </div>
-                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center text-center">
-                          <Award className="h-8 w-8 text-amber-500 mb-2" />
-                          <span className="font-bold text-slate-900">A+</span>
-                          <span className="text-xs text-slate-500">Accreditation</span>
                       </div>
                   </div>
                 </section>
@@ -641,89 +614,6 @@ export function SchoolPage() {
                   </div>
                 </section>
               </TabsContent>
-
-              <TabsContent value="student-life">
-                 <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                   <div className="flex items-center gap-3 mb-6">
-                     <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
-                       <BookOpenText className="h-6 w-6" />
-                     </div>
-                     <div>
-                       <h2 className="text-2xl font-bold text-slate-900 font-display">Student Life at {school.name}</h2>
-                       <p className="text-slate-500 text-sm">A holistic glimpse into a child's typical school day.</p>
-                     </div>
-                   </div>
-                   
-                   <div className="grid md:grid-cols-2 gap-8">
-                     <div className="space-y-6">
-                       <div className="space-y-3 font-sans text-sm">
-                         <h3 className="font-bold text-slate-900 border-b pb-2 text-base">Extracurricular Activities & Play</h3>
-                         <p className="text-slate-600 text-sm leading-relaxed">
-                           We believe early enrichment goes far beyond standard lessons. Our children participate in balanced active play daily:
-                         </p>
-                         <div className="grid grid-cols-2 gap-3 pt-1">
-                           <div className="bg-slate-50 p-3 rounded-xl border text-xs font-semibold text-slate-700 flex items-center gap-2">
-                             <span className="h-2 w-2 rounded-full bg-blue-500" /> Creative Arts & Pottery
-                           </div>
-                           <div className="bg-slate-50 p-3 rounded-xl border text-xs font-semibold text-slate-700 flex items-center gap-2">
-                             <span className="h-2 w-2 rounded-full bg-emerald-500" /> Early Music & Singing
-                           </div>
-                           <div className="bg-slate-50 p-3 rounded-xl border text-xs font-semibold text-slate-700 flex items-center gap-2">
-                             <span className="h-2 w-2 rounded-full bg-amber-500" /> Storytelling & Phonics
-                           </div>
-                           <div className="bg-slate-50 p-3 rounded-xl border text-xs font-semibold text-slate-700 flex items-center gap-2">
-                             <span className="h-2 w-2 rounded-full bg-rose-500" /> Indoor-Outdoor Games
-                           </div>
-                         </div>
-                       </div>
-
-                       <div className="space-y-3 font-sans text-sm">
-                         <h3 className="font-bold text-slate-900 border-b pb-2 text-base">Health & Nutrition</h3>
-                         <p className="text-slate-600 text-sm leading-relaxed">
-                           Our school provides fully balanced, nutritious mid-day fruit meals and healthy snacks. Every dietary restriction or preference is carefully adhered to by our support staff in accordance with health protocols.
-                         </p>
-                       </div>
-                     </div>
-
-                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                       <h3 className="font-bold text-slate-900 mb-4 text-base">A Day in the Life (Timetable):</h3>
-                       <div className="space-y-3.5 text-xs font-sans">
-                         <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                           <span className="font-bold text-blue-600 w-28">07:30 - 08:30</span>
-                           <span className="text-slate-700 font-medium flex-1">Arrival, Hand Sanitation & Free Play</span>
-                         </div>
-                         <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                           <span className="font-bold text-blue-600 w-28">08:30 - 09:30</span>
-                           <span className="text-slate-700 font-medium flex-1">Morning Circle, Phonics & Theme Lessons</span>
-                         </div>
-                         <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                           <span className="font-bold text-blue-600 w-28">09:30 - 10:00</span>
-                           <span className="text-slate-700 font-medium flex-1">Snack Break & Fresh Air Recess</span>
-                         </div>
-                         <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                           <span className="font-bold text-blue-600 w-28">10:00 - 11:30</span>
-                           <span className="text-slate-700 font-medium flex-1">Numeracy, Creative Arts & Adventure Play</span>
-                         </div>
-                         <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                           <span className="font-bold text-blue-600 w-28">11:30 - 12:30</span>
-                           <span className="text-slate-700 font-medium flex-1">Lunch & Supervised Quiet Rest / Storytime</span>
-                         </div>
-                         <div className="flex items-center justify-between">
-                           <span className="font-bold text-blue-600 w-28">12:30 - 13:00</span>
-                           <span className="text-slate-700 font-medium flex-1">Afternoon Pack-Up & Transition to Pickup</span>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </section>
-               </TabsContent>
-
-               <TabsContent value="news">
-                 <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                   <h2 className="text-2xl font-bold text-slate-900 mb-6">News & Events</h2>
-                   <p className="text-slate-600">Stay updated with the latest news, school announcements, and upcoming events from our preschool community.</p>
-                 </section>
-               </TabsContent>
 
                <TabsContent value="parent-portal">
                  <section className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
@@ -1098,28 +988,15 @@ export function SchoolPage() {
           </div>
         )}
       </AnimatePresence>
+
+      {showClaimModal && school && (
+        <ClaimSchoolModal 
+          school={school} 
+          onClose={() => setShowClaimModal(false)} 
+        />
+      )}
     </div>
   );
 }
 
-function GraduationCap(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21.42 10.922a2 2 0 0 0-.019-3.838L12.83 4.18a2 2 0 0 0-1.66 0L2.6 7.08a2 2 0 0 0 0 3.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-      <path d="M22 10v6" />
-      <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-    </svg>
-  )
-}
 

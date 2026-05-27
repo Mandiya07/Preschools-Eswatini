@@ -23,11 +23,7 @@ const FEATURES = [
   { id: "profiles", title: "Teacher Profiles", icon: <UserCircle className="h-6 w-6" />, color: "bg-rose-50 text-rose-600", description: "Get to know your teachers." },
 ];
 
-const SHARED_DOCUMENTS = [
-  { id: "doc3", title: "School Presentation", type: "presentation", status: "shared_to_network" },
-  { id: "doc4", title: "Creative Arts Lesson Plan", type: "lesson_plan", status: "shared_to_network" },
-  { id: "doc5", title: "Phonics Activities", type: "worksheet", status: "shared_to_network" },
-];
+const SHARED_DOCUMENTS: any[] = [];
 
 export function CommunityPage() {
   const [searchTerm, setSearchTerm] = useState("");

@@ -152,8 +152,9 @@ async function startServer() {
         httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
       });
 
-      // In a real production environment this would fetch from Firestore using firebase-admin
-      const schools: any[] = [];
+      // Use preloaded schools as the baseline for matching in server-side AI tools
+      const dataPath = path.join(process.cwd(), "src/data/preloadedSchools.json");
+      const schools: any[] = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
 
       const model = "gemini-3-flash-preview";
 
@@ -218,6 +219,59 @@ async function startServer() {
     } catch (e) {
       console.error("Failed to load preloaded schools:", e);
       res.json([]);
+    }
+  });
+
+  app.post("/api/create-checkout-session", async (req, res) => {
+    const { planId, billingCycle, schoolName, email } = req.body;
+
+    if (!process.env.STRIPE_SECRET_KEY) {
+      return res.status(500).json({ error: "Stripe is not configured" });
+    }
+
+    try {
+      const Stripe = (await import("stripe")).default;
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+      const PLANS_DATA: Record<string, any> = {
+        starter: { name: "Starter Plan", amount: billingCycle === 'annual' ? 2490 : 299 },
+        standard: { name: "Standard Plan", amount: billingCycle === 'annual' ? 4990 : 499 },
+        professional: { name: "Professional Plan", amount: billingCycle === 'annual' ? 8990 : 899 },
+        enterprise: { name: "Enterprise Plan", amount: billingCycle === 'annual' ? 14990 : 1499 },
+      };
+
+      const plan = PLANS_DATA[planId] || PLANS_DATA.standard;
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: "szl", // Emalangeni
+              product_data: {
+                name: `Preschools Eswatini - ${plan.name}`,
+                description: `Subscription for ${schoolName}`,
+              },
+              unit_amount: plan.amount * 100, // Stripe expects cents/cents equivalent
+            },
+            quantity: 1,
+          },
+        ],
+        customer_email: email,
+        mode: "payment",
+        success_url: `${req.headers.origin}/subscription?success=true&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.origin}/pricing?canceled=true`,
+        metadata: {
+          schoolName,
+          planId,
+          billingCycle
+        }
+      });
+
+      res.json({ id: session.id, url: session.url });
+    } catch (error: any) {
+      console.error("Stripe Error:", error);
+      res.status(500).json({ error: error.message });
     }
   });
 

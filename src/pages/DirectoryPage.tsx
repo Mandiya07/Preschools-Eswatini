@@ -3,11 +3,141 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SEO } from "@/components/SEO";
-import { Search, MapPin, Star, GraduationCap, CheckCircle2, Loader2, PlayCircle, Sparkles } from "lucide-react";
-import { fetchCollection } from "@/lib/firestoreUtils";
+import { Search, MapPin, Star, GraduationCap, Building2, CheckCircle2, Loader2, PlayCircle, Sparkles, Grid, Map as MapIcon, Columns, ChevronRight } from "lucide-react";
+import { fetchCollection, subscribeToCollection } from "@/lib/firestoreUtils";
 import { School } from "@/types";
-import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
 import kidsImg from '@/assets/images/kids_playing_blocks_1779268580565.png';
+import { APIProvider, Map, AdvancedMarker, Pin, useMap, InfoWindow } from '@vis.gl/react-google-maps';
+
+const API_KEY =
+  process.env.GOOGLE_MAPS_PLATFORM_KEY ||
+  (import.meta as any).env?.VITE_GOOGLE_MAPS_PLATFORM_KEY ||
+  (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY ||
+  '';
+const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
+
+function MapPlaceholder() {
+  return (
+    <div className="flex flex-col items-center justify-center p-8 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300 h-[500px] w-full">
+      <div className="bg-white p-6 rounded-2xl shadow-sm max-w-md border border-slate-200">
+        <MapIcon className="h-10 w-10 text-blue-500 mx-auto mb-3" />
+        <h3 className="text-base font-extrabold text-slate-900 mb-2">Interactive Map Requires API Key</h3>
+        <p className="text-xs text-slate-500 leading-relaxed mb-4">
+          Enable the integrated map view by configuring a Google Maps Platform API key in your workspace configurations.
+        </p>
+        <div className="text-left bg-slate-50 p-4 rounded-xl text-[11px] border border-slate-100 space-y-2 text-slate-600">
+          <p className="font-bold text-slate-700">To add your API key:</p>
+          <ol className="list-decimal pl-4 space-y-1">
+            <li>Open <strong className="text-slate-800">Settings</strong> (⚙️ gear icon, top-right corner)</li>
+            <li>Select <strong className="text-slate-800">Secrets</strong></li>
+            <li>Add secret with name <code className="bg-slate-100 px-1.5 py-0.5 rounded text-red-600 font-mono text-[10px]">GOOGLE_MAPS_PLATFORM_KEY</code></li>
+            <li>Paste your key as value and click Save</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface DirectoryMapProps {
+  schools: School[];
+  selectedSchool: School | null;
+  onSchoolSelect: (school: School | null) => void;
+}
+
+function DirectoryMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapProps) {
+  const map = useMap();
+  
+  // Pan to selected school when prop updates
+  useEffect(() => {
+    if (map && selectedSchool && selectedSchool.coordinates) {
+      map.panTo(selectedSchool.coordinates);
+      map.setZoom(13);
+    }
+  }, [map, selectedSchool]);
+
+  return (
+    <Map
+      defaultCenter={{ lat: -26.3167, lng: 31.1333 }}
+      defaultZoom={9}
+      mapId="PRESCHOOL_ESWATINI_DIRECTORY_MAP_ID"
+      internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
+      style={{ width: '100%', height: '100%' }}
+      disableDefaultUI={true}
+      zoomControl={true}
+      gestureHandling="greedy"
+    >
+      {schools.map((school) => {
+        if (!school.coordinates) return null;
+        const isSelected = selectedSchool?.id === school.id;
+        return (
+          <AdvancedMarker
+            key={school.id}
+            position={school.coordinates}
+            onClick={() => onSchoolSelect(school)}
+            zIndex={isSelected ? 10 : 1}
+          >
+            <Pin
+              background={isSelected ? "#2563eb" : "#f59e0b"}
+              borderColor={isSelected ? "#1d4ed8" : "#d97706"}
+              glyphColor="#fff"
+            />
+          </AdvancedMarker>
+        );
+      })}
+
+      {selectedSchool && selectedSchool.coordinates && (
+        <InfoWindow
+          position={selectedSchool.coordinates}
+          onCloseClick={() => onSchoolSelect(null)}
+        >
+          <div className="p-1 min-w-[180px] max-w-[220px] text-left">
+            <div className="w-full h-20 bg-slate-100 rounded-md mb-2 flex items-center justify-center overflow-hidden">
+              {selectedSchool.heroImage && !selectedSchool.heroImage.includes('unsplash.com') ? (
+                <img
+                  src={selectedSchool.heroImage}
+                  alt={selectedSchool.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Building2 className="h-8 w-8 text-slate-300" />
+              )}
+            </div>
+            <h4 className="font-extrabold text-xs text-slate-900 line-clamp-1">{selectedSchool.name}</h4>
+            <p className="text-[10px] text-slate-500 mb-2">{selectedSchool.town}, {selectedSchool.region}</p>
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[10px] font-bold text-blue-600">E{selectedSchool.feePerTerm}/term</span>
+              <Link
+                to={`/school/${selectedSchool.id}`}
+                className="inline-flex items-center text-[10px] font-black text-white bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded"
+              >
+                Details <ChevronRight className="h-3 w-3 ml-0.5" />
+              </Link>
+            </div>
+          </div>
+        </InfoWindow>
+      )}
+    </Map>
+  );
+}
+
+function IntegratedMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapProps) {
+  if (!hasValidKey) {
+    return <MapPlaceholder />;
+  }
+
+  return (
+    <APIProvider apiKey={API_KEY} version="weekly">
+      <div className="relative h-full w-full rounded-2xl overflow-hidden border border-slate-200 shadow-sm min-h-[450px] bg-slate-100">
+        <DirectoryMap 
+          schools={schools} 
+          selectedSchool={selectedSchool} 
+          onSchoolSelect={onSchoolSelect} 
+        />
+      </div>
+    </APIProvider>
+  );
+}
 
 export function DirectoryPage() {
   const [schools, setSchools] = useState<School[]>([]);
@@ -19,37 +149,37 @@ export function DirectoryPage() {
   const [selectedBoarding, setSelectedBoarding] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [maxFee, setMaxFee] = useState<number>(10000);
+  const [viewMode, setViewMode] = useState<"grid" | "split" | "map">("grid");
+  const [selectedMapSchool, setSelectedMapSchool] = useState<School | null>(null);
 
   useEffect(() => {
-    async function loadSchools() {
-      // First try fetching from Firestore
-      let data: School[] = [];
-      try {
-        data = await fetchCollection('schools') as School[];
-      } catch (err) {
-        console.warn("Failed to fetch from Firestore", err);
-      }
+    const unsub = subscribeToCollection('schools', (data) => {
+      const rawSchools = data as School[];
       
-      if (data && data.length > 0) {
-        setSchools(data);
-      } else {
-        // Fallback to API if empty
-        try {
-          const response = await fetch('/api/schools');
-          const apiData = await response.json();
-          if (apiData && apiData.length > 0) {
-            setSchools(apiData);
-          } else {
-            setSchools(PRELOADED_SCHOOLS);
+      // Add deterministic coordinates to institutions that lack them
+      const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 };
+      const enhancedSchools = rawSchools.map((s) => {
+        if (!s.coordinates) {
+          // Stable coordinates based on id string hash
+          let hash = 0;
+          const str = s.id || s.name || "";
+          for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
           }
-        } catch(e) {
-          console.error("Error fetching from API", e);
-          setSchools(PRELOADED_SCHOOLS);
+          const latOffset = ((hash % 100) / 400) - 0.12; 
+          const lngOffset = (((hash >> 8) % 100) / 400) - 0.12;
+          const lat = ESWATINI_CENTER.lat + latOffset;
+          const lng = ESWATINI_CENTER.lng + lngOffset;
+          return { ...s, coordinates: { lat, lng } };
         }
-      }
+        return s;
+      });
+
+      setSchools(enhancedSchools);
       setLoading(false);
-    }
-    loadSchools();
+    });
+
+    return () => unsub();
   }, []);
 
   const handleCheckboxChange = (
@@ -91,7 +221,9 @@ export function DirectoryPage() {
       return schoolTypeLower === typeLower || schoolTypeLower.includes(typeLower);
     });
 
-    return matchesSearch && matchesRegion && matchesCurriculum && matchesAges && matchesBoarding && matchesFee && matchesType;
+    const isPubliclyVisible = !school.ownerId || school.ownerId === 'super_admin_seed' || school.subscriptionStatus === 'active';
+
+    return matchesSearch && matchesRegion && matchesCurriculum && matchesAges && matchesBoarding && matchesFee && matchesType && isPubliclyVisible;
   });
 
    const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -293,7 +425,7 @@ export function DirectoryPage() {
             </div>
           </div>
 
-          {/* Results Grid */}
+          {/* Results Grid / Map / Split container */}
           <div className="flex-1 space-y-6">
             {/* Free In-Home Care & Flatlet Matching Alert Banner */}
             <div className="bg-amber-50/80 border border-amber-200 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row gap-5 items-center justify-between text-left font-sans">
@@ -311,10 +443,41 @@ export function DirectoryPage() {
               </Button>
             </div>
 
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-medium text-slate-900">
-                {loading ? 'Searching...' : `Found ${filteredSchools.length} ${filteredSchools.length === 1 ? 'school' : 'schools'}`}
-              </h2>
+            {/* View Switching Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900">
+                  {loading ? 'Searching...' : `Found ${filteredSchools.length} ${filteredSchools.length === 1 ? 'school' : 'schools'}`}
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">Filter results reflect dynamically on lists and maps.</p>
+              </div>
+              
+              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl self-start sm:self-auto border border-slate-200/50">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all h-8 ${viewMode === "grid" ? "bg-white text-blue-600 shadow-xs hover:bg-white" : "text-slate-600 hover:text-slate-900"}`}
+                  onClick={() => setViewMode("grid")}
+                >
+                  <Grid className="h-3.5 w-3.5 mr-1.5" /> List
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all h-8 ${viewMode === "split" ? "bg-white text-blue-600 shadow-xs hover:bg-white" : "text-slate-600 hover:text-slate-900"}`}
+                  onClick={() => setViewMode("split")}
+                >
+                  <Columns className="h-3.5 w-3.5 mr-1.5" /> Split Map
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all h-8 ${viewMode === "map" ? "bg-white text-blue-600 shadow-xs hover:bg-white" : "text-slate-600 hover:text-slate-900"}`}
+                  onClick={() => setViewMode("map")}
+                >
+                  <MapIcon className="h-3.5 w-3.5 mr-1.5" /> Map
+                </Button>
+              </div>
             </div>
             
             {loading ? (
@@ -323,53 +486,143 @@ export function DirectoryPage() {
                 <p className="text-slate-500 font-medium">Loading schools...</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredSchools.map((school) => (
-                <Link to={`/school/${school.id}`} key={school.id} className="group flex flex-col rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all">
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                    <img src={school.heroImage} alt={school.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                    {school.featured && (
-                      <div className="absolute top-3 left-3 rounded-full bg-amber-400 px-2 py-1 text-xs font-bold text-amber-900 flex items-center gap-1 shadow-sm">
-                        <Star className="h-3 w-3 fill-amber-900" /> Featured
-                      </div>
-                    )}
+              <>
+                {/* 1. GRID VIEW MODE */}
+                {viewMode === "grid" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in duration-300">
+                    {filteredSchools.map((school) => (
+                      <Link to={`/school/${school.id}`} key={school.id} className="group flex flex-col rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 flex items-center justify-center">
+                          {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
+                            <img src={school.heroImage} alt={school.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                          ) : (
+                            <Building2 className="h-12 w-12 text-slate-300" />
+                          )}
+                          {school.featured && (
+                            <div className="absolute top-3 left-3 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-black text-amber-900 flex items-center gap-1 shadow-xs uppercase tracking-wide">
+                              <Star className="h-3 w-3 fill-amber-900" /> Featured
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex flex-col flex-1 p-5">
+                          <div className="flex justify-between items-start mb-2">
+                            <div className="flex flex-col">
+                              <h3 className="text-lg font-bold text-slate-900 line-clamp-1 flex items-center gap-2">
+                                {school.name}
+                                {school.verified && <CheckCircle2 className="h-4 w-4 text-blue-500 fill-blue-50 animate-in zoom-in duration-300" title="Verified School" />}
+                              </h3>
+                              <span className="text-xs text-slate-500 font-bold">Fees: E{school.feePerTerm}/term</span>
+                            </div>
+                            <div className="flex flex-col items-end gap-1">
+                               <div className="flex items-center gap-1 bg-green-50 text-green-700 px-1.5 py-0.5 rounded text-xs font-medium shrink-0">
+                                 <Star className="h-3 w-3 fill-green-700" /> {school.rating}
+                               </div>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center text-xs text-slate-500 mb-4 gap-4 flex-wrap">
+                            <span className="flex items-center gap-1 shrink-0 font-medium">
+                              <MapPin className="h-3.5 w-3.5 text-slate-400" /> {school.town}, {school.region}
+                            </span>
+                            <span className="flex items-center gap-1 shrink-0 font-medium">
+                              <GraduationCap className="h-3.5 w-3.5 text-slate-400" /> {school.curriculum}
+                            </span>
+                          </div>
+
+                          <div className="flex flex-wrap gap-1.5 mt-auto">
+                            {school.tags.map(tag => (
+                              <span key={tag} className="rounded-md bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-600">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                  <div className="flex flex-col flex-1 p-5">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex flex-col">
-                        <h3 className="text-lg font-bold text-slate-900 line-clamp-1 flex items-center gap-2">
-                          {school.name}
-                          {school.verified && <CheckCircle2 className="h-4 w-4 text-blue-500 fill-blue-50" title="Verified School" />}
-                        </h3>
-                        <span className="text-xs text-slate-500">Fees: E{school.feePerTerm}/term</span>
-                      </div>
-                      <div className="flex flex-col items-end gap-1">
-                         <div className="flex items-center gap-1 bg-green-50 text-green-700 px-1.5 py-0.5 rounded text-xs font-medium shrink-0">
-                           <Star className="h-3 w-3 fill-green-700" /> {school.rating}
-                         </div>
-                      </div>
+                )}
+
+                {/* 2. SPLIT VIEW MODE */}
+                {viewMode === "split" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-in fade-in duration-300">
+                    <div className="lg:col-span-5 space-y-3 max-h-[600px] overflow-y-auto pr-1 scrollbar-thin">
+                      {filteredSchools.map((school) => (
+                        <div 
+                          key={school.id}
+                          onClick={() => setSelectedMapSchool(school)}
+                          className={`flex gap-3.5 p-3.5 rounded-2xl border transition-all cursor-pointer text-left ${selectedMapSchool?.id === school.id ? 'border-blue-500 bg-blue-50/25 shadow-xs' : 'border-slate-200 hover:border-slate-350 bg-white shadow-xs'}`}
+                        >
+                          <div className="h-16 w-16 bg-slate-50 rounded-xl shrink-0 border border-slate-100 flex items-center justify-center overflow-hidden">
+                            {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
+                              <img src={school.heroImage} alt={school.name} className="h-full w-full object-cover" />
+                            ) : (
+                              <Building2 className="h-8 w-8 text-slate-300" />
+                            )}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-extrabold text-slate-900 text-sm truncate flex items-center gap-1.5">
+                              {school.name}
+                              {school.verified && <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 fill-blue-50" />}
+                            </h4>
+                            <p className="text-xs text-slate-500 flex items-center gap-1 mt-1 font-medium">
+                              <MapPin className="h-3 w-3 text-slate-400" /> {school.town}
+                            </p>
+                            <div className="flex items-center justify-between mt-2.5">
+                              <span className="text-xs font-black text-blue-600">E{school.feePerTerm}/term</span>
+                              <span className="text-[10px] font-extrabold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                                ⭐ {school.rating}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      {filteredSchools.length === 0 && (
+                        <div className="p-8 text-center text-slate-400 italic text-xs">
+                          No schools match current filters.
+                        </div>
+                      )}
                     </div>
                     
-                    <div className="flex items-center text-sm text-slate-500 mb-4 gap-4 flex-wrap">
-                      <span className="flex items-center gap-1 shrink-0">
-                        <MapPin className="h-4 w-4" /> {school.town}, {school.region}
-                      </span>
-                      <span className="flex items-center gap-1 shrink-0">
-                        <GraduationCap className="h-4 w-4" /> {school.curriculum}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {school.tags.map(tag => (
-                        <span key={tag} className="rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">
-                          {tag}
-                        </span>
-                      ))}
+                    <div className="lg:col-span-7 h-[600px] sticky top-24">
+                      <IntegratedMap 
+                        schools={filteredSchools} 
+                        selectedSchool={selectedMapSchool} 
+                        onSchoolSelect={setSelectedMapSchool} 
+                      />
                     </div>
                   </div>
-                </Link>
-              ))}
-            </div>
+                )}
+
+                {/* 3. FULL MAP VIEW MODE */}
+                {viewMode === "map" && (
+                  <div className="h-[550px] w-full overflow-hidden rounded-3xl relative animate-in fade-in duration-300 bg-slate-100 shadow-inner">
+                    <IntegratedMap 
+                      schools={filteredSchools} 
+                      selectedSchool={selectedMapSchool} 
+                      onSchoolSelect={setSelectedMapSchool} 
+                    />
+                    
+                    {/* Floating list-controller so map browse is fluid */}
+                    <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200/80 p-3 flex flex-col gap-1.5 max-w-xs z-10 animate-in slide-in-from-bottom-5 duration-500">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Active Pin Selector</p>
+                      <select 
+                        className="h-9 px-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl outline-hidden focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-slate-850"
+                        value={selectedMapSchool?.id || ""}
+                        onChange={(e) => {
+                          const id = e.target.value;
+                          const found = filteredSchools.find(s => s.id === id);
+                          setSelectedMapSchool(found || null);
+                        }}
+                      >
+                        <option value="">-- Choose on-map school --</option>
+                        {filteredSchools.map(s => (
+                          <option key={s.id} value={s.id}>{s.name} ({s.town})</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
             {!loading && filteredSchools.length === 0 && (
@@ -377,7 +630,7 @@ export function DirectoryPage() {
                 <Search className="mx-auto h-12 w-12 text-slate-300 mb-4" />
                 <h3 className="text-lg font-medium text-slate-900 mb-1">No schools found</h3>
                 <p className="text-slate-500">Try adjusting your search or filters.</p>
-                <Button variant="outline" className="mt-4" onClick={() => {
+                <Button variant="outline" className="mt-4 rounded-xl" onClick={() => {
                     setSearchTerm(""); 
                     setSelectedRegion("All");
                     setSelectedCurriculum([]);

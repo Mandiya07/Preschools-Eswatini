@@ -38,15 +38,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from "motion/react";
 import { AnalyticsCard } from "@/components/AnalyticsCard";
 
-const socialAnalyticsData = [
-  { date: "2026-05-01", label: "May 01", impressions: 12000, engagementRate: 4.8, clicks: 580 },
-  { date: "2026-05-04", label: "May 04", impressions: 15400, engagementRate: 5.2, clicks: 800 },
-  { date: "2026-05-08", label: "May 08", impressions: 14200, engagementRate: 4.9, clicks: 690 },
-  { date: "2026-05-11", label: "May 11", impressions: 18900, engagementRate: 6.1, clicks: 1150 },
-  { date: "2026-05-15", label: "May 15", impressions: 22000, engagementRate: 5.8, clicks: 1280 },
-  { date: "2026-05-18", label: "May 18", impressions: 24500, engagementRate: 6.5, clicks: 1590 },
-  { date: "2026-05-21", label: "May 21", impressions: 27800, engagementRate: 7.2, clicks: 1980 },
-];
+const socialAnalyticsData: any[] = [];
 
 interface SocialPost {
   id: string;
@@ -63,43 +55,7 @@ interface SocialPost {
   };
 }
 
-const INITIAL_POSTS: SocialPost[] = [
-  {
-    id: "post-1",
-    content: "📢 Eswatini Preschool Owners! Did you know you can set up your school micro-website in less than 5 minutes on Preschools Eswatini? Get verified to show compliance badges and unlock direct parent applications. Click below to register 🇸🇿✨ #EswatiniEducation #PreschoolsEswatini #SwatiSchools",
-    platforms: ["facebook", "linkedin"],
-    status: "Published",
-    publishDate: "May 20, 2026, 09:30 AM",
-    image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=600&q=80",
-    analytics: {
-      impressions: 1420,
-      engagementRate: "8.4%",
-      clicks: 112
-    }
-  },
-  {
-    id: "post-2",
-    content: "✨ Choosing a preschool? We have mapped and verified accredited early learning centers across Mbabane, Manzini, and Nhlangano! Filter by safety records, distance, and custom curricula. Secure your child's spot online today! 📚👶 #SwatiMoms #EswatiniKids #EarlyLearning",
-    platforms: ["facebook", "instagram", "twitter"],
-    status: "Published",
-    publishDate: "May 18, 2026, 02:15 PM",
-    image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80",
-    analytics: {
-      impressions: 2150,
-      engagementRate: "11.2%",
-      clicks: 184
-    }
-  },
-  {
-    id: "post-3",
-    content: "🍎 Stationary, health kits, bulk nutrition, uniforms? Join the largest supplier marketplace linking wholesale distributors with preschool boards throughout Eswatini. Scale your sales pipeline without physical reps. Onboard now at /supplier-register! 🚛🎒 #EswatiniBusiness #ProcurementSZ",
-    platforms: ["linkedin", "twitter"],
-    status: "Scheduled",
-    publishDate: "May 22, 2026, 10:00 AM",
-    scheduledTime: "2026-05-22T10:00",
-    image: "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80"
-  }
-];
+const INITIAL_POSTS: SocialPost[] = [];
 
 const TEMPLATES = [
   {

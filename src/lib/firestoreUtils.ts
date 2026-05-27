@@ -60,10 +60,29 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
   throw new Error(JSON.stringify(errInfo));
 }
 
+// Timeout helper to bypass 10s hanging when Firestore backend is blocked/unreachable
+const withTimeout = <T>(promise: Promise<T>, timeoutMs: number = 10000): Promise<T> => {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error("Firestore operation timed out (Connection sandboxed or offline)"));
+    }, timeoutMs);
+
+    promise
+      .then((res) => {
+        clearTimeout(timer);
+        resolve(res);
+      })
+      .catch((err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+  });
+};
+
 export const fetchCollection = async (path: string, ...queryConstraints: QueryConstraint[]) => {
   try {
     const q = query(collection(db, path), ...queryConstraints);
-    const snapshot = await getDocs(q);
+    const snapshot = await withTimeout(getDocs(q));
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     handleFirestoreError(error, OperationType.LIST, path);
@@ -73,7 +92,7 @@ export const fetchCollection = async (path: string, ...queryConstraints: QueryCo
 export const fetchDocument = async (path: string, id: string) => {
   try {
     const docRef = doc(db, path, id);
-    const snapshot = await getDoc(docRef);
+    const snapshot = await withTimeout(getDoc(docRef));
     if (snapshot.exists()) {
       return { id: snapshot.id, ...snapshot.data() };
     }
@@ -86,10 +105,10 @@ export const fetchDocument = async (path: string, id: string) => {
 export const createDocument = async (path: string, id: string | null, data: any) => {
   try {
     if (id) {
-      await setDoc(doc(db, path, id), data);
+      await withTimeout(setDoc(doc(db, path, id), data));
       return id;
     } else {
-      const docRef = await addDoc(collection(db, path), data);
+      const docRef = await withTimeout(addDoc(collection(db, path), data));
       return docRef.id;
     }
   } catch (error) {
@@ -100,7 +119,7 @@ export const createDocument = async (path: string, id: string | null, data: any)
 export const updateDocument = async (path: string, id: string, data: any) => {
   try {
     const docRef = doc(db, path, id);
-    await updateDoc(docRef, data);
+    await withTimeout(updateDoc(docRef, data));
   } catch (error) {
     handleFirestoreError(error, OperationType.UPDATE, `${path}/${id}`);
   }
@@ -109,7 +128,7 @@ export const updateDocument = async (path: string, id: string, data: any) => {
 export const deleteDocument = async (path: string, id: string) => {
   try {
     const docRef = doc(db, path, id);
-    await deleteDoc(docRef);
+    await withTimeout(deleteDoc(docRef));
   } catch (error) {
     handleFirestoreError(error, OperationType.DELETE, `${path}/${id}`);
   }
@@ -150,6 +169,7 @@ export const bulkImportPreloadedSchools = async (ownerId?: string) => {
       if (!docSnap.exists()) {
         await setDoc(docRef, {
           ...school,
+          subscriptionStatus: 'inactive', // Override JSON during import to ensure revenue is 0 until claimed
           ownerId: ownerId || auth.currentUser?.uid || 'super_admin_seed',
           createdAt: school.createdAt || new Date().toISOString()
         });

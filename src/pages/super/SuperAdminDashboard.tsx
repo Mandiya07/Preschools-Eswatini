@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
-  BarChart3, 
   Building2, 
   Users, 
   CreditCard, 
@@ -10,14 +9,14 @@ import {
   ArrowUpRight,
   ShieldCheck,
   AlertCircle,
-  Megaphone
+  Megaphone,
+  Database,
+  Loader2
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -26,25 +25,162 @@ import {
   AreaChart,
   Area
 } from 'recharts';
+import { subscribeToCollection, bulkImportPreloadedSchools } from "@/lib/firestoreUtils";
+import { toast } from "sonner";
 
-const data = [
-  { name: 'Jan', revenue: 45000, users: 400, schools: 12 },
-  { name: 'Feb', revenue: 52000, users: 600, schools: 15 },
-  { name: 'Mar', revenue: 48000, users: 800, schools: 18 },
-  { name: 'Apr', revenue: 61000, users: 1100, schools: 22 },
-  { name: 'May', revenue: 75000, users: 1400, schools: 25 },
-  { name: 'Jun', revenue: 89000, users: 1800, schools: 28 },
-];
+const getMonthlyPlanPrice = (plan: string) => {
+  switch (plan) {
+    case 'Enterprise': return 999;
+    case 'Professional': return 599;
+    case 'Basic':
+    case 'Starter': return 299;
+    default: return 0;
+  }
+};
 
 export function SuperAdminDashboard() {
+  const [schools, setSchools] = useState<any[]>([]);
+  const [registrations, setRegistrations] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  useEffect(() => {
+    const unsubSchools = subscribeToCollection("schools", (data) => {
+      setSchools(data || []);
+      setLoading(false);
+    });
+
+    const unsubUsers = subscribeToCollection("users", (data) => {
+      setUsers(data || []);
+    });
+
+    const unsubRegs = subscribeToCollection("school_registrations", (data) => {
+      setRegistrations(data || []);
+    });
+
+    return () => {
+      unsubSchools();
+      unsubUsers();
+      unsubRegs();
+    };
+  }, []);
+
+  const handleSeedDatabase = async () => {
+    setIsSeeding(true);
+    try {
+      const result = await bulkImportPreloadedSchools();
+      toast.success(`Success! Imported ${result.successCount} schools. ${result.skipCount} already existed.`);
+    } catch (err) {
+      toast.error("Failed to seed database.");
+    } finally {
+      setIsSeeding(false);
+    }
+  };
+
+  // Compute realistic base variables
+  const schoolsList = schools;
+  
+  const totalSchoolsCount = schoolsList.length;
+  
+  // Calculate subscriptions & Arr revenue
+  const activeSchools = schoolsList.filter(s => 
+    s.subscriptionStatus === 'active' && 
+    s.ownerId && 
+    s.ownerId !== 'super_admin_seed'
+  );
+  const monthlyRevenue = activeSchools.reduce((sum, s) => sum + getMonthlyPlanPrice(s.subscriptionPlan || 'Free'), 0);
+  
+  const totalUsersCount = users.length;
+
+  const pendingVerificationCount = registrations.filter(r => r.status === 'pending').length;
+
+  // Generate dynamic chart data based on schools signup history
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  const chartData = months.map((monthName, index) => {
+    const monthNum = index + 1;
+    // Cumulative schools registered on or before this month (real ones only)
+    const schoolsUpToMonth = schoolsList.filter(s => {
+      if (!s.ownerId || s.ownerId === 'super_admin_seed') return false; 
+      if (!s.createdAt) return true;
+      const createdDate = new Date(s.createdAt);
+      const createdMonth = createdDate.getMonth() + 1;
+      const createdYear = createdDate.getFullYear();
+      if (createdYear < 2026) return true;
+      return createdMonth <= monthNum;
+    });
+
+    const monthlyRev = schoolsUpToMonth
+      .filter(s => s.subscriptionStatus === 'active')
+      .reduce((sum, s) => sum + getMonthlyPlanPrice(s.subscriptionPlan || 'Free'), 0);
+
+    return {
+      name: monthName,
+      revenue: monthlyRev,
+      users: users.filter(u => {
+        if (!u.createdAt) return false;
+        const createdDate = new Date(u.createdAt);
+        return (createdDate.getMonth() + 1) <= monthNum;
+      }).length,
+      schools: schoolsUpToMonth.length
+    };
+  });
+
+  // Live real-time activity feed generated from real collections
+  const liveEvents: any[] = [];
+  
+  if (registrations.length > 0) {
+    registrations.forEach((r, i) => {
+      if (r.status === 'pending') {
+        liveEvents.push({
+          type: 'verification',
+          title: 'Verification Pending',
+          school: r.schoolName || 'Swati Preschool',
+          plan: r.curriculum || 'National Curriculum',
+          time: 'Active'
+        });
+      }
+    });
+  }
+
+  // Only show real user signups or real school updates
+  users.slice(0, 5).forEach((u, idx) => {
+    liveEvents.push({
+      type: 'user',
+      title: 'New User Registered',
+      school: u.name || 'Anonymous',
+      plan: u.role || 'Parent',
+      time: u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'Just now'
+    });
+  });
+
+  const finalEvents = liveEvents.slice(0, 5);
+
+  // KPI Cards
+  const kpis = [
+    { label: "Total Schools", value: totalSchoolsCount.toString(), icon: Building2, color: "blue" },
+    { label: "Monthly Revenue", value: `E${monthlyRevenue.toLocaleString()}`, icon: CreditCard, color: "green" },
+    { label: "Total Users", value: totalUsersCount.toLocaleString(), icon: Users, color: "purple" },
+    { label: "Pending Verification", value: pendingVerificationCount.toString(), icon: ShieldCheck, color: "orange" },
+  ];
+
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 text-left">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black tracking-tight text-slate-900">Platform Overview</h1>
           <p className="text-slate-500 italic text-sm">Vital metrics and real-time activity for the Preschools Eswatini ecosystem.</p>
         </div>
         <div className="flex items-center gap-3">
+           <Button 
+            variant="outline" 
+            className="rounded-xl border-slate-200 gap-2" 
+            onClick={handleSeedDatabase}
+            disabled={isSeeding}
+           >
+             {isSeeding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Database className="h-4 w-4" />}
+             Seed Ecosystem
+           </Button>
            <Button variant="outline" className="rounded-xl border-slate-200">Export Report</Button>
            <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-100">Live View</Button>
         </div>
@@ -52,28 +188,19 @@ export function SuperAdminDashboard() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { label: "Total Schools", value: "142", icon: Building2, trend: "+12%", color: "blue" },
-          { label: "Monthly Revenue", value: "E89,420", icon: CreditCard, trend: "+24%", color: "green" },
-          { label: "Total Users", value: "3,842", icon: Users, trend: "+8%", color: "purple" },
-          { label: "Pending Verification", value: "14", icon: ShieldCheck, trend: "-2", color: "orange" },
-        ].map((kpi, i) => (
+        {kpis.map((kpi, i) => (
           <Card key={i} className="border-none shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
             <CardContent className="p-6 relative">
                <div className="flex items-center justify-between">
-                  <div className={`h-12 w-12 rounded-2xl bg-${kpi.color}-50 flex items-center justify-center text-${kpi.color}-600 group-hover:scale-110 transition-transform`}>
+                  <div className={`h-12 w-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 group-hover:scale-110 transition-transform`}>
                      <kpi.icon className="h-6 w-6" />
                   </div>
-                  <Badge variant="outline" className={`bg-${kpi.trend.startsWith('+') ? 'green' : 'red'}-50 text-${kpi.trend.startsWith('+') ? 'green' : 'red'}-600 border-none`}>
-                     {kpi.trend.startsWith('+') ? <TrendingUp className="h-3 w-3 mr-1" /> : <TrendingDown className="h-3 w-3 mr-1" />}
-                     {kpi.trend}
-                  </Badge>
                </div>
                <div className="mt-4">
                   <p className="text-xs font-black text-slate-400 uppercase tracking-widest">{kpi.label}</p>
                   <h3 className="text-3xl font-black text-slate-900 mt-1">{kpi.value}</h3>
                </div>
-               <div className={`absolute -bottom-1 -right-1 h-12 w-12 bg-${kpi.color}-100/30 rounded-full blur-2xl group-hover:scale-150 transition-transform`}></div>
+               <div className="absolute -bottom-1 -right-1 h-12 w-12 bg-slate-100/30 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
             </CardContent>
           </Card>
         ))}
@@ -92,7 +219,7 @@ export function SuperAdminDashboard() {
            <CardContent className="pt-8">
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={data}>
+                  <AreaChart data={chartData}>
                     <defs>
                       <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
@@ -129,15 +256,9 @@ export function SuperAdminDashboard() {
               <CardTitle className="text-sm font-black uppercase tracking-widest text-slate-900">Live Activity</CardTitle>
               <CardDescription>Real-time platform events.</CardDescription>
            </CardHeader>
-           <CardContent className="p-0 flex-1 overflow-y-auto">
+           <CardContent className="p-0 flex-1 overflow-y-auto max-h-[350px]">
               <div className="divide-y divide-slate-50">
-                 {[
-                   { type: 'subscription', title: 'New Subscription', school: 'Little Stars Academy', plan: 'Professional', time: '2m ago' },
-                   { type: 'verification', title: 'Verification Request', school: 'Sunshine Preschool', plan: 'Basic', time: '14m ago' },
-                   { type: 'support', title: 'Critical Ticket', school: 'System', plan: 'Urgent', time: '22m ago' },
-                   { type: 'user', title: 'New Admin Registered', school: 'Happy Kids Daycare', plan: 'Trial', time: '1h ago' },
-                   { type: 'payment', title: 'Payment Success', school: 'Mbabane ECCDE', plan: 'Enterprise', time: '3h ago' },
-                 ].map((log, i) => (
+                 {finalEvents.map((log: any, i) => (
                    <div key={i} className="p-4 hover:bg-slate-50 transition-colors flex items-start gap-4">
                       <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${
                         log.type === 'subscription' ? 'bg-green-100 text-green-600' :
@@ -159,7 +280,7 @@ export function SuperAdminDashboard() {
                  ))}
               </div>
            </CardContent>
-           <div className="p-4 border-t border-slate-50">
+           <div className="p-4 border-t border-slate-50 mt-auto">
               <Button variant="ghost" className="w-full text-xs font-bold uppercase tracking-widest text-blue-600">View Full Logs</Button>
            </div>
         </Card>

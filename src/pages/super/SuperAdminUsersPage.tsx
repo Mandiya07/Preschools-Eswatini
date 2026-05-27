@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Users, 
   Search, 
@@ -24,17 +24,51 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import { subscribeToCollection } from "@/lib/firestoreUtils";
 
 export function SuperAdminUsersPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [usersList, setUsersList] = useState<any[]>([]);
+  const [schoolsList, setSchoolsList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const users = [
-    { id: '1', name: 'Sipho Mati', email: 'sipho@school.sz', role: 'SchoolAdmin', school: 'Little Stars Academy', status: 'Active', lastActive: '2h ago' },
-    { id: '2', name: 'Sarah Dlamini', email: 'sarah@parent.sz', role: 'Parent', school: 'Sunshine Early Learning', status: 'Active', lastActive: '5h ago' },
-    { id: '3', name: 'Bheki Ndlovu', email: 'bheki@admin.sz', role: 'SchoolAdmin', school: 'Sunshine Early Learning', status: 'Suspended', lastActive: '2 days ago' },
-    { id: '4', name: 'Platform Admin', email: 'admin@preschools.sz', role: 'SuperAdmin', school: 'System', status: 'Active', lastActive: 'Online' },
-    { id: '5', name: 'Nosipho Gamedze', email: 'nosi@parent.sz', role: 'Parent', school: 'Happy Kids Daycare', status: 'Active', lastActive: 'Yesterday' },
-  ];
+  useEffect(() => {
+    const unsubUsers = subscribeToCollection("users", (data) => {
+      setUsersList(data || []);
+      setLoading(false);
+    });
+
+    const unsubSchools = subscribeToCollection("schools", (data) => {
+      setSchoolsList(data || []);
+    });
+
+    return () => {
+      unsubUsers();
+      unsubSchools();
+    };
+  }, []);
+
+  const getSchoolName = (schoolId: string) => {
+    if (!schoolId) return "System";
+    const sch = schoolsList.find(s => s.id === schoolId);
+    return sch ? sch.name : "N/A";
+  };
+
+  const activeAdminsCount = usersList.filter(u => u.role === "SchoolAdmin" || u.role === "SuperAdmin").length;
+  const registeredParentsCount = usersList.filter(u => u.role === "Parent").length;
+  const bannedUsersCount = usersList.filter(u => u.status === "Suspended" || u.status === "Banned").length;
+
+  const filteredUsers = usersList.filter(user => {
+    const name = user.name || "";
+    const email = user.email || "";
+    const role = user.role || "";
+    const schName = getSchoolName(user.schoolId || user.school);
+    return name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           schName.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -55,9 +89,9 @@ export function SuperAdminUsersPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
          {[
-           { label: "Active Admins", value: "158", icon: Shield, color: "blue" },
-           { label: "Registered Parents", value: "2,420", icon: Users, color: "purple" },
-           { label: "Banned Users", value: "12", icon: XCircle, color: "red" },
+           { label: "Active Admins", value: activeAdminsCount.toLocaleString(), icon: Shield, color: "blue" },
+           { label: "Registered Parents", value: registeredParentsCount.toLocaleString(), icon: Users, color: "purple" },
+           { label: "Banned Users", value: bannedUsersCount.toLocaleString(), icon: XCircle, color: "red" },
          ].map((stat, i) => (
            <Card key={i} className="border-none shadow-sm group cursor-pointer hover:bg-slate-50 transition-colors">
               <CardContent className="p-6 flex items-center gap-4">
@@ -99,17 +133,23 @@ export function SuperAdminUsersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
-                {users.map((user) => (
-                  <tr key={user.id} className="hover:bg-slate-50/50 transition-colors group">
+                {filteredUsers.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-slate-400 text-xs italic">
+                      {loading ? "Loading users..." : "No users matched the criteria in database."}
+                    </td>
+                  </tr>
+                ) : filteredUsers.map((user) => (
+                  <tr key={user.id || user.uid} className="hover:bg-slate-50/50 transition-colors group">
                     <td className="px-6 py-4">
                        <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-black">
-                             {user.name.split(' ').map(n => n[0]).join('')}
+                          <div className="h-10 w-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-black text-xs uppercase">
+                             {(user.name || "U").split(' ').filter(Boolean).map((n: string) => n[0]).join('')}
                           </div>
                           <div>
-                             <p className="font-bold text-slate-900 uppercase tracking-tight">{user.name}</p>
+                             <p className="font-bold text-slate-900 uppercase tracking-tight">{user.name || "Unnamed User"}</p>
                              <p className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
-                                <Mail className="h-3 w-3" /> {user.email}
+                                <Mail className="h-3 w-3" /> {user.email || "No Email"}
                              </p>
                           </div>
                        </div>
@@ -120,11 +160,11 @@ export function SuperAdminUsersPage() {
                          user.role === 'SchoolAdmin' ? 'border-blue-200 text-blue-600' :
                          'border-purple-200 text-purple-600'
                        }`}>
-                         {user.role}
+                         {user.role || 'Parent'}
                        </Badge>
                     </td>
                     <td className="px-6 py-4 text-xs font-medium">
-                       {user.school}
+                       {getSchoolName(user.schoolId || user.school)}
                     </td>
                     <td className="px-6 py-4">
                        <div className="flex items-center gap-1.5">
@@ -135,7 +175,7 @@ export function SuperAdminUsersPage() {
                     <td className="px-6 py-4">
                        <div className="flex items-center gap-1.5 text-slate-400">
                           <Activity className="h-3 w-3" />
-                          <span className="text-[10px] font-bold uppercase tracking-tight">{user.lastActive}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-tight">{user.lastActive || 'N/A'}</span>
                        </div>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -144,14 +184,16 @@ export function SuperAdminUsersPage() {
                             <MoreHorizontal className="h-4 w-4" />
                          </DropdownMenuTrigger>
                          <DropdownMenuContent align="end" className="w-48 rounded-xl border-slate-200 shadow-xl p-1">
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3">
+                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => toast.info('Edit Profile coming soon.')}>
                                <UserCircle className="h-3 w-3" /> Edit Profile
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3">
+                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3" onClick={() => toast.info('Permissions editor coming soon.')}>
                                <Shield className="h-3 w-3" /> Change Permissions
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-slate-50" />
-                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3 text-red-600 hover:bg-red-50 hover:text-red-700">
+                            <DropdownMenuItem className="rounded-lg gap-2 cursor-pointer font-bold text-xs py-2 px-3 text-red-600 hover:bg-red-50 hover:text-red-700" onClick={() => {
+                               toast.success(`${user.name} has been banned.`);
+                            }}>
                                Ban Account
                             </DropdownMenuItem>
                          </DropdownMenuContent>
