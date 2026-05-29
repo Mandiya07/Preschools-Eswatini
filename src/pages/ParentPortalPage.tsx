@@ -38,7 +38,8 @@ import {
   Sliders,
   Database,
   Globe,
-  Building2
+  Building2,
+  PenTool
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AIChatBot } from "@/components/AIChatBot";
@@ -57,9 +58,11 @@ import {
   Newsletter 
 } from "@/types";
 import { Badge } from "@/components/ui/badge";
+import { DigitalSignatureModal } from "@/components/DigitalSignatureModal";
 
 export function ParentPortalPage() {
   const { user, logout } = useAuth();
+  const userSchoolName = (user as any)?.schoolName || "Verified Institution";
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"dashboard" | "children" | "billing" | "messages" | "privacy">("dashboard");
   const [personalConsent, setPersonalConsent] = useState(true);
@@ -79,6 +82,24 @@ export function ParentPortalPage() {
   const [cookieConsent, setCookieConsent] = useState(true);
   const [showAccountDeletionConfirm, setShowAccountDeletionConfirm] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+  const [signingConsentStudent, setSigningConsentStudent] = useState<Student | null>(null);
+  const [consentTypeToSign, setConsentTypeToSign] = useState<"medical" | "outing" | "policy">("medical");
+  const [signedFiles, setSignedFiles] = useState<{ studentId: string; type: string; url: string }[]>(() => {
+    try {
+      const saved = localStorage.getItem("parent_signed_files");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("parent_signed_files", JSON.stringify(signedFiles));
+    } catch (err) {
+      console.error("Failed to save signed files in localStorage", err);
+    }
+  }, [signedFiles]);
 
   useEffect(() => {
     if (user) {
@@ -882,7 +903,7 @@ export function ParentPortalPage() {
                </div>
                <div className="text-left">
                   <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1.5">Academic Partner</p>
-                  <p className="font-black text-white text-sm truncate max-w-[150px]">{user?.schoolName || "Verified Institution"}</p>
+                  <p className="font-black text-white text-sm truncate max-w-[150px]">{userSchoolName}</p>
                   <div className="flex items-center gap-1.5 mt-1">
                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
                      <p className="text-[9px] font-bold text-emerald-400 uppercase">Synchronized</p>
@@ -924,6 +945,141 @@ export function ParentPortalPage() {
              </div>
           </section>
         )}
+
+        {/* Mandatory Forms & Signature Status Section */}
+        {students.length > 0 && (() => {
+          const formTypes = [
+            { id: "medical", label: "Medical Emergency Consent", desc: "Authorizes emergency medical treatments and clinical records access." },
+            { id: "outing", label: "Outing & Field Trip Permission", desc: "Allows off-campus excursions and school field trips." },
+            { id: "policy", label: "School Policy & Rulebook Agreement", desc: "Affirms agreement to uniform rules, billing schedules, and codes of conduct." }
+          ] as const;
+
+          const totalFormsNeeded = students.length * formTypes.length;
+          const signedCount = signedFiles.filter(item => 
+            students.some(s => s.id === item.studentId) && 
+            formTypes.some(f => f.id === item.type)
+          ).length;
+          
+          const completionRate = totalFormsNeeded > 0 ? Math.round((signedCount / totalFormsNeeded) * 100) : 0;
+
+          return (
+            <section className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 animate-in fade-in">
+                  <ClipboardCheck className="h-5 w-5 text-blue-600" />
+                  Mandatory Forms & Compliance
+                </h2>
+                <Badge className={completionRate === 100 ? "bg-emerald-100 text-emerald-800 border-none px-2 rounded-full font-bold" : "bg-blue-100 text-blue-800 border-none px-2 rounded-full font-bold"}>
+                  {signedCount}/{totalFormsNeeded} Forms Signed ({completionRate}%)
+                </Badge>
+              </div>
+
+              <Card className="rounded-3xl border-slate-200 shadow-sm overflow-hidden bg-white">
+                <CardHeader className="bg-slate-50 border-b border-slate-100 py-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <CardTitle className="text-base font-black">Digital Signature Tracker</CardTitle>
+                      <CardDescription className="text-xs font-medium text-slate-500 mt-1">
+                        All mandatory regulatory slips must be signed for your children to participate in school activities.
+                      </CardDescription>
+                    </div>
+                    <div className="w-full sm:w-48">
+                      <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 mb-1">
+                        <span>COMPLIANCE STATUS</span>
+                        <span>{completionRate}%</span>
+                      </div>
+                      <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full transition-all duration-500 ${completionRate === 100 ? 'bg-emerald-500' : 'bg-blue-600'}`} 
+                          style={{ width: `${completionRate}%` }} 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="p-6 space-y-6">
+                  {students.map(student => (
+                    <div key={student.id} className="border border-slate-150 rounded-2xl p-4 bg-slate-50/50 space-y-4">
+                      {/* Student Header */}
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full overflow-hidden bg-white border border-slate-200 shadow-sm animate-in zoom-in">
+                          <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${student.id}`} alt="student" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-slate-900">{student.name}</p>
+                          <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{student.class}</p>
+                        </div>
+                      </div>
+
+                      {/* Forms Grid */}
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {formTypes.map(formSpec => {
+                          const isSignedRecord = signedFiles.find(sf => sf.studentId === student.id && sf.type === formSpec.id);
+                          
+                          return (
+                            <div 
+                              key={formSpec.id} 
+                              className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
+                                isSignedRecord 
+                                  ? 'bg-emerald-50/20 border-emerald-100 hover:border-emerald-200' 
+                                  : 'bg-white border-slate-200 hover:border-blue-200 shadow-sm'
+                              }`}
+                            >
+                              <div>
+                                <div className="flex items-center justify-between gap-2 mb-2">
+                                  <span className="text-xs font-bold text-slate-900 line-clamp-1">{formSpec.label}</span>
+                                  {isSignedRecord ? (
+                                    <Badge className="bg-emerald-100 text-emerald-800 text-[9px] px-1.5 py-0 border-none font-bold">
+                                      Signed
+                                    </Badge>
+                                  ) : (
+                                    <Badge className="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0 border-none font-bold animate-pulse">
+                                      Pending
+                                    </Badge>
+                                  )}
+                                </div>
+                                <p className="text-[10px] text-slate-500 line-clamp-2 leading-relaxed mb-4 min-h-[30px]">{formSpec.desc}</p>
+                              </div>
+
+                              <div>
+                                {isSignedRecord ? (
+                                  <div className="flex items-center justify-between bg-emerald-50/40 p-2 rounded-lg border border-emerald-100/30">
+                                    <span className="text-[9px] text-emerald-800 font-bold uppercase tracking-wider">Completed</span>
+                                    <a 
+                                      href={isSignedRecord.url} 
+                                      download={`${student.name.replace(/\s+/g, '_')}_${formSpec.id}_consent.pdf`}
+                                      className="text-emerald-600 hover:text-emerald-700 p-1 bg-white rounded border border-emerald-100 hover:shadow-sm flex items-center justify-center gap-1"
+                                      title="Download Signed Form PDF"
+                                    >
+                                      <Download className="h-3 w-3" />
+                                      <span className="text-[8px] font-bold">PDF</span>
+                                    </a>
+                                  </div>
+                                ) : (
+                                  <Button 
+                                    size="sm" 
+                                    className="w-full text-[10px] font-bold h-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-1.5"
+                                    onClick={() => {
+                                      setSigningConsentStudent(student); 
+                                      setConsentTypeToSign(formSpec.id);
+                                    }}
+                                  >
+                                    <PenTool className="h-3 w-3" /> Sign Slip
+                                  </Button>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </section>
+          );
+        })()}
 
         {/* My Applications Section */}
         <section className="space-y-4">
@@ -1195,6 +1351,37 @@ export function ParentPortalPage() {
                           <Button variant="outline" size="sm" className="rounded-xl text-xs h-9">View Attendance</Button>
                           <Button variant="outline" size="sm" className="rounded-xl text-xs h-9">Learning Journal</Button>
                           <Button variant="outline" size="sm" className="rounded-xl text-xs h-9">Message Teacher</Button>
+                       </div>
+                       
+                       <div className="pt-4 border-t border-slate-100">
+                          <p className="text-xs font-bold text-slate-900 mb-3">Digital Consent Forms</p>
+                          <div className="flex flex-wrap gap-3">
+                             <Button size="sm" variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50 text-xs rounded-xl h-8" onClick={() => { setSigningConsentStudent(student); setConsentTypeToSign("medical"); }}>
+                                Sign Medical Consent
+                             </Button>
+                             <Button size="sm" variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50 text-xs rounded-xl h-8" onClick={() => { setSigningConsentStudent(student); setConsentTypeToSign("outing"); }}>
+                                Sign Outing Permission
+                             </Button>
+                             <Button size="sm" variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50 text-xs rounded-xl h-8" onClick={() => { setSigningConsentStudent(student); setConsentTypeToSign("policy"); }}>
+                                Sign Policy Update
+                             </Button>
+                          </div>
+                          {signedFiles.filter(f => f.studentId === student.id).length > 0 && (
+                             <div className="mt-4 space-y-2">
+                                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Signed Documents</p>
+                                {signedFiles.filter(f => f.studentId === student.id).map((f, i) => (
+                                   <div key={i} className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                                      <div className="flex items-center gap-2">
+                                         <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                         <span className="text-xs font-medium text-slate-700 capitalize">{f.type} Consent (PDF)</span>
+                                      </div>
+                                      <a href={f.url} download={`${student.name}_${f.type}_consent.pdf`} className="text-blue-600 hover:text-blue-700">
+                                         <Download className="h-4 w-4" />
+                                      </a>
+                                   </div>
+                                ))}
+                             </div>
+                          )}
                        </div>
                     </div>
                  </div>
@@ -1549,6 +1736,22 @@ export function ParentPortalPage() {
       </main>
 
       <AIChatBot schoolName="Parent Support" />
+
+      {signingConsentStudent && (
+        <DigitalSignatureModal 
+          isOpen={true} 
+          onClose={() => setSigningConsentStudent(null)}
+          studentName={signingConsentStudent.name}
+          consentType={consentTypeToSign}
+          onSave={(pdfDataUri) => {
+             setSignedFiles(prev => [...prev, {
+                studentId: signingConsentStudent.id,
+                type: consentTypeToSign,
+                url: pdfDataUri
+             }]);
+          }}
+        />
+      )}
     </div>
   );
 }

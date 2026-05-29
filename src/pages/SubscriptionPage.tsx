@@ -349,11 +349,11 @@ export function SubscriptionPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {[
-                    { id: "INV-2026-05", date: "May 1, 2026", desc: "Professional Plan", amount: "E899.00", status: "Paid" },
-                    { id: "INV-2026-04", date: "Apr 1, 2026", desc: "Professional Plan", amount: "E899.00", status: "Paid" },
-                    { id: "INV-2026-03", date: "Mar 1, 2026", desc: "Professional Plan", amount: "E899.00", status: "Paid" },
-                    { id: "INV-2026-02", date: "Feb 1, 2026", desc: "Standard Plan", amount: "E499.00", status: "Paid" },
-                    { id: "INV-2026-01", date: "Jan 1, 2026", desc: "Standard Plan", amount: "E499.00", status: "Paid" }
+                    { id: "INV-2026-05", date: "May 1, 2026", desc: "Professional Plan", amount: "E599.00", status: "Paid" },
+                    { id: "INV-2026-04", date: "Apr 1, 2026", desc: "Professional Plan", amount: "E599.00", status: "Paid" },
+                    { id: "INV-2026-03", date: "Mar 1, 2026", desc: "Professional Plan", amount: "E599.00", status: "Paid" },
+                    { id: "INV-2026-02", date: "Feb 1, 2026", desc: "Starter Plan", amount: "E299.00", status: "Paid" },
+                    { id: "INV-2026-01", date: "Jan 1, 2026", desc: "Starter Plan", amount: "E299.00", status: "Paid" }
                   ].map((invoice, i) => (
                     <tr key={i} className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-4 font-mono text-xs">{invoice.id}</td>

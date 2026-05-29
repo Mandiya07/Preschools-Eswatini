@@ -46,7 +46,7 @@ export function SchoolAdminLayout() {
   const [activeSchool, setActiveSchool] = useState<School | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, login, activeSchoolId, setActiveSchoolId } = useAuth();
+  const { user, devLogin, activeSchoolId, setActiveSchoolId } = useAuth();
 
   const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
 
@@ -118,7 +118,7 @@ export function SchoolAdminLayout() {
   ];
 
   const switchToParent = () => {
-    login("Parent");
+    devLogin?.("Parent");
     navigate("/parent");
   };
 

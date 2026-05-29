@@ -8,7 +8,7 @@ import { updateDocument } from '@/lib/firestoreUtils';
 import { toast } from 'sonner';
 
 export function SupplierPortalPage() {
-  const { user, signOut } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<'Dashboard' | 'Products' | 'Orders' | 'Invoices' | 'Clients' | 'Tenders' | 'Subscription'>('Dashboard');
   const [updatingPlan, setUpdatingPlan] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export function SupplierPortalPage() {
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await logout();
       navigate('/');
     } catch (error) {
       console.error('Error signing out:', error);

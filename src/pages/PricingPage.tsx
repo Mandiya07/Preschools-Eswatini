@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 
+import { PRICING_TIERS, FEATURES } from "@/components/PricingTier";
+
 export function PricingPage() {
   return (
     <div className="bg-slate-50 pb-24 min-h-screen">
@@ -25,8 +27,8 @@ export function PricingPage() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-16">
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {pricingPlans.map((plan, i) => (
-            <div key={i} className={`rounded-3xl bg-white border p-8 flex flex-col ${plan.popular ? 'border-blue-600 shadow-xl relative' : 'border-slate-200 shadow-sm'}`}>
+          {PRICING_TIERS.map((plan, i) => (
+            <div key={plan.id} className={`rounded-3xl bg-white border p-8 flex flex-col ${plan.popular ? 'border-blue-600 shadow-xl relative' : 'border-slate-200 shadow-sm'}`}>
               {plan.popular && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 px-4 py-1 text-xs font-bold text-white tracking-widest uppercase shadow-sm">
                   Most Popular
@@ -36,21 +38,25 @@ export function PricingPage() {
               <p className="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100 min-h-[4rem]">{plan.description}</p>
               
               <div className="mb-6 flex items-baseline gap-2">
-                <span className="text-4xl font-extrabold text-slate-900">{plan.price}</span>
-                <span className="text-slate-500 font-medium">{plan.period}</span>
+                <span className="text-4xl font-extrabold text-slate-900">E{plan.price.monthly}</span>
+                <span className="text-slate-500 font-medium">/month</span>
               </div>
               
               <ul className="mb-8 space-y-4 flex-1">
+                <li className="flex items-start gap-3 text-slate-700">
+                  <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm"><strong>Up to {plan.limits.students === 9999 ? 'Unlimited' : plan.limits.students}</strong> Students</span>
+                </li>
                 {plan.features.map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-700">
                     <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{f}</span>
+                    <span className="text-sm">{FEATURES[f as keyof typeof FEATURES]}</span>
                   </li>
                 ))}
               </ul>
               
               <Button variant={plan.popular ? 'default' : 'outline'} className={`w-full h-12 ${!plan.popular && 'border-slate-300'}`} asChild>
-                <Link to="/register">{plan.cta}</Link>
+                <Link to={`/register?plan=${plan.id}`}>Get Started</Link>
               </Button>
             </div>
           ))}
@@ -120,7 +126,7 @@ export function PricingPage() {
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> ECCDE Ministry Compliance Checklists</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-blue-600" /> Community Marketplace</li>
               </ul>
-              <Button variant="outline" className="w-full">View Modules</Button>
+              <Button variant="outline" className="w-full" asChild><Link to="/advanced-features">View Modules</Link></Button>
             </div>
 
             {/* Services */}
@@ -136,7 +142,7 @@ export function PricingPage() {
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-orange-600" /> Professional Photography & Media</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-orange-600" /> Digital Marketing & SEO</li>
               </ul>
-              <Button variant="outline" className="w-full">Request Quote</Button>
+              <Button variant="outline" className="w-full" asChild><Link to="/contact">Request Quote</Link></Button>
             </div>
 
             {/* Customization & Verification */}
@@ -152,7 +158,7 @@ export function PricingPage() {
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-green-600" /> Custom Development</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-green-600" /> Regional Expansion Support</li>
               </ul>
-              <Button variant="outline" className="w-full">Explore</Button>
+              <Button variant="outline" className="w-full" asChild><Link to="/features">Explore</Link></Button>
             </div>
 
             {/* Support Ecosystem */}
@@ -168,7 +174,7 @@ export function PricingPage() {
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-indigo-600" /> Video Onboarding</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-indigo-600" /> Live Chat System</li>
               </ul>
-              <Button variant="outline" className="w-full">View Support Plans</Button>
+              <Button variant="outline" className="w-full" asChild><Link to="/faq">View Support Plans</Link></Button>
             </div>
 
             {/* Photography & Content Creation */}
@@ -188,7 +194,7 @@ export function PricingPage() {
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-purple-600" /> Video Production</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-purple-600" /> Preschool Promotional Videos</li>
               </ul>
-              <Button variant="outline" className="w-full">Book a Shoot</Button>
+              <Button variant="outline" className="w-full" asChild><Link to="/contact">Book a Shoot</Link></Button>
             </div>
 
             {/* Branding Services */}
@@ -204,7 +210,7 @@ export function PricingPage() {
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-pink-600" /> Prospectus</li>
                 <li className="flex items-center gap-2 text-sm text-slate-700 font-medium"><CheckCircle2 className="h-4 w-4 text-pink-600" /> Social Media Branding</li>
               </ul>
-              <Button variant="outline" className="w-full">Get a Quote</Button>
+              <Button variant="outline" className="w-full" asChild><Link to="/contact">Get a Quote</Link></Button>
             </div>
           </div>
         </div>
@@ -340,60 +346,3 @@ export function PricingPage() {
     </div>
   );
 }
-
-const pricingPlans = [
-  {
-    name: "Starter",
-    description: "Perfect for small daycares and learning centers starting their digital journey.",
-    price: "E299",
-    period: "/month",
-    popular: false,
-    cta: "Start Free Trial",
-    features: [
-      "Custom Preschool Website (.preschoolseswatini.com)",
-      "Listed in National Directory",
-      "Up to 50 Student Records",
-      "Basic Announcements",
-      "Email Support"
-    ]
-  },
-  {
-    name: "Professional",
-    description: "The complete toolkit for growing preschools, daycares, and early learning centres.",
-    price: "E599",
-    period: "/month",
-    popular: true,
-    cta: "Start Free Trial",
-    features: [
-      "Everything in Starter",
-      "Online Admissions & Applications",
-      "Parent Portal Access",
-      "Unlimited Student Records",
-      "Billing, Invoicing & Financials",
-      "Digital Document Archive",
-      "E-Learning Course & Video Management",
-      "Community Marketplace",
-      "Custom Domain Support",
-      "Priority WhatsApp & Live Support"
-    ]
-  },
-  {
-    name: "Enterprise",
-    description: "Advanced features for large preschools, ECD chains, or groups of centres.",
-    price: "E999",
-    period: "/month",
-    popular: false,
-    cta: "Contact Sales",
-    features: [
-      "Everything in Professional",
-      "Multi-Branch & Institution Management",
-      "Advanced Export & Reporting",
-      "Full Trust, Verification & Accreditation",
-      "Multiple Staff Admin Accounts",
-      "24/7 AI Support Assistant",
-      "Unlimited Video & Content Hosting",
-      "Dedicated Account Manager",
-      "Full API & Custom Integrations"
-    ]
-  }
-];

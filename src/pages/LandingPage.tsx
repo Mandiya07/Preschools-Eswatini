@@ -32,6 +32,8 @@ import classroomImg from '@/assets/images/black_preschool_children_classroom_177
 import girlImg from '@/assets/images/black_preschool_girl_smiling_1778977067358.png';
 import teacherImg from '@/assets/images/black_preschool_teacher_kids_1778977086971.png';
 
+import { PRICING_TIERS, FEATURES } from "@/components/PricingTier";
+
 export function LandingPage() {
   return (
     <div className="flex flex-col bg-slate-50 font-sans overflow-x-hidden">
@@ -266,10 +268,10 @@ export function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, i) => (
+            {PRICING_TIERS.map((plan) => (
               <motion.div 
                 whileHover={{ y: -10 }}
-                key={i} 
+                key={plan.id} 
                 className={`bg-white rounded-[2.5rem] border p-8 sm:p-10 flex flex-col ${plan.popular ? 'border-primary ring-2 ring-primary shadow-2xl relative' : 'border-slate-200 shadow-md'}`}
               >
                 {plan.popular && (
@@ -280,19 +282,23 @@ export function LandingPage() {
                 <h3 className="text-2xl font-extrabold text-slate-900 mb-3">{plan.name}</h3>
                 <p className="text-slate-500 text-base mb-6 font-medium min-h-[3rem]">{plan.description}</p>
                 <div className="mb-8 flex items-baseline gap-2">
-                  <span className="text-5xl font-extrabold text-slate-900">{plan.price}</span>
-                  <span className="text-slate-500 font-bold text-lg">{plan.period}</span>
+                  <span className="text-5xl font-extrabold text-slate-900">E{plan.price.monthly}</span>
+                  <span className="text-slate-500 font-bold text-lg">/mo</span>
                 </div>
                 <ul className="mb-10 space-y-5 flex-1">
+                  <li className="flex items-start gap-4 text-slate-700 font-bold">
+                    <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0" />
+                    <span><strong>Up to {plan.limits.students === 9999 ? 'Unlimited' : plan.limits.students}</strong> Students</span>
+                  </li>
                   {plan.features.map((f, i) => (
                     <li key={i} className="flex items-start gap-4 text-slate-700 font-bold">
                       <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0" />
-                      <span>{f}</span>
+                      <span>{FEATURES[f as keyof typeof FEATURES]}</span>
                     </li>
                   ))}
                 </ul>
                 <Button variant={plan.popular ? 'default' : 'outline'} className={`w-full h-14 text-lg font-bold rounded-2xl ${plan.popular ? 'shadow-lg shadow-primary/20' : 'border-slate-300'}`} asChild>
-                  <Link to="/register">Get Started</Link>
+                  <Link to={`/register`}>Get Started</Link>
                 </Button>
               </motion.div>
             ))}
@@ -460,51 +466,5 @@ const features = [
   }
 ];
 
-const pricingPlans = [
-  {
-    name: "Starter",
-    description: "Perfect for small daycares starting their digital journey.",
-    price: "E299",
-    period: "/mo",
-    popular: false,
-    features: [
-      "Custom School Website",
-      "Listed in School Directory",
-      "Up to 50 Students",
-      "Basic Parent Portal",
-      "Email Support"
-    ]
-  },
-  {
-    name: "Professional",
-    description: "The complete toolkit for growing preschools and academies.",
-    price: "E599",
-    period: "/mo",
-    popular: true,
-    features: [
-      "Everything in Starter",
-      "Online Admissions System",
-      "Up to 200 Students",
-      "SMS & Email Announcements",
-      "Staff Management",
-      "Priority WhatsApp Support"
-    ]
-  },
-  {
-    name: "Enterprise",
-    description: "Advanced features for large institutions or groups.",
-    price: "E999",
-    period: "/mo",
-    popular: false,
-    features: [
-      "Everything in Professional",
-      "Unlimited Students",
-      "Advanced Analytics",
-      "Custom Domain Support",
-      "Dedicated Account Manager",
-      "Custom API Integrations"
-    ]
-  }
-];
 
 

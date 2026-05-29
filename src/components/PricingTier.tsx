@@ -1,54 +1,52 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
 
-export type PlanId = 'free' | 'basic' | 'professional' | 'enterprise';
+export type PlanId = 'starter' | 'professional' | 'enterprise';
 
 export const FEATURES = {
   attendance: "Attendance Tracking",
   admissions: "Admissions Management",
-  finance: "Financial Management",
+  students: "Student Profiles",
   communication: "Parent Communication",
+  finance: "Fees & Billing",
+  health: "Health & Daily Logs",
+  staff: "Staff Management",
   analytics: "Basic Analytics",
-  advanced_analytics: "Advanced Analytics",
-  transport: "Transport Management",
-  hr: "HR & Payroll",
-  custom_domain: "Custom Website Domain",
-  api_access: "API Access",
+  transport: "Transport & Fleet",
+  e_learning: "E-Learning Modules",
+  marketplace: "Marketplace Access",
+  advanced_analytics: "Advanced Analytics & CRM",
+  hr: "HR & Facilities",
+  compliance: "Compliance Tracking",
+  website: "Website Builder",
+  ai_tools: "AI Powered Tools",
 };
 
 export const PRICING_TIERS = [
   {
-    id: "free",
-    name: "Free",
-    price: { monthly: 0, annual: 0 },
-    features: ['attendance', 'admissions'],
-    limits: { students: 50, storage: 1 },
-    description: "Basic tools for very small or new preschools."
-  },
-  {
-    id: "basic",
-    name: "Basic",
+    id: "starter",
+    name: "Starter",
     price: { monthly: 299, annual: 2490 },
-    features: ['attendance', 'admissions', 'finance', 'communication'],
-    limits: { students: 150, storage: 5 },
-    description: "Essential management for growing preschools."
+    features: ['attendance', 'admissions', 'students', 'communication', 'analytics'],
+    limits: { students: 50, storage: 1 },
+    description: "Perfect for small daycares and learning centers starting their digital journey."
   },
   {
     id: "professional",
     name: "Professional",
-    price: { monthly: 499, annual: 4990 },
-    features: ['attendance', 'admissions', 'finance', 'communication', 'analytics', 'transport'],
-    limits: { students: 500, storage: 20 },
-    description: "Complete management for established schools.",
+    price: { monthly: 599, annual: 5990 },
+    features: ['attendance', 'admissions', 'students', 'communication', 'analytics', 'finance', 'health', 'staff', 'transport', 'e_learning', 'marketplace'],
+    limits: { students: 9999, storage: 20 },
+    description: "The complete toolkit for growing preschools, daycares, and early learning centres.",
     popular: true
   },
   {
     id: "enterprise",
     name: "Enterprise",
-    price: { monthly: 899, annual: 8990 },
-    features: ['attendance', 'admissions', 'finance', 'communication', 'analytics', 'advanced_analytics', 'transport', 'hr', 'custom_domain', 'api_access'],
+    price: { monthly: 999, annual: 9990 },
+    features: ['attendance', 'admissions', 'students', 'communication', 'analytics', 'finance', 'health', 'staff', 'transport', 'e_learning', 'marketplace', 'advanced_analytics', 'hr', 'compliance', 'website', 'ai_tools'],
     limits: { students: 9999, storage: 100 },
-    description: "Advanced tools & APIs for large schools or chains."
+    description: "Advanced features for large preschools, ECD chains, or groups of centres."
   }
 ];
 
@@ -81,7 +79,7 @@ export function PricingTier({ selectedPlan, onSelectPlan, billingCycle, onBillin
         </div>
       )}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         {PRICING_TIERS.map((tier) => (
           <div 
             key={tier.id}

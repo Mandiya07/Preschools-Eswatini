@@ -18,8 +18,8 @@ export function RegisterSchoolPage() {
   
   const [step, setStep] = useState<"details" | "plan">("plan");
   const [paymentMethod, setPaymentMethod] = useState<"card" | "momo" | "bank">("card");
-  const [selectedPlanId, setSelectedPlanId] = useState("basic");
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['attendance', 'admissions', 'finance', 'communication']);
+  const [selectedPlanId, setSelectedPlanId] = useState("starter");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['attendance', 'admissions', 'students', 'communication', 'analytics']);
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
 
   const [platformPayment, setPlatformPayment] = useState({
