@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SEO } from "@/components/SEO";
-import { Search, MapPin, Star, GraduationCap, Building2, CheckCircle2, Loader2, PlayCircle, Sparkles, Grid, Map as MapIcon, Columns, ChevronRight } from "lucide-react";
+import { Search, MapPin, Star, GraduationCap, Building2, CheckCircle2, Loader2, PlayCircle, Sparkles, Grid, Map as MapIcon, Columns, ChevronRight, ChevronLeft } from "lucide-react";
 import { fetchCollection, subscribeToCollection } from "@/lib/firestoreUtils";
 import { School } from "@/types";
 import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
@@ -203,6 +203,12 @@ export function DirectoryPage() {
   const [maxFee, setMaxFee] = useState<number>(10000);
   const [viewMode, setViewMode] = useState<"grid" | "split" | "map">("grid");
   const [selectedMapSchool, setSelectedMapSchool] = useState<School | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 12;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedRegion, selectedCurriculum, selectedAges, selectedBoarding, selectedTypes, maxFee]);
 
   useEffect(() => {
     const unsub = subscribeToCollection('schools', (data) => {
@@ -288,6 +294,13 @@ export function DirectoryPage() {
 
     return matchesSearch && matchesRegion && matchesCurriculum && matchesAges && matchesBoarding && matchesFee && matchesType && isPubliclyVisible;
   });
+
+  const paginatedSchools = filteredSchools.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const totalPages = Math.ceil(filteredSchools.length / ITEMS_PER_PAGE);
 
    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -552,9 +565,10 @@ export function DirectoryPage() {
               <>
                 {/* 1. GRID VIEW MODE */}
                 {viewMode === "grid" && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in duration-300">
-                    {filteredSchools.map((school) => (
-                      <Link to={`/school/${school.id}`} key={school.id} className="group flex flex-col rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all">
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in duration-300">
+                      {paginatedSchools.map((school) => (
+                        <Link to={`/school/${school.id}`} key={school.id} className="group flex flex-col rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 flex items-center justify-center">
                           {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
                             <img src={school.heroImage} alt={school.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
@@ -602,14 +616,74 @@ export function DirectoryPage() {
                         </div>
                       </Link>
                     ))}
-                  </div>
+                    </div>
+                    
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                      <div className="flex items-center justify-center gap-2 mt-12 pb-8">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rounded-xl border-slate-200"
+                          disabled={currentPage === 1}
+                          onClick={() => {
+                            setCurrentPage(prev => Math.max(1, prev - 1));
+                            window.scrollTo({ top: 300, behavior: 'smooth' });
+                          }}
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </Button>
+                        
+                        <div className="flex items-center gap-1.5">
+                          {Array.from({ length: totalPages }, (_, i) => i + 1)
+                            .filter(page => {
+                              if (totalPages <= 7) return true;
+                              if (page === 1 || page === totalPages) return true;
+                              return Math.abs(page - currentPage) <= 1;
+                            })
+                            .map((page, index, array) => {
+                              const showEllipsis = index > 0 && page - array[index - 1] > 1;
+                              return (
+                                <React.Fragment key={page}>
+                                  {showEllipsis && <span className="text-slate-400 px-1">...</span>}
+                                  <Button
+                                    variant={currentPage === page ? "default" : "outline"}
+                                    size="sm"
+                                    className={`rounded-xl min-w-[36px] h-9 font-bold ${currentPage === page ? "bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-200" : "border-slate-200 text-slate-600 hover:bg-white"}`}
+                                    onClick={() => {
+                                      setCurrentPage(page);
+                                      window.scrollTo({ top: 300, behavior: 'smooth' });
+                                    }}
+                                  >
+                                    {page}
+                                  </Button>
+                                </React.Fragment>
+                              );
+                            })}
+                        </div>
+
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rounded-xl border-slate-200"
+                          disabled={currentPage === totalPages}
+                          onClick={() => {
+                            setCurrentPage(prev => Math.min(totalPages, prev + 1));
+                            window.scrollTo({ top: 300, behavior: 'smooth' });
+                          }}
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {/* 2. SPLIT VIEW MODE */}
                 {viewMode === "split" && (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-in fade-in duration-300">
                     <div className="lg:col-span-5 space-y-3 max-h-[600px] overflow-y-auto pr-1 scrollbar-thin">
-                      {filteredSchools.map((school) => (
+                      {paginatedSchools.map((school) => (
                         <div 
                           key={school.id}
                           onClick={() => setSelectedMapSchool(school)}
@@ -642,6 +716,31 @@ export function DirectoryPage() {
                       {filteredSchools.length === 0 && (
                         <div className="p-8 text-center text-slate-400 italic text-xs">
                           No schools match current filters.
+                        </div>
+                      )}
+
+                      {/* Split View Pagination */}
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-between gap-2 pt-4 mt-2 border-t border-slate-100">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 text-[10px] font-black uppercase rounded-lg border-slate-200"
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                          >
+                            <ChevronLeft className="h-3 w-3 mr-1" /> Prev
+                          </Button>
+                          <span className="text-[10px] font-black text-slate-400">Page {currentPage} of {totalPages}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 text-[10px] font-black uppercase rounded-lg border-slate-200"
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                          >
+                            Next <ChevronRight className="h-3 w-3 ml-1" />
+                          </Button>
                         </div>
                       )}
                     </div>

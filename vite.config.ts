@@ -40,7 +40,7 @@ export default defineConfig(({mode}) => {
           ]
         },
         workbox: {
-          maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+          maximumFileSizeToCacheInBytes: 7 * 1024 * 1024,
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/api\.dicebear\.com\/.*/i,
