@@ -20,6 +20,14 @@ console.log("Firestore initialized with DB ID:", firebaseConfig.firestoreDatabas
 
 export const storage = getStorage(app);
 
-export const auth = getAuth(app);
+let authInstance: any;
+try {
+  authInstance = getAuth(app);
+} catch (e) {
+  console.warn('Firebase Auth initialization failed (likely missing API key):', e);
+  authInstance = { app }; // Mock auth object enough for AuthContext to detect missing API key
+}
+
+export const auth = authInstance;
 
 export default app;

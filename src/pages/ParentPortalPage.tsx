@@ -1302,6 +1302,10 @@ export function ParentPortalPage() {
 
     useEffect(() => {
       if (!user) return;
+      if (students.length === 0) {
+        setFetchingReports(false);
+        return;
+      }
       const unsub = subscribeToCollection(
         'weekly_dietary_reports',
         (data) => {
@@ -1311,7 +1315,7 @@ export function ParentPortalPage() {
         where('studentId', 'in', students.map(s => s.id))
       );
       return () => unsub();
-    }, [students]);
+    }, [students, user]);
 
     return (
       <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
