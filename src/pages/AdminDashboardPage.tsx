@@ -150,7 +150,7 @@ export function AdminDashboardPage() {
         (new Date(prev.createdAt) > new Date(current.createdAt)) ? prev : current
       );
 
-      if (lastInquiryId && newestInquiry.id !== lastInquiryId && newestInquiry.status === 'New') {
+      if (lastInquiryId && newestInquiry.id !== lastInquiryId && newestInquiry.status === 'pending') {
         // In a real app we would trigger a Toast here
         console.log("New inquiry received in dashboard!", newestInquiry);
       }
@@ -458,8 +458,8 @@ export function AdminDashboardPage() {
                         {new Date(inquiry.createdAt).toLocaleDateString()}
                       </span>
                       <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                        inquiry.status === 'New' ? 'bg-blue-100 text-blue-800' :
-                        inquiry.status === 'Contacted' ? 'bg-amber-100 text-amber-800' :
+                        inquiry.status === 'pending' ? 'bg-blue-100 text-blue-800' :
+                        inquiry.status === 'responded' ? 'bg-amber-100 text-amber-800' :
                         'bg-slate-100 text-slate-800'
                       }`}>
                         {inquiry.status}

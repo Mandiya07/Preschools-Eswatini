@@ -455,7 +455,7 @@ export function AdminFinancePage() {
                        </div>
 
                        <Dialog>
-                          <DialogTrigger asChild>
+                          <DialogTrigger>
                              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-12 shadow-md">
                                 Launch Detailed Step-by-Step <ArrowRight className="ml-2 h-4 w-4" />
                              </Button>

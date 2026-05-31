@@ -81,7 +81,15 @@ export function SuperAdminSchoolsPage() {
     });
     
     const unsubSchools = subscribeToCollection("schools", (data) => {
-      setSchools(data);
+      const dbSchools = data as any[];
+      const mergedSchoolsMap = new Map<string, any>();
+      
+      // 1. Add preloaded schools as baseline
+      PRELOADED_SCHOOLS.forEach(s => mergedSchoolsMap.set(s.id, s));
+      // 2. Overwrite with DB schools
+      dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
+      
+      setSchools(Array.from(mergedSchoolsMap.values()));
       setLoading(false);
     });
 

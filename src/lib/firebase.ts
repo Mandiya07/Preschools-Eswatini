@@ -2,7 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { initializeFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import firebaseConfig from '../../firebase-applet-config.json';
+import baseConfig from '../../firebase-applet-config.json';
+
+const firebaseConfig = {
+  ...baseConfig,
+  apiKey: (typeof process !== 'undefined' ? process.env?.VITE_FIREBASE_API_KEY : null) || (import.meta as any).env?.VITE_FIREBASE_API_KEY || baseConfig.apiKey,
+};
 
 const app = initializeApp(firebaseConfig);
 console.log("Firebase App initialized with project:", firebaseConfig.projectId);

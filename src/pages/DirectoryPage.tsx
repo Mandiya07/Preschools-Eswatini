@@ -6,8 +6,9 @@ import { SEO } from "@/components/SEO";
 import { Search, MapPin, Star, GraduationCap, Building2, CheckCircle2, Loader2, PlayCircle, Sparkles, Grid, Map as MapIcon, Columns, ChevronRight } from "lucide-react";
 import { fetchCollection, subscribeToCollection } from "@/lib/firestoreUtils";
 import { School } from "@/types";
+import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
 import kidsImg from '@/assets/images/kids_playing_blocks_1779268580565.png';
-import { APIProvider, Map, AdvancedMarker, Pin, useMap, InfoWindow } from '@vis.gl/react-google-maps';
+import { APIProvider, Map as GoogleMap, AdvancedMarker, Pin, useMap, InfoWindow } from '@vis.gl/react-google-maps';
 import { MapContainer, TileLayer, Marker, Popup, useMap as useLeafletMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -46,7 +47,7 @@ function DirectoryMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapP
   }, [map, selectedSchool]);
 
   return (
-    <Map
+    <GoogleMap
       defaultCenter={{ lat: -26.3167, lng: 31.1333 }}
       defaultZoom={9}
       mapId="PRESCHOOL_ESWATINI_DIRECTORY_MAP_ID"
@@ -106,7 +107,7 @@ function DirectoryMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapP
           </div>
         </InfoWindow>
       )}
-    </Map>
+    </GoogleMap>
   );
 }
 
@@ -205,11 +206,22 @@ export function DirectoryPage() {
 
   useEffect(() => {
     const unsub = subscribeToCollection('schools', (data) => {
-      const rawSchools = data as School[];
+      const dbSchools = data as School[];
+      
+      // Merge with preloaded schools to ensure all 109 entries reflect even if offline or sync failed
+      const mergedSchoolsMap = new Map<string, School>();
+      
+      // 1. Add preloaded schools as baseline
+      PRELOADED_SCHOOLS.forEach(s => mergedSchoolsMap.set(s.id, s));
+      
+      // 2. Overwrite with DB schools (which might have more recent updates)
+      dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
+      
+      const rawSchools: School[] = Array.from(mergedSchoolsMap.values());
       
       // Add deterministic coordinates to institutions that lack them
       const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 };
-      const enhancedSchools = rawSchools.map((s) => {
+      const enhancedSchools = rawSchools.map((s: School) => {
         if (!s.coordinates) {
           // Stable coordinates based on id string hash
           let hash = 0;
@@ -560,7 +572,7 @@ export function DirectoryPage() {
                             <div className="flex flex-col">
                               <h3 className="text-lg font-bold text-slate-900 line-clamp-1 flex items-center gap-2">
                                 {school.name}
-                                {school.verified && <CheckCircle2 className="h-4 w-4 text-blue-500 fill-blue-50 animate-in zoom-in duration-300" title="Verified School" />}
+                                {school.verified && <CheckCircle2 className="h-4 w-4 text-blue-500 fill-blue-50 animate-in zoom-in duration-300" />}
                               </h3>
                               <span className="text-xs text-slate-500 font-bold">Fees: E{school.feePerTerm}/term</span>
                             </div>

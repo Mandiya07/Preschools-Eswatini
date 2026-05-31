@@ -61,7 +61,7 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
 }
 
 // Timeout helper to bypass 10s hanging when Firestore backend is blocked/unreachable
-const withTimeout = <T>(promise: Promise<T>, timeoutMs: number = 10000): Promise<T> => {
+const withTimeout = <T>(promise: Promise<T>, timeoutMs: number = 30000): Promise<T> => {
   return new Promise<T>((resolve, reject) => {
     const timer = setTimeout(() => {
       reject(new Error("Firestore operation timed out (Connection sandboxed or offline)"));

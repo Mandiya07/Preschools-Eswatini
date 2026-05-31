@@ -47,7 +47,20 @@ export function SuperAdminDashboard() {
 
   useEffect(() => {
     const unsubSchools = subscribeToCollection("schools", (data) => {
-      setSchools(data || []);
+      const dbSchools = data as any[];
+      
+      // Merge with preloaded schools to ensure all 109 entries reflect even if sync failed
+      const mergedSchoolsMap = new Map<string, any>();
+      
+      // 1. Add preloaded schools as baseline
+      import("@/data/preloadedSchools").then(({ PRELOADED_SCHOOLS }) => {
+        PRELOADED_SCHOOLS.forEach(s => mergedSchoolsMap.set(s.id, s));
+        dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
+        setSchools(Array.from(mergedSchoolsMap.values()));
+      }).catch(() => {
+        setSchools(dbSchools);
+      });
+      
       setLoading(false);
     });
 

@@ -315,7 +315,7 @@ function MapContent({ schools }: { schools: School[] }) {
                 {/* Floating Action Hint */}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] bg-white rounded-2xl shadow-2xl p-4 border border-blue-100 flex items-center gap-4 max-w-sm whitespace-nowrap">
                    <div className="h-10 w-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
-                      <Lock className="h-5 w-5" />
+                      <AlertCircle className="h-5 w-5" />
                    </div>
                    <div>
                       <p className="text-xs font-bold text-slate-900">Advanced Features Locked</p>

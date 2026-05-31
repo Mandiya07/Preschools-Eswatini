@@ -82,6 +82,8 @@ import { RegisterSupplierPage } from "@/pages/RegisterSupplierPage";
 import { RegisterAdvertiserPage } from "@/pages/RegisterAdvertiserPage";
 import { PWAPrompt } from "@/components/PWAPrompt";
 import { Toaster } from "sonner";
+import { useEffect } from "react";
+import { bulkImportPreloadedSchools } from "@/lib/firestoreUtils";
 
 export default function App() {
   return (

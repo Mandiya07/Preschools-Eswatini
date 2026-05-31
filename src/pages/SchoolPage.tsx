@@ -228,7 +228,7 @@ export function SchoolPage() {
           "telephone": school.phone,
           "email": school.email,
           "image": school.heroImage,
-          "description": school.about
+          "description": school.description
         }}
       />
 
@@ -378,7 +378,7 @@ export function SchoolPage() {
                       <Info className="h-6 w-6 text-blue-600" /> About Our School
                     </h2>
                     <div className="text-lg text-slate-700 leading-relaxed bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
-                      <p>{school.description || school.about}</p>
+                      <p>{school.description}</p>
                       {school.mission && (
                         <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
                           <strong className="text-slate-900 block mb-2">Our Mission:</strong> 
