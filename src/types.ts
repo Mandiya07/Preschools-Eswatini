@@ -222,6 +222,31 @@ export interface DailyLog {
   createdAt: string;
 }
 
+export type MealIntakeLevel = "All" | "Most" | "Some" | "None" | "Refused";
+export type MealType = "Breakfast" | "Morning Snack" | "Lunch" | "Afternoon Snack" | "Late Snack";
+
+export interface MealLogDetails {
+  mealType: MealType;
+  foodItems: string[];
+  intakeLevel: MealIntakeLevel;
+  liquidIntake?: string;
+  notes?: string;
+  nutritionalNotes?: string;
+}
+
+export interface WeeklyDietaryReport {
+  id: string;
+  schoolId: string;
+  studentId: string;
+  studentName: string;
+  startDate: string;
+  endDate: string;
+  summary: string;
+  recommendations?: string;
+  generatedBy: string;
+  createdAt: string;
+}
+
 export interface InventoryItem {
   id: string;
   schoolId: string;

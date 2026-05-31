@@ -8,12 +8,13 @@ import {
   HeartPulse, Pill, Activity, ShieldAlert,
   Moon, Coffee, ClipboardList, CheckCircle2,
   CalendarDays, UserCheck, WifiOff, AlertCircle,
-  Loader2
+  Loader2, Utensils
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { useAuth } from "@/lib/AuthContext";
 import { subscribeToCollection } from "@/lib/firestoreUtils";
 import { where } from "firebase/firestore";
+import { MealTrackingModule } from "@/components/admin/MealTrackingModule";
 
 export function AdminHealthDailyPage() {
   const { user, activeSchoolId } = useAuth();
@@ -216,12 +217,17 @@ export function AdminHealthDailyPage() {
       </div>
 
       <Tabs defaultValue="daily-logs" className="w-full mt-8" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4 lg:w-[600px] h-12 bg-slate-100 rounded-xl p-1 mb-8">
-          <TabsTrigger value="daily-logs" className="rounded-lg font-bold data-[state=active]:shadow-sm">Daily Logs</TabsTrigger>
-          <TabsTrigger value="health" className="rounded-lg font-bold data-[state=active]:shadow-sm">Health Records</TabsTrigger>
-          <TabsTrigger value="incidents" className="rounded-lg font-bold data-[state=active]:shadow-sm">Incidents</TabsTrigger>
-          <TabsTrigger value="assessments" className="rounded-lg font-bold data-[state=active]:shadow-sm">Assessments</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-5 h-12 bg-slate-100 rounded-xl p-1 mb-8 overflow-x-auto">
+          <TabsTrigger value="daily-logs" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs">Daily Logs</TabsTrigger>
+          <TabsTrigger value="nutrition" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs flex items-center gap-1.5"><Utensils className="h-3 w-3" /> Meals</TabsTrigger>
+          <TabsTrigger value="health" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs">Health</TabsTrigger>
+          <TabsTrigger value="incidents" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs">Incidents</TabsTrigger>
+          <TabsTrigger value="assessments" className="rounded-lg font-bold data-[state=active]:shadow-sm text-xs">Assessments</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="nutrition" className="space-y-6">
+           <MealTrackingModule schoolId={effectiveSchoolId || ""} students={students} />
+        </TabsContent>
 
         <TabsContent value="daily-logs" className="space-y-6">
            {isOffline && (

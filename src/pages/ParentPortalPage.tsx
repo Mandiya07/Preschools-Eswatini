@@ -39,7 +39,9 @@ import {
   Database,
   Globe,
   Building2,
-  PenTool
+  PenTool,
+  Utensils,
+  ChefHat
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AIChatBot } from "@/components/AIChatBot";
@@ -55,16 +57,18 @@ import {
   Announcement,
   AttendanceRecord,
   Message,
-  Newsletter 
+  Newsletter,
+  WeeklyDietaryReport
 } from "@/types";
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
 import { DigitalSignatureModal } from "@/components/DigitalSignatureModal";
 
 export function ParentPortalPage() {
   const { user, logout } = useAuth();
   const userSchoolName = (user as any)?.schoolName || "Verified Institution";
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"dashboard" | "children" | "billing" | "messages" | "privacy">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "children" | "billing" | "messages" | "privacy" | "diet">("dashboard");
   const [personalConsent, setPersonalConsent] = useState(true);
   const [medicalConsent, setMedicalConsent] = useState(true);
   const [consentSyncing, setConsentSyncing] = useState(false);
@@ -1292,6 +1296,103 @@ export function ParentPortalPage() {
     </div>
   );
 
+  const renderDietaryLog = () => {
+    const [reports, setReports] = useState<WeeklyDietaryReport[]>([]);
+    const [fetchingReports, setFetchingReports] = useState(true);
+
+    useEffect(() => {
+      if (!user) return;
+      const unsub = subscribeToCollection(
+        'weekly_dietary_reports',
+        (data) => {
+          setReports(data as WeeklyDietaryReport[]);
+          setFetchingReports(false);
+        },
+        where('studentId', 'in', students.map(s => s.id))
+      );
+      return () => unsub();
+    }, [students]);
+
+    return (
+      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
+              <Utensils className="h-6 w-6 text-emerald-600" />
+              Dietary & Nutritional Reports
+            </h2>
+            <p className="text-sm text-slate-500 mt-1 font-medium italic">
+              Weekly summaries of your child's nutritional intake and meal observations.
+            </p>
+          </div>
+          <div className="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-2xl border border-emerald-100 flex items-center gap-2 text-xs font-black uppercase tracking-widest">
+            <CheckCircle2 className="h-4 w-4" /> GDPR Secure Health Data
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          {reports.length > 0 ? (
+            reports.map(report => (
+              <Card key={report.id} className="overflow-hidden border-slate-200 hover:shadow-xl transition-all duration-300 rounded-[2.5rem]">
+                <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-4">
+                  <div className="flex items-center justify-between">
+                    <Badge className="bg-emerald-600 text-white font-bold px-3 py-1 rounded-lg">
+                      {format(new Date(report.startDate), 'MMM d')} - {format(new Date(report.endDate), 'MMM d, yyyy')}
+                    </Badge>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Weekly Summary</span>
+                  </div>
+                  <CardTitle className="mt-4 text-xl font-black text-slate-900">
+                    Nutrition Overview: {report.studentName}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6 space-y-6">
+                  <div className="bg-emerald-50/30 p-4 rounded-2xl border border-emerald-100/50">
+                    <h4 className="text-[10px] font-black text-emerald-800 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                      <ClipboardCheck className="h-3 w-3" /> Staff Clinical Summary
+                    </h4>
+                    <p className="text-sm text-slate-700 leading-relaxed font-medium">{report.summary}</p>
+                  </div>
+
+                  {report.recommendations && (
+                    <div className="space-y-2">
+                      <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Recommendations</h4>
+                      <p className="text-sm text-slate-600 italic bg-amber-50/50 p-4 rounded-2xl border border-amber-100/30">
+                        "{report.recommendations}"
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="h-8 w-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                        <User className="h-4 w-4" />
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-500">Verified by {report.generatedBy}</span>
+                    </div>
+                    <Button variant="ghost" size="sm" className="text-blue-600 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                      <Download className="h-3.5 w-3.5" /> PDF Copy
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <div className="lg:col-span-2 p-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-100 flex flex-col items-center">
+              <div className="h-24 w-24 bg-slate-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                <ChefHat className="h-10 w-10 text-slate-200" />
+              </div>
+              <h3 className="text-xl font-black text-slate-900 uppercase tracking-tighter Ital">No Reports Available</h3>
+              <p className="text-slate-500 max-w-sm font-medium mt-4 leading-relaxed">
+                {fetchingReports ? "Synchronizing with school health registry..." : "Your child's first dietary and nutritional summary will appear here once the weekly review is signed off by school staff."}
+              </p>
+              {fetchingReports && <Loader2 className="h-6 w-6 animate-spin text-blue-500 mt-6" />}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const renderChildren = () => (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
        <div className="flex items-center justify-between">
@@ -1649,6 +1750,12 @@ export function ParentPortalPage() {
                Chat
              </button>
               <button 
+               onClick={() => setActiveTab("diet")}
+               className={`text-[10px] sm:text-[11px] font-black px-3 sm:px-4 py-2 rounded-lg transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'diet' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-900'}`}
+             >
+               Dietary Log
+             </button>
+              <button 
                onClick={() => setActiveTab("privacy")}
                className={`text-[10px] sm:text-[11px] font-black px-3 sm:px-4 py-2 rounded-lg transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'privacy' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-900'}`}
              >
@@ -1732,6 +1839,7 @@ export function ParentPortalPage() {
         {activeTab === 'children' && renderChildren()}
         {activeTab === 'billing' && renderBilling()}
         {activeTab === 'messages' && renderMessages()}
+        {activeTab === 'diet' && renderDietaryLog()}
         {activeTab === 'privacy' && renderPrivacy()}
       </main>
 
