@@ -1,24 +1,20 @@
-Subject: Action Required: Claim Your Preschool Profile on Preschools Eswatini
+Subject: Claim Your Free Profile on Preschools Eswatini
 
-Dear Preschool Administrator,
+Dear Administrator,
 
-We are excited to inform you that your school has been listed on **Preschools Eswatini**, the premier directory for early childhood education in the country. Our platform helps local parents discover, compare, and connect with top preschools like yours.
+Your school is currently listed on **Preschools Eswatini**, the leading directory for early childhood education. We help parents discover and compare top preschools.
 
-We invite you to **claim your school's official profile** today. By doing so, you will unlock several key benefits:
+We invite you to **claim your free official profile** today to:
+- **Showcase Your School:** Add photos, highlight facilities, and update your curriculum & fees.
+- **Connect with Parents:** Receive direct enrollment inquiries.
+- **Get Verified:** Display a trusted "Verified Badge" on your profile.
 
-- **Enhanced Visibility:** Showcase your facilities by adding your own photos, curriculum details, and fee structures.
-- **Improved Communication:** Receive and manage direct enrollment inquiries from interested parents.
-- **Verified Status:** Stand out in our directory with a "Verified Badge" once your administration status is confirmed.
+**How to claim your profile in 3 simple steps:**
+1. Visit [Insert Website Link].
+2. Search and open your school's page.
+3. Click **"Claim Profile"** and follow the instructions.
 
-**How to claim your profile (Free & Secure):**
-1. Visit our directory at [Insert Link to Website].
-2. Search for your school's name.
-3. Click the "Claim This Profile" button on your school's page and follow the quick verification steps.
-
-Ensure your school steps into the digital spotlight and connects with more families this enrollment season. If you have any questions, please reply directly to this email.
+Join the growing community of preschools reaching more families online.
 
 Best regards,
-
 **The Preschools Eswatini Team**
-[Link to Website]
-[Contact Phone/Email]

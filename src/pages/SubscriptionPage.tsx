@@ -9,8 +9,18 @@ import { useAuth } from "@/lib/AuthContext";
 import { toast } from "sonner";
 import { 
   CheckCircle2, CreditCard, AlertCircle, TrendingUp, Users, HardDrive, 
-  Download, Calendar, Gift, Search, Smartphone, ShieldCheck, Zap
+  Download, Calendar, Gift, Search, Smartphone, ShieldCheck, Zap,
+  Mail, Phone
 } from "lucide-react";
+
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogFooter 
+} from "@/components/ui/dialog";
 
 import { PricingTier, PRICING_TIERS } from "@/components/PricingTier";
 
@@ -21,7 +31,8 @@ export function SubscriptionPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
-  const [isChangingPlan, setIsChangingPlan] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPlanDetails, setSelectedPlanDetails] = useState<any>(null);
   
   const currentPlan = PRICING_TIERS.find(p => p.id === currentPlanId) || PRICING_TIERS[0];
   
@@ -34,33 +45,12 @@ export function SubscriptionPage() {
     }
   };
 
-  const handlePlanChange = async (planId: string) => {
-    setIsChangingPlan(true);
+  const handlePlanChange = (planId: string) => {
+    const plan = PRICING_TIERS.find(p => p.id === planId);
+    if (!plan) return;
     
-    try {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          planId,
-          billingCycle,
-          schoolId: effectiveSchoolId,
-          email: user?.email 
-        }),
-      });
-
-      const session = await response.json();
-      
-      if (session.url) {
-        window.location.href = session.url;
-      } else {
-        throw new Error(session.error || "Failed to create checkout session");
-      }
-    } catch (err: any) {
-      console.error("Payment error:", err);
-      toast.error(err.message || "An error occurred while initiating payment.");
-      setIsChangingPlan(false);
-    }
+    setSelectedPlanDetails(plan);
+    setShowPaymentModal(true);
   };
 
   return (
@@ -264,61 +254,58 @@ export function SubscriptionPage() {
            <Card>
              <CardHeader>
                <CardTitle>Payment Methods</CardTitle>
-               <CardDescription>Manage how you pay for your subscription and premium add-ons.</CardDescription>
+               <CardDescription>We currently process all platform subscription payments manually via EFT or Mobile Money to minimize processing fees for schools.</CardDescription>
              </CardHeader>
              <CardContent className="space-y-6">
-                {/* Default Method */}
                 <div>
-                   <h3 className="text-sm font-medium text-slate-900 mb-3">Default Payment Method</h3>
-                   <div className="flex items-center justify-between p-4 border border-blue-200 bg-blue-50/30 rounded-lg">
-                     <div className="flex items-center gap-4">
-                       <div className="h-10 w-16 bg-white border border-slate-200 rounded flex items-center justify-center p-1 shadow-sm">
-                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png" alt="Visa" className="h-full object-contain" />
-                       </div>
-                       <div>
-                         <p className="font-semibold text-slate-900">Visa ending in <span className="font-mono">4242</span></p>
-                         <p className="text-sm text-slate-500">Expires 12/2026</p>
-                       </div>
+                   <h3 className="text-sm font-medium text-slate-900 mb-3">Accepted Payment Options</h3>
+                   <div className="grid sm:grid-cols-2 gap-4">
+                     {/* Mobile Money */}
+                     <div className="border border-blue-200 bg-blue-50/50 rounded-lg p-5 flex flex-col gap-3 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">PREFERRED</div>
+                        <div className="flex items-center gap-3">
+                          <Smartphone className="h-6 w-6 text-blue-600" />
+                          <div>
+                            <p className="font-bold text-slate-900">Mobile Money</p>
+                            <p className="text-xs text-slate-500">MTN MoMo</p>
+                          </div>
+                        </div>
+                        <div className="text-sm space-y-1.5 mt-2 bg-white p-3 rounded-md border border-blue-100">
+                          <div className="flex justify-between"><span className="text-slate-500">Number</span><span className="font-bold">7600 0000</span></div>
+                          <div className="flex justify-between"><span className="text-slate-500">Name</span><span className="font-medium">Preschools Eswatini</span></div>
+                        </div>
                      </div>
-                     <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-none">Default</Badge>
+                     
+                     {/* EFT */}
+                     <div className="border border-slate-200 rounded-lg p-5 flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          <HardDrive className="h-6 w-6 text-slate-600" />
+                          <div>
+                            <p className="font-bold text-slate-900">Bank Transfer (EFT)</p>
+                            <p className="text-xs text-slate-500">Standard Bank or FNB</p>
+                          </div>
+                        </div>
+                        <div className="text-sm space-y-1.5 mt-2 bg-slate-50 p-3 rounded-md border border-slate-100">
+                          <div className="flex justify-between"><span className="text-slate-500">Bank</span><span className="font-medium">FNB Eswatini</span></div>
+                          <div className="flex justify-between"><span className="text-slate-500">Account</span><span className="font-mono font-bold">62000000000</span></div>
+                          <div className="flex justify-between"><span className="text-slate-500">Branch</span><span className="font-mono">280164</span></div>
+                        </div>
+                     </div>
                    </div>
                 </div>
 
-                {/* Add New Methods */}
-                <div>
-                  <h3 className="text-sm font-medium text-slate-900 mb-3">Add Payment Method</h3>
-                  <div className="grid sm:grid-cols-3 gap-4">
-                     {/* Stripe/Card */}
-                     <div className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:border-blue-400 hover:bg-slate-50 transition-colors flex flex-col items-center text-center gap-3">
-                        <CreditCard className="h-8 w-8 text-slate-400" />
-                        <div>
-                          <p className="font-medium text-slate-900 text-sm">Credit / Debit Card</p>
-                          <p className="text-xs text-slate-500 mt-1">Powered by Stripe</p>
-                        </div>
-                     </div>
-                     {/* PayPal */}
-                     <div className="border border-slate-200 rounded-lg p-4 cursor-pointer hover:border-blue-400 hover:bg-slate-50 transition-colors flex flex-col items-center text-center gap-3">
-                        <svg className="h-8 w-8 text-[#00457C]" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/></svg>
-                        <div>
-                          <p className="font-medium text-slate-900 text-sm">PayPal</p>
-                          <p className="text-xs text-slate-500 mt-1">Connect account</p>
-                        </div>
-                     </div>
-                     {/* Mobile Money */}
-                     <div className="border border-blue-200 bg-blue-50/50 rounded-lg p-4 cursor-pointer hover:border-blue-400 transition-colors flex flex-col items-center text-center gap-3 relative overflow-hidden">
-                        <div className="absolute -right-6 top-3 bg-blue-600 text-white text-[10px] font-bold px-8 py-0.5 rotate-45">NEW</div>
-                        <Smartphone className="h-8 w-8 text-blue-600" />
-                        <div>
-                          <p className="font-medium text-slate-900 text-sm">Mobile Money</p>
-                          <p className="text-xs text-slate-500 mt-1">MTN / Eswatini Mobile</p>
-                        </div>
-                     </div>
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 text-amber-800">
+                  <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="font-bold mb-1">How to link a payment to your account?</p>
+                    <p className="opacity-90 leading-relaxed mb-3">After making your payment via MoMo or EFT, send your Proof of Payment (POP) via WhatsApp or Email including your school's unique Reference ID (<strong className="font-mono text-amber-900">{user?.schoolId?.substring(0,6).toUpperCase() || 'SUB2026'}</strong>).</p>
+                    <p className="font-medium flex items-center gap-4">
+                      <span><Phone className="h-3 w-3 inline mr-1" /> 7600 0000</span>
+                      <span><Mail className="h-3 w-3 inline mr-1" /> billing@preschools.sz</span>
+                    </p>
                   </div>
                 </div>
              </CardContent>
-             <CardFooter className="bg-slate-50 border-t border-slate-100 flex items-center gap-2 text-sm text-slate-500 py-4">
-               <ShieldCheck className="h-4 w-4 text-green-600" /> Payments are secure and encrypted. We do not store your full card details.
-             </CardFooter>
            </Card>
         </TabsContent>
 
@@ -378,6 +365,122 @@ export function SubscriptionPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <Dialog open={showPaymentModal} onOpenChange={setShowPaymentModal}>
+        <DialogContent className="max-w-2xl bg-white p-0 overflow-hidden border-0 shadow-2xl">
+          <div className="bg-slate-900 p-6 text-white">
+            <DialogHeader className="space-y-2">
+              <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-blue-400" />
+                Complete Your Subscription
+              </DialogTitle>
+              <DialogDescription className="text-slate-300">
+                Automated card payments are currently unavailable. Please use one of our manual payment options below to activate the <strong className="text-white">{selectedPlanDetails?.name}</strong> plan.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+          
+          <div className="p-6 overflow-y-auto max-h-[65vh] space-y-6">
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Selected Plan</p>
+                <p className="font-bold text-slate-900 text-lg">{selectedPlanDetails?.name} ({billingCycle === 'monthly' ? 'Monthly' : 'Annual'})</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium text-slate-500">Amount Due</p>
+                <p className="font-black text-slate-900 text-2xl text-blue-600">
+                  E{selectedPlanDetails?.price[billingCycle]}.00
+                </p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="border border-blue-200 rounded-xl p-5 bg-blue-50/30 relative">
+                <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-lg rounded-tr-xl">
+                  Fastest
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 bg-yellow-400 rounded-full flex items-center justify-center font-bold text-yellow-900 shrink-0">
+                    Mo
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900">MTN Mobile Money</h3>
+                    <p className="text-xs text-slate-500">Pay via MoMo</p>
+                  </div>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Number</span>
+                    <span className="font-mono font-bold text-slate-900 text-base">7600 0000</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Name</span>
+                    <span className="font-medium text-slate-900">Preschools Eswatini</span>
+                  </div>
+                  <div className="flex flex-col gap-1 pt-1">
+                    <span className="text-slate-500">Reference:</span>
+                    <span className="font-mono font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded w-fit">
+                      {user?.schoolId?.substring(0,6).toUpperCase() || 'SUB2026'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-slate-200 rounded-xl p-5 hover:border-blue-200 transition-colors">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shrink-0">
+                    <HardDrive className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900">Bank Transfer (EFT)</h3>
+                    <p className="text-xs text-slate-500">Standard Bank or FNB</p>
+                  </div>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Bank</span>
+                    <span className="font-medium text-slate-900">FNB Eswatini</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Account</span>
+                    <span className="font-mono font-bold text-slate-900">62000000000</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Branch Code</span>
+                    <span className="font-mono font-bold text-slate-900">280164</span>
+                  </div>
+                  <div className="flex flex-col gap-1 pt-1">
+                    <span className="text-slate-500">Reference:</span>
+                    <span className="font-mono font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded w-fit">
+                      {user?.schoolId?.substring(0,6).toUpperCase() || 'SUB2026'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 text-amber-800">
+              <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+              <div className="text-sm">
+                <p className="font-bold mb-1">Activation Process</p>
+                <p className="opacity-90 leading-relaxed mb-3">After making your payment, please send your Proof of Payment (POP) along with your school name or reference code to our support team.</p>
+                <div className="flex flex-wrap gap-4 font-medium">
+                  <a href="https://wa.me/26876000000" target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-amber-900 transition-colors">
+                    <Phone className="h-4 w-4" /> WhatsApp: 7600 0000
+                  </a>
+                  <a href="mailto:billing@preschools.sz" className="flex items-center gap-1.5 hover:text-amber-900 transition-colors">
+                    <Mail className="h-4 w-4" /> billing@preschools.sz
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="bg-slate-50 p-4 border-t border-slate-100 sm:justify-between">
+            <Button variant="ghost" className="text-slate-500" onClick={() => setShowPaymentModal(false)}>Close</Button>
+            <Button onClick={() => setShowPaymentModal(false)}>I have understood</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

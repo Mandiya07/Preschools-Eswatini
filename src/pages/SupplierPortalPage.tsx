@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Package, Truck, FileText, Settings, LogOut, DollarSign, Users, Store, CreditCard, CheckCircle2, Zap, ShieldCheck, Sparkles, Loader2, ArrowUpRight } from 'lucide-react';
+import { Package, Truck, FileText, Settings, LogOut, DollarSign, Users, Store, CreditCard, CheckCircle2, Zap, ShieldCheck, Sparkles, Loader2, ArrowUpRight, Smartphone, HardDrive, AlertCircle, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from '@/lib/AuthContext';
@@ -7,11 +7,22 @@ import { useNavigate } from 'react-router-dom';
 import { updateDocument } from '@/lib/firestoreUtils';
 import { toast } from 'sonner';
 
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogFooter 
+} from "@/components/ui/dialog";
+
 export function SupplierPortalPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<'Dashboard' | 'Products' | 'Orders' | 'Invoices' | 'Clients' | 'Tenders' | 'Subscription'>('Dashboard');
   const [updatingPlan, setUpdatingPlan] = useState<string | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPlanDetails, setSelectedPlanDetails] = useState<any>(null);
 
   const activePlan = user?.subscriptionPlan || 'Basic';
 
@@ -24,18 +35,18 @@ export function SupplierPortalPage() {
     }
   };
 
-  const handleUpgradePlan = async (planId: string) => {
-    if (!user?.uid) return;
-    setUpdatingPlan(planId);
-    try {
-      await updateDocument('users', user.uid, { subscriptionPlan: planId });
-      toast.success(`Successfully subscribed to ${planId}!`);
-    } catch(err) {
-      console.error(err);
-      toast.error("Failed to update marketplace plan.");
-    } finally {
-      setUpdatingPlan(null);
-    }
+  const SELLER_PLANS = [
+    { id: 'Basic', name: 'Verified Supplier', price: 'E0', period: '/forever', features: ['Listed in Supplier Directory', 'Receive Public Quotes', 'Standard Support (48hr)', '14% Standard Commission'], isCurrent: activePlan === 'Basic', color: 'slate' },
+    { id: 'Professional', name: 'Pro Merchant', price: 'E250', period: '/month', features: ['Priority Search Ranking', 'Bid on Private Tenders', 'Priority Support (12hr)', '8% Reduced Commission', 'Automated Quote Generation'], isCurrent: activePlan === 'Professional', color: 'blue' },
+    { id: 'Enterprise', name: 'Enterprise Distributor', price: 'E700', period: '/month', features: ['Top Placement Worldwide', 'Guaranteed RFQ Matches', 'Dedicated Account Manager', '3% Lowest Commission', 'Bulk Import Catalog API'], isCurrent: activePlan === 'Enterprise', color: 'indigo' },
+  ];
+
+  const handleUpgradePlan = (planId: string) => {
+    const plan = SELLER_PLANS.find(p => p.id === planId);
+    if (!plan || plan.id === 'Basic') return;
+    
+    setSelectedPlanDetails(plan);
+    setShowPaymentModal(true);
   };
 
   return (
@@ -382,6 +393,122 @@ export function SupplierPortalPage() {
           </>
         )}
       </main>
+
+      <Dialog open={showPaymentModal} onOpenChange={setShowPaymentModal}>
+        <DialogContent className="max-w-xl bg-white p-0 overflow-hidden border-0 shadow-2xl">
+          <div className="bg-slate-900 p-6 text-white">
+            <DialogHeader className="space-y-2">
+              <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-blue-400" />
+                Complete Your Subscription
+              </DialogTitle>
+              <DialogDescription className="text-slate-300">
+                Automated card payments are currently unavailable. Please use one of our manual payment options below to activate the <strong className="text-white">{selectedPlanDetails?.name}</strong> plan.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+          
+          <div className="p-6 overflow-y-auto max-h-[65vh] space-y-6">
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <div>
+                <p className="text-sm font-medium text-slate-500">Selected Plan</p>
+                <p className="font-bold text-slate-900 text-lg">{selectedPlanDetails?.name} (Monthly)</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium text-slate-500">Amount Due</p>
+                <p className="font-black text-slate-900 text-2xl text-blue-600">
+                  {selectedPlanDetails?.price}.00
+                </p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="border border-blue-200 rounded-xl p-5 bg-blue-50/30 relative">
+                <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-lg rounded-tr-xl">
+                  Fastest
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 bg-yellow-400 rounded-full flex items-center justify-center font-bold text-yellow-900 shrink-0">
+                    Mo
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900">MTN Mobile Money</h3>
+                    <p className="text-xs text-slate-500">Pay via MoMo</p>
+                  </div>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Number</span>
+                    <span className="font-mono font-bold text-slate-900 text-base">7600 0000</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Name</span>
+                    <span className="font-medium text-slate-900">Preschools Eswatini</span>
+                  </div>
+                  <div className="flex flex-col gap-1 pt-1">
+                    <span className="text-slate-500">Reference:</span>
+                    <span className="font-mono font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded w-fit">
+                      {user?.uid?.substring(0,6).toUpperCase() || 'SUP2026'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-slate-200 rounded-xl p-5 hover:border-blue-200 transition-colors">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shrink-0">
+                    <HardDrive className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900">Bank Transfer (EFT)</h3>
+                    <p className="text-xs text-slate-500">Standard Bank or FNB</p>
+                  </div>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Bank</span>
+                    <span className="font-medium text-slate-900">FNB Eswatini</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Account</span>
+                    <span className="font-mono font-bold text-slate-900">62000000000</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <span className="text-slate-500">Branch Code</span>
+                    <span className="font-mono font-bold text-slate-900">280164</span>
+                  </div>
+                  <div className="flex flex-col gap-1 pt-1">
+                    <span className="text-slate-500">Reference:</span>
+                    <span className="font-mono font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded w-fit">
+                      {user?.uid?.substring(0,6).toUpperCase() || 'SUP2026'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 text-amber-800">
+              <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+              <div className="text-sm">
+                <p className="font-bold mb-1">Activation Process</p>
+                <p className="opacity-90 leading-relaxed mb-3">After making your payment, please send your Proof of Payment (POP) along with your business name or reference code to our support team.</p>
+                <div className="flex flex-wrap gap-4 font-medium">
+                  <a href="https://wa.me/26876000000" target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-amber-900 transition-colors">
+                    <Phone className="h-4 w-4" /> WhatsApp: 7600 0000
+                  </a>
+                  <a href="mailto:billing@preschools.sz" className="flex items-center gap-1.5 hover:text-amber-900 transition-colors">
+                    <Mail className="h-4 w-4" /> billing@preschools.sz
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="bg-slate-50 p-4 border-t border-slate-100 sm:justify-between">
+            <Button variant="ghost" className="text-slate-500" onClick={() => setShowPaymentModal(false)}>Close</Button>
+            <Button onClick={() => setShowPaymentModal(false)}>I have understood</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

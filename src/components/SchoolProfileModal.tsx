@@ -14,7 +14,7 @@ export function SchoolProfileModal({ school, onClose, onUpdate }: { school: Scho
     region: school.region || '',
     curriculum: school.curriculum || '',
     feePerTerm: school.feePerTerm || 0,
-    totalCapacity: school.totalCapacity || '',
+    totalCapacity: school.totalCapacity || 0,
     description: school.description || '',
     boarding: school.boarding || 'Day',
     type: school.type || 'Private',

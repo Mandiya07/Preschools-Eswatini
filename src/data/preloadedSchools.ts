@@ -13669,7 +13669,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.321,
       "lng": 31.1415
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.734Z"
   },
   {
     "id": "entabeni-preschool",
@@ -13714,7 +13717,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3112,
       "lng": 31.129
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "phalangwane-community-preschool",
@@ -13759,7 +13765,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.915,
       "lng": 31.2912
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "endzingeni-nazarene-pre-school",
@@ -13804,7 +13813,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.0115,
       "lng": 31.2515
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "msunduza-hope-pre-school",
@@ -13849,7 +13861,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3342,
       "lng": 31.156
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "gelekeceni-prep-phase",
@@ -13894,7 +13909,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4172,
       "lng": 31.1963
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "valley-stars-pre-primary",
@@ -13939,7 +13957,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.434,
       "lng": 31.1815
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "elangeni-community-nursery",
@@ -13984,7 +14005,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4465,
       "lng": 31.2012
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "umdoni-early-learning-academy",
@@ -14029,7 +14053,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.398,
       "lng": 31.1712
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mvutjini-area-pre-school",
@@ -14074,7 +14101,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4215,
       "lng": 31.201
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "madonsa-extension-pre-school",
@@ -14119,7 +14149,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.471,
       "lng": 31.3915
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "kwaluseni-junction-nursery",
@@ -14164,7 +14197,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4835,
       "lng": 31.3412
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "logoba-neighborhood-pre-primary",
@@ -14209,7 +14245,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.511,
       "lng": 31.325
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "zion-early-learning-academy",
@@ -14254,7 +14293,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4812,
       "lng": 31.385
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "ludzeludze-community-nursery",
@@ -14299,7 +14341,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4811,
       "lng": 31.3345
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "inhlanyelo-pre-primary-school",
@@ -14344,7 +14389,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.811,
       "lng": 31.9345
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "siteki-central-nursery-phase",
@@ -14389,7 +14437,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.451,
       "lng": 31.948
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "lavumisa-border-nursery",
@@ -14434,7 +14485,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.215,
       "lng": 31.4215
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "nhlangano-grace-nursery",
@@ -14479,7 +14533,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.111,
       "lng": 31.203
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "simunye-lowveld-pre-primary",
@@ -14524,7 +14581,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.021,
       "lng": 31.9215
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "goodnews-pre-primary-school-tl5o",
@@ -14569,7 +14629,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.489,
       "lng": 31.378
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "sasebunya-community-preschool-keuy",
@@ -14614,7 +14677,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.152,
       "lng": 31.184
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "kids-academy-preschool-w24z",
@@ -14659,7 +14725,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4915,
       "lng": 31.312
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "little-legends-pre-school-5n6d",
@@ -14704,7 +14773,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.326,
       "lng": 31.1395
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mpaka-sugar-estate-preschool-7823",
@@ -14749,7 +14821,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.411,
       "lng": 31.7845
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "bright-spark-academy-vsz6",
@@ -14794,7 +14869,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4195,
       "lng": 31.1912
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "nhlangano-methodist-pre-school-agr4",
@@ -14839,7 +14917,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.111,
       "lng": 31.203
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "new-generation-pre-school-hklg",
@@ -14884,7 +14965,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.511,
       "lng": 31.325
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "siteki-christian-pre-school-rtp3",
@@ -14929,7 +15013,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.451,
       "lng": 31.948
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "tiny-steps-learning-center-l2bf",
@@ -14974,7 +15061,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3245,
       "lng": 31.1398
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "malkerns-valley-pre-primary-32nu",
@@ -15019,7 +15109,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.521,
       "lng": 31.1812
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "phumelele-kids-nursery-5z3w",
@@ -15064,7 +15157,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4811,
       "lng": 31.354
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "piggs-peak-pilot-grade-0-phase-fxxv",
@@ -15109,7 +15205,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.9555,
       "lng": 31.249
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "little-lambs-pre-school-ka9p",
@@ -15154,7 +15253,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4925,
       "lng": 31.381
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "fountain-of-life-pre-school-earf",
@@ -15199,7 +15301,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.491,
       "lng": 31.3212
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "imphumelelo-pre-school-4k2n",
@@ -15244,7 +15349,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4815,
       "lng": 31.3465
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "bethel-early-learning-phase-ogbw",
@@ -15289,7 +15397,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.436,
       "lng": 31.1915
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "little-lambs-christian-preschool-znzp",
@@ -15334,7 +15445,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.489,
       "lng": 31.3698
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "sunny-side-pre-school-playgroup-r6kd",
@@ -15379,7 +15493,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.489,
       "lng": 31.3715
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "shiselweni-mission-preschool-r4f8",
@@ -15424,7 +15541,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.9745,
       "lng": 31.321
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "khanyisa-christian-academy-pre-school-division-vbnj",
@@ -15469,7 +15589,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.495,
       "lng": 31.361
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "harold-s-academy-early-childhood-phase-v2zh",
@@ -15514,7 +15637,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4715,
       "lng": 31.3812
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "floral-academy-pre-school-5p90",
@@ -15559,7 +15685,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3215,
       "lng": 31.1495
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "skhulanabo-creche-preschool-t9w4",
@@ -15604,7 +15733,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.541,
       "lng": 31.751
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "swazi-national-high-school-pilot-grade-0-track-5wml",
@@ -15649,7 +15781,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.5122,
       "lng": 31.312
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "lobamba-national-primary-pilot-grade-0-phase-bhmg",
@@ -15694,7 +15829,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4465,
       "lng": 31.2012
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "piggs-peak-nazarene-primary-pilot-grade-0-tk9d",
@@ -15739,7 +15877,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.9555,
       "lng": 31.249
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "nhlangano-central-primary-pilot-grade-0-phase-oggg",
@@ -15784,7 +15925,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.111,
       "lng": 31.203
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "siteki-nazarene-primary-pilot-grade-0-phase-evxv",
@@ -15829,7 +15973,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.453,
       "lng": 31.9442
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mhlume-primary-school-pilot-grade-0-phase-kcy5",
@@ -15874,7 +16021,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.9845,
       "lng": 31.912
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "big-bend-primary-school-pilot-grade-0-phase-kaff",
@@ -15919,7 +16069,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.811,
       "lng": 31.9345
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mankayane-primary-school-pilot-grade-0-phase-fmwi",
@@ -15964,7 +16117,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.6815,
       "lng": 31.065
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "hlatikulu-primary-school-pilot-grade-0-phase-9aw9",
@@ -16009,7 +16165,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.9745,
       "lng": 31.321
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "pigg-s-peak-primary-school-pilot-grade-0-phase-8dna",
@@ -16054,7 +16213,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.961,
       "lng": 31.2542
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "lavumisa-primary-school-pilot-grade-0-phase-j0ss",
@@ -16099,7 +16261,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.215,
       "lng": 31.4215
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "simunye-primary-school-pilot-grade-0-phase-rem8",
@@ -16144,7 +16309,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.021,
       "lng": 31.9215
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "sidvokodvo-primary-school-pilot-grade-0-phase-bp6a",
@@ -16189,7 +16357,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.6345,
       "lng": 31.378
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "malkerns-primary-school-pilot-grade-0-phase-u1ed",
@@ -16234,7 +16405,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.521,
       "lng": 31.1812
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "kwaluseni-primary-school-pilot-grade-0-phase-9v4o",
@@ -16279,7 +16453,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4811,
       "lng": 31.3345
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "ezulwini-primary-school-pilot-grade-0-phase-dwfc",
@@ -16324,7 +16501,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4172,
       "lng": 31.1963
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "new-life-montessori-pre-school-syxz",
@@ -16369,7 +16549,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3312,
       "lng": 31.139
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "international-community-schools-early-phase-96ev",
@@ -16414,7 +16597,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.483,
       "lng": 31.3695
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "manzini-nazarene-primary-pre-school-division-4i5f",
@@ -16459,7 +16645,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4855,
       "lng": 31.378
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mpaka-railway-academy-pre-school-track-6s2p",
@@ -16504,7 +16693,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.402,
       "lng": 31.7915
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "peak-methodist-preschool-w4l9",
@@ -16549,7 +16741,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.958,
       "lng": 31.2495
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "lobamba-national-nursery-az6k",
@@ -16594,7 +16789,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.447,
       "lng": 31.2025
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "nhlangano-covenant-pre-school-qzjr",
@@ -16639,7 +16837,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.112,
       "lng": 31.2045
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mhlume-sugar-estate-pre-primary-h5ck",
@@ -16684,7 +16885,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.985,
       "lng": 31.9135
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "sidvokodvo-junction-pre-primary-qxrq",
@@ -16729,7 +16933,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.635,
       "lng": 31.3795
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "malkerns-valley-preschool-bq8h",
@@ -16774,7 +16981,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.522,
       "lng": 31.1825
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "ezulwini-orchard-pre-primary-school-jrjv",
@@ -16819,7 +17029,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.435,
       "lng": 31.183
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "sibebe-view-pre-school-cat8",
@@ -16864,7 +17077,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.291,
       "lng": 31.1565
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "highveld-christian-pre-school-c7mj",
@@ -16909,7 +17125,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.955,
       "lng": 31.253
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "little-harvard-pre-primary-jiw5",
@@ -16954,7 +17173,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3165,
       "lng": 31.1402
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "woodlands-early-learning-academy-r200",
@@ -16999,7 +17221,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.303,
       "lng": 31.1255
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "ubombo-primary-school-pre-school-division-qfab",
@@ -17044,7 +17269,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.8125,
       "lng": 31.936
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "trelawney-kids-corner-7v79",
@@ -17089,7 +17317,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.494,
       "lng": 31.3825
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "phuthuma-christian-academy-pre-school-division-iglm",
@@ -17134,7 +17365,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.488,
       "lng": 31.365
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "sifundza-nursery-school-60wt",
@@ -17179,7 +17413,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.495,
       "lng": 31.3195
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "jabula-pre-primary-school-t5t8",
@@ -17224,7 +17461,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4215,
       "lng": 31.196
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "enaleni-community-preschool-wt84",
@@ -17269,7 +17509,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.511,
       "lng": 31.325
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "stepping-stones-pre-school-cs0f",
@@ -17314,7 +17557,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.326,
       "lng": 31.1415
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "word-of-truth-christian-pre-school-cgq8",
@@ -17359,7 +17605,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4812,
       "lng": 31.385
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "little-disciples-nursery-preschool-w1t0",
@@ -17404,7 +17653,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4745,
       "lng": 31.3975
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "asikhule-private-pre-school-atvi",
@@ -17449,7 +17701,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.451,
       "lng": 31.948
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "tiny-explorers-academy-pe6m",
@@ -17494,7 +17749,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.524,
       "lng": 31.1765
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "bethel-evangelical-pre-school-jpge",
@@ -17539,7 +17797,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -27.111,
       "lng": 31.203
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "fountain-of-hope-pre-school-ilam",
@@ -17584,7 +17845,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3325,
       "lng": 31.156
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "st-paul-s-primary-school-integrated-grade-0-pilot-j456",
@@ -17629,7 +17893,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.329,
       "lng": 31.137
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "little-lambs-pre-primary-skba",
@@ -17674,7 +17941,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4925,
       "lng": 31.381
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "bright-horizons-pre-school-82wv",
@@ -17719,7 +17989,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.289,
       "lng": 31.104
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "kingdom-heritage-pre-school-pn7u",
@@ -17764,7 +18037,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.631,
       "lng": 31.375
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "apex-early-learning-center-ma5x",
@@ -17809,7 +18085,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4495,
       "lng": 31.0195
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "new-life-christian-pre-school-osdj",
@@ -17854,7 +18133,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.814,
       "lng": 31.931
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "phumlani-early-childhood-centre-xshw",
@@ -17899,7 +18181,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.581,
       "lng": 31.2415
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "fairyland-english-medium-pre-school-2ixz",
@@ -17944,7 +18229,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.5245,
       "lng": 31.179
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "asiphile-ncp-preschool-rhdm",
@@ -17989,7 +18277,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.486,
       "lng": 31.3812
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "imbali-montessori-school-pre-primary-phase-llxm",
@@ -18034,7 +18325,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.5414,
       "lng": 31.1738
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "tiny-tots-learning-center-0lw0",
@@ -18079,7 +18373,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3245,
       "lng": 31.1398
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "morningstar-international-school-pre-primary-phase-3dk4",
@@ -18124,7 +18421,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4881,
       "lng": 31.3392
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "reach-for-the-sky-childcare-and-preschool-jmnd",
@@ -18169,7 +18469,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.4865,
       "lng": 31.369
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "peak-nazarene-pre-school-vq9r",
@@ -18214,7 +18517,10 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -25.961,
       "lng": 31.2542
-    }
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
   },
   {
     "id": "mother-touch-learning-center-54mu",
@@ -18259,6 +18565,157 @@ export const PRELOADED_SCHOOLS: School[] = [
     "coordinates": {
       "lat": -26.3291,
       "lng": 31.1365
+    },
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T06:55:43.735Z"
+  },
+  {
+    "id": "fonteyn-evangelical-preschool-a3re",
+    "name": "Fonteyn Evangelical Preschool",
+    "region": "Eswatini",
+    "town": "Fonteyn Central",
+    "address": "Fonteyn Evangelical Preschool, Fonteyn Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Faith-based National ECCE Standard integrated with core character development frameworks",
+    "boarding": "Day",
+    "feePerTerm": 1800,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 5,
+    "description": "Operating as the local structural heart of the neighborhood to provide highly accessible early vocabulary building, phonics steps, and structural social habits before children scale up to formal primary tracks.",
+    "mission": "Operating as the local structural heart of the neighborhood to provide highly accessible early vocabulary building, phonics steps, and structural social habits before children scale up to formal primary tracks.",
+    "phone": "+268 2404 0000",
+    "email": "info@fonteyn-evangelical-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Advance application registry packet completion",
+      "copy of child's birth certificate",
+      "verified child clinic immunization booklet"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Fonteyn Central",
+      "Toddler Care"
+    ],
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T08:58:43.642Z",
+    "coordinates": {
+      "lat": -26.3115,
+      "lng": 31.1712
+    }
+  },
+  {
+    "id": "sifundzani-school-pre-primary-phase-du9p",
+    "name": "Sifundzani School – Pre-Primary Phase",
+    "region": "Eswatini",
+    "town": "Pine Valley Corridor Proximity",
+    "address": "Sifundzani School – Pre-Primary Phase, Pine Valley Corridor Proximity, Eswatini",
+    "type": "Private",
+    "curriculum": "Advanced International Primary Prep Track blending regional language milestones with global English frameworks",
+    "boarding": "Day",
+    "feePerTerm": 6800,
+    "ageGroups": [
+      "3-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 16,
+    "description": "Operating as one of Mbabane's premium international foundational programs to nurture globally competitive, expressive, and culturally receptive early learners.",
+    "mission": "Operating as one of Mbabane's premium international foundational programs to nurture globally competitive, expressive, and culturally receptive early learners.",
+    "phone": "+268 2404 0000",
+    "email": "info@sifundzani-school-pre-primary-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Formalized student readiness interaction evaluation",
+      "full identity card compliance",
+      "space deposit fee"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Pine Valley Corridor Proximity",
+      "Toddler Care"
+    ],
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T08:58:43.642Z",
+    "coordinates": {
+      "lat": -26.3361,
+      "lng": 31.1274
+    }
+  },
+  {
+    "id": "learning-tree-preschool-l5gw",
+    "name": "Learning Tree Preschool",
+    "region": "Eswatini",
+    "town": "Fonteyn / Dalriach Corridor",
+    "address": "Learning Tree Preschool, Fonteyn / Dalriach Corridor, Eswatini",
+    "type": "Public",
+    "curriculum": "Faith-based National ECCE Standard integrated with Anglican Christian moral frameworks, foundational phonics, and holistic child development values.",
+    "boarding": "Day",
+    "feePerTerm": 1900,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 10,
+    "description": "Guided by a church-supported ethos to deliver quality, affordable early childhood care and moral education, focusing tightly on raising well-rounded, expressive children who transition seamlessly into primary schooling.",
+    "mission": "Guided by a church-supported ethos to deliver quality, affordable early childhood care and moral education, focusing tightly on raising well-rounded, expressive children who transition seamlessly into primary schooling.",
+    "phone": "+268 2404 0000",
+    "email": "info@learning-tree-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Fully completed parish enrollment packet",
+      "child's official birth certificate copy",
+      "up-to-date vaccine compliance record",
+      "parent intake meeting"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Fonteyn / Dalriach Corridor",
+      "Toddler Care"
+    ],
+    "subscriptionPlan": "Free",
+    "subscriptionStatus": "active",
+    "createdAt": "2026-06-01T09:03:44.961Z",
+    "coordinates": {
+      "lat": -26.313,
+      "lng": 31.1685
     }
   }
 ];
