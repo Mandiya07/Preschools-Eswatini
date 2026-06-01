@@ -63,6 +63,7 @@ export interface School {
   featured: boolean;
   verified: boolean;
   tags: string[];
+  totalCapacity?: number;
   coordinates?: { lat: number; lng: number };
   subscriptionPlan: "Free" | "Basic" | "Professional" | "Enterprise";
   subscriptionStatus: "active" | "past_due" | "canceled" | "trialing";

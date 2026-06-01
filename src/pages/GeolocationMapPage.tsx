@@ -22,7 +22,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 }; // Mbabane roughly
 const API_KEY =
-  process.env.GOOGLE_MAPS_PLATFORM_KEY ||
+  (typeof process !== 'undefined' ? process.env.GOOGLE_MAPS_PLATFORM_KEY : null) ||
   (import.meta as any).env?.VITE_GOOGLE_MAPS_PLATFORM_KEY ||
   (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY ||
   '';

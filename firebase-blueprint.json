@@ -35,6 +35,7 @@
         "featured": { "type": "boolean" },
         "verified": { "type": "boolean" },
         "tags": { "type": "array" },
+        "totalCapacity": { "type": "number" },
         "ownerId": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }

@@ -9973,192 +9973,6 @@
     "createdAt": "2026-05-31T16:04:00Z"
   },
   {
-    "id": "sweet-home-nhlangano",
-    "name": "Sweet Home Pre-Primary School (Nhlangano)",
-    "region": "Shiselweni",
-    "town": "Nhlangano",
-    "address": "Nhlangano, Shiselweni",
-    "type": "Private",
-    "curriculum": "Traditional private National ECCE Curriculum with an emphasis on early phonetic fluency",
-    "boarding": "Day",
-    "feePerTerm": 1650,
-    "ageGroups": [
-      "2 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1595250475262-4487de7ef69d?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.6,
-    "reviews": 10,
-    "description": "Top-tier early childhood care in the southern hub focusing on phonetic fluency.",
-    "mission": "Delivering top-tier early childhood care within the southern highveld hub to foster seamless integration into regional public and private primary school trackers.",
-    "phone": "+268 2207 8000",
-    "email": "sweethome@nhlangano.sz",
-    "hours": "07:30 AM - 01:30 PM",
-    "programs": [
-      {
-        "name": "Phonetic Highveld",
-        "age": "2-4 yrs",
-        "desc": "Emphasis on early phonetic fluency and secure classroom pods sessions."
-      },
-      {
-        "name": "Southern Tracker",
-        "age": "5-6 yrs",
-        "desc": "Seamless integration modules for regional primary tracker success."
-      }
-    ],
-    "facilities": [
-      "Gated perimeter playgrounds",
-      "Secure classroom pods",
-      "Colorful alphabet interior layouts"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Fully completed parent intake books",
-      "Child birth records",
-      "Vaccine compliance proof"
-    ],
-    "socialMedia": {},
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Nhlangano",
-      "Southern Hub",
-      "Phonetic Fluency",
-      "Primary Track"
-    ],
-    "coordinates": {
-      "lat": -27.1085,
-      "lng": 31.201
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:05:00Z"
-  },
-  {
-    "id": "hhuhhuma-ncp-nhlangano",
-    "name": "Hhuhhuma NCP Preschool (Nhlangano Outskirts)",
-    "region": "Shiselweni",
-    "town": "Nhlangano",
-    "address": "Nhlangano Outskirts, Shiselweni",
-    "type": "Community-Based",
-    "curriculum": "Subsidized Community-Based Neighborhood Care Point (NCP) Model",
-    "boarding": "Day",
-    "feePerTerm": 150,
-    "ageGroups": [
-      "3 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.2,
-    "reviews": 4,
-    "description": "Providing vital nutrition and literacy to underprivileged rural children via the NCP model.",
-    "mission": "Supported by regional development funds and local leadership to provide vital nutrition, protection, and basic early literacy to underprivileged rural children.",
-    "phone": "+268 7611 1300",
-    "email": "hhuhhuma.ncp@gmail.com",
-    "hours": "07:30 AM - 01:00 PM",
-    "programs": [
-      {
-        "name": "Nutrition & Care",
-        "age": "3-4 yrs",
-        "desc": "Vital nutrition and protection via donated fruit tree plots interaction."
-      },
-      {
-        "name": "Rural Literacy",
-        "age": "5-6 yrs",
-        "desc": "Basic early literacy and rural assembly structures-based learning."
-      }
-    ],
-    "facilities": [
-      "Multi-use rural assembly structures",
-      "Donated fruit tree plots",
-      "Open physical play areas"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Economic vulnerability assessment",
-      "Inkhundla committee clearance",
-      "Proof of local residence"
-    ],
-    "socialMedia": {},
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Nhlangano Outskirts",
-      "NCP",
-      "Subsidized",
-      "Social Welfare"
-    ],
-    "coordinates": {
-      "lat": -27.135,
-      "lng": 31.242
-    },
-    "subscriptionPlan": "Free",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:06:00Z"
-  },
-  {
-    "id": "simunye-sugar-estate-learning",
-    "name": "Simunye Sugar Estate Learning Centre – Pre-Primary (Simunye)",
-    "region": "Lubombo",
-    "town": "Simunye",
-    "address": "Simunye Sugar Estate, Lubombo",
-    "type": "Private",
-    "curriculum": "Multi-disciplinary preparatory path tailored for agribusiness employee tracks",
-    "boarding": "Day",
-    "feePerTerm": 4100,
-    "ageGroups": [
-      "3 to 5 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.9,
-    "reviews": 22,
-    "description": "Premium learning for agribusiness families in the Lubombo lowveld with extensive facilities.",
-    "mission": "Cultivating a modern, multi-cultural, and comfortable learning environment for the children of agribusiness employees in the Lubombo lowveld.",
-    "phone": "+268 2383 8000",
-    "email": "learningcentre@simunye.sz",
-    "hours": "07:30 AM - 04:00 PM",
-    "programs": [
-      {
-        "name": "Lowveld Agribiz Track",
-        "age": "3-4 yrs",
-        "desc": "Multi-disciplinary path and expansive secure playground park interaction."
-      },
-      {
-        "name": "Corporate Prep",
-        "age": "5 yrs",
-        "desc": "Modern multi-cultural environment and dedicated creative arts rooms phase."
-      }
-    ],
-    "facilities": [
-      "Air-conditioned modern classrooms",
-      "Expansive secure playground park",
-      "Kids' pool",
-      "Dedicated creative arts rooms"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Employment verification (for corporate tracks)",
-      "Private entry assessment interviews"
-    ],
-    "socialMedia": {},
-    "featured": true,
-    "verified": true,
-    "tags": [
-      "Simunye",
-      "Agribusiness",
-      "Lowveld",
-      "Premium"
-    ],
-    "coordinates": {
-      "lat": -26.021,
-      "lng": 31.9215
-    },
-    "subscriptionPlan": "Enterprise",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:07:00Z"
-  },
-  {
     "id": "malkerns-agricultural-preschool",
     "name": "Malkerns Agricultural Area Preschool (Malkerns District Hub)",
     "region": "Manzini",
@@ -10218,446 +10032,6 @@
     "subscriptionPlan": "Free",
     "subscriptionStatus": "active",
     "createdAt": "2026-05-31T16:08:00Z"
-  },
-  {
-    "id": "joy-christian-moneni",
-    "name": "Joy Christian Pre School (Moneni)",
-    "region": "Manzini",
-    "town": "Manzini",
-    "address": "Moneni Ekuphumleni, Manzini",
-    "type": "Private",
-    "curriculum": "Faith-Based Early Childhood Care & Education",
-    "boarding": "Day",
-    "feePerTerm": 1400,
-    "ageGroups": [
-      "3 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1595250475262-4487de7ef69d?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.5,
-    "reviews": 6,
-    "description": "Nurturing faith-based school in Moneni blending academic prep with moral values.",
-    "mission": "Nurturing children at Moneni Ekuphumleni through a blend of early academic prep and foundational biblical moral values.",
-    "phone": "+268 7611 1500",
-    "email": "joychristian.moneni@gmail.com",
-    "hours": "07:30 AM - 01:30 PM",
-    "programs": [
-      {
-        "name": "Moral Foundation",
-        "age": "3-4 yrs",
-        "desc": "Foundational biblical moral values and bible-story theater interaction."
-      },
-      {
-        "name": "Academic Nursery",
-        "age": "5-6 yrs",
-        "desc": "Early academic prep and grass playground-based motor development."
-      }
-    ],
-    "facilities": [
-      "Safe nursery crib rooms",
-      "Outdoor grass playgrounds",
-      "Bible-story theater space"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Parent interview",
-      "Full childhood immunization tracking card copies"
-    ],
-    "socialMedia": {
-      "facebook": "https://facebook.com/JoyChristianMoneni"
-    },
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Moneni",
-      "Christian",
-      "Bible-Story",
-      "Affordable"
-    ],
-    "coordinates": {
-      "lat": -26.4991,
-      "lng": 31.3995
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:09:00Z"
-  },
-  {
-    "id": "little-duckling-fairview",
-    "name": "Little Duckling Preschool (Fairview North)",
-    "region": "Manzini",
-    "town": "Manzini",
-    "address": "Fairview North, Manzini",
-    "type": "Private",
-    "curriculum": "Practical National ECCE Model focusing on early speech development and peer vocabulary",
-    "boarding": "Day",
-    "feePerTerm": 1800,
-    "ageGroups": [
-      "2 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.6,
-    "reviews": 8,
-    "description": "Tight-knit family atmosphere in Fairview North encouraging social confidence.",
-    "mission": "Creating a tight-knit family atmosphere that encourages social confidence and linguistic fluency for local neighborhood kids.",
-    "phone": "+268 2505 1300",
-    "email": "littleduckling@fairview.sz",
-    "hours": "07:30 AM - 04:30 PM",
-    "programs": [
-      {
-        "name": "Social Confidence",
-        "age": "2-4 yrs",
-        "desc": "Family atmosphere modules and indoor story circles interaction."
-      },
-      {
-        "name": "Linguistic Fluency",
-        "age": "5-6 yrs",
-        "desc": "Early speech development and peer vocabulary enrichment."
-      }
-    ],
-    "facilities": [
-      "Indoor story circles",
-      "Specialized child security fencing",
-      "Interactive toy stations"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Completed local registry card",
-      "Birth registration form",
-      "Guardian emergency contact details"
-    ],
-    "socialMedia": {},
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Fairview North",
-      "Speech Development",
-      "Social Confidence",
-      "Family Atmosphere"
-    ],
-    "coordinates": {
-      "lat": -26.4741,
-      "lng": 31.398
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:10:00Z"
-  },
-  {
-    "id": "achievers-primary-kwaluseni",
-    "name": "Achievers Primary School – Pre-school Phase (Kwaluseni)",
-    "region": "Manzini",
-    "town": "Kwaluseni",
-    "address": "Ludzeludze Road, Kwaluseni, Manzini",
-    "type": "Private",
-    "curriculum": "Traditional British primary-prep and National ECCE alignment",
-    "boarding": "Day",
-    "feePerTerm": 2225,
-    "ageGroups": [
-      "3 to 5 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.7,
-    "reviews": 13,
-    "description": "Disciplined intellectual foundations at affordable private rates near UNESWA.",
-    "mission": "Positioned along Ludzeludze Road near the University of Eswatini, its mission is to build highly disciplined intellectual foundations at affordable private rates.",
-    "phone": "+268 2518 4000",
-    "email": "info@achieversschool.sz",
-    "hours": "07:30 AM - 01:30 PM",
-    "programs": [
-      {
-        "name": "Disciplined Foundation",
-        "age": "3-4 yrs",
-        "desc": "British primary-prep and interactive whiteboard room sessions."
-      },
-      {
-        "name": "UNESWA Proximity Track",
-        "age": "5 yrs",
-        "desc": "Disciplined benchmarks and small-group reading corners phase."
-      }
-    ],
-    "facilities": [
-      "Interactive whiteboard rooms",
-      "Outdoor climbing apparatus",
-      "Small-group reading corners"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Academic readiness screening",
-      "Official copy of birth records",
-      "Space registration payment"
-    ],
-    "socialMedia": {
-      "facebook": "https://facebook.com/AchieversPrimarySD"
-    },
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Kwaluseni",
-      "Academic Readiness",
-      "Disciplined",
-      "UNESWA Area"
-    ],
-    "coordinates": {
-      "lat": -26.4811,
-      "lng": 31.3345
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:11:00Z"
-  },
-  {
-    "id": "mother-touch-mbabane",
-    "name": "Mother Touch Learning Center (Mbabane Central)",
-    "region": "Hhohho",
-    "town": "Mbabane",
-    "address": "Sozisa Street, Mbabane Central, Hhohho",
-    "type": "Private",
-    "curriculum": "National ECCE Syllabus integrated with early music and motor skill coordination",
-    "boarding": "Day",
-    "feePerTerm": 1500,
-    "ageGroups": [
-      "2 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.4,
-    "reviews": 5,
-    "description": "Accessible and protective early development on Sozisa Street for working parents.",
-    "mission": "Delivering accessible and protective early childhood development on Sozisa Street to support working parents in the capital city.",
-    "phone": "+268 7611 1600",
-    "email": "mothertouch@mbabane.sz",
-    "hours": "07:00 AM - 05:00 PM",
-    "programs": [
-      {
-        "name": "Touch & Melody",
-        "age": "2-4 yrs",
-        "desc": "Early music integration and musical instrument blocks play."
-      },
-      {
-        "name": "Capital Support Track",
-        "age": "5-6 yrs",
-        "desc": "Motor skill coordination and capital city working class transition prep."
-      }
-    ],
-    "facilities": [
-      "Compact central learning rooms",
-      "Musical instrument blocks",
-      "Basic drawing spaces"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Completed registration booking form",
-      "Indemnity waiver",
-      "Child birth certificate copy"
-    ],
-    "socialMedia": {},
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Mbabane Central",
-      "Working Parents",
-      "Music & Motor",
-      "Accessible"
-    ],
-    "coordinates": {
-      "lat": -26.3291,
-      "lng": 31.1365
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:12:00Z"
-  },
-  {
-    "id": "pumpkin-patch-dalriach",
-    "name": "Pumpkin Patch Daycare & Preschool (Dalriach East)",
-    "region": "Hhohho",
-    "town": "Mbabane",
-    "address": "Dalriach East, Mbabane, Hhohho",
-    "type": "Private",
-    "curriculum": "Play-Based Reggio Emilia inspired discovery model",
-    "boarding": "Day",
-    "feePerTerm": 2800,
-    "ageGroups": [
-      "18 months to 5 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.8,
-    "reviews": 11,
-    "description": "Experiential play loops in a warm setting in Dalriach East.",
-    "mission": "Fostering natural physical coordination and emotional growth through curated experiential play loops in a warm setting.",
-    "phone": "+268 7611 1700",
-    "email": "pumpkinpatch@dalriach.sz",
-    "hours": "07:00 AM - 05:00 PM",
-    "programs": [
-      {
-        "name": "Discovery Loop",
-        "age": "18m-3 yrs",
-        "desc": "Reggio Emilia inspired discovery and soft-play zone sessions."
-      },
-      {
-        "name": "Coordination Growth",
-        "age": "4-5 yrs",
-        "desc": "Natural physical coordination and emotional growth via experiential play."
-      }
-    ],
-    "facilities": [
-      "Specialized toddler soft-play zones",
-      "Shaded outdoor activity spaces",
-      "Small-group learning stations"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Advance deposit payment",
-      "Parental ID documents",
-      "Standard health records"
-    ],
-    "socialMedia": {},
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Dalriach East",
-      "Reggio Emilia",
-      "Daycare",
-      "Experiential Play"
-    ],
-    "coordinates": {
-      "lat": -26.312,
-      "lng": 31.1625
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:13:00Z"
-  },
-  {
-    "id": "fayes-little-academy-mhlambanyatsi",
-    "name": "Faye’s Little Academy / Faye Pre-school (Mhlambanyatsi)",
-    "region": "Manzini",
-    "town": "Mhlambanyatsi",
-    "address": "Mhlambanyatsi Village, Manzini",
-    "type": "Private",
-    "curriculum": "Blended National ECCE and foundational primary prep trackers",
-    "boarding": "Day",
-    "feePerTerm": 1000,
-    "ageGroups": [
-      "3 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.5,
-    "reviews": 9,
-    "description": "Structured village-centered development transitioning students into public trackers.",
-    "mission": "Providing structured, community-centered, and accessible early student development that transitions rural students successfully into formal public education trackers.",
-    "phone": "+268 7611 1811",
-    "email": "admissions@fayeslittleacademy.org",
-    "hours": "07:30 AM - 01:30 PM",
-    "programs": [
-      {
-        "name": "Village Development",
-        "age": "3-4 yrs",
-        "desc": "Structured community-centered development and sports field activities."
-      },
-      {
-        "name": "Public Track Transition",
-        "age": "5-6 yrs",
-        "desc": "Foundational primary prep and formal education tracker transition modules."
-      }
-    ],
-    "facilities": [
-      "Shared village primary school sports fields",
-      "Classic alphabet-lined walls",
-      "Communal dining facilities"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Advance payment of term fee",
-      "Executed enrollment application",
-      "Birth certificate copy"
-    ],
-    "socialMedia": {
-      "website": "https://fayeslittleacademy.org"
-    },
-    "featured": false,
-    "verified": true,
-    "tags": [
-      "Mhlambanyatsi",
-      "Affordable",
-      "Community-Centered",
-      "Public Transition"
-    ],
-    "coordinates": {
-      "lat": -26.4485,
-      "lng": 31.021
-    },
-    "subscriptionPlan": "Basic",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:14:00Z"
-  },
-  {
-    "id": "acc-carepoint-regional",
-    "name": "ACC CarePoint Preschools (Regional Networks)",
-    "region": "Hhohho",
-    "town": "Mbabane",
-    "address": "Regional CarePoint Networks, Mbabane Hub",
-    "type": "Community-Based",
-    "curriculum": "National ECCE Community-Based Model matching early care with social welfare",
-    "boarding": "Day",
-    "feePerTerm": 0,
-    "ageGroups": [
-      "3 to 6 years old"
-    ],
-    "heroImage": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&auto=format&fit=crop&q=80",
-    "rating": 4.6,
-    "reviews": 30,
-    "description": "Breaking financial barriers to deliver top-tier care to socio-economically marginalized families.",
-    "mission": "Breaking financial barriers to deliver top-tier, accredited early childhood learning to socio-economically marginalized children, prioritizing health and foundational education.",
-    "phone": "+268 2404 9999",
-    "email": "info@acc.org.sz",
-    "hours": "07:30 AM - 04:00 PM",
-    "programs": [
-      {
-        "name": "Welfare Learning",
-        "age": "3-4 yrs",
-        "desc": "Social welfare matched early care and wellness check clinic participation."
-      },
-      {
-        "name": "Accredited Foundation",
-        "age": "5-6 yrs",
-        "desc": "Top-tier accredited early childhood learning and health prioritization."
-      }
-    ],
-    "facilities": [
-      "Integrated wellness check clinics",
-      "Community care dining rooms",
-      "Open-plan learning centers"
-    ],
-    "staff": [],
-    "gallery": [],
-    "admissionsDetails": [
-      "Proof of residence in sponsored CarePoint area",
-      "Socioeconomic vulnerability assessment clearance"
-    ],
-    "socialMedia": {
-      "website": "https://eswatinirising.com"
-    },
-    "featured": true,
-    "verified": true,
-    "tags": [
-      "Regional",
-      "CarePoint",
-      "Free",
-      "Health & Welfare"
-    ],
-    "coordinates": {
-      "lat": -26.3155,
-      "lng": 31.132
-    },
-    "subscriptionPlan": "Free",
-    "subscriptionStatus": "active",
-    "createdAt": "2026-05-31T16:15:00Z"
   },
   {
     "id": "phuthuma-christian-manzini",
@@ -14249,5 +13623,4640 @@
     "subscriptionPlan": "Basic",
     "subscriptionStatus": "active",
     "createdAt": "2026-05-31T17:13:00Z"
+  },
+  {
+    "id": "riverside-early-learning-pods",
+    "name": "Riverside Early Learning Pods",
+    "region": "Eswatini",
+    "town": "Mbabane",
+    "address": "Riverside Early Learning Pods, Mbabane, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended National ECCE Framework",
+    "boarding": "Day",
+    "feePerTerm": 2400,
+    "ageGroups": [
+      "2.5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Providing a balanced, highly supportive early platform focused on foundational vocabulary, motor skill coordination, and easy social transitions.",
+    "mission": "Providing a balanced, highly supportive early platform focused on foundational vocabulary, motor skill coordination, and easy social transitions.",
+    "phone": "+268 2404 0000",
+    "email": "info@riverside-early-learning-pods.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.321,
+      "lng": 31.1415
+    }
+  },
+  {
+    "id": "entabeni-preschool",
+    "name": "Entabeni Preschool",
+    "region": "Eswatini",
+    "town": "Mbabane Heights",
+    "address": "Entabeni Preschool, Mbabane Heights, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended British Primary Preparation path and National ECCE",
+    "boarding": "Day",
+    "feePerTerm": 3200,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 7,
+    "description": "Establishing disciplined intellectual benchmarks and early peer communication skill-building to support primary tracker entry",
+    "mission": "Establishing disciplined intellectual benchmarks and early peer communication skill-building to support primary tracker entry",
+    "phone": "+268 2404 0000",
+    "email": "info@entabeni-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Heights",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3112,
+      "lng": 31.129
+    }
+  },
+  {
+    "id": "phalangwane-community-preschool",
+    "name": "Phalangwane Community Preschool",
+    "region": "Eswatini",
+    "town": "Northern Hhohho District",
+    "address": "Phalangwane Community Preschool, Northern Hhohho District, Eswatini",
+    "type": "Public",
+    "curriculum": "Rural Community-Based Early Childhood Care",
+    "boarding": "Day",
+    "feePerTerm": 300,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Eliminating northern highveld geographical barriers to early childcare by equipping rural children with solid language, social safety, and fine motor skills",
+    "mission": "Eliminating northern highveld geographical barriers to early childcare by equipping rural children with solid language, social safety, and fine motor skills",
+    "phone": "+268 2404 0000",
+    "email": "info@phalangwane-community-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Northern Hhohho District",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.915,
+      "lng": 31.2912
+    }
+  },
+  {
+    "id": "endzingeni-nazarene-pre-school",
+    "name": "Endzingeni Nazarene Pre-School",
+    "region": "Eswatini",
+    "town": "Endzingeni",
+    "address": "Endzingeni Nazarene Pre-School, Endzingeni, Eswatini",
+    "type": "Public",
+    "curriculum": "Church-supported National ECCE framework",
+    "boarding": "Day",
+    "feePerTerm": 1050,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 2,
+    "description": "Serving northern mountain families through highly affordable, character-driven early education built on Christian moral frameworks.",
+    "mission": "Serving northern mountain families through highly affordable, character-driven early education built on Christian moral frameworks.",
+    "phone": "+268 2404 0000",
+    "email": "info@endzingeni-nazarene-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Endzingeni",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.0115,
+      "lng": 31.2515
+    }
+  },
+  {
+    "id": "msunduza-hope-pre-school",
+    "name": "Msunduza Hope Pre-School",
+    "region": "Eswatini",
+    "town": "Msunduza",
+    "address": "Msunduza Hope Pre-School, Msunduza, Eswatini",
+    "type": "Public",
+    "curriculum": "Play-based neighborhood National ECCE framework",
+    "boarding": "Day",
+    "feePerTerm": 950,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 6,
+    "description": "Lowering early childhood barriers for urban working-class families by offering reliable daytime protection and essential language skills.",
+    "mission": "Lowering early childhood barriers for urban working-class families by offering reliable daytime protection and essential language skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@msunduza-hope-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Msunduza",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3342,
+      "lng": 31.156
+    }
+  },
+  {
+    "id": "gelekeceni-prep-phase",
+    "name": "Gelekeceni Prep Phase",
+    "region": "Eswatini",
+    "town": "Ezulwini Valley",
+    "address": "Gelekeceni Prep Phase, Ezulwini Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary International Primary Years Framework",
+    "boarding": "Day",
+    "feePerTerm": 3500,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Cultivating a modern, highly engaging, and secure environment that easily transitions students up high-tier private ladders",
+    "mission": "Cultivating a modern, highly engaging, and secure environment that easily transitions students up high-tier private ladders",
+    "phone": "+268 2404 0000",
+    "email": "info@gelekeceni-prep-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4172,
+      "lng": 31.1963
+    }
+  },
+  {
+    "id": "valley-stars-pre-primary",
+    "name": "Valley Stars Pre-Primary",
+    "region": "Eswatini",
+    "town": "Ezulwini Corridor",
+    "address": "Valley Stars Pre-Primary, Ezulwini Corridor, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended Play-Based Reggio Emilia and Early Literacy Tracks",
+    "boarding": "Day",
+    "feePerTerm": 2600,
+    "ageGroups": [
+      "2.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with interactive peer playtime.",
+    "mission": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with interactive peer playtime.",
+    "phone": "+268 2404 0000",
+    "email": "info@valley-stars-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.434,
+      "lng": 31.1815
+    }
+  },
+  {
+    "id": "elangeni-community-nursery",
+    "name": "Elangeni Community Nursery",
+    "region": "Eswatini",
+    "town": "Elangeni Constituency Hub",
+    "address": "Elangeni Community Nursery, Elangeni Constituency Hub, Eswatini",
+    "type": "Public",
+    "curriculum": "Subsidized Community-Based Model (NCP)",
+    "boarding": "Day",
+    "feePerTerm": 450,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 10,
+    "description": "Overcoming regional financial barriers to early childcare by equipping fringe-urban children with solid language, social safety, and fine motor skills.",
+    "mission": "Overcoming regional financial barriers to early childcare by equipping fringe-urban children with solid language, social safety, and fine motor skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@elangeni-community-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Elangeni Constituency Hub",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4465,
+      "lng": 31.2012
+    }
+  },
+  {
+    "id": "umdoni-early-learning-academy",
+    "name": "Umdoni Early Learning Academy",
+    "region": "Eswatini",
+    "town": "Ezulwini Valley",
+    "address": "Umdoni Early Learning Academy, Ezulwini Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Traditional private National ECCE Syllabus",
+    "boarding": "Day",
+    "feePerTerm": 3100,
+    "ageGroups": [
+      "2.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 18,
+    "description": "Fostering natural confidence and cognitive growth through small classroom sizing and interactive, play-based learning tracks.",
+    "mission": "Fostering natural confidence and cognitive growth through small classroom sizing and interactive, play-based learning tracks.",
+    "phone": "+268 2404 0000",
+    "email": "info@umdoni-early-learning-academy.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.398,
+      "lng": 31.1712
+    }
+  },
+  {
+    "id": "mvutjini-area-pre-school",
+    "name": "Mvutjini Area Pre-School",
+    "region": "Eswatini",
+    "town": "Mvutjini",
+    "address": "Mvutjini Area Pre-School, Mvutjini, Eswatini",
+    "type": "Public",
+    "curriculum": "Standard Early Childhood Core Syllabus",
+    "boarding": "Day",
+    "feePerTerm": 1500,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 18,
+    "description": "Dedicated to illuminating the foundational potentials of local youth by focusing tightly on peer communication and simple motor play",
+    "mission": "Dedicated to illuminating the foundational potentials of local youth by focusing tightly on peer communication and simple motor play",
+    "phone": "+268 2404 0000",
+    "email": "info@mvutjini-area-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mvutjini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4215,
+      "lng": 31.201
+    }
+  },
+  {
+    "id": "madonsa-extension-pre-school",
+    "name": "Madonsa Extension Pre-School",
+    "region": "Eswatini",
+    "town": "Manzini Hub",
+    "address": "Madonsa Extension Pre-School, Manzini Hub, Eswatini",
+    "type": "Private",
+    "curriculum": "Advanced International Primary Prep Track",
+    "boarding": "Day",
+    "feePerTerm": 3200,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 14,
+    "description": "Pairing intensive reading readiness with active fine-motor coordination blocks to help students transition seamlessly up the local academic ladder.",
+    "mission": "Pairing intensive reading readiness with active fine-motor coordination blocks to help students transition seamlessly up the local academic ladder.",
+    "phone": "+268 2404 0000",
+    "email": "info@madonsa-extension-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Hub",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.471,
+      "lng": 31.3915
+    }
+  },
+  {
+    "id": "kwaluseni-junction-nursery",
+    "name": "Kwaluseni Junction Nursery",
+    "region": "Eswatini",
+    "town": "Kwaluseni Corridor",
+    "address": "Kwaluseni Junction Nursery, Kwaluseni Corridor, Eswatini",
+    "type": "Private",
+    "curriculum": "Global English-Medium primary preparatory tracks",
+    "boarding": "Day",
+    "feePerTerm": 3900,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 3,
+    "description": "To cultivate open-minded, inquisitive young students within a structurally secure and modern multilingual educational setting",
+    "mission": "To cultivate open-minded, inquisitive young students within a structurally secure and modern multilingual educational setting",
+    "phone": "+268 2404 0000",
+    "email": "info@kwaluseni-junction-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Kwaluseni Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4835,
+      "lng": 31.3412
+    }
+  },
+  {
+    "id": "logoba-neighborhood-pre-primary",
+    "name": "Logoba Neighborhood Pre-Primary",
+    "region": "Eswatini",
+    "town": "Matsapha Outskirts",
+    "address": "Logoba Neighborhood Pre-Primary, Matsapha Outskirts, Eswatini",
+    "type": "Public",
+    "curriculum": "Structured playgroup routines and standard primary preparation drills",
+    "boarding": "Day",
+    "feePerTerm": 1650,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 13,
+    "description": "Supporting commuting working-class families by offering reliable daytime child-minding paired with introductory language mechanics.",
+    "mission": "Supporting commuting working-class families by offering reliable daytime child-minding paired with introductory language mechanics.",
+    "phone": "+268 2404 0000",
+    "email": "info@logoba-neighborhood-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha Outskirts",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.511,
+      "lng": 31.325
+    }
+  },
+  {
+    "id": "zion-early-learning-academy",
+    "name": "Zion Early Learning Academy",
+    "region": "Eswatini",
+    "town": "Manzini Zone",
+    "address": "Zion Early Learning Academy, Manzini Zone, Eswatini",
+    "type": "Public",
+    "curriculum": "Faith-based National ECCE Standard",
+    "boarding": "Day",
+    "feePerTerm": 1800,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 6,
+    "description": "Nurturing community youth through Christ-centered moral frameworks, focusing tightly on early communication, vocabulary drills, and reading readiness.",
+    "mission": "Nurturing community youth through Christ-centered moral frameworks, focusing tightly on early communication, vocabulary drills, and reading readiness.",
+    "phone": "+268 2404 0000",
+    "email": "info@zion-early-learning-academy.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Zone",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4812,
+      "lng": 31.385
+    }
+  },
+  {
+    "id": "ludzeludze-community-nursery",
+    "name": "Ludzeludze Community Nursery",
+    "region": "Eswatini",
+    "town": "Ludzeludze",
+    "address": "Ludzeludze Community Nursery, Ludzeludze, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 14,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems",
+    "phone": "+268 2404 0000",
+    "email": "info@ludzeludze-community-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ludzeludze",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4811,
+      "lng": 31.3345
+    }
+  },
+  {
+    "id": "inhlanyelo-pre-primary-school",
+    "name": "Inhlanyelo Pre-Primary School",
+    "region": "Eswatini",
+    "town": "Big Bend",
+    "address": "Inhlanyelo Pre-Primary School, Big Bend, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary International Preparatory Track",
+    "boarding": "Day",
+    "feePerTerm": 4500,
+    "ageGroups": [
+      "3-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 11,
+    "description": "Cultivating a modern, highly comfortable, and cooling early learning environment for local lowveld families",
+    "mission": "Cultivating a modern, highly comfortable, and cooling early learning environment for local lowveld families",
+    "phone": "+268 2404 0000",
+    "email": "info@inhlanyelo-pre-primary-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Big Bend",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.811,
+      "lng": 31.9345
+    }
+  },
+  {
+    "id": "siteki-central-nursery-phase",
+    "name": "Siteki Central Nursery Phase",
+    "region": "Eswatini",
+    "town": "Siteki Central",
+    "address": "Siteki Central Nursery Phase, Siteki Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Practical community-based National ECCE framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Eliminating eastern geographical inequalities by ensuring young lowveld children develop solid early language and numeracy tools.",
+    "mission": "Eliminating eastern geographical inequalities by ensuring young lowveld children develop solid early language and numeracy tools.",
+    "phone": "+268 2404 0000",
+    "email": "info@siteki-central-nursery-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Siteki Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.451,
+      "lng": 31.948
+    }
+  },
+  {
+    "id": "lavumisa-border-nursery",
+    "name": "Lavumisa Border Nursery",
+    "region": "Eswatini",
+    "town": "Lavumisa Zone",
+    "address": "Lavumisa Border Nursery, Lavumisa Zone, Eswatini",
+    "type": "Public",
+    "curriculum": "Subsidized community neighborhood care model",
+    "boarding": "Day",
+    "feePerTerm": 350,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 15,
+    "description": "Lowering childhood education barriers for southern border families by delivering essential socialization, health relief, and fine motor skills.",
+    "mission": "Lowering childhood education barriers for southern border families by delivering essential socialization, health relief, and fine motor skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@lavumisa-border-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lavumisa Zone",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.215,
+      "lng": 31.4215
+    }
+  },
+  {
+    "id": "nhlangano-grace-nursery",
+    "name": "Nhlangano Grace Nursery",
+    "region": "Eswatini",
+    "town": "Nhlangano Central",
+    "address": "Nhlangano Grace Nursery, Nhlangano Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Traditional National ECCE Curriculum",
+    "boarding": "Day",
+    "feePerTerm": 1450,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 3,
+    "description": "Delivering top-tier private early childhood care within the southern hub to foster seamless integration into regional public and private primary schools.",
+    "mission": "Delivering top-tier private early childhood care within the southern hub to foster seamless integration into regional public and private primary schools.",
+    "phone": "+268 2404 0000",
+    "email": "info@nhlangano-grace-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Nhlangano Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.111,
+      "lng": 31.203
+    }
+  },
+  {
+    "id": "simunye-lowveld-pre-primary",
+    "name": "Simunye Lowveld Pre-Primary",
+    "region": "Eswatini",
+    "town": "Simunye Estate",
+    "address": "Simunye Lowveld Pre-Primary, Simunye Estate, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended National ECCE Syllabus",
+    "boarding": "Day",
+    "feePerTerm": 2900,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 16,
+    "description": "Cultivating a structured, modern, and comfortable lowveld learning environment for the children of agribusiness employees.",
+    "mission": "Cultivating a structured, modern, and comfortable lowveld learning environment for the children of agribusiness employees.",
+    "phone": "+268 2404 0000",
+    "email": "info@simunye-lowveld-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Simunye Estate",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.021,
+      "lng": 31.9215
+    }
+  },
+  {
+    "id": "goodnews-pre-primary-school-tl5o",
+    "name": "GoodNews Pre-Primary School",
+    "region": "Eswatini",
+    "town": "Manzini",
+    "address": "GoodNews Pre-Primary School, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "National ECCE Framework",
+    "boarding": "Day",
+    "feePerTerm": 2400,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 9,
+    "description": "Providing a balanced, interactive foundational track that builds confident phonics milestones to ensure smooth entry into private or public primary tiers.",
+    "mission": "Providing a balanced, interactive foundational track that builds confident phonics milestones to ensure smooth entry into private or public primary tiers.",
+    "phone": "+268 2404 0000",
+    "email": "info@goodnews-pre-primary-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.489,
+      "lng": 31.378
+    }
+  },
+  {
+    "id": "sasebunya-community-preschool-keuy",
+    "name": "Sasebunya Community Preschool",
+    "region": "Eswatini",
+    "town": "Hhohho Region",
+    "address": "Sasebunya Community Preschool, Hhohho Region, Eswatini",
+    "type": "Public",
+    "curriculum": "Community-Based Early Childhood Care & Education",
+    "boarding": "Day",
+    "feePerTerm": 400,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 14,
+    "description": "Lowering early childcare barriers for rural highveld families by delivering essential language socialization, baseline numbers, and structural behavioral guidance.",
+    "mission": "Lowering early childcare barriers for rural highveld families by delivering essential language socialization, baseline numbers, and structural behavioral guidance.",
+    "phone": "+268 2404 0000",
+    "email": "info@sasebunya-community-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Hhohho Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.152,
+      "lng": 31.184
+    }
+  },
+  {
+    "id": "kids-academy-preschool-w24z",
+    "name": "Kids Academy Preschool",
+    "region": "Eswatini",
+    "town": "Matsapha Hub",
+    "address": "Kids Academy Preschool, Matsapha Hub, Eswatini",
+    "type": "Private",
+    "curriculum": "Registered English-medium National ECCE Framework",
+    "boarding": "Day",
+    "feePerTerm": 2250,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 5,
+    "description": "Working collaboratively with parents to establish a secure, commuting-friendly city hub that prioritizes initial vocabulary fluency and peer interactive games.",
+    "mission": "Working collaboratively with parents to establish a secure, commuting-friendly city hub that prioritizes initial vocabulary fluency and peer interactive games.",
+    "phone": "+268 2404 0000",
+    "email": "info@kids-academy-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha Hub",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4915,
+      "lng": 31.312
+    }
+  },
+  {
+    "id": "little-legends-pre-school-5n6d",
+    "name": "Little Legends Pre-School",
+    "region": "Eswatini",
+    "town": "Mbabane Central",
+    "address": "Little Legends Pre-School, Mbabane Central, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended Play-Based child care and foundational primary preparation",
+    "boarding": "Day",
+    "feePerTerm": 2600,
+    "ageGroups": [
+      "2.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 15,
+    "description": "Embracing a holistic philosophy centered tightly around boosting independence, confidence-building, and simple early literacy.",
+    "mission": "Embracing a holistic philosophy centered tightly around boosting independence, confidence-building, and simple early literacy.",
+    "phone": "+268 2404 0000",
+    "email": "info@little-legends-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.326,
+      "lng": 31.1395
+    }
+  },
+  {
+    "id": "mpaka-sugar-estate-preschool-7823",
+    "name": "Mpaka Sugar Estate Preschool",
+    "region": "Eswatini",
+    "town": "Lubombo Region",
+    "address": "Mpaka Sugar Estate Preschool, Lubombo Region, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary preparatory path tailored for agribusiness employee tracks",
+    "boarding": "Day",
+    "feePerTerm": 2900,
+    "ageGroups": [
+      "3-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 14,
+    "description": "Cultivating a structured, highly comfortable, and cooling early learning environment for the children of industrial lowveld families.",
+    "mission": "Cultivating a structured, highly comfortable, and cooling early learning environment for the children of industrial lowveld families.",
+    "phone": "+268 2404 0000",
+    "email": "info@mpaka-sugar-estate-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lubombo Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.411,
+      "lng": 31.7845
+    }
+  },
+  {
+    "id": "bright-spark-academy-vsz6",
+    "name": "Bright Spark Academy",
+    "region": "Eswatini",
+    "town": "Ezulwini Valley",
+    "address": "Bright Spark Academy, Ezulwini Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended Play-Based Reggio Emilia and Early Literacy Tracks",
+    "boarding": "Day",
+    "feePerTerm": 3100,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "To cultivate an expressive, challenging, and secure launchpad for early academic mastery, ensuring students effortlessly build confidence.",
+    "mission": "To cultivate an expressive, challenging, and secure launchpad for early academic mastery, ensuring students effortlessly build confidence.",
+    "phone": "+268 2404 0000",
+    "email": "info@bright-spark-academy.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4195,
+      "lng": 31.1912
+    }
+  },
+  {
+    "id": "nhlangano-methodist-pre-school-agr4",
+    "name": "Nhlangano Methodist Pre-School",
+    "region": "Eswatini",
+    "town": "Shiselweni Region",
+    "address": "Nhlangano Methodist Pre-School, Shiselweni Region, Eswatini",
+    "type": "Public",
+    "curriculum": "Church-supported National ECCE framework",
+    "boarding": "Day",
+    "feePerTerm": 1350,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Serving southern hub families through highly accessible early childhood care that roots language literacy in character-building moral values.",
+    "mission": "Serving southern hub families through highly accessible early childhood care that roots language literacy in character-building moral values.",
+    "phone": "+268 2404 0000",
+    "email": "info@nhlangano-methodist-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Shiselweni Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.111,
+      "lng": 31.203
+    }
+  },
+  {
+    "id": "new-generation-pre-school-hklg",
+    "name": "New Generation Pre-School",
+    "region": "Eswatini",
+    "town": "Matsapha Outskirts",
+    "address": "New Generation Pre-School, Matsapha Outskirts, Eswatini",
+    "type": "Public",
+    "curriculum": "Traditional private National ECCE Syllabus integrated with early music and art tracks",
+    "boarding": "Day",
+    "feePerTerm": 1850,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Delivering accessible early childhood enrichment focused heavily on building peer socialization, confidence, and creative fine-motor skills.",
+    "mission": "Delivering accessible early childhood enrichment focused heavily on building peer socialization, confidence, and creative fine-motor skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@new-generation-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha Outskirts",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.511,
+      "lng": 31.325
+    }
+  },
+  {
+    "id": "siteki-christian-pre-school-rtp3",
+    "name": "Siteki Christian Pre-School",
+    "region": "Eswatini",
+    "town": "Siteki Central",
+    "address": "Siteki Christian Pre-School, Siteki Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Faith-inspired early childhood training tracking directly into primary branches",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 17,
+    "description": "Nurturing community youth through Christ-centered moral frameworks, focusing tightly on early communication, vocabulary drills, and reading readiness.",
+    "mission": "Nurturing community youth through Christ-centered moral frameworks, focusing tightly on early communication, vocabulary drills, and reading readiness.",
+    "phone": "+268 2404 0000",
+    "email": "info@siteki-christian-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Siteki Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.451,
+      "lng": 31.948
+    }
+  },
+  {
+    "id": "tiny-steps-learning-center-l2bf",
+    "name": "Tiny Steps Learning Center",
+    "region": "Eswatini",
+    "town": "Mbabane",
+    "address": "Tiny Steps Learning Center, Mbabane, Eswatini",
+    "type": "Private",
+    "curriculum": "Playgroup and Holistic Early Child Development program",
+    "boarding": "Day",
+    "feePerTerm": 2450,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Embracing a holistic philosophy that children are distinct individuals to be unfolded rather than molded, focusing entirely on natural creative expression.",
+    "mission": "Embracing a holistic philosophy that children are distinct individuals to be unfolded rather than molded, focusing entirely on natural creative expression.",
+    "phone": "+268 2404 0000",
+    "email": "info@tiny-steps-learning-center.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3245,
+      "lng": 31.1398
+    }
+  },
+  {
+    "id": "malkerns-valley-pre-primary-32nu",
+    "name": "Malkerns Valley Pre-Primary",
+    "region": "Eswatini",
+    "town": "Malkerns District Hub",
+    "address": "Malkerns Valley Pre-Primary, Malkerns District Hub, Eswatini",
+    "type": "Public",
+    "curriculum": "Community Agricultural Zone ECCE framework tailored to regional development plans",
+    "boarding": "Day",
+    "feePerTerm": 700,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 3,
+    "description": "Strictly structured around regional town schemas to provide high-access early childhood development centers for local agro-industrial families",
+    "mission": "Strictly structured around regional town schemas to provide high-access early childhood development centers for local agro-industrial families",
+    "phone": "+268 2404 0000",
+    "email": "info@malkerns-valley-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Malkerns District Hub",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.521,
+      "lng": 31.1812
+    }
+  },
+  {
+    "id": "phumelele-kids-nursery-5z3w",
+    "name": "Phumelele Kids Nursery",
+    "region": "Eswatini",
+    "town": "Manzini Corridor",
+    "address": "Phumelele Kids Nursery, Manzini Corridor, Eswatini",
+    "type": "Private",
+    "curriculum": "Global English-Medium primary preparatory tracks paired with cross-cultural interaction rules",
+    "boarding": "Day",
+    "feePerTerm": 3900,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 19,
+    "description": "To cultivate open-minded, inquisitive young students within a structurally secure and modern multilingual educational setting.",
+    "mission": "To cultivate open-minded, inquisitive young students within a structurally secure and modern multilingual educational setting.",
+    "phone": "+268 2404 0000",
+    "email": "info@phumelele-kids-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4811,
+      "lng": 31.354
+    }
+  },
+  {
+    "id": "piggs-peak-pilot-grade-0-phase-fxxv",
+    "name": "Piggs Peak Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Northern Hhohho",
+    "address": "Piggs Peak Pilot Grade 0 Phase, Northern Hhohho, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 17,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems",
+    "phone": "+268 2404 0000",
+    "email": "info@piggs-peak-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Northern Hhohho",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.9555,
+      "lng": 31.249
+    }
+  },
+  {
+    "id": "little-lambs-pre-school-ka9p",
+    "name": "Little Lambs Pre-School",
+    "region": "Eswatini",
+    "town": "Trelawney Park, Manzini",
+    "address": "Little Lambs Pre-School, Trelawney Park, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Traditional National ECCE Curriculum with an emphasis on early phonetic fluency",
+    "boarding": "Day",
+    "feePerTerm": 2150,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Providing premier early language fluency and behavioral socialization tracks to prepare local neighborhood children smoothly for formal primary entries.",
+    "mission": "Providing premier early language fluency and behavioral socialization tracks to prepare local neighborhood children smoothly for formal primary entries.",
+    "phone": "+268 2404 0000",
+    "email": "info@little-lambs-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Trelawney Park, Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4925,
+      "lng": 31.381
+    }
+  },
+  {
+    "id": "fountain-of-life-pre-school-earf",
+    "name": "Fountain of Life Pre-School",
+    "region": "Eswatini",
+    "town": "Matsapha Industrial Fringe",
+    "address": "Fountain of Life Pre-School, Matsapha Industrial Fringe, Eswatini",
+    "type": "Public",
+    "curriculum": "Integrated playgroup and interactive basic language drills",
+    "boarding": "Day",
+    "feePerTerm": 1500,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Creating a stable drop-off child-care setting that matches structured peer playtime with foundational English speech steps for working commuting lines.",
+    "mission": "Creating a stable drop-off child-care setting that matches structured peer playtime with foundational English speech steps for working commuting lines.",
+    "phone": "+268 2404 0000",
+    "email": "info@fountain-of-life-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha Industrial Fringe",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.491,
+      "lng": 31.3212
+    }
+  },
+  {
+    "id": "imphumelelo-pre-school-4k2n",
+    "name": "Imphumelelo Pre-School",
+    "region": "Eswatini",
+    "town": "Kwaluseni Corridor",
+    "address": "Imphumelelo Pre-School, Kwaluseni Corridor, Eswatini",
+    "type": "Public",
+    "curriculum": "Standard Early Childhood Core Syllabus with basic writing readiness tools",
+    "boarding": "Day",
+    "feePerTerm": 1350,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 17,
+    "description": "Illuminating the early developmental traits of high-density neighborhood youth by prioritizing language interaction habits and simple motor plays.",
+    "mission": "Illuminating the early developmental traits of high-density neighborhood youth by prioritizing language interaction habits and simple motor plays.",
+    "phone": "+268 2404 0000",
+    "email": "info@imphumelelo-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Kwaluseni Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4815,
+      "lng": 31.3465
+    }
+  },
+  {
+    "id": "bethel-early-learning-phase-ogbw",
+    "name": "Bethel Early Learning Phase",
+    "region": "Eswatini",
+    "town": "Ezulwini Valley",
+    "address": "Bethel Early Learning Phase, Ezulwini Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Faith-inspired National ECCE framework focusing on social adjustment rules",
+    "boarding": "Day",
+    "feePerTerm": 2200,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 9,
+    "description": "Establishing a gentle, respectful launchpad where early childhood milestones match emotional resilience goals.",
+    "mission": "Establishing a gentle, respectful launchpad where early childhood milestones match emotional resilience goals.",
+    "phone": "+268 2404 0000",
+    "email": "info@bethel-early-learning-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.436,
+      "lng": 31.1915
+    }
+  },
+  {
+    "id": "little-lambs-christian-preschool-znzp",
+    "name": "Little Lambs Christian Preschool",
+    "region": "Eswatini",
+    "town": "Manzini",
+    "address": "Little Lambs Christian Preschool, Manzini, Eswatini",
+    "type": "Public",
+    "curriculum": "Blended Play-Based child care and foundational counting/phonics tools",
+    "boarding": "Day",
+    "feePerTerm": 1750,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Fostering an engaging, warm child care ecosystem that ensures young children learn group boundaries and basic vocabulary routines through laughter and play.",
+    "mission": "Fostering an engaging, warm child care ecosystem that ensures young children learn group boundaries and basic vocabulary routines through laughter and play.",
+    "phone": "+268 2404 0000",
+    "email": "info@little-lambs-christian-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.489,
+      "lng": 31.3698
+    }
+  },
+  {
+    "id": "sunny-side-pre-school-playgroup-r6kd",
+    "name": "Sunny Side Pre-School & Playgroup",
+    "region": "Eswatini",
+    "town": "Manzini Central",
+    "address": "Sunny Side Pre-School & Playgroup, Manzini Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Practical National ECCE Model focusing on early speech development and peer vocabulary",
+    "boarding": "Day",
+    "feePerTerm": 1800,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Maximizing early social adjustment milestones through balanced daily routines and interactive child care options.",
+    "mission": "Maximizing early social adjustment milestones through balanced daily routines and interactive child care options.",
+    "phone": "+268 2404 0000",
+    "email": "info@sunny-side-pre-school-playgroup.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.489,
+      "lng": 31.3715
+    }
+  },
+  {
+    "id": "shiselweni-mission-preschool-r4f8",
+    "name": "Shiselweni Mission Preschool",
+    "region": "Eswatini",
+    "town": "Hlatikulu Zone",
+    "address": "Shiselweni Mission Preschool, Hlatikulu Zone, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Standard blended with regional childhood protection rules",
+    "boarding": "Day",
+    "feePerTerm": 800,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Lowering childhood education barriers for southern families by delivering essential socialization, health relief, and fine motor skills.",
+    "mission": "Lowering childhood education barriers for southern families by delivering essential socialization, health relief, and fine motor skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@shiselweni-mission-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Hlatikulu Zone",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.9745,
+      "lng": 31.321
+    }
+  },
+  {
+    "id": "khanyisa-christian-academy-pre-school-division-vbnj",
+    "name": "Khanyisa Christian Academy – Pre-School Division",
+    "region": "Eswatini",
+    "town": "Manzini",
+    "address": "Khanyisa Christian Academy – Pre-School Division, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Faith-based National ECCE Framework",
+    "boarding": "Day",
+    "feePerTerm": 2500,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Providing a balanced, spiritually sound launchpad where early childhood milestones match emotional resilience and language skills.",
+    "mission": "Providing a balanced, spiritually sound launchpad where early childhood milestones match emotional resilience and language skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@khanyisa-christian-academy-pre-school-division.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.495,
+      "lng": 31.361
+    }
+  },
+  {
+    "id": "harold-s-academy-early-childhood-phase-v2zh",
+    "name": "Harold’s Academy – Early Childhood Phase",
+    "region": "Eswatini",
+    "town": "Manzini Corridor",
+    "address": "Harold’s Academy – Early Childhood Phase, Manzini Corridor, Eswatini",
+    "type": "Private",
+    "curriculum": "Ministry of Education Authorized private ECCE curriculum",
+    "boarding": "Day",
+    "feePerTerm": 3800,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Grounded in giving children a head start by delivering highly disciplined intellectual foundations at authorized private rates.",
+    "mission": "Grounded in giving children a head start by delivering highly disciplined intellectual foundations at authorized private rates.",
+    "phone": "+268 2404 0000",
+    "email": "info@harold-s-academy-early-childhood-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4715,
+      "lng": 31.3812
+    }
+  },
+  {
+    "id": "floral-academy-pre-school-5p90",
+    "name": "Floral Academy Pre-School",
+    "region": "Eswatini",
+    "town": "Hhohho Region",
+    "address": "Floral Academy Pre-School, Hhohho Region, Eswatini",
+    "type": "Private",
+    "curriculum": "Traditional British primary-prep and National ECCE",
+    "boarding": "Day",
+    "feePerTerm": 2900,
+    "ageGroups": [
+      "2.5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 11,
+    "description": "Establishing a gentle, rule-light environment where early child development blooms naturally through shared play and basic academic curiosity.",
+    "mission": "Establishing a gentle, rule-light environment where early child development blooms naturally through shared play and basic academic curiosity.",
+    "phone": "+268 2404 0000",
+    "email": "info@floral-academy-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Hhohho Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3215,
+      "lng": 31.1495
+    }
+  },
+  {
+    "id": "skhulanabo-creche-preschool-t9w4",
+    "name": "Skhulanabo Creche & Preschool",
+    "region": "Eswatini",
+    "town": "Lubombo Region",
+    "address": "Skhulanabo Creche & Preschool, Lubombo Region, Eswatini",
+    "type": "Public",
+    "curriculum": "Community-Based Early Childhood Care & Education (ECCE)",
+    "boarding": "Day",
+    "feePerTerm": 450,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 17,
+    "description": "Supported by local early childhood educators who remain completely dedicated to providing vital nutrition, protection, and basic early literacy to rural children.",
+    "mission": "Supported by local early childhood educators who remain completely dedicated to providing vital nutrition, protection, and basic early literacy to rural children.",
+    "phone": "+268 2404 0000",
+    "email": "info@skhulanabo-creche-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lubombo Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.541,
+      "lng": 31.751
+    }
+  },
+  {
+    "id": "swazi-national-high-school-pilot-grade-0-track-5wml",
+    "name": "Swazi National High School – Pilot Grade 0 Track",
+    "region": "Eswatini",
+    "town": "Matsapha",
+    "address": "Swazi National High School – Pilot Grade 0 Track, Matsapha, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public campuses.",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public campuses.",
+    "phone": "+268 2404 0000",
+    "email": "info@swazi-national-high-school-pilot-grade-0-track.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.5122,
+      "lng": 31.312
+    }
+  },
+  {
+    "id": "lobamba-national-primary-pilot-grade-0-phase-bhmg",
+    "name": "Lobamba National Primary – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Lobamba",
+    "address": "Lobamba National Primary – Pilot Grade 0 Phase, Lobamba, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Pilot Grade 0 Framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 19,
+    "description": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost literacy equity before first grade entry.",
+    "mission": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost literacy equity before first grade entry.",
+    "phone": "+268 2404 0000",
+    "email": "info@lobamba-national-primary-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lobamba",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4465,
+      "lng": 31.2012
+    }
+  },
+  {
+    "id": "piggs-peak-nazarene-primary-pilot-grade-0-tk9d",
+    "name": "Piggs Peak Nazarene Primary – Pilot Grade 0",
+    "region": "Eswatini",
+    "town": "Piggs Peak",
+    "address": "Piggs Peak Nazarene Primary – Pilot Grade 0, Piggs Peak, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 15,
+    "description": "Expanding standard pre-primary foundations inside public campuses to ensure rural highveld children enter first grade with a solid footing.",
+    "mission": "Expanding standard pre-primary foundations inside public campuses to ensure rural highveld children enter first grade with a solid footing.",
+    "phone": "+268 2404 0000",
+    "email": "info@piggs-peak-nazarene-primary-pilot-grade-0.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Piggs Peak",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.9555,
+      "lng": 31.249
+    }
+  },
+  {
+    "id": "nhlangano-central-primary-pilot-grade-0-phase-oggg",
+    "name": "Nhlangano Central Primary – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Nhlangano",
+    "address": "Nhlangano Central Primary – Pilot Grade 0 Phase, Nhlangano, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 2,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems to optimize literacy equity.",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems to optimize literacy equity.",
+    "phone": "+268 2404 0000",
+    "email": "info@nhlangano-central-primary-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Nhlangano",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.111,
+      "lng": 31.203
+    }
+  },
+  {
+    "id": "siteki-nazarene-primary-pilot-grade-0-phase-evxv",
+    "name": "Siteki Nazarene Primary – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Siteki Central",
+    "address": "Siteki Nazarene Primary – Pilot Grade 0 Phase, Siteki Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Pilot Grade 0 Framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 18,
+    "description": "Overcoming geographical imbalances across the eastern plains by delivering standardized, high-utility pre-primary paths right inside public elementary systems.",
+    "mission": "Overcoming geographical imbalances across the eastern plains by delivering standardized, high-utility pre-primary paths right inside public elementary systems.",
+    "phone": "+268 2404 0000",
+    "email": "info@siteki-nazarene-primary-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Siteki Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.453,
+      "lng": 31.9442
+    }
+  },
+  {
+    "id": "mhlume-primary-school-pilot-grade-0-phase-kcy5",
+    "name": "Mhlume Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Mhlume",
+    "address": "Mhlume Primary School – Pilot Grade 0 Phase, Mhlume, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost lowveld educational quality.",
+    "mission": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost lowveld educational quality.",
+    "phone": "+268 2404 0000",
+    "email": "info@mhlume-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mhlume",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.9845,
+      "lng": 31.912
+    }
+  },
+  {
+    "id": "big-bend-primary-school-pilot-grade-0-phase-kaff",
+    "name": "Big Bend Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Big Bend",
+    "address": "Big Bend Primary School – Pilot Grade 0 Phase, Big Bend, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Pilot Grade 0 Framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 19,
+    "description": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to ensure lowveld children enter first grade with a solid footing.",
+    "mission": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to ensure lowveld children enter first grade with a solid footing.",
+    "phone": "+268 2404 0000",
+    "email": "info@big-bend-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Big Bend",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.811,
+      "lng": 31.9345
+    }
+  },
+  {
+    "id": "mankayane-primary-school-pilot-grade-0-phase-fmwi",
+    "name": "Mankayane Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Mankayane",
+    "address": "Mankayane Primary School – Pilot Grade 0 Phase, Mankayane, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 7,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "phone": "+268 2404 0000",
+    "email": "info@mankayane-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mankayane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.6815,
+      "lng": 31.065
+    }
+  },
+  {
+    "id": "hlatikulu-primary-school-pilot-grade-0-phase-9aw9",
+    "name": "Hlatikulu Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Hlatikulu",
+    "address": "Hlatikulu Primary School – Pilot Grade 0 Phase, Hlatikulu, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 6,
+    "description": "Expanding standard pre-primary foundations inside public campuses to optimize literacy equity for children entering primary schools.",
+    "mission": "Expanding standard pre-primary foundations inside public campuses to optimize literacy equity for children entering primary schools.",
+    "phone": "+268 2404 0000",
+    "email": "info@hlatikulu-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Hlatikulu",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.9745,
+      "lng": 31.321
+    }
+  },
+  {
+    "id": "pigg-s-peak-primary-school-pilot-grade-0-phase-8dna",
+    "name": "Pigg's Peak Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Piggs Peak Central",
+    "address": "Pigg's Peak Primary School – Pilot Grade 0 Phase, Piggs Peak Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Pilot Grade 0 Framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 19,
+    "description": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost national educational quality.",
+    "mission": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost national educational quality.",
+    "phone": "+268 2404 0000",
+    "email": "info@pigg-s-peak-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Piggs Peak Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.961,
+      "lng": 31.2542
+    }
+  },
+  {
+    "id": "lavumisa-primary-school-pilot-grade-0-phase-j0ss",
+    "name": "Lavumisa Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Lavumisa",
+    "address": "Lavumisa Primary School – Pilot Grade 0 Phase, Lavumisa, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 14,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "phone": "+268 2404 0000",
+    "email": "info@lavumisa-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lavumisa",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.215,
+      "lng": 31.4215
+    }
+  },
+  {
+    "id": "simunye-primary-school-pilot-grade-0-phase-rem8",
+    "name": "Simunye Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Simunye Estate",
+    "address": "Simunye Primary School – Pilot Grade 0 Phase, Simunye Estate, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Expanding standard pre-primary foundations inside public campuses to optimize literacy equity for children entering primary schools.",
+    "mission": "Expanding standard pre-primary foundations inside public campuses to optimize literacy equity for children entering primary schools.",
+    "phone": "+268 2404 0000",
+    "email": "info@simunye-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Simunye Estate",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.021,
+      "lng": 31.9215
+    }
+  },
+  {
+    "id": "sidvokodvo-primary-school-pilot-grade-0-phase-bp6a",
+    "name": "Sidvokodvo Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Sidvokodvo",
+    "address": "Sidvokodvo Primary School – Pilot Grade 0 Phase, Sidvokodvo, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Pilot Grade 0 Framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 9,
+    "description": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost regional educational quality.",
+    "mission": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to boost regional educational quality.",
+    "phone": "+268 2404 0000",
+    "email": "info@sidvokodvo-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Sidvokodvo",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.6345,
+      "lng": 31.378
+    }
+  },
+  {
+    "id": "malkerns-primary-school-pilot-grade-0-phase-u1ed",
+    "name": "Malkerns Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Malkerns",
+    "address": "Malkerns Primary School – Pilot Grade 0 Phase, Malkerns, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 2,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "phone": "+268 2404 0000",
+    "email": "info@malkerns-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Malkerns",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.521,
+      "lng": 31.1812
+    }
+  },
+  {
+    "id": "kwaluseni-primary-school-pilot-grade-0-phase-9v4o",
+    "name": "Kwaluseni Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Kwaluseni",
+    "address": "Kwaluseni Primary School – Pilot Grade 0 Phase, Kwaluseni, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Expanding standard pre-primary foundations inside public campuses to ensure lowveld children enter first grade with a solid footing.",
+    "mission": "Expanding standard pre-primary foundations inside public campuses to ensure lowveld children enter first grade with a solid footing.",
+    "phone": "+268 2404 0000",
+    "email": "info@kwaluseni-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Kwaluseni",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4811,
+      "lng": 31.3345
+    }
+  },
+  {
+    "id": "ezulwini-primary-school-pilot-grade-0-phase-dwfc",
+    "name": "Ezulwini Primary School – Pilot Grade 0 Phase",
+    "region": "Eswatini",
+    "town": "Ezulwini Valley",
+    "address": "Ezulwini Primary School – Pilot Grade 0 Phase, Ezulwini Valley, Eswatini",
+    "type": "Public",
+    "curriculum": "Ministry of Education Pilot Grade 0 Framework",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to optimize literacy equity for children entering primary schools.",
+    "mission": "Delivering standardized, high-utility pre-primary paths right inside public elementary systems to optimize literacy equity for children entering primary schools.",
+    "phone": "+268 2404 0000",
+    "email": "info@ezulwini-primary-school-pilot-grade-0-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4172,
+      "lng": 31.1963
+    }
+  },
+  {
+    "id": "new-life-montessori-pre-school-syxz",
+    "name": "New Life Montessori Pre School",
+    "region": "Eswatini",
+    "town": "Mbabane",
+    "address": "New Life Montessori Pre School, Mbabane, Eswatini",
+    "type": "Private",
+    "curriculum": "Child-centered Montessori Framework",
+    "boarding": "Day",
+    "feePerTerm": 3400,
+    "ageGroups": [
+      "2.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 6,
+    "description": "Fostering independent, highly self-motivated early learners by providing a safe, courteous, and respectful workspace that values individualized pacing.",
+    "mission": "Fostering independent, highly self-motivated early learners by providing a safe, courteous, and respectful workspace that values individualized pacing.",
+    "phone": "+268 2404 0000",
+    "email": "info@new-life-montessori-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3312,
+      "lng": 31.139
+    }
+  },
+  {
+    "id": "international-community-schools-early-phase-96ev",
+    "name": "International Community Schools – Early Phase",
+    "region": "Eswatini",
+    "town": "Manzini",
+    "address": "International Community Schools – Early Phase, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary International Primary Prep Track",
+    "boarding": "Day",
+    "feePerTerm": 4500,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 14,
+    "description": "To cultivate open-minded, inquisitive young students within a structurally secure, supportive, and modern multilingual educational setting.",
+    "mission": "To cultivate open-minded, inquisitive young students within a structurally secure, supportive, and modern multilingual educational setting.",
+    "phone": "+268 2404 0000",
+    "email": "info@international-community-schools-early-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.483,
+      "lng": 31.3695
+    }
+  },
+  {
+    "id": "manzini-nazarene-primary-pre-school-division-4i5f",
+    "name": "Manzini Nazarene Primary – Pre-School Division",
+    "region": "Eswatini",
+    "town": "Manzini Central",
+    "address": "Manzini Nazarene Primary – Pre-School Division, Manzini Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Traditional church-supported National ECCE Framework",
+    "boarding": "Day",
+    "feePerTerm": 1650,
+    "ageGroups": [
+      "4-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Rooted in community-centered faith values, this institutional track focuses on raising highly disciplined young learners by pairing vocabulary development with positive social habits.",
+    "mission": "Rooted in community-centered faith values, this institutional track focuses on raising highly disciplined young learners by pairing vocabulary development with positive social habits.",
+    "phone": "+268 2404 0000",
+    "email": "info@manzini-nazarene-primary-pre-school-division.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4855,
+      "lng": 31.378
+    }
+  },
+  {
+    "id": "mpaka-railway-academy-pre-school-track-6s2p",
+    "name": "Mpaka Railway Academy – Pre-School Track",
+    "region": "Eswatini",
+    "town": "Lubombo Region",
+    "address": "Mpaka Railway Academy – Pre-School Track, Lubombo Region, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Core Curriculum",
+    "boarding": "Day",
+    "feePerTerm": 1300,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 4,
+    "description": "Providing reliable, accessible early childhood care to transit and agricultural families in the eastern plains by focusing heavily on basic numeracy, phonics, and socialization rules.",
+    "mission": "Providing reliable, accessible early childhood care to transit and agricultural families in the eastern plains by focusing heavily on basic numeracy, phonics, and socialization rules.",
+    "phone": "+268 2404 0000",
+    "email": "info@mpaka-railway-academy-pre-school-track.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lubombo Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.402,
+      "lng": 31.7915
+    }
+  },
+  {
+    "id": "peak-methodist-preschool-w4l9",
+    "name": "Peak Methodist Preschool",
+    "region": "Eswatini",
+    "town": "Northern Hhohho District",
+    "address": "Peak Methodist Preschool, Northern Hhohho District, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Standard integrated with regional community support models",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Lowering childhood education barriers for northern highveld families by delivering essential language socialization, baseline math foundations, and physical fine-motor play.",
+    "mission": "Lowering childhood education barriers for northern highveld families by delivering essential language socialization, baseline math foundations, and physical fine-motor play.",
+    "phone": "+268 2404 0000",
+    "email": "info@peak-methodist-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Northern Hhohho District",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.958,
+      "lng": 31.2495
+    }
+  },
+  {
+    "id": "lobamba-national-nursery-az6k",
+    "name": "Lobamba National Nursery",
+    "region": "Eswatini",
+    "town": "Lobamba",
+    "address": "Lobamba National Nursery, Lobamba, Eswatini",
+    "type": "Public",
+    "curriculum": "Subsidized Community-Based Model (NCP)",
+    "boarding": "Day",
+    "feePerTerm": 450,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Supported by local leadership to ensure that socio-economically marginalized children have direct access to structural childhood development, protection, and vital nutrition.",
+    "mission": "Supported by local leadership to ensure that socio-economically marginalized children have direct access to structural childhood development, protection, and vital nutrition.",
+    "phone": "+268 2404 0000",
+    "email": "info@lobamba-national-nursery.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Lobamba",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.447,
+      "lng": 31.2025
+    }
+  },
+  {
+    "id": "nhlangano-covenant-pre-school-qzjr",
+    "name": "Nhlangano Covenant Pre-School",
+    "region": "Eswatini",
+    "town": "Nhlangano Central",
+    "address": "Nhlangano Covenant Pre-School, Nhlangano Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Traditional private National ECCE Curriculum",
+    "boarding": "Day",
+    "feePerTerm": 1450,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Delivering top-tier private early childhood care within the southern highveld hub to foster seamless integration into regional primary school trackers.",
+    "mission": "Delivering top-tier private early childhood care within the southern highveld hub to foster seamless integration into regional primary school trackers.",
+    "phone": "+268 2404 0000",
+    "email": "info@nhlangano-covenant-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Nhlangano Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.112,
+      "lng": 31.2045
+    }
+  },
+  {
+    "id": "mhlume-sugar-estate-pre-primary-h5ck",
+    "name": "Mhlume Sugar Estate Pre-Primary",
+    "region": "Eswatini",
+    "town": "Mhlume",
+    "address": "Mhlume Sugar Estate Pre-Primary, Mhlume, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended National ECCE Syllabus",
+    "boarding": "Day",
+    "feePerTerm": 2900,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Cultivating a structured, modern, and highly comfortable lowveld learning environment for the children of agribusiness employees.",
+    "mission": "Cultivating a structured, modern, and highly comfortable lowveld learning environment for the children of agribusiness employees.",
+    "phone": "+268 2404 0000",
+    "email": "info@mhlume-sugar-estate-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mhlume",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.985,
+      "lng": 31.9135
+    }
+  },
+  {
+    "id": "sidvokodvo-junction-pre-primary-qxrq",
+    "name": "Sidvokodvo Junction Pre-Primary",
+    "region": "Eswatini",
+    "town": "Sidvokodvo",
+    "address": "Sidvokodvo Junction Pre-Primary, Sidvokodvo, Eswatini",
+    "type": "Public",
+    "curriculum": "Combined play-based child care and foundational counting/phonics tools",
+    "boarding": "Day",
+    "feePerTerm": 1250,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 2,
+    "description": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with interactive peer playtime.",
+    "mission": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with interactive peer playtime.",
+    "phone": "+268 2404 0000",
+    "email": "info@sidvokodvo-junction-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Sidvokodvo",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.635,
+      "lng": 31.3795
+    }
+  },
+  {
+    "id": "malkerns-valley-preschool-bq8h",
+    "name": "Malkerns Valley Preschool",
+    "region": "Eswatini",
+    "town": "Malkerns District Hub",
+    "address": "Malkerns Valley Preschool, Malkerns District Hub, Eswatini",
+    "type": "Public",
+    "curriculum": "Community Agricultural Zone ECCE framework tailored to regional town development plans",
+    "boarding": "Day",
+    "feePerTerm": 700,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 19,
+    "description": "Strictly structured around regional town schemas to provide high-access early childhood development centers for local agro-industrial working-class families.",
+    "mission": "Strictly structured around regional town schemas to provide high-access early childhood development centers for local agro-industrial working-class families.",
+    "phone": "+268 2404 0000",
+    "email": "info@malkerns-valley-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Malkerns District Hub",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.522,
+      "lng": 31.1825
+    }
+  },
+  {
+    "id": "ezulwini-orchard-pre-primary-school-jrjv",
+    "name": "Ezulwini Orchard Pre-Primary School",
+    "region": "Eswatini",
+    "town": "Ezulwini Corridor",
+    "address": "Ezulwini Orchard Pre-Primary School, Ezulwini Corridor, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary International Primary Years Framework",
+    "boarding": "Day",
+    "feePerTerm": 3900,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 17,
+    "description": "Cultivating a modern, highly engaging, and secure environment that easily transitions valley students up high-tier private ladders.",
+    "mission": "Cultivating a modern, highly engaging, and secure environment that easily transitions valley students up high-tier private ladders.",
+    "phone": "+268 2404 0000",
+    "email": "info@ezulwini-orchard-pre-primary-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.435,
+      "lng": 31.183
+    }
+  },
+  {
+    "id": "sibebe-view-pre-school-cat8",
+    "name": "Sibebe View Pre-School",
+    "region": "Eswatini",
+    "town": "Mbabane Outskirts",
+    "address": "Sibebe View Pre-School, Mbabane Outskirts, Eswatini",
+    "type": "Public",
+    "curriculum": "Play-based neighborhood National ECCE framework partnered with local transport tracking",
+    "boarding": "Day",
+    "feePerTerm": 1600,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 6,
+    "description": "Specializing strictly in early childhood development, this school works to ensure a vibrant and structured daily curriculum that eases the transition from home to formal elementary learning environments.",
+    "mission": "Specializing strictly in early childhood development, this school works to ensure a vibrant and structured daily curriculum that eases the transition from home to formal elementary learning environments.",
+    "phone": "+268 2404 0000",
+    "email": "info@sibebe-view-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Outskirts",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.291,
+      "lng": 31.1565
+    }
+  },
+  {
+    "id": "highveld-christian-pre-school-c7mj",
+    "name": "Highveld Christian Pre-School",
+    "region": "Eswatini",
+    "town": "Piggs Peak",
+    "address": "Highveld Christian Pre-School, Piggs Peak, Eswatini",
+    "type": "Public",
+    "curriculum": "Church-supported National ECCE framework",
+    "boarding": "Day",
+    "feePerTerm": 1150,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Dedicated to illuminating the foundational potentials of northern highveld youth by focusing tightly on peer communication and character-driven moral values.",
+    "mission": "Dedicated to illuminating the foundational potentials of northern highveld youth by focusing tightly on peer communication and character-driven moral values.",
+    "phone": "+268 2404 0000",
+    "email": "info@highveld-christian-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Piggs Peak",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.955,
+      "lng": 31.253
+    }
+  },
+  {
+    "id": "little-harvard-pre-primary-jiw5",
+    "name": "Little Harvard Pre-Primary",
+    "region": "Eswatini",
+    "town": "Queensgate, Mbabane",
+    "address": "Little Harvard Pre-Primary, Queensgate, Mbabane, Eswatini",
+    "type": "Private",
+    "curriculum": "National ECCE Framework with advanced English-medium phonetic training",
+    "boarding": "Day",
+    "feePerTerm": 2850,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 13,
+    "description": "Delivering premier early language fluency and behavioral socialization tracks to prepare local neighborhood children smoothly for formal primary entries.",
+    "mission": "Delivering premier early language fluency and behavioral socialization tracks to prepare local neighborhood children smoothly for formal primary entries.",
+    "phone": "+268 2404 0000",
+    "email": "info@little-harvard-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Queensgate, Mbabane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3165,
+      "lng": 31.1402
+    }
+  },
+  {
+    "id": "woodlands-early-learning-academy-r200",
+    "name": "Woodlands Early Learning Academy",
+    "region": "Eswatini",
+    "town": "Mbabane Outskirts",
+    "address": "Woodlands Early Learning Academy, Mbabane Outskirts, Eswatini",
+    "type": "Private",
+    "curriculum": "National ECCE Core Curriculum combined with outdoor nature-based sensory discovery",
+    "boarding": "Day",
+    "feePerTerm": 2300,
+    "ageGroups": [
+      "2.5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 11,
+    "description": "Prioritizing emotional security, fine motor skill strength, and easy transitions from home to initial peer learning environments.",
+    "mission": "Prioritizing emotional security, fine motor skill strength, and easy transitions from home to initial peer learning environments.",
+    "phone": "+268 2404 0000",
+    "email": "info@woodlands-early-learning-academy.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Outskirts",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.303,
+      "lng": 31.1255
+    }
+  },
+  {
+    "id": "ubombo-primary-school-pre-school-division-qfab",
+    "name": "Ubombo Primary School – Pre-School Division",
+    "region": "Eswatini",
+    "town": "Big Bend",
+    "address": "Ubombo Primary School – Pre-School Division, Big Bend, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary International Preparatory Track",
+    "boarding": "Day",
+    "feePerTerm": 4500,
+    "ageGroups": [
+      "3-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 6,
+    "description": "Cultivating a modern, highly comfortable, and cooling early learning environment for local lowveld families.",
+    "mission": "Cultivating a modern, highly comfortable, and cooling early learning environment for local lowveld families.",
+    "phone": "+268 2404 0000",
+    "email": "info@ubombo-primary-school-pre-school-division.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Big Bend",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.8125,
+      "lng": 31.936
+    }
+  },
+  {
+    "id": "trelawney-kids-corner-7v79",
+    "name": "Trelawney Kids Corner",
+    "region": "Eswatini",
+    "town": "Trelawney Park, Manzini",
+    "address": "Trelawney Kids Corner, Trelawney Park, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Traditional National ECCE Curriculum",
+    "boarding": "Day",
+    "feePerTerm": 2150,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 15,
+    "description": "Fostering an engaging, warm child care ecosystem that ensures young children learn group boundaries and basic vocabulary routines through laughter and play.",
+    "mission": "Fostering an engaging, warm child care ecosystem that ensures young children learn group boundaries and basic vocabulary routines through laughter and play.",
+    "phone": "+268 2404 0000",
+    "email": "info@trelawney-kids-corner.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Trelawney Park, Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.494,
+      "lng": 31.3825
+    }
+  },
+  {
+    "id": "phuthuma-christian-academy-pre-school-division-iglm",
+    "name": "Phuthuma Christian Academy – Pre-School Division",
+    "region": "Eswatini",
+    "town": "Manzini",
+    "address": "Phuthuma Christian Academy – Pre-School Division, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Faith-based National ECCE Standard integrated with character education",
+    "boarding": "Day",
+    "feePerTerm": 2100,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Building secure cognitive and moral foundations to transition neighborhood children smoothly into formal private elementary school trackers.",
+    "mission": "Building secure cognitive and moral foundations to transition neighborhood children smoothly into formal private elementary school trackers.",
+    "phone": "+268 2404 0000",
+    "email": "info@phuthuma-christian-academy-pre-school-division.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.488,
+      "lng": 31.365
+    }
+  },
+  {
+    "id": "sifundza-nursery-school-60wt",
+    "name": "Sifundza Nursery School",
+    "region": "Eswatini",
+    "town": "Matsapha Industrial Corridor",
+    "address": "Sifundza Nursery School, Matsapha Industrial Corridor, Eswatini",
+    "type": "Public",
+    "curriculum": "Blended playgroup structures and traditional private National ECCE framework",
+    "boarding": "Day",
+    "feePerTerm": 1850,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 13,
+    "description": "Supporting commuting working-class families by offering reliable daytime child-minding paired with introductory language mechanics.",
+    "mission": "Supporting commuting working-class families by offering reliable daytime child-minding paired with introductory language mechanics.",
+    "phone": "+268 2404 0000",
+    "email": "info@sifundza-nursery-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha Industrial Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.495,
+      "lng": 31.3195
+    }
+  },
+  {
+    "id": "jabula-pre-primary-school-t5t8",
+    "name": "Jabula Pre-Primary School",
+    "region": "Eswatini",
+    "town": "Ezulwini Hub",
+    "address": "Jabula Pre-Primary School, Ezulwini Hub, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended Play-Based Reggio Emilia and exploratory child learning",
+    "boarding": "Day",
+    "feePerTerm": 2600,
+    "ageGroups": [
+      "2.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with active physical exploration.",
+    "mission": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with active physical exploration.",
+    "phone": "+268 2404 0000",
+    "email": "info@jabula-pre-primary-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ezulwini Hub",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4215,
+      "lng": 31.196
+    }
+  },
+  {
+    "id": "enaleni-community-preschool-wt84",
+    "name": "Enaleni Community Preschool",
+    "region": "Eswatini",
+    "town": "Matsapha Outskirts",
+    "address": "Enaleni Community Preschool, Matsapha Outskirts, Eswatini",
+    "type": "Public",
+    "curriculum": "Subsidized Community-Based Early Childhood Care & Education framework",
+    "boarding": "Day",
+    "feePerTerm": 450,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 13,
+    "description": "Ensuring essential, community-accessible child minding that readies area children for elementary public school tracking.",
+    "mission": "Ensuring essential, community-accessible child minding that readies area children for elementary public school tracking.",
+    "phone": "+268 2404 0000",
+    "email": "info@enaleni-community-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Matsapha Outskirts",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.511,
+      "lng": 31.325
+    }
+  },
+  {
+    "id": "stepping-stones-pre-school-cs0f",
+    "name": "Stepping Stones Pre-School",
+    "region": "Eswatini",
+    "town": "Mbabane Central",
+    "address": "Stepping Stones Pre-School, Mbabane Central, Eswatini",
+    "type": "Private",
+    "curriculum": "Traditional private National ECCE Syllabus integrated with early music and art tracks",
+    "boarding": "Day",
+    "feePerTerm": 2450,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Delivering accessible early childhood enrichment focused heavily on building peer socialization, confidence, and creative fine-motor skills.",
+    "mission": "Delivering accessible early childhood enrichment focused heavily on building peer socialization, confidence, and creative fine-motor skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@stepping-stones-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.326,
+      "lng": 31.1415
+    }
+  },
+  {
+    "id": "word-of-truth-christian-pre-school-cgq8",
+    "name": "Word of Truth Christian Pre-School",
+    "region": "Eswatini",
+    "town": "Manzini Zone",
+    "address": "Word of Truth Christian Pre-School, Manzini Zone, Eswatini",
+    "type": "Public",
+    "curriculum": "Faith-inspired early childhood training tracking directly into primary branches",
+    "boarding": "Day",
+    "feePerTerm": 1900,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Nurturing community youth through Christ-centered moral frameworks, focusing tightly on early communication, vocabulary drills, and reading readiness.",
+    "mission": "Nurturing community youth through Christ-centered moral frameworks, focusing tightly on early communication, vocabulary drills, and reading readiness.",
+    "phone": "+268 2404 0000",
+    "email": "info@word-of-truth-christian-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Zone",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4812,
+      "lng": 31.385
+    }
+  },
+  {
+    "id": "little-disciples-nursery-preschool-w1t0",
+    "name": "Little Disciples Nursery & Preschool",
+    "region": "Eswatini",
+    "town": "Fairview, Manzini",
+    "address": "Little Disciples Nursery & Preschool, Fairview, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary International Primary Years framework",
+    "boarding": "Day",
+    "feePerTerm": 3100,
+    "ageGroups": [
+      "1.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "To cultivate an expressive, challenging, and secure launchpad for early academic mastery, ensuring students meet private primary entry benchmarks.",
+    "mission": "To cultivate an expressive, challenging, and secure launchpad for early academic mastery, ensuring students meet private primary entry benchmarks.",
+    "phone": "+268 2404 0000",
+    "email": "info@little-disciples-nursery-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Fairview, Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4745,
+      "lng": 31.3975
+    }
+  },
+  {
+    "id": "asikhule-private-pre-school-atvi",
+    "name": "Asikhule Private Pre-School",
+    "region": "Eswatini",
+    "town": "Siteki Central",
+    "address": "Asikhule Private Pre-School, Siteki Central, Eswatini",
+    "type": "Public",
+    "curriculum": "Practical community-based National ECCE framework partnered with health relief trackers",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Eliminating eastern geographical inequalities by ensuring young lowveld children develop solid early language and numeracy tools.",
+    "mission": "Eliminating eastern geographical inequalities by ensuring young lowveld children develop solid early language and numeracy tools.",
+    "phone": "+268 2404 0000",
+    "email": "info@asikhule-private-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Siteki Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.451,
+      "lng": 31.948
+    }
+  },
+  {
+    "id": "tiny-explorers-academy-pe6m",
+    "name": "Tiny Explorers Academy",
+    "region": "Eswatini",
+    "town": "Malkerns Valley",
+    "address": "Tiny Explorers Academy, Malkerns Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Pure Montessori Method focusing on child-led independent workspace tracking",
+    "boarding": "Day",
+    "feePerTerm": 3800,
+    "ageGroups": [
+      "2.5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 3,
+    "description": "Empowering students to confidently discover and unlock their innate academic potential by creating a carefully prepared, respectful learning ecosystem.",
+    "mission": "Empowering students to confidently discover and unlock their innate academic potential by creating a carefully prepared, respectful learning ecosystem.",
+    "phone": "+268 2404 0000",
+    "email": "info@tiny-explorers-academy.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Malkerns Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.524,
+      "lng": 31.1765
+    }
+  },
+  {
+    "id": "bethel-evangelical-pre-school-jpge",
+    "name": "Bethel Evangelical Pre-School",
+    "region": "Eswatini",
+    "town": "Nhlangano",
+    "address": "Bethel Evangelical Pre-School, Nhlangano, Eswatini",
+    "type": "Public",
+    "curriculum": "Traditional National ECCE Curriculum paired with phonetic literacy trackers",
+    "boarding": "Day",
+    "feePerTerm": 1400,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Delivering top-tier private early childhood care within the southern hub to foster seamless integration into regional public and private primary schools.",
+    "mission": "Delivering top-tier private early childhood care within the southern hub to foster seamless integration into regional public and private primary schools.",
+    "phone": "+268 2404 0000",
+    "email": "info@bethel-evangelical-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Nhlangano",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -27.111,
+      "lng": 31.203
+    }
+  },
+  {
+    "id": "fountain-of-hope-pre-school-ilam",
+    "name": "Fountain of Hope Pre-School",
+    "region": "Eswatini",
+    "town": "Msunduza, Mbabane",
+    "address": "Fountain of Hope Pre-School, Msunduza, Mbabane, Eswatini",
+    "type": "Public",
+    "curriculum": "Community-aligned neighborhood National ECCE framework partnered with care relief networks",
+    "boarding": "Day",
+    "feePerTerm": 950,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 20,
+    "description": "Lowering early childhood barriers for urban working-class families by offering reliable daytime protection and essential language skills.",
+    "mission": "Lowering early childhood barriers for urban working-class families by offering reliable daytime protection and essential language skills.",
+    "phone": "+268 2404 0000",
+    "email": "info@fountain-of-hope-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Msunduza, Mbabane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3325,
+      "lng": 31.156
+    }
+  },
+  {
+    "id": "st-paul-s-primary-school-integrated-grade-0-pilot-j456",
+    "name": "St. Paul’s Primary School – Integrated Grade 0 Pilot",
+    "region": "Eswatini",
+    "town": "Mbabane Zone",
+    "address": "St. Paul’s Primary School – Integrated Grade 0 Pilot, Mbabane Zone, Eswatini",
+    "type": "Public",
+    "curriculum": "Institutional Ministry of Education Integrated Grade 0 Pilot Track",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "5-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 11,
+    "description": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "mission": "Supporting the national target of providing equitable, highly structured, and standardized pre-primary paths right inside public elementary systems.",
+    "phone": "+268 2404 0000",
+    "email": "info@st-paul-s-primary-school-integrated-grade-0-pilot.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Zone",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.329,
+      "lng": 31.137
+    }
+  },
+  {
+    "id": "little-lambs-pre-primary-skba",
+    "name": "Little Lambs Pre-Primary",
+    "region": "Eswatini",
+    "town": "Trelawney Park, Manzini",
+    "address": "Little Lambs Pre-Primary, Trelawney Park, Manzini, Eswatini",
+    "type": "Private",
+    "curriculum": "Advanced International Primary Prep Track blending regional language milestones with global English frameworks",
+    "boarding": "Day",
+    "feePerTerm": 3500,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with interactive peer playtime.",
+    "mission": "Creating a highly stimulating, happy environment that pairs early academic confidence steps with interactive peer playtime.",
+    "phone": "+268 2404 0000",
+    "email": "info@little-lambs-pre-primary.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Trelawney Park, Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4925,
+      "lng": 31.381
+    }
+  },
+  {
+    "id": "bright-horizons-pre-school-82wv",
+    "name": "Bright Horizons Pre-School",
+    "region": "Eswatini",
+    "town": "Nkoyoyo",
+    "address": "Bright Horizons Pre-School, Nkoyoyo, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Framework focused on early phonetic fluency and motor skill building",
+    "boarding": "Day",
+    "feePerTerm": 1650,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 5,
+    "description": "Creating a tight-knit family atmosphere that encourages social confidence and linguistic fluency for local neighborhood kids.",
+    "mission": "Creating a tight-knit family atmosphere that encourages social confidence and linguistic fluency for local neighborhood kids.",
+    "phone": "+268 2404 0000",
+    "email": "info@bright-horizons-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Nkoyoyo",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.289,
+      "lng": 31.104
+    }
+  },
+  {
+    "id": "kingdom-heritage-pre-school-pn7u",
+    "name": "Kingdom Heritage Pre-School",
+    "region": "Eswatini",
+    "town": "Sidvokodvo",
+    "address": "Kingdom Heritage Pre-School, Sidvokodvo, Eswatini",
+    "type": "Public",
+    "curriculum": "Faith-inspired early childhood care and primary tracker preparation",
+    "boarding": "Day",
+    "feePerTerm": 1250,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 9,
+    "description": "Providing reliable, moral early education to children inside the railway and agricultural junction zones.",
+    "mission": "Providing reliable, moral early education to children inside the railway and agricultural junction zones.",
+    "phone": "+268 2404 0000",
+    "email": "info@kingdom-heritage-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Sidvokodvo",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.631,
+      "lng": 31.375
+    }
+  },
+  {
+    "id": "apex-early-learning-center-ma5x",
+    "name": "Apex Early Learning Center",
+    "region": "Eswatini",
+    "town": "Mhlambanyatsi Corridor",
+    "address": "Apex Early Learning Center, Mhlambanyatsi Corridor, Eswatini",
+    "type": "Private",
+    "curriculum": "Blended Accelerated Christian Education (A.C.E.) and exploratory child-directed frameworks",
+    "boarding": "Day",
+    "feePerTerm": 2800,
+    "ageGroups": [
+      "3-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 1,
+    "description": "Championing early academic excellence and behavioral discipline by establishing a supportive, character-building environment focused on raising first-class citizens.",
+    "mission": "Championing early academic excellence and behavioral discipline by establishing a supportive, character-building environment focused on raising first-class citizens.",
+    "phone": "+268 2404 0000",
+    "email": "info@apex-early-learning-center.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mhlambanyatsi Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4495,
+      "lng": 31.0195
+    }
+  },
+  {
+    "id": "new-life-christian-pre-school-osdj",
+    "name": "New Life Christian Pre-School",
+    "region": "Eswatini",
+    "town": "Big Bend",
+    "address": "New Life Christian Pre-School, Big Bend, Eswatini",
+    "type": "Private",
+    "curriculum": "Multi-disciplinary preparatory path tailored for agribusiness employee tracks",
+    "boarding": "Day",
+    "feePerTerm": 2900,
+    "ageGroups": [
+      "3-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Cultivating a modern, highly comfortable, and cooling early learning environment for local lowveld families.",
+    "mission": "Cultivating a modern, highly comfortable, and cooling early learning environment for local lowveld families.",
+    "phone": "+268 2404 0000",
+    "email": "info@new-life-christian-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Big Bend",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.814,
+      "lng": 31.931
+    }
+  },
+  {
+    "id": "phumlani-early-childhood-centre-xshw",
+    "name": "Phumlani Early Childhood Centre",
+    "region": "Eswatini",
+    "town": "Ntondozi Region",
+    "address": "Phumlani Early Childhood Centre, Ntondozi Region, Eswatini",
+    "type": "Public",
+    "curriculum": "Rural-fringe National ECCE Framework with community-based sensory learning methods",
+    "boarding": "Day",
+    "feePerTerm": 1400,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 11,
+    "description": "Focuses heavily on encouraging creative skills, confidence-gaining opportunities, and a healthy early self-concept through highly interactive peer games and basic language tools.",
+    "mission": "Focuses heavily on encouraging creative skills, confidence-gaining opportunities, and a healthy early self-concept through highly interactive peer games and basic language tools.",
+    "phone": "+268 2404 0000",
+    "email": "info@phumlani-early-childhood-centre.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Ntondozi Region",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.581,
+      "lng": 31.2415
+    }
+  },
+  {
+    "id": "fairyland-english-medium-pre-school-2ixz",
+    "name": "Fairyland English Medium Pre-School",
+    "region": "Eswatini",
+    "town": "Malkerns Valley",
+    "address": "Fairyland English Medium Pre-School, Malkerns Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Mid-tier structural day-minding combined with early childhood language tracks",
+    "boarding": "Day",
+    "feePerTerm": 2100,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 11,
+    "description": "Specializes in early socialization, speech development, and creative play for kids transitioning out of home nurseries.",
+    "mission": "Specializes in early socialization, speech development, and creative play for kids transitioning out of home nurseries.",
+    "phone": "+268 2404 0000",
+    "email": "info@fairyland-english-medium-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Malkerns Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.5245,
+      "lng": 31.179
+    }
+  },
+  {
+    "id": "asiphile-ncp-preschool-rhdm",
+    "name": "Asiphile NCP Preschool",
+    "region": "Eswatini",
+    "town": "Greater Manzini",
+    "address": "Asiphile NCP Preschool, Greater Manzini, Eswatini",
+    "type": "Public",
+    "curriculum": "Subsidized Community-Based Model (NCP) matching early care with social welfare",
+    "boarding": "Day",
+    "feePerTerm": 400,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 12,
+    "description": "Provides critical localized drop-off care, early social care, structured group peer activities, and foundational childhood health and nutritional support trackers.",
+    "mission": "Provides critical localized drop-off care, early social care, structured group peer activities, and foundational childhood health and nutritional support trackers.",
+    "phone": "+268 2404 0000",
+    "email": "info@asiphile-ncp-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Greater Manzini",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.486,
+      "lng": 31.3812
+    }
+  },
+  {
+    "id": "imbali-montessori-school-pre-primary-phase-llxm",
+    "name": "Imbali Montessori School – Pre-Primary Phase",
+    "region": "Eswatini",
+    "town": "Malkerns Valley",
+    "address": "Imbali Montessori School – Pre-Primary Phase, Malkerns Valley, Eswatini",
+    "type": "Private",
+    "curriculum": "Authentic Montessori Method blended with the early learning framework of the Cambridge International Curriculum",
+    "boarding": "Day",
+    "feePerTerm": 4500,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Providing an authentic child-centered approach to learning that nurtures long-term critical thinking, emotional resilience, and academic curiosity within a scenic agricultural setting.",
+    "mission": "Providing an authentic child-centered approach to learning that nurtures long-term critical thinking, emotional resilience, and academic curiosity within a scenic agricultural setting.",
+    "phone": "+268 2404 0000",
+    "email": "info@imbali-montessori-school-pre-primary-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Malkerns Valley",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.5414,
+      "lng": 31.1738
+    }
+  },
+  {
+    "id": "tiny-tots-learning-center-0lw0",
+    "name": "Tiny Tots Learning Center",
+    "region": "Eswatini",
+    "town": "Mbabane",
+    "address": "Tiny Tots Learning Center, Mbabane, Eswatini",
+    "type": "Private",
+    "curriculum": "Playgroup and Holistic Early Child Development program",
+    "boarding": "Day",
+    "feePerTerm": 2800,
+    "ageGroups": [
+      "2-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 8,
+    "description": "Embracing a holistic philosophy that children are distinct individuals to be unfolded rather than molded, the center provides an interactive, warm setting focused entirely on natural creative expression and basic socialization.",
+    "mission": "Embracing a holistic philosophy that children are distinct individuals to be unfolded rather than molded, the center provides an interactive, warm setting focused entirely on natural creative expression and basic socialization.",
+    "phone": "+268 2404 0000",
+    "email": "info@tiny-tots-learning-center.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3245,
+      "lng": 31.1398
+    }
+  },
+  {
+    "id": "morningstar-international-school-pre-primary-phase-3dk4",
+    "name": "Morningstar International School – Pre-Primary Phase",
+    "region": "Eswatini",
+    "town": "Kwaluseni",
+    "address": "Morningstar International School – Pre-Primary Phase, Kwaluseni, Eswatini",
+    "type": "Private",
+    "curriculum": "National ECCE Framework interwoven with global private primary preparation values",
+    "boarding": "Day",
+    "feePerTerm": 3950,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 2,
+    "description": "Operating on the core philosophy that early childhood represents a present future, this Christian-valued institution strives to empower young learners to become confident change-agents who add immediate value to their communities.",
+    "mission": "Operating on the core philosophy that early childhood represents a present future, this Christian-valued institution strives to empower young learners to become confident change-agents who add immediate value to their communities.",
+    "phone": "+268 2404 0000",
+    "email": "info@morningstar-international-school-pre-primary-phase.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Kwaluseni",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4881,
+      "lng": 31.3392
+    }
+  },
+  {
+    "id": "reach-for-the-sky-childcare-and-preschool-jmnd",
+    "name": "Reach For The Sky Childcare and Preschool",
+    "region": "Eswatini",
+    "town": "Manzini Corridor",
+    "address": "Reach For The Sky Childcare and Preschool, Manzini Corridor, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Syllabus with basic child-minding structures",
+    "boarding": "Day",
+    "feePerTerm": 700,
+    "ageGroups": [
+      "0.5-5 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 3,
+    "description": "Providing highly affordable early childhood development, infant care, and basic motor-skill preparation to support working parents in the local residential sectors.",
+    "mission": "Providing highly affordable early childhood development, infant care, and basic motor-skill preparation to support working parents in the local residential sectors.",
+    "phone": "+268 2404 0000",
+    "email": "info@reach-for-the-sky-childcare-and-preschool.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Manzini Corridor",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.4865,
+      "lng": 31.369
+    }
+  },
+  {
+    "id": "peak-nazarene-pre-school-vq9r",
+    "name": "Peak Nazarene Pre-School",
+    "region": "Eswatini",
+    "town": "Piggs Peak",
+    "address": "Peak Nazarene Pre-School, Piggs Peak, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Framework with community church-based spiritual integration",
+    "boarding": "Day",
+    "feePerTerm": 1100,
+    "ageGroups": [
+      "3-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 5,
+    "description": "Serving northern families through highly affordable, character-driven early education built on Christian moral frameworks.",
+    "mission": "Serving northern families through highly affordable, character-driven early education built on Christian moral frameworks.",
+    "phone": "+268 2404 0000",
+    "email": "info@peak-nazarene-pre-school.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Piggs Peak",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -25.961,
+      "lng": 31.2542
+    }
+  },
+  {
+    "id": "mother-touch-learning-center-54mu",
+    "name": "Mother Touch Learning Center",
+    "region": "Eswatini",
+    "town": "Mbabane Central",
+    "address": "Mother Touch Learning Center, Mbabane Central, Eswatini",
+    "type": "Public",
+    "curriculum": "National ECCE Syllabus integrated with early music and motor skill coordination",
+    "boarding": "Day",
+    "feePerTerm": 1500,
+    "ageGroups": [
+      "2-6 years"
+    ],
+    "heroImage": "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&auto=format&fit=crop&q=80",
+    "rating": 4.5,
+    "reviews": 15,
+    "description": "Delivering accessible and protective early childhood development on Sozisa Street to support working parents in the capital city.",
+    "mission": "Delivering accessible and protective early childhood development on Sozisa Street to support working parents in the capital city.",
+    "phone": "+268 2404 0000",
+    "email": "info@mother-touch-learning-center.sz",
+    "hours": "07:30 AM - 01:30 PM",
+    "programs": [],
+    "facilities": [
+      "Playground",
+      "Learning Corners"
+    ],
+    "staff": [],
+    "gallery": [],
+    "admissionsDetails": [
+      "Copy of Child's Birth Certificate required",
+      "SISA Immunization card copy"
+    ],
+    "socialMedia": {},
+    "featured": false,
+    "verified": true,
+    "tags": [
+      "Eswatini",
+      "Mbabane Central",
+      "Toddler Care"
+    ],
+    "coordinates": {
+      "lat": -26.3291,
+      "lng": 31.1365
+    }
   }
 ]

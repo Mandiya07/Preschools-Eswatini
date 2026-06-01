@@ -336,7 +336,28 @@ export function AdminDashboardPage() {
               <GraduationCap className="h-4 w-4 text-slate-400" />
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-2xl font-bold text-slate-900">{students.length}</div>
+              <div className="flex items-end justify-between">
+                <div className="text-2xl font-bold text-slate-900">{students.length}</div>
+                {school?.totalCapacity && (
+                  <span className="text-sm text-slate-500 mb-1">/ {school.totalCapacity} capacity</span>
+                )}
+              </div>
+              
+              {school?.totalCapacity && (
+                <div className="mt-1 mb-2 h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full rounded-full transition-all ${
+                      (students.length / school.totalCapacity) > 0.9 
+                        ? 'bg-rose-500' 
+                        : (students.length / school.totalCapacity) > 0.7 
+                          ? 'bg-amber-500' 
+                          : 'bg-emerald-500'
+                    }`} 
+                    style={{ width: `${Math.min((students.length / school.totalCapacity) * 100, 100)}%` }}
+                  />
+                </div>
+              )}
+              
               <span className={`flex items-center text-xs font-medium ${students.length > 0 ? 'text-green-600' : 'text-slate-500'}`}>
                 {students.length > 0 ? <ArrowUpRight className="mr-1 h-3 w-3" /> : null}
                 {students.length > 0 ? 'Active pupils' : 'No students yet'}

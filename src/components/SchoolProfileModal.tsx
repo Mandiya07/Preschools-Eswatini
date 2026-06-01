@@ -14,6 +14,7 @@ export function SchoolProfileModal({ school, onClose, onUpdate }: { school: Scho
     region: school.region || '',
     curriculum: school.curriculum || '',
     feePerTerm: school.feePerTerm || 0,
+    totalCapacity: school.totalCapacity || '',
     description: school.description || '',
     boarding: school.boarding || 'Day',
     type: school.type || 'Private',
@@ -99,6 +100,16 @@ export function SchoolProfileModal({ school, onClose, onUpdate }: { school: Scho
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={formData.feePerTerm}
                   onChange={(e) => setFormData({...formData, feePerTerm: Number(e.target.value)})}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">Total capacity</label>
+                <input 
+                  type="number" 
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.totalCapacity}
+                  onChange={(e) => setFormData({...formData, totalCapacity: Number(e.target.value)})}
                 />
               </div>
 
