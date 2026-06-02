@@ -101,7 +101,12 @@ export function InstallGuidePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-semibold mt-1">2.</span>
-                  <div>Look for the <span className="font-bold text-slate-900">Install icon</span> <Download className="inline w-4 h-4 mx-1" /> inside your address bar, on the right side.</div>
+                  <div>
+                    Look for the <span className="font-bold text-slate-900">Install icon</span> <Download className="inline w-4 h-4 mx-1" /> inside your address bar, on the right side.
+                    <div className="text-sm mt-1.5 text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                      <span className="font-semibold text-slate-700">Not seeing the icon?</span> Click the three dots menu <span className="font-bold text-slate-700">⋮</span> (Chrome) or <span className="font-bold text-slate-700">⋯</span> (Edge) in the top-right corner, then select <span className="font-bold text-slate-700">Install Preschools Eswatini</span> (or <span className="font-bold text-slate-700">Apps {">"} Install this site as an app</span>).
+                    </div>
+                  </div>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-semibold mt-1">3.</span>

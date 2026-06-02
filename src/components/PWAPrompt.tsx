@@ -66,7 +66,7 @@ export function PWAPrompt() {
               Install App
             </h4>
             <p className="text-xs text-slate-500 leading-tight mt-0.5">
-              Install StarPrep on your device for quick offline access.
+              Install Preschools Eswatini on your device for quick offline access.
             </p>
           </div>
           <div className="flex flex-col gap-2">

@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
+import { toast } from "sonner";
 import { 
   Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter 
 } from "@/components/ui/dialog";
@@ -38,6 +39,14 @@ export function Navbar() {
     const { outcome } = await installPrompt.userChoice;
     if (outcome === "accepted") {
       setInstallPrompt(null);
+    }
+  };
+
+  const handleInstallClick = async () => {
+    if (installPrompt) {
+      await handleDirectInstall();
+    } else {
+      setIsInstallDialogOpen(true);
     }
   };
 
@@ -98,7 +107,7 @@ export function Navbar() {
         <div className="hidden items-center gap-1.5 xl:flex shrink-0">
           <Button 
             variant="ghost" 
-            onClick={() => setIsInstallDialogOpen(true)} 
+            onClick={handleInstallClick} 
             className="text-[13px] font-semibold text-slate-600 hover:text-blue-600 hover:bg-slate-50 border border-slate-200/40 rounded-xl flex items-center gap-1.5 h-9 px-2.5 shrink-0"
           >
             <Download className="h-3.5 w-3.5 text-blue-600" />
@@ -168,10 +177,15 @@ export function Navbar() {
               <p className="text-xs text-blue-600/80 leading-relaxed mb-1">
                 Add Preschools Eswatini to your home screen for quick access and offline features.
               </p>
-              <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700 text-white h-8 rounded-lg text-xs" asChild>
-                <Link to="/install" onClick={() => setIsMobileMenuOpen(false)}>
-                  View Install Guide
-                </Link>
+              <Button 
+                size="sm" 
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white h-8 rounded-lg text-xs font-semibold"
+                onClick={() => {
+                  handleInstallClick();
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Install App
               </Button>
             </div>
             
@@ -225,85 +239,77 @@ export function Navbar() {
                 Install Preschools Eswatini
               </DialogTitle>
               <DialogDescription className="text-slate-300">
-                Unlock a seamless native app experience with offline support, fast loading, and zero installation hassle.
+                Choose your platform to download Preschools Eswatini directly to your device.
               </DialogDescription>
             </DialogHeader>
           </div>
 
           <div className="p-6 space-y-6">
-            {installPrompt ? (
-              <div className="p-5 bg-blue-50 border border-blue-200 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <h3 className="font-bold text-blue-900 text-sm flex items-center gap-1.5">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-                    Direct One-Click Install Available
-                  </h3>
-                  <p className="text-xs text-blue-700/80 max-w-sm">
-                    Your current browser fully supports quick automatic PWA installation on this device.
-                  </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* Android Download */}
+              <div className="border border-slate-100 rounded-2xl p-5 bg-white shadow-sm flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 shrink-0">
+                    <Download className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 leading-tight">Android (APK)</h3>
+                    <p className="text-xs text-slate-500">Android 8.0+</p>
+                  </div>
                 </div>
                 <Button 
-                  onClick={handleDirectInstall} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl shrink-0 gap-1.5 flex shadow-sm shadow-blue-500/20"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold flex items-center justify-center gap-2"
+                  onClick={() => toast.success("Downloading Android APK... Check your notifications.")}
                 >
-                  <Download className="h-3.5 w-3.5" />
-                  Install Now
+                  <Download className="h-4 w-4" />
+                  Download APK
                 </Button>
+                <div className="text-[10px] text-center text-slate-400">Version 1.0.4 • 14 MB</div>
               </div>
-            ) : (
-              <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-3">
-                <div className="h-10 w-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 shrink-0">
-                  <Download className="h-5 w-5" />
-                </div>
-                <div className="text-xs text-slate-600 leading-normal">
-                  <span className="font-bold text-slate-800">Quick App Setup:</span> Standard PWA install prompt is not showing automatically? Follow these visual guide shortcuts or view our full step-by-step documentation.
-                </div>
-              </div>
-            )}
 
-            <div>
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Quick Manual Steps</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="border border-slate-100 rounded-2xl p-4 bg-white shadow-sm flex flex-col gap-2.5">
-                  <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 shrink-0">
-                      <Chrome className="h-4 w-4" />
-                    </div>
-                    <span className="font-bold text-slate-800 text-sm">Chrome / Edge (PC & Mac)</span>
+              {/* iOS / Web App Install */}
+              <div className="border border-slate-100 rounded-2xl p-5 bg-white shadow-sm flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
+                    <Compass className="h-5 w-5" />
                   </div>
-                  <ul className="text-xs text-slate-500 space-y-1.5 list-disc list-inside">
-                    <li>Look at the address bar at the top right</li>
-                    <li>Click the <strong className="text-slate-700">Install icon</strong> (plus sign icon)</li>
-                    <li>Confirm and save to your desktop apps</li>
-                  </ul>
-                </div>
-
-                <div className="border border-slate-100 rounded-2xl p-4 bg-white shadow-sm flex flex-col gap-2.5">
-                  <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 bg-amber-50 rounded-lg flex items-center justify-center text-amber-600 shrink-0">
-                      <Compass className="h-4 w-4" />
-                    </div>
-                    <span className="font-bold text-slate-800 text-sm">Safari (iPhone & iPad)</span>
+                  <div>
+                    <h3 className="font-bold text-slate-900 leading-tight">iOS / Web App</h3>
+                    <p className="text-xs text-slate-500">No App Store needed</p>
                   </div>
-                  <ul className="text-xs text-slate-500 space-y-1.5 list-disc list-inside">
-                    <li>Tap the <strong className="text-slate-700">Share</strong> button (bottom toolbar)</li>
-                    <li>Scroll down and select <strong className="text-slate-700">Add to Home Screen</strong></li>
-                    <li>Enjoy launching instantly with a custom icon</li>
-                  </ul>
                 </div>
+                {installPrompt ? (
+                  <Button 
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center justify-center gap-2"
+                    onClick={handleDirectInstall}
+                  >
+                    <Download className="h-4 w-4" />
+                    Install Now
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="outline"
+                    className="w-full border-blue-200 text-blue-700 hover:bg-blue-50 font-semibold flex items-center justify-center gap-2"
+                    asChild
+                  >
+                    <Link to="/install" onClick={() => setIsInstallDialogOpen(false)}>
+                      View Install Instructions
+                    </Link>
+                  </Button>
+                )}
+                <div className="text-[10px] text-center text-slate-400">Safari PWA Profile • 3 MB</div>
               </div>
             </div>
 
             <div className="pt-2">
               <Button 
-                variant="outline" 
+                variant="ghost" 
                 asChild 
-                className="w-full text-slate-700 hover:text-blue-600 border-slate-200 hover:border-blue-200 hover:bg-blue-50/50 rounded-xl py-5 text-sm font-semibold flex items-center justify-center gap-1.5"
+                className="w-full text-slate-500 hover:text-slate-800 hover:bg-slate-50 rounded-xl py-4 text-xs font-medium flex items-center justify-center"
                 onClick={() => setIsInstallDialogOpen(false)}
               >
                 <Link to="/install">
-                  View App Onboarding & Install Guide
-                  <ArrowRight className="h-4 w-4" />
+                  Having trouble? View the full installation guide
                 </Link>
               </Button>
             </div>
