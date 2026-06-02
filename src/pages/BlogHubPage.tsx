@@ -105,6 +105,57 @@ const ARTICLES: Article[] = [
     }
   },
   {
+    "slug": "how-to-claim-profile",
+    "title": "Step-by-Step Guide: How to Claim Your Preschool Profile",
+    "category": "schools",
+    "categoryLabel": "Preschool Admins",
+    "author": "Platform Admissions Council",
+    "date": "June 02, 2026",
+    "readTime": "4 min read",
+    "summary": "Is your preschool already listed? Learn how administrators can claim their existing profile, verify their identity, and start receiving direct inquiries from parents.",
+    "image": "https://images.unsplash.com/photo-1543269664-76bc3997d9ea?auto=format&fit=crop&w=600&q=80",
+    "highlights": [
+        "Access pre-listed school data instantly",
+        "Fast-track administrator verification",
+        "Enable parental inquiries directly",
+        "Earn the Verified Badge"
+    ],
+    "sections": [
+        {
+            "heading": "1. Locate Your School Profile",
+            "paragraphs": [
+                "Navigate to the main directory (/directory) and search for your school\'s name. We have pre-populated hundreds of schools using our national mapping project.",
+                "Once you locate your school, click to open its dedicated profile page. If your school has not yet been claimed, you will see a \'Claim Profile\' button on the screen."
+            ]
+        },
+        {
+            "heading": "2. Initiate the Claim Process",
+            "paragraphs": [
+                "Click the \'Claim Profile\' button securely positioned on your school\'s page. This opens a modal to begin your verification.",
+                "You will need to have a registered account on the platform to proceed. If you don\'t have one, please create a free account and ensure you select \'School Administrator\' as your role, or request for access via our support page."
+            ]
+        },
+        {
+            "heading": "3. Provide Administrative Evidence",
+            "paragraphs": [
+                "Provide your official role (e.g., Principal, Administrator), verify your phone number, and provide any required documentation if requested by our team.",
+                "This critical safety step ensures that only authorized personnel can assume digital control over the school\'s public identity."
+            ]
+        },
+        {
+            "heading": "4. Await Approval",
+            "paragraphs": [
+                "Once submitted, our internal compliance team reviews your claim request within a short timeframe. They may contact the school\'s official phone line to verify your identity.",
+                "Upon approval, the school will be seamlessly linked to your administrator dashboard. You will then have full capabilities to edit facilities, update fees, add custom photos, and manage digital inquiries!"
+            ]
+        }
+    ],
+    "cta": {
+        "text": "Search the Directory",
+        "link": "/directory"
+    }
+},
+  {
     slug: "how-suppliers-register",
     title: "Connecting with Schools: The Complete Supplier Onboarding Guide",
     category: "suppliers",
