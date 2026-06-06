@@ -48,6 +48,7 @@ import { AdminTransportPage } from "@/pages/AdminTransportPage";
 import { AdminELearningPage } from "@/pages/AdminELearningPage";
 import { DigitalLearningEcosystemPage } from "@/pages/DigitalLearningEcosystemPage";
 import { CommunityPage } from "@/pages/CommunityPage";
+import AdminTeacherOnboardingPage from "@/pages/AdminTeacherOnboardingPage";
 import { SafetySecurityPage } from "@/pages/SafetySecurityPage";
 import { AIMatchingPage } from "@/pages/AIMatchingPage";
 import { AdvancedWebsiteFeaturesPage } from "@/pages/AdvancedWebsiteFeaturesPage";
@@ -124,6 +125,7 @@ export default function App() {
             <Route path="applications" element={<SchoolApplicationsPage />} />
             <Route path="parent-resources" element={<ParentResourcesPage />} />
             <Route path="website-builder" element={<WebsiteBuilderPage />} />
+            <Route path="teacher-onboarding" element={<AdminTeacherOnboardingPage />} />
           </Route>
           
           {/* Admin Routes */}
@@ -136,6 +138,7 @@ export default function App() {
             <Route path="website" element={<WebsiteBuilderPage />} />
             <Route path="students" element={<AdminStudentsPage />} />
             <Route path="staff" element={<AdminStaffPage />} />
+            <Route path="teacher-onboarding" element={<AdminTeacherOnboardingPage />} />
             <Route path="attendance" element={<AdminAttendancePage />} />
             <Route path="events" element={<AdminEventsPage />} />
             <Route path="announcements" element={<AdminAnnouncementsPage />} />

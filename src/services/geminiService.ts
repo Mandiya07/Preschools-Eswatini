@@ -6,7 +6,8 @@ export type AIGenerateType =
   | 'admissions' 
   | 'seo' 
   | 'caption' 
-  | 'recommendation';
+  | 'recommendation'
+  | 'learning_personalization';
 
 export interface AIGenerateResponse {
   text: string;

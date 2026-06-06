@@ -79,7 +79,7 @@ async function startServer() {
       });
 
       let systemInstruction = "You are a helpful assistant for school administrators.";
-      let model = "gemini-3-flash-preview";
+      let model = "gemini-3.5-flash";
 
       switch (type) {
         case 'website':
@@ -111,6 +111,9 @@ async function startServer() {
           break;
         case 'recommendation':
           systemInstruction = "Recommend improvements to school descriptions or content to make them more parent-friendly and professional.";
+          break;
+        case 'learning_personalization':
+          systemInstruction = "You are an expert early childhood development (ECD) educator in Eswatini. Create a highly encouraging, gamified, and tailored 1-day personalized educational activity plan based on the child's age, interests, and target skill focus. Structure it with rich markdown, bullet points, and friendly emojis. Keep it extremely actionable for parents and write it in a warm, inspirational tone.";
           break;
       }
 
@@ -156,7 +159,7 @@ async function startServer() {
       const dataPath = path.join(process.cwd(), "src/data/preloadedSchools.json");
       const schools: any[] = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
 
-      const model = "gemini-3-flash-preview";
+      const model = "gemini-3.5-flash";
 
       const prompt = `Given these schools: ${JSON.stringify(schools.map(({id, name, description, region, town, feePerTerm, curriculum}) => ({id, name, description, region, town, feePerTerm, curriculum})))}, 
       find the best school match for these requirements: ${requirements}.
@@ -196,7 +199,7 @@ async function startServer() {
       Be helpful, warm, and professional. If you don't know the answer, advise them to contact the school office.`;
 
       const chat = ai.chats.create({
-        model: "gemini-3-flash-preview",
+        model: "gemini-3.5-flash",
         config: { systemInstruction },
       });
 

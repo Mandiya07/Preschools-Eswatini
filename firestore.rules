@@ -133,6 +133,32 @@ service cloud.firestore {
              data.resourceType is string && data.resourceType.size() > 0 && data.resourceType.size() <= 100;
     }
 
+    function isValidDiscussionTopic(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+             data.content is string && data.content.size() > 0 && data.content.size() <= 10000 &&
+             data.category is string && data.category.size() <= 100 &&
+             data.authorId is string && data.authorId == request.auth.uid &&
+             data.authorName is string && data.authorName.size() <= 200 &&
+             data.authorRole is string && data.authorRole.size() <= 50;
+    }
+
+    function isValidDiscussionReply(data) {
+      return data.topicId is string && isValidId(data.topicId) &&
+             data.content is string && data.content.size() > 0 && data.content.size() <= 5000 &&
+             data.authorId is string && data.authorId == request.auth.uid &&
+             data.authorName is string && data.authorName.size() <= 200 &&
+             data.authorRole is string && data.authorRole.size() <= 50;
+    }
+
+    function isValidTeacherOnboarding(data) {
+      return data.schoolId is string && isValidId(data.schoolId) &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 128 &&
+             data.email is string && data.email.size() > 0 && data.email.size() <= 128 &&
+             data.userUid is string && isValidId(data.userUid) &&
+             data.status in ['pending', 'approved', 'rejected'] &&
+             data.qualifications is string && data.qualifications.size() <= 2000;
+    }
+
     // --- Rules ---
 
     match /audit_logs/{logId} {
@@ -160,6 +186,16 @@ service cloud.firestore {
       allow delete: if isSuperAdmin() || (isVerified() && existing().ownerId == request.auth.uid);
     }
 
+    match /educational_videos/{videoId} {
+      allow read, get, list: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    match /notifications/{notificationId} {
+      allow read, get, list: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
     match /school_registrations/{regId} {
       allow create: if true;
       allow read, update, delete: if true;
@@ -167,6 +203,16 @@ service cloud.firestore {
 
     match /dashboard_notes/{noteId} {
       allow read, create, update, delete: if isSignedIn();
+    }
+
+    match /live_classes/{classId} {
+      allow read, get, list: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    match /live_chats/{chatId} {
+      allow read, get, list: if true;
+      allow create, update, delete: if isSignedIn();
     }
 
     match /inquiries/{inquiryId} {
@@ -299,6 +345,40 @@ service cloud.firestore {
       allow get: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.recipientIds.hasAny([request.auth.uid]));
       allow list: if isVerified() && isSchoolOwner(resource.data.schoolId);
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidCommunicationLog(incoming());
+    }
+
+    match /discussion_topics/{topicId} {
+      allow read, list: if true;
+      allow create: if isSignedIn() && isValidDiscussionTopic(incoming());
+      allow update: if isSignedIn() && (
+        (existing().authorId == request.auth.uid && isValidDiscussionTopic(incoming())) ||
+        (incoming().diff(existing()).affectedKeys().hasOnly(['likes'])) ||
+        (incoming().diff(existing()).affectedKeys().hasOnly(['repliesCount'])) ||
+        (incoming().diff(existing()).affectedKeys().hasAny(['repliesCount', 'likes'])) ||
+        isSuperAdmin()
+      );
+      allow delete: if isSignedIn() && (existing().authorId == request.auth.uid || isSuperAdmin());
+    }
+
+    match /discussion_replies/{replyId} {
+      allow read, list: if true;
+      allow create: if isSignedIn() && isValidDiscussionReply(incoming());
+      allow update: if isSignedIn() && (
+        (existing().authorId == request.auth.uid && isValidDiscussionReply(incoming())) ||
+        isSuperAdmin()
+      );
+      allow delete: if isSignedIn() && (existing().authorId == request.auth.uid || isSuperAdmin());
+    }
+
+    match /teacher_onboardings/{onboardingId} {
+      allow create: if isSignedIn() && isValidTeacherOnboarding(incoming()) && incoming().userUid == request.auth.uid;
+      allow get, list: if isSignedIn() && (resource.data.userUid == request.auth.uid || isSchoolOwner(resource.data.schoolId) || isSuperAdmin());
+      allow update: if isSignedIn() && (
+        (existing().userUid == request.auth.uid && existing().status == 'pending' && isValidTeacherOnboarding(incoming()) && incoming().userUid == request.auth.uid && incoming().status == 'pending' && incoming().schoolId == existing().schoolId) ||
+        (isSchoolOwner(existing().schoolId) && isValidTeacherOnboarding(incoming()) && incoming().userUid == existing().userUid) ||
+        isSuperAdmin()
+      );
+      allow delete: if isSignedIn() && (existing().userUid == request.auth.uid && existing().status == 'pending');
     }
   }
 }

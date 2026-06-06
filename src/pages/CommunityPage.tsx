@@ -10,10 +10,11 @@ import { SEO } from "@/components/SEO";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { DiscussionBoard } from "@/components/community/DiscussionBoard";
 
 const FEATURES = [
   { id: "parents", title: "Parent Communities", icon: <Users className="h-6 w-6" />, color: "bg-blue-50 text-blue-600", description: "Connect with other parents in your school." },
-  { id: "boards", title: "Discussion Boards", icon: <MessageSquare className="h-6 w-6" />, color: "bg-slate-50 text-slate-600", description: "Engage in school-wide discussions." },
+  { id: "boards", title: "Discussion Boards", icon: <MessageSquare className="h-6 w-6" />, color: "bg-indigo-50 text-indigo-600", description: "Engage in school-wide discussions about ECD, admissions, and parenting. (Interactive)" },
   { id: "events", title: "Event RSVPs", icon: <Calendar className="h-6 w-6" />, color: "bg-red-50 text-red-600", description: "Easily manage and track event attendance." },
   { id: "photos", title: "Photo Sharing", icon: <ImageIcon className="h-6 w-6" />, color: "bg-emerald-50 text-emerald-600", description: "Securely share classroom moments." },
   { id: "feed", title: "Classroom Feeds", icon: <Rss className="h-6 w-6" />, color: "bg-amber-50 text-amber-600", description: "Stay updated with class activities." },
@@ -27,6 +28,7 @@ const SHARED_DOCUMENTS: any[] = [];
 
 export function CommunityPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("overview");
 
   const filteredDocs = SHARED_DOCUMENTS.filter(doc => 
     doc.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,33 +51,61 @@ export function CommunityPage() {
            </p>
         </div>
       </section>
-
+ 
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-4 -mt-16 relative z-20">
-        <Tabs defaultValue="overview" className="space-y-12">
-          <TabsList className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-2 border border-slate-100 flex items-center h-16 w-full max-w-sm mx-auto">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-12">
+          <TabsList className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-2 border border-slate-100 flex items-center h-16 w-full max-w-md mx-auto">
             <TabsTrigger value="overview" className="flex-1 rounded-xl font-bold h-full">Overview</TabsTrigger>
+            <TabsTrigger value="discussions" className="flex-1 rounded-xl font-bold h-full">Discussions</TabsTrigger>
             <TabsTrigger value="marketplace" className="flex-1 rounded-xl font-bold h-full">Marketplace</TabsTrigger>
           </TabsList>
-
+ 
           <TabsContent value="overview">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {FEATURES.map((feature) => (
-                <Card key={feature.id} className="rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full">
+                <Card 
+                  key={feature.id} 
+                  onClick={() => {
+                    if (feature.id === "boards") {
+                      setActiveTab("discussions");
+                    }
+                  }}
+                  className={`rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full ${
+                    feature.id === "boards" ? "cursor-pointer border-blue-200 bg-blue-50/10 shadow-blue-50/20 shadow-md" : ""
+                  }`}
+                >
                   <CardHeader className="flex flex-row items-center gap-4">
                     <div className={`h-14 w-14 rounded-2xl flex items-center justify-center ${feature.color} group-hover:scale-110 transition-transform`}>
                       {feature.icon}
                     </div>
-                    <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{feature.title}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                      {feature.title} {feature.id === "boards" && <span className="text-xs text-blue-500 font-extrabold animate-pulse ml-1">(Live)</span>}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 font-medium">{feature.description}</p>
+                    {feature.id === "boards" && (
+                      <p className="text-xs text-blue-600 font-bold mt-2 hover:underline">Click here to browse boards &rarr;</p>
+                    )}
                   </CardContent>
                 </Card>
               ))}
             </div>
           </TabsContent>
 
+          <TabsContent value="discussions" className="space-y-8">
+            <div className="max-w-4xl mx-auto space-y-4">
+              <div className="text-center space-y-2 mb-8">
+                <h2 className="text-3xl font-black text-slate-900 tracking-tight">Preschool Community Discussion Boards</h2>
+                <p className="text-slate-500 font-semibold max-w-2xl mx-auto text-sm">
+                  Join interactive conversations with other Eswatini parents, early educators, and school administrators. Seek guidance on ECD curriculum, admissions processes, nourishing meals, and special developmental aids.
+                </p>
+              </div>
+              <DiscussionBoard />
+            </div>
+          </TabsContent>
+ 
         <TabsContent value="marketplace" className="space-y-8">
           <div className="flex flex-col items-center text-center space-y-4">
             <h2 className="text-2xl font-bold text-slate-900">Community Marketplace</h2>

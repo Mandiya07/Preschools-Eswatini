@@ -99,6 +99,7 @@ export function Navbar() {
           <Link to="/marketplace" className={getLinkClass("/marketplace")}>Marketplace</Link>
           <Link to="/learning" className={getLinkClass("/learning")}>Learning</Link>
           <Link to="/community" className={getLinkClass("/community")}>Community</Link>
+          <Link to="/teacher-onboarding" className={getLinkClass("/teacher-onboarding")}>Teach</Link>
           <Link to="/flatlets" className="text-[13px] font-semibold transition-all duration-200 whitespace-nowrap px-1.5 py-1.5 rounded-xl text-indigo-700 hover:text-indigo-900 bg-indigo-50/50 hover:bg-indigo-50 shrink-0">
             ♥ Flatlets Care
           </Link>
@@ -198,6 +199,7 @@ export function Navbar() {
             <Link to="/marketplace" className={getMobileLinkClass("/marketplace")} onClick={() => setIsMobileMenuOpen(false)}>Marketplace</Link>
             <Link to="/learning" className={getMobileLinkClass("/learning")} onClick={() => setIsMobileMenuOpen(false)}>Learning</Link>
             <Link to="/community" className={getMobileLinkClass("/community")} onClick={() => setIsMobileMenuOpen(false)}>Community</Link>
+            <Link to="/teacher-onboarding" className={getMobileLinkClass("/teacher-onboarding")} onClick={() => setIsMobileMenuOpen(false)}>Teach</Link>
             <Link to="/flatlets" className="text-sm font-semibold py-3 px-4 block rounded-xl transition-all text-indigo-700 bg-indigo-50/50 hover:bg-indigo-50" onClick={() => setIsMobileMenuOpen(false)}>
               ♥ Flatlets Care
             </Link>
@@ -258,11 +260,14 @@ export function Navbar() {
                   </div>
                 </div>
                 <Button 
+                  asChild
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold flex items-center justify-center gap-2"
                   onClick={() => toast.success("Downloading Android APK... Check your notifications.")}
                 >
-                  <Download className="h-4 w-4" />
-                  Download APK
+                  <a href="/Preschools_Eswatini.apk" download="Preschools_Eswatini.apk">
+                    <Download className="h-4 w-4" />
+                    Download APK
+                  </a>
                 </Button>
                 <div className="text-[10px] text-center text-slate-400">Version 1.0.4 • 14 MB</div>
               </div>

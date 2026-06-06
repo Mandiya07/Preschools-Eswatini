@@ -1,5 +1,25 @@
 {
   "entities": {
+    "EducationalVideo": {
+      "title": "EducationalVideo",
+      "description": "Educational videos shared by teachers for students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "teacher": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "duration": { "type": "string" },
+        "topic": { "type": "string" },
+        "targetAge": { "type": "string" },
+        "views": { "type": "number" },
+        "scheduledWeek": { "type": "string" },
+        "scheduledDate": { "type": "string", "format": "date" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "videoUrl", "teacher"]
+    },
     "School": {
       "title": "School",
       "description": "Information about an educational institution",
@@ -549,9 +569,65 @@
         "ipAddress": { "type": "string" }
       },
       "required": ["action", "resourceType", "userId", "timestamp"]
+    },
+    "DiscussionTopic": {
+      "title": "DiscussionTopic",
+      "description": "A community discussion board topic",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorRole": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "likes": { "type": "array", "items": { "type": "string" } },
+        "repliesCount": { "type": "number" }
+      },
+      "required": ["title", "content", "category", "authorId", "authorName", "authorRole"]
+    },
+    "DiscussionReply": {
+      "title": "DiscussionReply",
+      "description": "A comment or reply to a discussion topic",
+      "type": "object",
+      "properties": {
+        "topicId": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorRole": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["topicId", "content", "authorId", "authorName", "authorRole"]
+    },
+    "TeacherOnboarding": {
+      "title": "TeacherOnboarding",
+      "description": "A teacher's application to join a school's staff which needs approval from the school's admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "userUid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "qualifications": { "type": "string" },
+        "experienceYears": { "type": "number" },
+        "specialization": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "userUid", "name", "email", "status"]
     }
   },
   "firestore": {
+    "educational_videos": {
+      "schema": "EducationalVideo",
+      "description": "Library of educational videos for students"
+    },
     "audit_logs": {
       "schema": "AuditLog",
       "description": "Enterprise audit logs, append-only"
@@ -687,6 +763,18 @@
     "compliance_records": {
       "schema": "ComplianceRecord",
       "description": "Digital compliance, ministry support, and inspection records"
+    },
+    "discussion_topics": {
+      "schema": "DiscussionTopic",
+      "description": "Information and threads posted on the community forums"
+    },
+    "discussion_replies": {
+      "schema": "DiscussionReply",
+      "description": "Replies and comments on the discussion board threads"
+    },
+    "teacher_onboardings": {
+      "schema": "TeacherOnboarding",
+      "description": "Onboarding applications and qualification records submitted by prospective teachers."
     }
   }
 }

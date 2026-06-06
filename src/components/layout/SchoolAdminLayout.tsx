@@ -99,6 +99,7 @@ export function SchoolAdminLayout() {
     { name: 'Students', href: '/admin/students', icon: GraduationCap },
     { name: 'Attendance', href: '/admin/attendance', icon: UserCheck },
     { name: 'Staff', href: '/admin/staff', icon: Briefcase },
+    { name: 'Teacher Onboarding', href: '/admin/teacher-onboarding', icon: UserCheck },
     { name: 'Parents', href: '/admin/parents', icon: Users },
     { name: 'Events', href: '/admin/events', icon: Calendar },
     { name: 'Announcements', href: '/admin/announcements', icon: Megaphone },
