@@ -40,7 +40,13 @@ export function SuperAdminUsersPage() {
     });
 
     const unsubSchools = subscribeToCollection("schools", (data) => {
-      setSchoolsList(data || []);
+      const dbSchools = (data as any[]) || [];
+      const mergedSchoolsMap = new Map<string, any>();
+      import("@/data/preloadedSchools").then(({ PRELOADED_SCHOOLS }) => {
+        PRELOADED_SCHOOLS.forEach((s: any) => mergedSchoolsMap.set(s.id, s));
+        dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
+        setSchoolsList(Array.from(mergedSchoolsMap.values()));
+      });
     });
 
     return () => {

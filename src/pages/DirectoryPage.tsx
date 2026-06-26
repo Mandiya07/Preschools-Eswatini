@@ -214,29 +214,34 @@ export function DirectoryPage() {
     const unsub = subscribeToCollection('schools', (data) => {
       const dbSchools = (data as School[]) || [];
       
-      const rawSchools: School[] = dbSchools;
-      
-      // Add deterministic coordinates to institutions that lack them
-      const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 };
-      const enhancedSchools = rawSchools.map((s: School) => {
-        if (!s.coordinates) {
-          // Stable coordinates based on id string hash
-          let hash = 0;
-          const str = s.id || s.name || "";
-          for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      const mergedSchoolsMap = new Map<string, School>();
+      import("@/data/preloadedSchools").then(({ PRELOADED_SCHOOLS }) => {
+        PRELOADED_SCHOOLS.forEach((s: any) => mergedSchoolsMap.set(s.id, s));
+        dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
+        const rawSchools: School[] = Array.from(mergedSchoolsMap.values());
+        
+        // Add deterministic coordinates to institutions that lack them
+        const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 };
+        const enhancedSchools = rawSchools.map((s: School) => {
+          if (!s.coordinates) {
+            // Stable coordinates based on id string hash
+            let hash = 0;
+            const str = s.id || s.name || "";
+            for (let i = 0; i < str.length; i++) {
+              hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const latOffset = ((hash % 100) / 400) - 0.12; 
+            const lngOffset = (((hash >> 8) % 100) / 400) - 0.12;
+            const lat = ESWATINI_CENTER.lat + latOffset;
+            const lng = ESWATINI_CENTER.lng + lngOffset;
+            return { ...s, coordinates: { lat, lng } };
           }
-          const latOffset = ((hash % 100) / 400) - 0.12; 
-          const lngOffset = (((hash >> 8) % 100) / 400) - 0.12;
-          const lat = ESWATINI_CENTER.lat + latOffset;
-          const lng = ESWATINI_CENTER.lng + lngOffset;
-          return { ...s, coordinates: { lat, lng } };
-        }
-        return s;
-      });
+          return s;
+        });
 
-      setSchools(enhancedSchools);
-      setLoading(false);
+        setSchools(enhancedSchools);
+        setLoading(false);
+      });
     });
 
     return () => unsub();

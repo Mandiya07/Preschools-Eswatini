@@ -54,8 +54,14 @@ export function SuperAdminRevenuePage() {
 
   useEffect(() => {
     const unsub = subscribeToCollection("schools", (data) => {
-      setSchools(data || []);
-      setLoading(false);
+      const dbSchools = (data as any[]) || [];
+      const mergedSchoolsMap = new Map<string, any>();
+      import("@/data/preloadedSchools").then(({ PRELOADED_SCHOOLS }) => {
+        PRELOADED_SCHOOLS.forEach((s: any) => mergedSchoolsMap.set(s.id, s));
+        dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
+        setSchools(Array.from(mergedSchoolsMap.values()));
+        setLoading(false);
+      });
     });
 
     loadPaymentConfig();
