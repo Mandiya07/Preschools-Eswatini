@@ -123,6 +123,24 @@ export function SchoolPage() {
 
       try {
         schoolData = await fetchDocument('schools', id) as School | null;
+        
+        // If not found in Firestore, check preloaded schools
+        if (!schoolData) {
+          const { PRELOADED_SCHOOLS } = await import("@/data/preloadedSchools");
+          schoolData = PRELOADED_SCHOOLS.find(s => s.id === id) || null;
+        } else {
+           // If found in Firestore, check if it's also a preloaded school
+           const { PRELOADED_SCHOOLS } = await import("@/data/preloadedSchools");
+           const preloaded = PRELOADED_SCHOOLS.find(s => s.id === id);
+           if (preloaded) {
+             // If preloaded, ensure it's visible, merge properties but prioritize preloaded active status if necessary
+             schoolData = { ...preloaded, ...schoolData };
+             if (schoolData.subscriptionStatus !== 'active' && preloaded.subscriptionStatus === 'active') {
+                schoolData.subscriptionStatus = 'active';
+             }
+           }
+        }
+        
         configData = await fetchDocument('websites', id);
         
         setSchool(schoolData);
