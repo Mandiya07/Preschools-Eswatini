@@ -35,7 +35,6 @@ interface AuthContextType {
   register: (email: string, pass: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
   sendEmailVerification: () => Promise<void>;
-  devLogin?: (role: Role) => void;
   activeSchoolId: string | null;
   setActiveSchoolId: (id: string | null) => void;
 }
@@ -66,13 +65,66 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!auth.app.options.apiKey) {
       console.warn("No Firebase API key provided! Firebase Auth is disabled. Using dev logic only.");
       if (localStorage.getItem('dev_role')) {
-        setUser({
-          uid: 'dev-123',
-          name: 'Dev SuperAdmin',
-          email: 'siphom.yati@gmail.com',
-          role: localStorage.getItem('dev_role') as Role,
-          emailVerified: true
-        });
+        const role = localStorage.getItem('dev_role') as Role;
+        let savedCustom = {};
+        try {
+          const customStr = localStorage.getItem('dev_custom_fields');
+          if (customStr) savedCustom = JSON.parse(customStr);
+        } catch (e) {}
+
+        let defaultProfile: UserProfile = {
+          uid: 'dev-' + role.toLowerCase(),
+          name: `Dev ${role}`,
+          email: `${role.toLowerCase()}@example.com`,
+          role: role,
+          emailVerified: true,
+        };
+
+        if (role === 'SuperAdmin') {
+          defaultProfile = {
+            uid: 'dev-superadmin',
+            name: 'Sipho Myati',
+            email: 'siphom.yati@gmail.com',
+            role: 'SuperAdmin',
+            emailVerified: true
+          };
+        } else if (role === 'SchoolAdmin') {
+          defaultProfile = {
+            uid: 'dev-schooladmin',
+            name: 'Thabo Dlamini',
+            email: 'thabo@littlescholars.sz',
+            role: 'SchoolAdmin',
+            schoolId: 'mbabane-scholars',
+            emailVerified: true
+          };
+        } else if (role === 'Parent') {
+          defaultProfile = {
+            uid: 'dev-parent',
+            name: 'Sihle Mamba',
+            email: 'sihle@mamba.co.sz',
+            role: 'Parent',
+            schoolId: 'mbabane-scholars',
+            emailVerified: true
+          };
+        } else if (role === 'Supplier') {
+          defaultProfile = {
+            uid: 'dev-supplier',
+            name: 'Eswatini School Supplies',
+            email: 'sales@eswatinisupplies.co.sz',
+            role: 'Supplier',
+            emailVerified: true
+          };
+        } else if (role === 'Advertiser') {
+          defaultProfile = {
+            uid: 'dev-advertiser',
+            name: 'MoMo Media',
+            email: 'ads@momomedia.sz',
+            role: 'Advertiser',
+            emailVerified: true
+          };
+        }
+
+        setUser({ ...defaultProfile, ...savedCustom });
       }
       setLoading(false);
       return;
@@ -83,16 +135,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       console.error("Error setting persistence:", error);
     });
 
+    // Removed dev_role bypass. Clear it if exists to un-stick previous users.
     if (localStorage.getItem('dev_role')) {
-      setUser({
-        uid: 'dev-123',
-        name: 'Dev SuperAdmin',
-        email: 'siphom.yati@gmail.com',
-        role: localStorage.getItem('dev_role') as Role,
-        emailVerified: true
-      });
-      setLoading(false);
-      return;
+      localStorage.removeItem('dev_role');
+      localStorage.removeItem('dev_custom_fields');
     }
 
     const unsubscribe = onIdTokenChanged(auth, async (fbUser) => {
@@ -217,17 +263,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
   };
 
-  const devLogin = (role: Role) => {
-    localStorage.setItem('dev_role', role);
-    setUser({
-      uid: 'dev-123',
-      name: 'Dev SuperAdmin',
-      email: 'siphom.yati@gmail.com',
-      role: role,
-      emailVerified: true
-    });
-  };
-
   const sendVerification = async () => {
     if (auth.currentUser) {
       await sendEmailVerification(auth.currentUser);
@@ -242,7 +277,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       loginWithEmail, 
       register, 
       logout,
-      devLogin,
       activeSchoolId,
       setActiveSchoolId,
       sendEmailVerification: sendVerification

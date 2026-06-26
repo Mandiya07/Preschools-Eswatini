@@ -263,8 +263,12 @@ export function SchoolPage() {
       {/* Hero Header */}
       <div className="relative h-[400px] md:h-[500px]">
         <div className="absolute inset-0">
-          {!isHeroPlaceholder && school.heroImage && (
+          {!isHeroPlaceholder && school.heroImage ? (
             <img src={school.heroImage} className="h-full w-full object-cover" alt={school.name} />
+          ) : (
+            <div className="h-full w-full bg-slate-50 flex items-center justify-center p-8">
+               <img src="/logo-512.png" className="h-full w-full max-h-64 object-contain opacity-40" alt="Preschools Eswatini" />
+            </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
         </div>

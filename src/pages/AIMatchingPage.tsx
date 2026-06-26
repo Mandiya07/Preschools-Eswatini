@@ -55,7 +55,11 @@ export function AIMatchingPage() {
           <div className="grid gap-6">
             {results.map((school) => (
               <div key={school.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex gap-4">
-                <img src={school.heroImage} alt={school.name} className="w-32 h-32 rounded-xl object-cover" />
+                {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
+                  <img src={school.heroImage} alt={school.name} className="w-32 h-32 rounded-xl object-cover" />
+                ) : (
+                  <img src="/logo-512.png" alt="Preschools Eswatini" className="w-32 h-32 rounded-xl object-contain bg-slate-50 p-2" />
+                )}
                 <div className="flex-1">
                   <h3 className="font-bold text-xl">{school.name}</h3>
                   <p className="text-slate-600 text-sm mt-1">{school.region}, {school.town}</p>

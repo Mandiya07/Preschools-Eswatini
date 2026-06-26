@@ -47,7 +47,7 @@ export function SchoolAdminLayout() {
   const [activeSchool, setActiveSchool] = useState<School | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, devLogin, activeSchoolId, setActiveSchoolId } = useAuth();
+  const { user, activeSchoolId, setActiveSchoolId } = useAuth();
 
   const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
 
@@ -119,10 +119,7 @@ export function SchoolAdminLayout() {
     { name: 'Suppliers', href: '/admin/supplier-marketplace', icon: Store },
   ];
 
-  const switchToParent = () => {
-    devLogin?.("Parent");
-    navigate("/parent");
-  };
+
 
   return (
     <div className="flex h-screen bg-slate-50 font-sans">
@@ -184,10 +181,7 @@ export function SchoolAdminLayout() {
                 Return to Website
               </Link>
              </Button>
-             <Button variant="outline" size="sm" onClick={switchToParent} className="w-full justify-start text-slate-800 bg-slate-100 hover:bg-slate-200 border-none">
-              <LogOut className="h-4 w-4 mr-2" />
-              Test Parent Portal
-             </Button>
+
 
              {user?.role === 'SuperAdmin' && (
                 <Button variant="outline" size="sm" onClick={() => navigate('/super/schools')} className="w-full justify-start text-amber-400 border-amber-900/50 bg-amber-900/20 hover:bg-amber-900/40 hover:text-amber-300 font-bold">

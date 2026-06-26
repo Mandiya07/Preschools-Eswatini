@@ -90,7 +90,7 @@ function DirectoryMap({ schools, selectedSchool, onSchoolSelect }: DirectoryMapP
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <Building2 className="h-8 w-8 text-slate-300" />
+                <img src="/logo-512.png" alt="Preschools Eswatini" className="h-full w-full object-contain p-2" />
               )}
             </div>
             <h4 className="font-extrabold text-xs text-slate-900 line-clamp-1">{selectedSchool.name}</h4>
@@ -212,18 +212,9 @@ export function DirectoryPage() {
 
   useEffect(() => {
     const unsub = subscribeToCollection('schools', (data) => {
-      const dbSchools = data as School[];
+      const dbSchools = (data as School[]) || [];
       
-      // Merge with preloaded schools to ensure all 109 entries reflect even if offline or sync failed
-      const mergedSchoolsMap = new Map<string, School>();
-      
-      // 1. Add preloaded schools as baseline
-      PRELOADED_SCHOOLS.forEach(s => mergedSchoolsMap.set(s.id, s));
-      
-      // 2. Overwrite with DB schools (which might have more recent updates)
-      dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
-      
-      const rawSchools: School[] = Array.from(mergedSchoolsMap.values());
+      const rawSchools: School[] = dbSchools;
       
       // Add deterministic coordinates to institutions that lack them
       const ESWATINI_CENTER = { lat: -26.3167, lng: 31.1333 };
@@ -573,7 +564,7 @@ export function DirectoryPage() {
                           {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
                             <img src={school.heroImage} alt={school.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                           ) : (
-                            <Building2 className="h-12 w-12 text-slate-300" />
+                            <img src="/logo-512.png" alt="Preschools Eswatini" className="h-full w-full object-contain p-4" />
                           )}
                           {school.featured && (
                             <div className="absolute top-3 left-3 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-black text-amber-900 flex items-center gap-1 shadow-xs uppercase tracking-wide">
@@ -693,7 +684,7 @@ export function DirectoryPage() {
                             {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
                               <img src={school.heroImage} alt={school.name} className="h-full w-full object-cover" />
                             ) : (
-                              <Building2 className="h-8 w-8 text-slate-300" />
+                              <img src="/logo-512.png" alt="Preschools Eswatini" className="h-full w-full object-contain p-1" />
                             )}
                           </div>
                           <div className="min-w-0 flex-1">

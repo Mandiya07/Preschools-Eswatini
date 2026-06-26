@@ -190,8 +190,12 @@ export function ApplyPage() {
           <Card className="border-none shadow-sm rounded-2xl overflow-hidden bg-slate-900 text-white p-6">
              {selectedSchool ? (
                <div className="space-y-4">
-                 <div className="h-40 -mx-6 -mt-6 bg-slate-800 overflow-hidden">
-                   <img src={selectedSchool.heroImage} className="w-full h-full object-cover" alt="" />
+                 <div className="h-40 -mx-6 -mt-6 bg-white overflow-hidden flex items-center justify-center">
+                   {selectedSchool.heroImage && !selectedSchool.heroImage.includes('unsplash.com') ? (
+                     <img src={selectedSchool.heroImage} className="w-full h-full object-cover" alt="" />
+                   ) : (
+                     <img src="/logo-512.png" alt="Preschools Eswatini" className="w-full h-full object-contain p-4" />
+                   )}
                  </div>
                  <div>
                    <h3 className="font-black text-xl italic">{selectedSchool.name}</h3>

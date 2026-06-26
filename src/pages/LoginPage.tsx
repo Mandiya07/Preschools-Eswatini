@@ -9,7 +9,7 @@ import { SEO } from "@/components/SEO";
 import { Logo } from "@/components/layout/Logo";
 
 export function LoginPage() {
-  const { login, loginWithEmail, user, loading, sendEmailVerification, devLogin } = useAuth();
+  const { login, loginWithEmail, user, loading, sendEmailVerification } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -166,13 +166,7 @@ export function LoginPage() {
               Create an Account
             </Link>
           </p>
-          {devLogin && (
-            <div className="mt-4">
-               <Button onClick={() => devLogin('SuperAdmin')} variant="outline" className="w-full text-blue-600 border-blue-200 bg-blue-50 hover:bg-blue-100">
-                  Dev: Sign in as Super Admin
-               </Button>
-            </div>
-          )}
+
         </div>
       </div>
     </div>

@@ -177,7 +177,11 @@ function MapContent({ schools }: { schools: School[] }) {
                 <X className="h-4 w-4 mr-1" /> Back to list
              </button>
              
-             <img src={selectedSchool.heroImage} alt={selectedSchool.name} className="w-full h-40 object-cover rounded-xl mb-4 shadow-sm" />
+             {selectedSchool.heroImage && !selectedSchool.heroImage.includes('unsplash.com') ? (
+               <img src={selectedSchool.heroImage} alt={selectedSchool.name} className="w-full h-40 object-cover rounded-xl mb-4 shadow-sm" />
+             ) : (
+               <img src="/logo-512.png" alt="Preschools Eswatini" className="w-full h-40 object-contain rounded-xl mb-4 shadow-sm bg-slate-50 p-2" />
+             )}
              
              <h2 className="text-xl font-bold text-slate-900 mb-1 flex items-center gap-2">
                 {selectedSchool.name} {selectedSchool.verified && <CheckCircle2 className="h-4 w-4 text-blue-500 fill-blue-50" />}
@@ -244,7 +248,11 @@ function MapContent({ schools }: { schools: School[] }) {
                   onClick={() => handleSchoolSelect(school)}
                   className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 cursor-pointer transition-all flex gap-4 items-center"
                >
-                  <img src={school.heroImage} className="w-16 h-16 rounded-lg object-cover bg-slate-100" alt="" />
+                  {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
+                    <img src={school.heroImage} className="w-16 h-16 rounded-lg object-cover bg-slate-100 shrink-0" alt="" />
+                  ) : (
+                    <img src="/logo-512.png" className="w-16 h-16 rounded-lg object-contain bg-slate-50 p-1 shrink-0" alt="" />
+                  )}
                   <div className="flex-1 min-w-0">
                      <h4 className="font-bold text-slate-900 text-sm truncate">{school.name}</h4>
                      <p className="text-xs text-slate-500 mt-1 flex items-center">

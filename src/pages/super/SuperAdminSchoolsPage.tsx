@@ -32,10 +32,10 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
-import { fetchCollection, updateDocument, createDocument, subscribeToCollection, bulkImportPreloadedSchools } from "@/lib/firestoreUtils";
+import { fetchCollection, updateDocument, createDocument, subscribeToCollection } from "@/lib/firestoreUtils";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { PRELOADED_SCHOOLS } from "@/data/preloadedSchools";
+
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/lib/AuthContext";
 
@@ -47,33 +47,9 @@ export function SuperAdminSchoolsPage() {
   const [schools, setSchools] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
-  const [seeding, setSeeding] = useState(false);
   const [editSchool, setEditSchool] = useState<any | null>(null);
   const [suspendSchool, setSuspendSchool] = useState<any | null>(null);
   const [viewSchoolDetails, setViewSchoolDetails] = useState<any | null>(null);
-  const [seedConfirmOpen, setSeedConfirmOpen] = useState(false);
-
-  const handleSeedRegistry = async () => {
-    setSeeding(true);
-
-    try {
-      const result = await bulkImportPreloadedSchools(auth.currentUser?.uid || "super_admin_seed");
-
-      if (result.successCount > 0) {
-        toast.success(`Successfully imported ${result.successCount} Swati preschools from preloadedSchools.json!`);
-      } else if (result.failCount > 0) {
-        toast.error(`Import completed with ${result.failCount} errors.`);
-      } else {
-        toast.info("All preloaded registry preschools are already present in your database.");
-      }
-    } catch (e) {
-      console.error("Critical bulk import failure:", e);
-      toast.error("An error occurred while attempting bulk import.");
-    } finally {
-      setSeeding(false);
-      setSeedConfirmOpen(false);
-    }
-  };
 
   useEffect(() => {
     const unsubRegs = subscribeToCollection("school_registrations", (data) => {
@@ -81,15 +57,8 @@ export function SuperAdminSchoolsPage() {
     });
     
     const unsubSchools = subscribeToCollection("schools", (data) => {
-      const dbSchools = data as any[];
-      const mergedSchoolsMap = new Map<string, any>();
-      
-      // 1. Add preloaded schools as baseline
-      PRELOADED_SCHOOLS.forEach(s => mergedSchoolsMap.set(s.id, s));
-      // 2. Overwrite with DB schools
-      dbSchools.forEach(s => mergedSchoolsMap.set(s.id, s));
-      
-      setSchools(Array.from(mergedSchoolsMap.values()));
+      const dbSchools = (data as any[]) || [];
+      setSchools(dbSchools);
       setLoading(false);
     });
 
@@ -164,19 +133,6 @@ export function SuperAdminSchoolsPage() {
           <p className="text-slate-500 italic text-sm">Manage all registered preschools and verify their documents.</p>
         </div>
         <div className="flex items-center gap-3">
-           <Button 
-             variant="outline" 
-             className="rounded-xl border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 cursor-pointer" 
-             onClick={handleSeedRegistry} 
-             disabled={seeding}
-           >
-              {seeding ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Database className="h-4 w-4 mr-2 text-emerald-600" />
-              )}
-              {seeding ? "Importing..." : "Pre-load Public Registry"}
-           </Button>
            <Button variant="outline" className="rounded-xl border-slate-200">
               <Filter className="h-4 w-4 mr-2" /> Filters
            </Button>
@@ -217,10 +173,10 @@ export function SuperAdminSchoolsPage() {
                     <td className="px-6 py-4">
                        <div className="flex items-center gap-3">
                           <div className="h-12 w-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-black relative overflow-hidden group-hover:shadow-md transition-all">
-                             {school.heroImage ? (
+                             {school.heroImage && !school.heroImage.includes('unsplash.com') ? (
                                <img src={school.heroImage} className="h-full w-full object-cover" alt="" />
                              ) : (
-                               <Building2 className="h-6 w-6" />
+                               <img src="/logo-512.png" alt="Preschools Eswatini" className="h-full w-full object-contain p-1" />
                              )}
                           </div>
                           <div className="min-w-0">
@@ -454,10 +410,10 @@ export function SuperAdminSchoolsPage() {
                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent"></div>
                <div className="absolute -bottom-12 left-8 h-24 w-24 rounded-2xl bg-white shadow-xl flex items-center justify-center p-1">
                   <div className="h-full w-full rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden">
-                     {viewSchoolDetails.heroImage ? (
+                     {viewSchoolDetails.heroImage && !viewSchoolDetails.heroImage.includes('unsplash.com') ? (
                         <img src={viewSchoolDetails.heroImage} className="h-full w-full object-cover" alt="" />
                      ) : (
-                        <Building2 className="h-10 w-10 text-slate-300" />
+                        <img src="/logo-512.png" alt="Preschools Eswatini" className="h-full w-full object-contain p-2" />
                      )}
                   </div>
                </div>
@@ -523,25 +479,7 @@ export function SuperAdminSchoolsPage() {
         </Dialog>
       )}
       
-      {seedConfirmOpen && (
-        <Dialog open={true} onOpenChange={(open) => !open && setSeedConfirmOpen(false)}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Confirm Bulk Import</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to bulk-import all preloaded schools from the registry into your Firestore database? This will skip any schools already matching by ID.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setSeedConfirmOpen(false)}>Cancel</Button>
-              <Button onClick={handleSeedRegistry} disabled={seeding}>
-                {seeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                {seeding ? "Importing..." : "Run Import"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+
     </div>
   );
 }
