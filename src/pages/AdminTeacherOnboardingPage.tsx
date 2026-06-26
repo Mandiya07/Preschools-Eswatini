@@ -135,36 +135,40 @@ export default function AdminTeacherOnboardingPage() {
     };
     loadSchools();
 
-    // 2. Subscribe to general onboardings (for school admin)
-    const effectiveSchool = user?.role === "SuperAdmin" ? activeSchoolId : user?.schoolId;
-    const unsubOnboardings = subscribeToCollection(
-      "teacher_onboardings",
-      (data) => {
-        let sorted = (data as TeacherOnboarding[]).sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-        setOnboardings(sorted);
-        setLoading(false);
-      }
-    );
+    let unsubOnboardings = () => {};
+    if (effectiveSchool || user?.role === "SuperAdmin") {
+      const constraints = effectiveSchool ? [where("schoolId", "==", effectiveSchool)] : [];
+      unsubOnboardings = subscribeToCollection(
+        "teacher_onboardings",
+        (data) => {
+          let sorted = (data as TeacherOnboarding[]).sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+          setOnboardings(sorted);
+          setLoading(false);
+        },
+        ...constraints
+      );
+    } else {
+      setLoading(false);
+    }
 
     // 3. Subscribe to current user's specific applications
+    let unsubMyOnboardings = () => {};
     if (user?.uid) {
-      const unsubMyOnboardings = subscribeToCollection(
+      unsubMyOnboardings = subscribeToCollection(
         "teacher_onboardings",
         (data) => {
           const filtered = (data as TeacherOnboarding[]).filter(x => x.userUid === user.uid);
           setTeacherOwnOnboardings(filtered);
-        }
+        },
+        where("userUid", "==", user.uid)
       );
-      return () => {
-        unsubOnboardings();
-        unsubMyOnboardings();
-      };
     }
 
     return () => {
       unsubOnboardings();
+      unsubMyOnboardings();
     };
   }, [user, activeSchoolId]);
 
