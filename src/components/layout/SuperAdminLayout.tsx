@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import { Logo } from "./Logo";
 import { 
   BarChart3, 
   Building2, 
@@ -55,8 +56,8 @@ export function SuperAdminLayout() {
         <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
           <div className="fixed inset-0 bg-slate-900/80" onClick={() => setMobileMenuOpen(false)}></div>
           <div className="fixed inset-y-0 left-0 w-full max-w-xs bg-white shadow-xl flex flex-col animate-in slide-in-from-left duration-300">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-               <span className="text-xl font-black text-blue-600 tracking-tighter">PLATFORM HUB</span>
+            <div className="flex items-center justify-between px-4 py-4 border-b border-slate-100">
+               <Logo variant="standard" size="sm" />
                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
                  <X className="h-5 w-5" />
                </Button>
@@ -99,11 +100,18 @@ export function SuperAdminLayout() {
           sidebarOpen ? "w-64" : "w-20"
         }`}
       >
-        <div className="h-16 flex items-center px-6 border-b border-slate-100">
-           <span className={`text-xl font-black text-blue-600 tracking-tighter transition-opacity duration-300 ${sidebarOpen ? "opacity-100" : "opacity-0 invisible"}`}>
-             SUPER ADMIN
-           </span>
-           {!sidebarOpen && <ShieldCheck className="h-8 w-8 text-blue-600 mx-auto" />}
+        <div className="h-16 flex items-center px-4 border-b border-slate-100 gap-2 overflow-hidden">
+          <Logo variant="icon" size="sm" className="shrink-0" />
+          {sidebarOpen ? (
+            <div className="flex flex-col">
+              <span className="text-xs font-black tracking-widest text-slate-800 uppercase">
+                PLATFORM
+              </span>
+              <span className="text-[10px] font-black text-blue-600 tracking-wider uppercase">
+                SUPER ADMIN
+              </span>
+            </div>
+          ) : null}
         </div>
 
         <nav className="sidebar-nav flex-1 overflow-y-auto py-4 px-2 space-y-0.5">

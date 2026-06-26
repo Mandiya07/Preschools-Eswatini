@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { motion } from "motion/react";
+import { Logo } from "@/components/layout/Logo";
 import { 
   Building2, 
   CheckCircle2, 
@@ -56,9 +57,12 @@ export function LandingPage() {
               transition={{ duration: 0.6 }}
               className="max-w-2xl"
             >
-              <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-bold text-primary mb-6 shadow-sm">
-                <Sparkles className="h-4 w-4 mr-2" />
-                The Modern Platform for Early Education
+              <div className="inline-flex items-center gap-2.5 mb-6 p-2 pr-5 bg-white border border-slate-200/80 rounded-2xl shadow-sm">
+                <Logo variant="icon" size="sm" />
+                <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-pulse fill-amber-400" />
+                  Eswatini's National Early Education System
+                </span>
               </div>
               <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl leading-[1.05]">
                 Run your school
@@ -75,11 +79,11 @@ export function LandingPage() {
                   <Link to="/directory"><Heart className="mr-2 h-5 w-5 text-secondary"/> Discover Schools</Link>
                 </Button>
               </div>
-              <div className="mt-10 flex items-center gap-4 text-sm text-slate-500 font-bold">
-                <div className="flex -space-x-3">
-                   <div className="h-10 w-10 rounded-full border-2 border-white bg-blue-600 flex items-center justify-center text-[10px] shadow-sm font-bold text-white">SZ</div>
+              <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-4 bg-slate-50 p-4 rounded-3xl border border-slate-100 max-w-lg">
+                <Logo variant="standard" size="sm" />
+                <div className="text-xs text-slate-500 font-bold leading-normal border-t sm:border-t-0 sm:border-l border-slate-200 pt-2 sm:pt-0 sm:pl-4">
+                  Official platform connecting preschools across the Kingdom of Eswatini.
                 </div>
-                Connecting preschools across the Kingdom of Eswatini
               </div>
             </motion.div>
             

@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Logo } from "./Logo";
 import { 
   GraduationCap, Menu, X, LayoutDashboard, ShieldCheck, Download,
   Chrome, Compass, ArrowRight, Check 
@@ -79,13 +80,8 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-md overflow-x-hidden">
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 sm:px-6 gap-2">
         <div className="flex items-center gap-4 shrink-0">
-          <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm shadow-blue-100">
-              <GraduationCap className="h-6 w-6" />
-            </div>
-            <span className="text-xl font-black tracking-tight text-slate-900 hidden sm:inline">
-              Preschools<span className="text-blue-600"> Eswatini</span>
-            </span>
+          <Link to="/" className="flex items-center shrink-0">
+            <Logo variant="standard" size="md" showTextOnMobile={false} />
           </Link>
         </div>
 

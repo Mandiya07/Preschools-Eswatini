@@ -1,4 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Logo } from "./Logo";
 import { 
   Building2, 
   LayoutDashboard, 
@@ -137,12 +138,10 @@ export function SchoolAdminLayout() {
       <div 
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 flex flex-col ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex h-16 items-center flex-shrink-0 px-6 bg-slate-950">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-600">
-              <Building2 className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-sm font-bold tracking-tight">
+        <div className="flex h-16 items-center flex-shrink-0 px-4 bg-slate-950 border-b border-slate-900">
+          <Link to="/" className="flex items-center gap-2 overflow-hidden">
+            <Logo variant="icon" size="sm" className="scale-90 shrink-0" />
+            <span className="text-xs font-black tracking-wider text-slate-100 uppercase truncate max-w-[150px]">
               {activeSchool?.name || "School Admin"}
             </span>
           </Link>

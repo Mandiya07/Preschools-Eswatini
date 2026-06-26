@@ -1,8 +1,103 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="100" fill="#2563eb" />
-  <g transform="translate(112, 112) scale(12)" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-    <path d="M22 10v6" />
-    <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="44" fill="#ffffff" />
+  <!-- Gold Arch on the Left -->
+  <path
+    d="M 50 145 A 65 65 0 0 1 100 40"
+    fill="none"
+    stroke="#f59e0b"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+
+  {/* Five Colorful Circular Dots along the arch */}
+  <circle cx="85" cy="40" r="5" fill="#22c55e" />
+  <circle cx="65" cy="55" r="5" fill="#ec4899" />
+  <circle cx="53" cy="73" r="5" fill="#f97316" />
+  <circle cx="48" cy="95" r="5" fill="#8b5cf6" />
+  <circle cx="47" cy="118" r="5" fill="#3b82f6" />
+
+  {/* Eswatini Flag on Top of the Roof */}
+  {/* Flagpole */}
+  <line x1="115" y1="40" x2="115" y2="10" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round" />
+  {/* Flag Canvas */}
+  <g transform="translate(115, 10)">
+    {/* Blue bands (top and bottom) */}
+    <rect x="0" y="0" width="36" height="22" fill="#002f6c" rx="1" />
+    {/* Yellow inner lines */}
+    <rect x="0" y="3.5" width="36" height="15" fill="#ffdd00" />
+    {/* Crimson red center */}
+    <rect x="0" y="5" width="36" height="12" fill="#b10c0c" />
+    {/* Simplified Eswatini Shield */}
+    <ellipse cx="18" cy="11" rx="4.5" ry="3.5" fill="#000000" />
+    <ellipse cx="18" cy="11" rx="2" ry="3.5" fill="#ffffff" />
+    <line x1="14" y1="11" x2="22" y2="11" stroke="#ffdd00" stroke-width="0.8" />
+    {/* Tiny staff circles */}
+    <circle cx="13" cy="11" r="0.6" fill="#ffffff" />
+    <circle cx="23" cy="11" r="0.6" fill="#ffffff" />
   </g>
+
+  {/* House Roof (Blue) */}
+  <path
+    d="M 60 75 L 115 40 L 170 75"
+    fill="none"
+    stroke="#1e3a8a"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  {/* Right Wall of House */}
+  <path
+    d="M 165 74 L 165 110"
+    stroke="#1e3a8a"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+  {/* Left Wall of House */}
+  <path
+    d="M 65 74 L 65 110"
+    stroke="#1e3a8a"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+
+  {/* Four Colorful Window Panes */}
+  <g transform="translate(0, 2)">
+    <rect x="104" y="51" width="7" height="7" fill="#ec4899" rx="1" />
+    <rect x="113" y="51" width="7" height="7" fill="#f59e0b" rx="1" />
+    <rect x="104" y="60" width="7" height="7" fill="#22c55e" rx="1" />
+    <rect x="113" y="60" width="7" height="7" fill="#3b82f6" rx="1" />
+  </g>
+
+  {/* Waving Boy (Green) inside house */}
+  <g>
+    {/* Head */}
+    <circle cx="94" cy="78" r="6" fill="#22c55e" />
+    {/* Body */}
+    <path d="M 87 114 C 88 102 91 88 95 86 C 99 88 102 102 103 114 Z" fill="#22c55e" />
+    {/* Left Arm waving up */}
+    <path d="M 91 88 Q 82 82 80 73" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" />
+    {/* Right Arm */}
+    <path d="M 97 88 Q 106 91 110 102" fill="none" stroke="#22c55e" stroke-width="4.5" stroke-linecap="round" />
+  </g>
+
+  {/* Waving Girl (Purple) inside house */}
+  <g>
+    {/* Head */}
+    <circle cx="136" cy="80" r="6" fill="#8b5cf6" />
+    {/* Ponytails */}
+    <circle cx="129" cy="76" r="3" fill="#8b5cf6" />
+    <circle cx="143" cy="76" r="3" fill="#8b5cf6" />
+    {/* Body */}
+    <path d="M 129 114 C 130 102 133 89 137 87 C 141 89 144 102 145 114 Z" fill="#8b5cf6" />
+    {/* Left Arm */}
+    <path d="M 132 89 Q 123 92 120 103" fill="none" stroke="#8b5cf6" stroke-width="4.5" stroke-linecap="round" />
+    {/* Right Arm waving up */}
+    <path d="M 139 89 Q 148 83 151 74" fill="none" stroke="#8b5cf6" stroke-width="4.5" stroke-linecap="round" />
+  </g>
+
+  {/* Open Book at the bottom in Blue */}
+  <path
+    d="M 115 114 C 90 102 61 110 61 110 L 64 120 C 64 120 90 111 115 122 C 140 111 166 120 166 120 L 169 110 C 169 110 140 102 115 114 Z"
+    fill="#2563eb"
+  />
 </svg>

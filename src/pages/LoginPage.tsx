@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Mail, AlertCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { Logo } from "@/components/layout/Logo";
 
 export function LoginPage() {
   const { login, loginWithEmail, user, loading, sendEmailVerification, devLogin } = useAuth();
@@ -100,9 +101,14 @@ export function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-50 px-4 py-12">
       <SEO title="Sign In | Preschools Eswatini Platform" />
-      <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-2 text-center">Sign In</h1>
-        <p className="text-slate-600 mb-8 text-center text-sm">Welcome back to Preschools Eswatini. Please sign in to continue.</p>
+      <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-md w-full flex flex-col">
+        <div className="flex flex-col items-center justify-center mb-8 border-b border-slate-100 pb-6">
+          <Link to="/">
+            <Logo variant="full" size="lg" className="hover:opacity-90 transition-opacity" />
+          </Link>
+        </div>
+        <h1 className="text-xl font-bold mb-2 text-center text-slate-800">Sign In</h1>
+        <p className="text-slate-500 mb-6 text-center text-xs">Welcome back. Please enter your credentials to access your dashboard.</p>
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-start gap-2">
