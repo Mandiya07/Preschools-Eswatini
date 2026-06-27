@@ -70,6 +70,7 @@ type SchoolData = {
 
 export default function AdminTeacherOnboardingPage() {
   const { user, activeSchoolId } = useAuth();
+  const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   
   // View switches
   // For developer ease & demonstration, allow switching between simulated roles if they want to demo both
@@ -136,8 +137,8 @@ export default function AdminTeacherOnboardingPage() {
     loadSchools();
 
     let unsubOnboardings = () => {};
-    if (effectiveSchool || user?.role === "SuperAdmin") {
-      const constraints = effectiveSchool ? [where("schoolId", "==", effectiveSchool)] : [];
+    if (effectiveSchoolId || user?.role === "SuperAdmin") {
+      const constraints = effectiveSchoolId ? [where("schoolId", "==", effectiveSchoolId)] : [];
       unsubOnboardings = subscribeToCollection(
         "teacher_onboardings",
         (data) => {

@@ -292,6 +292,36 @@ export function SuperAdminDashboard() {
         </Card>
       </div>
 
+      {/* Preschool Directory */}
+      <Card className="border-none shadow-sm">
+        <CardHeader className="border-b border-slate-50">
+          <CardTitle className="text-sm font-black uppercase tracking-widest text-slate-900">Preschool Directory</CardTitle>
+          <CardDescription>All registered preschools and contact information.</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-slate-500">
+              <thead className="text-xs text-slate-700 uppercase bg-slate-50">
+                <tr>
+                  <th scope="col" className="px-6 py-3">Preschool Name</th>
+                  <th scope="col" className="px-6 py-3">Email</th>
+                  <th scope="col" className="px-6 py-3">Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                {schoolsList.map((school) => (
+                  <tr key={school.id} className="bg-white border-b hover:bg-slate-50">
+                    <td className="px-6 py-4 font-bold text-slate-900">{school.name}</td>
+                    <td className="px-6 py-4">{school.email || 'N/A'}</td>
+                    <td className="px-6 py-4">{school.phone || 'N/A'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Quick Actions Footer */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
          <Card className="bg-slate-900 text-white border-none shadow-xl">

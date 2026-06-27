@@ -19,7 +19,8 @@ import {
   LayoutDashboard,
   ShieldAlert,
   FileText,
-  Share2
+  Share2,
+  TrendingUp
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,6 +35,7 @@ export function SuperAdminLayout() {
   const navigation = [
     { name: 'Dashboard', href: '/super', icon: LayoutDashboard },
     { name: 'Schools', href: '/super/schools', icon: Building2 },
+    { name: 'Sales CRM', href: '/super/crm', icon: TrendingUp },
     { name: 'Subscriptions', href: '/super/subscriptions', icon: CreditCard },
     { name: 'Revenue', href: '/super/revenue', icon: BarChart3 },
     { name: 'Users', href: '/super/users', icon: Users },

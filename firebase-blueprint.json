@@ -621,6 +621,42 @@
         "updatedAt": { "type": "string", "format": "date-time" }
       },
       "required": ["schoolId", "userUid", "name", "email", "status"]
+    },
+    "SalesLead": {
+      "title": "SalesLead",
+      "description": "A sales lead representing a preschool targeted for website subscription selling in Eswatini",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "preschoolName": { "type": "string" },
+        "contactName": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "region": { "type": "string", "enum": ["Hhohho", "Manzini", "Shiselweni", "Lubombo"] },
+        "town": { "type": "string" },
+        "websiteStatus": { "type": "string", "enum": ["none", "outdated", "has_active"] },
+        "leadStage": { "type": "string", "enum": ["discovery", "contacted", "demo_scheduled", "proposal_sent", "negotiation", "won", "lost"] },
+        "targetSubscriptionTier": { "type": "string", "enum": ["Free (Digital Equity)", "Standard - E800/term", "Premium - E1200/term"] },
+        "estimatedValue": { "type": "number" },
+        "notes": { "type": "string" },
+        "nextFollowUp": { "type": "string", "format": "date" },
+        "interactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "date": { "type": "string", "format": "date-time" },
+              "type": { "type": "string", "enum": ["call", "email", "meeting", "demo", "whatsapp", "other"] },
+              "summary": { "type": "string" },
+              "outcome": { "type": "string" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["preschoolName", "region", "town", "leadStage"]
     }
   },
   "firestore": {
@@ -775,6 +811,10 @@
     "teacher_onboardings": {
       "schema": "TeacherOnboarding",
       "description": "Onboarding applications and qualification records submitted by prospective teachers."
+    },
+    "sales_leads": {
+      "schema": "SalesLead",
+      "description": "Preschool sales leads database for Eswatini"
     }
   }
 }

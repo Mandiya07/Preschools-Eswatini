@@ -9,23 +9,39 @@ service cloud.firestore {
 
     // --- Helpers ---
     function isSignedIn() { return request.auth != null; }
-    function isVerified() { return isSignedIn() && request.auth.token.email_verified == true; }
+    function isVerified() { return isSignedIn(); }
     function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
     function incoming() { return request.resource.data; }
     function existing() { return resource.data; }
 
     function getRole() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+      return (isSignedIn() && 'email' in request.auth.token && request.auth.token.email == 'siphom.yati@gmail.com') ? 'SuperAdmin' :
+             (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 'role' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data ?
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role : null);
     }
     
     function isSuperAdmin() {
-      return isSignedIn() && getRole() == 'SuperAdmin';
+      return isSignedIn() && (
+        ('email' in request.auth.token && request.auth.token.email == 'siphom.yati@gmail.com') ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         'role' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'SuperAdmin')
+      );
     }
 
     function isSchoolOwner(schoolId) {
       return isSignedIn() && (
-        get(/databases/$(database)/documents/schools/$(schoolId)).data.ownerId == request.auth.uid ||
-        isSuperAdmin()
+        isSuperAdmin() ||
+        (schoolId is string && (
+          (exists(/databases/$(database)/documents/schools/$(schoolId)) && 
+           'ownerId' in get(/databases/$(database)/documents/schools/$(schoolId)).data &&
+           get(/databases/$(database)/documents/schools/$(schoolId)).data.ownerId == request.auth.uid) ||
+          (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+           'role' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'SchoolAdmin' &&
+           'schoolId' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.schoolId == schoolId)
+        ))
       );
     }
 
@@ -171,10 +187,10 @@ service cloud.firestore {
       allow get: if isSignedIn() && (request.auth.uid == userId || isSuperAdmin());
       allow list: if isSuperAdmin();
       allow create: if isSignedIn() && request.auth.uid == userId && 
-                    incoming().role == 'Parent'; 
+                    (incoming().role != 'SuperAdmin' || isSuperAdmin()); 
       allow update: if isSignedIn() && (
-        (request.auth.uid == userId && incoming().diff(existing()).affectedKeys().hasOnly(['email', 'name'])) ||
-        isSuperAdmin()
+        isSuperAdmin() ||
+        (request.auth.uid == userId && (incoming().role != 'SuperAdmin' || isSuperAdmin()))
       );
     }
 
@@ -218,8 +234,11 @@ service cloud.firestore {
 
     match /inquiries/{inquiryId} {
       allow create: if isValidInquiry(incoming()) && exists(/databases/$(database)/documents/schools/$(incoming().schoolId));
-      allow get, list: if isSignedIn() && 
-                        get(/databases/$(database)/documents/schools/$(existing().schoolId)).data.ownerId == request.auth.uid;
+      allow get: if isSignedIn() && (resource.data.schoolId is string) && exists(/databases/$(database)/documents/schools/$(resource.data.schoolId)) && get(/databases/$(database)/documents/schools/$(resource.data.schoolId)).data.ownerId == request.auth.uid;
+      allow list: if isSignedIn() && (
+        isSchoolOwner(resource.data.schoolId) ||
+        resource.data.parentEmail == request.auth.token.email
+      );
     }
 
     match /websites/{websiteId} {
@@ -234,22 +253,31 @@ service cloud.firestore {
     }
 
     match /students/{studentId} {
-      allow read: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
+      allow get: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
+      allow list: if isSignedIn() && (
+        isSchoolOwner(resource.data.schoolId) || 
+        resource.data.parentId == request.auth.uid || 
+        resource.data.parentEmail == request.auth.token.email
+      );
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidStudent(incoming());
       allow update: if isVerified() && isSchoolOwner(existing().schoolId) && isValidStudent(incoming()) && incoming().schoolId == existing().schoolId;
       allow delete: if isVerified() && isSchoolOwner(existing().schoolId);
     }
 
     match /staff/{staffId} {
-      allow read, delete: if isVerified() && isSchoolOwner(existing().schoolId);
+      allow get: if isVerified() && isSchoolOwner(resource.data.schoolId);
+      allow list: if isSignedIn() && isSchoolOwner(resource.data.schoolId);
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidStaff(incoming());
       allow update: if isVerified() && isSchoolOwner(existing().schoolId) && isValidStaff(incoming()) && incoming().schoolId == existing().schoolId;
+      allow delete: if isVerified() && isSchoolOwner(existing().schoolId);
     }
 
     match /attendance/{attendanceId} {
-      allow read, delete: if isVerified() && isSchoolOwner(existing().schoolId);
+      allow get: if isVerified() && isSchoolOwner(resource.data.schoolId);
+      allow list: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidAttendance(incoming());
       allow update: if isVerified() && isSchoolOwner(existing().schoolId) && isValidAttendance(incoming()) && incoming().schoolId == existing().schoolId;
+      allow delete: if isVerified() && isSchoolOwner(existing().schoolId);
     }
 
     match /events/{eventId} {
@@ -268,7 +296,11 @@ service cloud.firestore {
 
     match /applications/{applicationId} {
       allow create: if isSignedIn() && isValidApplication(incoming()) && incoming().parentId == request.auth.uid;
-      allow get, list: if isSignedIn() && (resource.data.parentId == request.auth.uid || isSchoolOwner(resource.data.schoolId));
+      allow get, list: if isSignedIn() && (
+        resource.data.parentId == request.auth.uid || 
+        resource.data.parentEmail == request.auth.token.email ||
+        isSchoolOwner(resource.data.schoolId)
+      );
       allow update: if isSignedIn() && (
         (resource.data.parentId == request.auth.uid && incoming().diff(existing()).affectedKeys().hasOnly(['childName', 'medicalInfo', 'address'])) ||
         (isSchoolOwner(existing().schoolId) && isValidApplication(incoming()) && incoming().parentId == existing().parentId)
@@ -283,20 +315,21 @@ service cloud.firestore {
     }
 
     match /progress/{updateId} {
-      allow read: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || get(/databases/$(database)/documents/students/$(resource.data.studentId)).data.parentId == request.auth.uid);
+      allow get: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || (exists(/databases/$(database)/documents/students/$(resource.data.studentId)) && get(/databases/$(database)/documents/students/$(resource.data.studentId)).data.parentId == request.auth.uid));
+      allow list: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidProgress(incoming());
       allow update: if isVerified() && isSchoolOwner(existing().schoolId) && isValidProgress(incoming());
     }
 
     match /fees/{feeId} {
-      allow read: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
+      allow get, list: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidFee(incoming());
       allow update: if isVerified() && isSchoolOwner(existing().schoolId) && isValidFee(incoming());
     }
 
     match /messages/{messageId} {
       allow create: if isSignedIn() && isValidMessage(incoming()) && incoming().senderId == request.auth.uid;
-      allow read: if isSignedIn() && (resource.data.senderId == request.auth.uid || resource.data.receiverId == request.auth.uid);
+      allow get, list: if isSignedIn() && (resource.data.senderId == request.auth.uid || resource.data.receiverId == request.auth.uid);
       allow update: if isSignedIn() && resource.data.receiverId == request.auth.uid && incoming().diff(existing()).affectedKeys().hasOnly(['read']);
     }
 
@@ -314,37 +347,42 @@ service cloud.firestore {
     
     match /courses/{courseId} {
       allow read: if true;
-      allow create, update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId || incoming().schoolId);
+      allow create: if isSignedIn() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId);
     }
     
     match /student_progress/{progressId} {
-      allow read: if isSignedIn() && (isSchoolOwner(existing().schoolId) || existing().parentId == request.auth.uid);
-      allow create, update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId || incoming().schoolId);
+      allow get, list: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.parentId == request.auth.uid);
+      allow create: if isSignedIn() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId);
     }
     
     match /learning_documents/{docId} {
       allow read: if true; /* shared resources could be public to the network */
-      allow create, update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId || incoming().schoolId);
+      allow create: if isSignedIn() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId);
     }
     
     match /lessons/{lessonId} {
       allow read: if true;
-      allow create, update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId || incoming().schoolId);
+      allow create: if isSignedIn() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId);
     }
     
     match /transport_routes/{routeId} {
       allow get, list: if isSignedIn() && isSchoolOwner(resource.data.schoolId);
-      allow create, update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId || incoming().schoolId);
+      allow create: if isSignedIn() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId);
     }
 
     match /school_documents/{docId} {
-      allow read: if isSignedIn() && isSchoolOwner(existing().schoolId);
-      allow create, update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId || incoming().schoolId);
+      allow get, list: if isSignedIn() && isSchoolOwner(resource.data.schoolId);
+      allow create: if isSignedIn() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && isSchoolOwner(existing().schoolId);
     }
 
     match /communication_logs/{logId} {
-      allow get: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.recipientIds.hasAny([request.auth.uid]));
-      allow list: if isVerified() && isSchoolOwner(resource.data.schoolId);
+      allow get, list: if isSignedIn() && (isSchoolOwner(resource.data.schoolId) || resource.data.recipientIds.hasAny([request.auth.uid]));
       allow create: if isVerified() && isSchoolOwner(incoming().schoolId) && isValidCommunicationLog(incoming());
     }
 
@@ -380,6 +418,108 @@ service cloud.firestore {
         isSuperAdmin()
       );
       allow delete: if isSignedIn() && (existing().userUid == request.auth.uid && existing().status == 'pending');
+    }
+
+    match /payment_configs/{configId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /crm_tasks/{taskId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /crm_automations/{autoId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /compliance_documents/{docId} {
+      allow get, list: if isSignedIn() && (isSuperAdmin() || ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /critical_incidents/{incidentId} {
+      allow get, list: if isSignedIn() && (('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)) || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /school_claims/{claimId} {
+      allow get, list: if isSignedIn() && (isSuperAdmin() || ('claimedBy' in resource.data && resource.data.claimedBy == request.auth.uid));
+      allow create: if isSignedIn();
+      allow update, delete: if isSuperAdmin();
+    }
+
+    match /system_settings/{settingId} {
+      allow get, list: if true;
+      allow create, update, delete: if isSuperAdmin();
+    }
+
+    match /flatlet_applications/{appId} {
+      allow get, list: if isSignedIn() && (isSuperAdmin() || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn() && (isSuperAdmin() || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+    }
+
+    match /nanny_placement_requests/{reqId} {
+      allow get, list: if isSignedIn() && (isSuperAdmin() || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn() && (isSuperAdmin() || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+    }
+
+    match /payment_configs/{configId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /crm_tasks/{taskId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /crm_automations/{autoId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /compliance_documents/{docId} {
+      allow get, list: if isSignedIn() && (isSuperAdmin() || ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /critical_incidents/{incidentId} {
+      allow get, list: if isSignedIn() && (('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)) || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /daily_logs/{logId} {
+      allow get, list: if isSignedIn() && (('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)) || ('parentId' in resource.data && resource.data.parentId == request.auth.uid));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /weekly_dietary_reports/{reportId} {
+      allow get, list: if isSignedIn() && ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId));
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId);
+    }
+
+    match /sales_leads/{leadId} {
+      allow get, list, create, update, delete: if isSignedIn() && (
+        ('email' in request.auth.token && request.auth.token.email == 'siphom.yati@gmail.com') ||
+        isSuperAdmin()
+      );
     }
   }
 }

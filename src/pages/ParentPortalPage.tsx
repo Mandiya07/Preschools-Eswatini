@@ -761,11 +761,32 @@ export function ParentPortalPage() {
       where('status', '==', 'Published')
     );
 
-    const unsubMessages = subscribeToCollection(
+    let sMsgs: any[] = [];
+    let rMsgs: any[] = [];
+
+    const updateMessagesList = (sent: any[], received: any[]) => {
+      const merged = [...sent, ...received];
+      const unique = Array.from(new Map(merged.map(m => [m.id, m])).values());
+      unique.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      setMessages(unique as Message[]);
+    };
+
+    const unsubSent = subscribeToCollection(
       'messages',
-      (data) => setMessages(data as Message[]),
-      where('receiverId', 'in', [user.uid, 'school_admin']), // Simplification for demo
-      orderBy('createdAt', 'desc')
+      (data) => {
+        sMsgs = data;
+        updateMessagesList(sMsgs, rMsgs);
+      },
+      where('senderId', '==', user.uid)
+    );
+
+    const unsubReceived = subscribeToCollection(
+      'messages',
+      (data) => {
+        rMsgs = data;
+        updateMessagesList(sMsgs, rMsgs);
+      },
+      where('receiverId', '==', user.uid)
     );
 
     setLoading(false);
@@ -777,7 +798,8 @@ export function ParentPortalPage() {
       unsubFees();
       unsubAnnouncements();
       unsubNewsletters();
-      unsubMessages();
+      unsubSent();
+      unsubReceived();
     };
   }, [user]);
 

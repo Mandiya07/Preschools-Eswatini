@@ -35,6 +35,7 @@ import { SuperAdminSupportPage } from "./pages/super/SuperAdminSupportPage";
 import { SuperAdminScalabilityPage } from "./pages/super/SuperAdminScalabilityPage";
 import { SuperAdminCMSPage } from "./pages/super/SuperAdminCMSPage";
 import { SuperAdminSocialPage } from "./pages/super/SuperAdminSocialPage";
+import { SuperAdminSalesCRMPage } from "./pages/super/SuperAdminSalesCRMPage";
 import { FeaturesPage } from "@/pages/FeaturesPage";
 import { PricingPage } from "@/pages/PricingPage";
 import { MarketplacePage } from "@/pages/MarketplacePage";
@@ -193,6 +194,7 @@ export default function App() {
           }>
             <Route index element={<SuperAdminDashboard />} />
             <Route path="schools" element={<SuperAdminSchoolsPage />} />
+            <Route path="crm" element={<SuperAdminSalesCRMPage />} />
             <Route path="subscriptions" element={<SuperAdminRevenuePage />} />
             <Route path="revenue" element={<SuperAdminRevenuePage />} />
             <Route path="users" element={<SuperAdminUsersPage />} />

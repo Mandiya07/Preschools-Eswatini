@@ -5,6 +5,7 @@ import {
   setPersistence,
   browserLocalPersistence,
   signInWithPopup, 
+  signInWithRedirect,
   GoogleAuthProvider, 
   signOut,
   createUserWithEmailAndPassword,
@@ -37,6 +38,7 @@ interface AuthContextType {
   sendEmailVerification: () => Promise<void>;
   activeSchoolId: string | null;
   setActiveSchoolId: (id: string | null) => void;
+  loginAsDevRole: (role: Role) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -62,70 +64,76 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [activeSchoolId]);
 
   useEffect(() => {
+    // If dev_role is set, we use the dev profile as a local bypass/sandbox mode
+    if (localStorage.getItem('dev_role')) {
+      const role = localStorage.getItem('dev_role') as Role;
+      let savedCustom = {};
+      try {
+        const customStr = localStorage.getItem('dev_custom_fields');
+        if (customStr) savedCustom = JSON.parse(customStr);
+      } catch (e) {}
+
+      let defaultProfile: UserProfile = {
+        uid: 'dev-' + role.toLowerCase(),
+        name: `Dev ${role}`,
+        email: `${role.toLowerCase()}@example.com`,
+        role: role,
+        emailVerified: true,
+      };
+
+      if (role === 'SuperAdmin') {
+        defaultProfile = {
+          uid: 'dev-superadmin',
+          name: 'Sipho Myati',
+          email: 'siphom.yati@gmail.com',
+          role: 'SuperAdmin',
+          emailVerified: true
+        };
+      } else if (role === 'SchoolAdmin') {
+        defaultProfile = {
+          uid: 'dev-schooladmin',
+          name: 'Thabo Dlamini',
+          email: 'thabo@littlescholars.sz',
+          role: 'SchoolAdmin',
+          schoolId: 'mbabane-scholars',
+          emailVerified: true
+        };
+      } else if (role === 'Parent') {
+        defaultProfile = {
+          uid: 'dev-parent',
+          name: 'Sihle Mamba',
+          email: 'sihle@mamba.co.sz',
+          role: 'Parent',
+          schoolId: 'mbabane-scholars',
+          emailVerified: true
+        };
+      } else if (role === 'Supplier') {
+        defaultProfile = {
+          uid: 'dev-supplier',
+          name: 'Eswatini School Supplies',
+          email: 'sales@eswatinisupplies.co.sz',
+          role: 'Supplier',
+          emailVerified: true
+        };
+      } else if (role === 'Advertiser') {
+        defaultProfile = {
+          uid: 'dev-advertiser',
+          name: 'MoMo Media',
+          email: 'ads@momomedia.sz',
+          role: 'Advertiser',
+          emailVerified: true
+        };
+      }
+
+      const finalUser = { ...defaultProfile, ...savedCustom };
+      setUser(finalUser);
+      localStorage.setItem('user_profile', JSON.stringify(finalUser));
+      setLoading(false);
+      return;
+    }
+
     if (!auth.app.options.apiKey) {
       console.warn("No Firebase API key provided! Firebase Auth is disabled. Using dev logic only.");
-      if (localStorage.getItem('dev_role')) {
-        const role = localStorage.getItem('dev_role') as Role;
-        let savedCustom = {};
-        try {
-          const customStr = localStorage.getItem('dev_custom_fields');
-          if (customStr) savedCustom = JSON.parse(customStr);
-        } catch (e) {}
-
-        let defaultProfile: UserProfile = {
-          uid: 'dev-' + role.toLowerCase(),
-          name: `Dev ${role}`,
-          email: `${role.toLowerCase()}@example.com`,
-          role: role,
-          emailVerified: true,
-        };
-
-        if (role === 'SuperAdmin') {
-          defaultProfile = {
-            uid: 'dev-superadmin',
-            name: 'Sipho Myati',
-            email: 'siphom.yati@gmail.com',
-            role: 'SuperAdmin',
-            emailVerified: true
-          };
-        } else if (role === 'SchoolAdmin') {
-          defaultProfile = {
-            uid: 'dev-schooladmin',
-            name: 'Thabo Dlamini',
-            email: 'thabo@littlescholars.sz',
-            role: 'SchoolAdmin',
-            schoolId: 'mbabane-scholars',
-            emailVerified: true
-          };
-        } else if (role === 'Parent') {
-          defaultProfile = {
-            uid: 'dev-parent',
-            name: 'Sihle Mamba',
-            email: 'sihle@mamba.co.sz',
-            role: 'Parent',
-            schoolId: 'mbabane-scholars',
-            emailVerified: true
-          };
-        } else if (role === 'Supplier') {
-          defaultProfile = {
-            uid: 'dev-supplier',
-            name: 'Eswatini School Supplies',
-            email: 'sales@eswatinisupplies.co.sz',
-            role: 'Supplier',
-            emailVerified: true
-          };
-        } else if (role === 'Advertiser') {
-          defaultProfile = {
-            uid: 'dev-advertiser',
-            name: 'MoMo Media',
-            email: 'ads@momomedia.sz',
-            role: 'Advertiser',
-            emailVerified: true
-          };
-        }
-
-        setUser({ ...defaultProfile, ...savedCustom });
-      }
       setLoading(false);
       return;
     }
@@ -134,12 +142,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setPersistence(auth, browserLocalPersistence).catch((error) => {
       console.error("Error setting persistence:", error);
     });
-
-    // Removed dev_role bypass. Clear it if exists to un-stick previous users.
-    if (localStorage.getItem('dev_role')) {
-      localStorage.removeItem('dev_role');
-      localStorage.removeItem('dev_custom_fields');
-    }
 
     const unsubscribe = onIdTokenChanged(auth, async (fbUser) => {
       if (fbUser) {
@@ -228,7 +230,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error: any) {
+      if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
+        await signInWithRedirect(auth, provider);
+      } else {
+        throw error;
+      }
+    }
   };
 
   const loginWithEmail = async (email: string, pass: string) => {
@@ -255,6 +265,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.removeItem('dev_role');
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_profile');
+    sessionStorage.setItem('logged_out', 'true');
     try {
       await signOut(auth);
     } catch (e) {
@@ -269,6 +280,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const loginAsDevRole = (role: Role) => {
+    localStorage.setItem('dev_role', role);
+    window.location.reload();
+  };
+
   return (
     <AuthContext.Provider value={{ 
       user, 
@@ -279,7 +295,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       logout,
       activeSchoolId,
       setActiveSchoolId,
-      sendEmailVerification: sendVerification
+      sendEmailVerification: sendVerification,
+      loginAsDevRole
     }}>
       {!loading && children}
     </AuthContext.Provider>

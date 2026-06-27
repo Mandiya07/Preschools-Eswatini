@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "@/lib/AuthContext";
+import { useAuth, Role } from "@/lib/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Mail, AlertCircle } from "lucide-react";
+import { Loader2, Mail, AlertCircle, Sparkles, ShieldCheck } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Logo } from "@/components/layout/Logo";
 
 export function LoginPage() {
-  const { login, loginWithEmail, user, loading, sendEmailVerification } = useAuth();
+  const { login, loginWithEmail, user, loading, sendEmailVerification, loginAsDevRole } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [verificationSent, setVerificationSent] = useState(false);
+
+  useEffect(() => {
+    // Automatic SuperAdmin sign-in on first visit (or when requested)
+    if (!user && !loading && !sessionStorage.getItem('logged_out')) {
+      if (loginAsDevRole) {
+        loginAsDevRole('SuperAdmin');
+      }
+    }
+  }, [user, loading, loginAsDevRole]);
 
   useEffect(() => {
     if (user && !loading) {
@@ -159,7 +168,50 @@ export function LoginPage() {
            Google
         </Button>
 
-        <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+        {/* Developer Sandbox Roles */}
+        <div className="mt-6 border-t border-slate-100 pt-6">
+          <div className="flex items-center gap-1.5 mb-3 justify-center text-blue-600 font-bold text-xs uppercase tracking-wider">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Developer Sandbox Quick Login</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => loginAsDevRole?.('SuperAdmin')}
+              className="text-xs h-9 border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center gap-1 font-semibold text-slate-700"
+            >
+              <ShieldCheck className="h-3.5 w-3.5 text-blue-600" />
+              <span>Super Admin</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => loginAsDevRole?.('SchoolAdmin')}
+              className="text-xs h-9 border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center gap-1 font-semibold text-slate-700"
+            >
+              <span>School Admin</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => loginAsDevRole?.('Parent')}
+              className="text-xs h-9 border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center gap-1 font-semibold text-slate-700"
+            >
+              <span>Parent Portal</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => loginAsDevRole?.('Supplier')}
+              className="text-xs h-9 border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center gap-1 font-semibold text-slate-700"
+            >
+              <span>Supplier</span>
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-slate-100 text-center">
           <p className="text-slate-500 text-sm">
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-600 font-bold hover:underline">
