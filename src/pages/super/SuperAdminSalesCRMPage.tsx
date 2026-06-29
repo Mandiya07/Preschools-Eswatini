@@ -98,139 +98,6 @@ const STAGE_CONFIGS: Record<LeadStage, { label: string; color: string; bg: strin
 
 const REGIONS = ['Hhohho', 'Manzini', 'Shiselweni', 'Lubombo'] as const;
 
-// Realistic Preloaded Eswatini Preschool Leads
-const PRELOADED_ESWATINI_LEADS: Omit<SalesLead, 'id'>[] = [
-  {
-    preschoolName: "Siphofaneni Tiny Tots Academy",
-    contactName: "Mrs. Nomsa Shongwe",
-    contactPhone: "+268 7602 4589",
-    contactEmail: "tinytots.siphofaneni@gmail.com",
-    region: "Lubombo",
-    town: "Siphofaneni",
-    websiteStatus: "none",
-    leadStage: "demo_scheduled",
-    targetSubscriptionTier: "Professional - E599.00",
-    estimatedValue: 800,
-    notes: "Highly enthusiastic director. Intrigued by the digital communication features for parents. Wants to show teachers on Tuesday.",
-    nextFollowUp: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    interactions: [
-      { id: "1", date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), type: "call", summary: "Cold call introduction. Discussed website subscription benefit.", outcome: "Scheduled live video demonstration." }
-    ],
-    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    preschoolName: "Ezulwini Valley Pre-Primary",
-    contactName: "Director Sibusiso Dlamini",
-    contactPhone: "+268 7812 9942",
-    contactEmail: "ezulwini.valley.prep@yahoo.com",
-    region: "Hhohho",
-    town: "Ezulwini",
-    websiteStatus: "outdated",
-    leadStage: "negotiation",
-    targetSubscriptionTier: "Enterprise - E999.00",
-    estimatedValue: 1200,
-    notes: "Currently has an old HTML static site made in 2018. Seeking professional portal to manage student roster and push digital news.",
-    nextFollowUp: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    interactions: [
-      { id: "1", date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), type: "meeting", summary: "In-person visit to school. Presented custom-branded mock template.", outcome: "Extremely impressed. Requesting minor discount on bulk SMS addons." }
-    ],
-    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    preschoolName: "Mbabane Heights Kindergarten",
-    contactName: "Mrs. Gertrude Mamba",
-    contactPhone: "+268 7654 3210",
-    contactEmail: "info@mbabaneheights.com",
-    region: "Hhohho",
-    town: "Mbabane",
-    websiteStatus: "none",
-    leadStage: "proposal_sent",
-    targetSubscriptionTier: "Enterprise - E999.00",
-    estimatedValue: 1200,
-    notes: "Received budget approval from board. Standard premium tier with custom domain support is proposed.",
-    nextFollowUp: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    interactions: [
-      { id: "1", date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(), type: "email", summary: "Sent comprehensive proposal package for preschool portal + support.", outcome: "Awaiting board meeting on Friday." }
-    ],
-    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    preschoolName: "Nhlangano Sunbeams Playgroup",
-    contactName: "Pastor Thabo Masuku",
-    contactPhone: "+268 7914 5511",
-    contactEmail: "sunbeams.nhlangano@outlook.com",
-    region: "Shiselweni",
-    town: "Nhlangano",
-    websiteStatus: "none",
-    leadStage: "contacted",
-    targetSubscriptionTier: "Starter - E299.00",
-    estimatedValue: 0,
-    notes: "Community-driven nursery. Minimal operational budget. Suitable for Free Digital Equity program with basic features to bridge access gap.",
-    nextFollowUp: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    interactions: [
-      { id: "1", date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), type: "whatsapp", summary: "Sent introductory video of digital learning tools on WhatsApp.", outcome: "Director is thankful. Expressed interest in free basic version." }
-    ],
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    preschoolName: "Manzini Central Early Learning",
-    contactName: "Ms. Linda Simelane",
-    contactPhone: "+268 7633 4488",
-    contactEmail: "linda.s@manzinicentralprep.ac.sz",
-    region: "Manzini",
-    town: "Manzini",
-    websiteStatus: "has_active",
-    leadStage: "discovery",
-    targetSubscriptionTier: "Professional - E599.00",
-    estimatedValue: 800,
-    notes: "Identified preschool listing. They have an active but non-mobile-friendly website. Needs a robust parents portal integration.",
-    nextFollowUp: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    interactions: [],
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    preschoolName: "Big Bend Sugar Nursery",
-    contactName: "Mr. Charles Myeni",
-    contactPhone: "+268 7622 7711",
-    contactEmail: "nursery@bigbendsugar.com",
-    region: "Lubombo",
-    town: "Big Bend",
-    websiteStatus: "none",
-    leadStage: "won",
-    targetSubscriptionTier: "Enterprise - E999.00",
-    estimatedValue: 1200,
-    notes: "Successfully closed. Contract signed, payment cleared. Next step is setting up their live custom template and verifying details.",
-    nextFollowUp: "",
-    interactions: [
-      { id: "1", date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), type: "demo", summary: "Conducted full demo with administrative staff.", outcome: "Approved instantly." },
-      { id: "2", date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), type: "meeting", summary: "Signed service agreement at their corporate office.", outcome: "Closed deal." }
-    ],
-    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    preschoolName: "Siteki Stars Early Academy",
-    contactName: "Mrs. Patience Tsabedze",
-    contactPhone: "+268 7604 8833",
-    contactEmail: "sitekistars@gmail.com",
-    region: "Lubombo",
-    town: "Siteki",
-    websiteStatus: "none",
-    leadStage: "discovery",
-    targetSubscriptionTier: "Professional - E599.00",
-    estimatedValue: 800,
-    notes: "Prominent preschool in Siteki town. Known to have 150+ students. Ideal candidate for our premium/standard parent communication suite.",
-    nextFollowUp: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    interactions: [],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  }
-];
 
 export function SuperAdminSalesCRMPage() {
   const [leads, setLeads] = useState<SalesLead[]>([]);
@@ -277,20 +144,28 @@ export function SuperAdminSalesCRMPage() {
     return () => unsub();
   }, []);
 
-  const handleSeedDatabase = async () => {
-    try {
-      setLoading(true);
-      for (const lead of PRELOADED_ESWATINI_LEADS) {
-        await createDocument("sales_leads", null, lead);
+  // Automatic clean up of demo/preloaded leads from live Firestore database
+  useEffect(() => {
+    const demoLeadNames = [
+      "Siphofaneni Tiny Tots Academy",
+      "Ezulwini Valley Pre-Primary",
+      "Mbabane Heights Kindergarten",
+      "Nhlangano Sunbeams Playgroup",
+      "Manzini Central Early Learning",
+      "Big Bend Sugar Nursery",
+      "Siteki Stars Early Academy"
+    ];
+    leads.forEach(async (lead) => {
+      if (lead.id && demoLeadNames.includes(lead.preschoolName)) {
+        try {
+          await deleteDocument("sales_leads", lead.id);
+          console.log(`Auto-removed demo lead from DB: ${lead.preschoolName}`);
+        } catch (e) {
+          console.error("Failed to delete demo lead:", e);
+        }
       }
-      toast.success("Successfully seeded sales CRM database with 7 high-quality Eswatini preschool leads!");
-    } catch (err) {
-      toast.error("Failed to seed leads");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    });
+  }, [leads]);
 
   const handleOpenAddForm = () => {
     setEditingLead(null);
@@ -570,15 +445,6 @@ export function SuperAdminSalesCRMPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          {leads.length === 0 && !loading && (
-            <Button 
-              variant="outline" 
-              onClick={handleSeedDatabase} 
-              className="gap-2 text-blue-700 bg-blue-50 hover:bg-blue-100 border-blue-200 rounded-xl"
-            >
-              <Database className="h-4 w-4" /> Seed Eswatini Leads
-            </Button>
-          )}
           <Button 
             onClick={handleOpenAddForm} 
             className="gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-100 font-bold text-sm"
@@ -740,12 +606,9 @@ export function SuperAdminSalesCRMPage() {
           <LayoutDashboard className="h-12 w-12 text-slate-300 mx-auto mb-4" />
           <h3 className="text-lg font-black text-slate-800">No Sales Leads Discovered</h3>
           <p className="text-xs text-slate-500 max-w-md mx-auto mt-2">
-            Build your Eswatini preschool subscription sales pipeline. Start adding manual leads or click the button below to seed the database with pre-configured target schools in Mbabane, Ezulwini, Manzini, Nhlangano, and Siphofaneni.
+            Build your Eswatini preschool subscription sales pipeline. Start adding manual leads or use the Social & Directory Lead Scraper to identify opportunities dynamically.
           </p>
           <div className="mt-6 flex justify-center gap-3">
-            <Button onClick={handleSeedDatabase} className="rounded-xl font-bold gap-2 text-xs" variant="outline">
-              <Database className="h-4 w-4" /> Seed Preloaded Schools
-            </Button>
             <Button onClick={handleOpenAddForm} className="bg-blue-600 text-white font-bold rounded-xl text-xs">
               <Plus className="h-4 w-4" /> Add First Lead
             </Button>

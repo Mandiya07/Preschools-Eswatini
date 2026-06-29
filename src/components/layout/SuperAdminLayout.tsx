@@ -20,7 +20,8 @@ import {
   ShieldAlert,
   FileText,
   Share2,
-  TrendingUp
+  TrendingUp,
+  Bot
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,6 +45,7 @@ export function SuperAdminLayout() {
     { name: 'Announcements', href: '/super/announcements', icon: Megaphone },
     { name: 'CMS', href: '/super/cms', icon: FileText },
     { name: 'Social Hub', href: '/super/social', icon: Share2 },
+    { name: 'Agent Center', href: '/super/agents', icon: Bot },
     { name: 'Support', href: '/super/support', icon: HelpCircle },
   ];
 

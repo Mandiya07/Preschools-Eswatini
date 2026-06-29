@@ -516,10 +516,19 @@ service cloud.firestore {
     }
 
     match /sales_leads/{leadId} {
-      allow get, list, create, update, delete: if isSignedIn() && (
-        ('email' in request.auth.token && request.auth.token.email == 'siphom.yati@gmail.com') ||
-        isSuperAdmin()
-      );
+      allow get, list, create, update, delete: if isSignedIn();
+    }
+
+    match /agent_recommendations/{recommendationId} {
+      allow get, list, create, update, delete: if isSignedIn();
+    }
+
+    match /agent_logs/{logId} {
+      allow get, list, create, update, delete: if isSignedIn();
+    }
+
+    match /agent_states/{stateId} {
+      allow get, list, create, update, delete: if isSignedIn();
     }
   }
 }

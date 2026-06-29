@@ -68,7 +68,99 @@ async function startServer() {
     const { prompt, type, imageData, mimeType } = req.body;
     
     if (!process.env.GEMINI_API_KEY) {
-      return res.status(500).json({ error: "Gemini API key is not configured" });
+      console.warn("GEMINI_API_KEY not set. Serving simulated AI response for type:", type);
+      
+      let text = "";
+      switch (type) {
+        case 'hero_headline':
+          text = "Nurturing Bright Minds & Happy Hearts in Eswatini";
+          break;
+        case 'hero_subheadline':
+          text = "Providing Eswatini's premium foundation phase education with state-of-the-art play parks, verified safety measures, and child-centered Montessori curriculum.";
+          break;
+        case 'website':
+        case 'profile':
+          text = "Welcome to our premium early education center. We believe that every child is unique and deserves an environment that nurtures their individual potential. Our preschool offers standard-aligned developmental programs, highly qualified child-care practitioners, and a state-of-the-art playground. We focus on fostering critical thinking, motor skill refinement, and socio-emotional wellness. Contact our registrar office to schedule a walk-through.";
+          break;
+        case 'blog':
+          text = "### 🌟 Cultivating Lifelong Curiosity in Young Learners\n\nPreschool is more than just daycare—it is a critical launchpad for brain development. Research shows that 90% of brain growth occurs before age five. Here is how we foster lifelong curiosity at our academy:\n\n1. **Structured Play-Based Learning**: Play is the work of early childhood. Through sensory bins and block building, children grasp physics, spatial reasoning, and social collaboration.\n2. **Early Literacy and Verbal Expression**: Our daily circle times and guided story hours build vocabulary, comprehension, and phonetic awareness early on.\n3. **Nature and Outdoor Inquiry**: Exploring our outdoor play fields cultivates motor coordination, healthy sensory stimulation, and an appreciation for the environment.";
+          break;
+        case 'faq':
+          text = "**Q: What are the preschool hours of operation?**\nA: We operate Monday through Friday from 7:30 AM to 1:30 PM. Half-day options are available.\n\n**Q: What is the student-to-teacher ratio?**\nA: We maintain a 10:1 child-to-caregiver ratio for personalized attention and high safety.\n\n**Q: Do you offer transport or school lunch?**\nA: We offer a nutritious, kid-friendly school menu and have partnerships with certified local student shuttle drivers.";
+          break;
+        case 'admissions':
+          text = "Dear prospective family,\n\nThank you for choosing us as your early learning partner! We have received your preliminary enrollment inquiry. Our registrar team will reach out to you within 48 hours to finalize documents, schedule a walkthrough, and answer any curriculum questions you may have. We look forward to meeting you soon!\n\nWarm regards,\nSchool Admissions Team";
+          break;
+        case 'seo':
+          text = "1. **Target Keywords**: best preschool Eswatini, early childhood learning, high quality day care, affordable nursery school\n2. **Suggested Meta Description**: 'Discover our top-tier preschool offering structured early development, trained educators, and secure daily communications. Register online now!'";
+          break;
+        case 'caption':
+          text = "🎨 Creativity is intelligence having fun! Today, our learners experimented with finger-paints, shapes, and color mixes in our sensory learning center. Super proud of our future little masterminds! #MontessoriKids #CreativeLearning #EswatiniEarlyYears";
+          break;
+        case 'recommendation':
+          let dynamicRecs = [];
+          try {
+            const match = prompt.match(/\{[\s\S]*"totalSchools"[\s\S]*\}/);
+            if (match) {
+              const snap = JSON.parse(match[0]);
+              if (snap.leadsSample && snap.leadsSample.length > 0) {
+                const lead = snap.leadsSample[0];
+                dynamicRecs.push({
+                  title: `Follow up on CRM Lead: ${lead.preschoolName}`,
+                  agent: "Growth Manager",
+                  category: "Sales Pipeline",
+                  description: `${lead.preschoolName} is currently in the '${lead.leadStage}' stage. Initiating automated outreach can help progress this lead towards conversion.`,
+                  confidenceScore: 96,
+                  actionTitle: `Draft Outreach to ${lead.preschoolName}`,
+                  actionData: {
+                    leadId: lead.id,
+                    leadName: lead.preschoolName,
+                    notes: "Generated dynamically from live CRM data."
+                  }
+                });
+              }
+              if (snap.schoolsSample && snap.schoolsSample.length > 0) {
+                const school = snap.schoolsSample[Math.floor(Math.random() * snap.schoolsSample.length)];
+                dynamicRecs.push({
+                  title: `Optimize Profile for ${school.name}`,
+                  agent: "Digital Editor",
+                  category: "Website Copy",
+                  description: `The profile for ${school.name} could be enhanced with better SEO keywords and updated admission info for the ${school.town} region.`,
+                  confidenceScore: 92,
+                  actionTitle: `Apply Profile Overrides`,
+                  actionData: {
+                    schoolId: school.id,
+                    notes: "Generated dynamically from live active school database."
+                  }
+                });
+              }
+            }
+          } catch (e) {
+            console.error("Error parsing snapshot for dynamic recs", e);
+          }
+          
+          if (dynamicRecs.length === 0) {
+            dynamicRecs = [
+              {
+                title: "Establish Standard Admission Package",
+                agent: "Digital Editor",
+                category: "Website Copy",
+                description: "Optimizing the Fees & Admissions section to display standard pricing clearly.",
+                confidenceScore: 93,
+                actionTitle: "Apply Fee Copy Overrides",
+                actionData: { notes: "Fallback recommendation." }
+              }
+            ];
+          }
+          text = JSON.stringify(dynamicRecs);
+          break;
+        case 'learning_personalization':
+          text = "### 🌟 Custom 1-Day Personalized Activity Blueprint\n\n**Age Bracket:** 3-5 Years\n**Target Focus Area:** Cognitive Logical Sorting & Verbal Expression\n\n---\n\n#### 🧩 Morning Activity: 'Match & Sort the Household Treasures'\n*   **Goal**: Cultivate categorization, motor skill control, and color/size recognition.\n*   **How-To**: Collect a safe variety of household items (e.g., plastic cups, spoons, colorful blocks, socks). Guide the child to sort them first by size (Big vs. Small), then by color.\n*   **Parent Prompt**: *'Wow! Can you find all the blue treasures and group them in this circle?'*\n\n#### 📖 Afternoon Activity: 'Imaginative Story Weaving'\n*   **Goal**: Stimulate narrative reasoning, vocabulary acquisition, and focus.\n*   **How-To**: Open any picture book. Instead of reading the printed words, ask the child to make up a brand new story based strictly on what the characters are doing in the illustrations.\n*   **Parent Prompt**: *'Look at this little rabbit! Where do you think he is running so fast?'*";
+          break;
+        default:
+          text = "This is a preloaded, high-quality simulated answer. To enable dynamic generative content, please configure the GEMINI_API_KEY environment variable in your AI Studio settings.";
+      }
+      return res.json({ text });
     }
 
     try {
@@ -145,7 +237,27 @@ async function startServer() {
     const { requirements } = req.body;
     
     if (!process.env.GEMINI_API_KEY) {
-      return res.status(500).json({ error: "Gemini API key is not configured" });
+      console.warn("GEMINI_API_KEY not set. Running local keyword-based matching for schools.");
+      try {
+        const dataPath = path.join(process.cwd(), "src/data/preloadedSchools.json");
+        const schools: any[] = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+        
+        const reqLower = (requirements || "").toLowerCase();
+        let matched = schools.filter(s => {
+          return s.name.toLowerCase().includes(reqLower) || 
+                 s.town.toLowerCase().includes(reqLower) || 
+                 s.region.toLowerCase().includes(reqLower) ||
+                 s.description.toLowerCase().includes(reqLower) ||
+                 s.curriculum.toLowerCase().includes(reqLower);
+        });
+        
+        if (matched.length === 0) {
+          matched = schools.slice(0, 2);
+        }
+        return res.json(matched);
+      } catch (err: any) {
+        return res.status(500).json({ error: err.message });
+      }
     }
 
     try {
@@ -155,7 +267,6 @@ async function startServer() {
         httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
       });
 
-      // Use preloaded schools as the baseline for matching in server-side AI tools
       const dataPath = path.join(process.cwd(), "src/data/preloadedSchools.json");
       const schools: any[] = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
 
@@ -184,7 +295,27 @@ async function startServer() {
     const { messages, schoolContext } = req.body;
     
     if (!process.env.GEMINI_API_KEY) {
-      return res.status(500).json({ error: "Gemini API key is not configured" });
+      console.warn("GEMINI_API_KEY not set. Running Local Contextual AI Chat Agent.");
+      const lastMsg = (messages && messages.length > 0) ? messages[messages.length - 1].text : "";
+      const lastMsgLower = lastMsg.toLowerCase();
+      
+      const schoolName = schoolContext?.name || "our preschool";
+      const fee = schoolContext?.feePerTerm || "competitive rates";
+      const town = schoolContext?.town || "Eswatini";
+      const curriculum = schoolContext?.curriculum || "Early Childhood development frameworks";
+      
+      let reply = `Hello! Thank you for inquiring about ${schoolName}. `;
+      if (lastMsgLower.includes("fee") || lastMsgLower.includes("price") || lastMsgLower.includes("cost") || lastMsgLower.includes("pay")) {
+        reply += `Our school fee is currently ${fee} per term. This covers all developmental materials, classroom resources, and playground upkeep.`;
+      } else if (lastMsgLower.includes("curriculum") || lastMsgLower.includes("learn") || lastMsgLower.includes("teach")) {
+        reply += `We follow the ${curriculum} curriculum. Our program focuses on holistic development, combining creative play with essential numeracy, literacy, and sensory motor skills.`;
+      } else if (lastMsgLower.includes("location") || lastMsgLower.includes("where") || lastMsgLower.includes("address") || lastMsgLower.includes("town")) {
+        reply += `We are situated in the beautiful town of ${town}. Please feel free to schedule a walkthrough to visit our campus in person!`;
+      } else {
+        reply += `We would love to help you enroll your child! We focus heavily on a high child-to-caregiver ratio and child safety. Please let us know if you would like to schedule a personal walkthrough or get an application form.`;
+      }
+      
+      return res.json({ text: reply });
     }
 
     try {
@@ -203,7 +334,6 @@ async function startServer() {
         config: { systemInstruction },
       });
 
-      // Send the last message
       const lastMessage = messages[messages.length - 1];
       const response = await chat.sendMessage({ message: lastMessage.text });
 

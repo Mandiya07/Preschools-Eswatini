@@ -36,6 +36,7 @@ import { SuperAdminScalabilityPage } from "./pages/super/SuperAdminScalabilityPa
 import { SuperAdminCMSPage } from "./pages/super/SuperAdminCMSPage";
 import { SuperAdminSocialPage } from "./pages/super/SuperAdminSocialPage";
 import { SuperAdminSalesCRMPage } from "./pages/super/SuperAdminSalesCRMPage";
+import { SuperAdminAgentCenterPage } from "./pages/super/SuperAdminAgentCenterPage";
 import { FeaturesPage } from "@/pages/FeaturesPage";
 import { PricingPage } from "@/pages/PricingPage";
 import { MarketplacePage } from "@/pages/MarketplacePage";
@@ -205,6 +206,7 @@ export default function App() {
             <Route path="scalability" element={<SuperAdminScalabilityPage />} />
             <Route path="cms" element={<SuperAdminCMSPage />} />
             <Route path="social" element={<SuperAdminSocialPage />} />
+            <Route path="agents" element={<SuperAdminAgentCenterPage />} />
             <Route path="*" element={<div className="p-8 text-center"><h1 className="text-slate-500">Super Admin Feature coming soon</h1></div>} />
           </Route>
         </Routes>
