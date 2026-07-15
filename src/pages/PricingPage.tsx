@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CheckCircle2, Sparkles, Building2, TrendingUp, MonitorSmartphone, Camera, ShieldCheck, Palette, LifeBuoy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -7,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { PRICING_TIERS, FEATURES } from "@/components/PricingTier";
 
 export function PricingPage() {
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'termly' | 'annual'>('monthly');
+
   return (
     <div className="bg-slate-50 pb-24 min-h-screen">
       <SEO 
@@ -25,7 +28,31 @@ export function PricingPage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 bg-slate-200/60 p-1.5 rounded-xl w-fit mx-auto mb-10">
+          <button 
+            type="button"
+            className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all ${billingCycle === 'monthly' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-600 hover:text-slate-800'}`}
+            onClick={() => setBillingCycle('monthly')}
+          >
+            Monthly
+          </button>
+          <button 
+            type="button"
+            className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all ${billingCycle === 'termly' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-600 hover:text-slate-800'}`}
+            onClick={() => setBillingCycle('termly')}
+          >
+            Per Term
+          </button>
+          <button 
+            type="button"
+            className={`px-6 py-2.5 text-sm font-bold rounded-lg transition-all ${billingCycle === 'annual' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-600 hover:text-slate-800'}`}
+            onClick={() => setBillingCycle('annual')}
+          >
+            Annual (Save 20%)
+          </button>
+        </div>
+
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {PRICING_TIERS.map((plan, i) => (
             <div key={plan.id} className={`rounded-3xl bg-white border p-8 flex flex-col ${plan.popular ? 'border-blue-600 shadow-xl relative' : 'border-slate-200 shadow-sm'}`}>
@@ -37,10 +64,27 @@ export function PricingPage() {
               <h3 className="text-xl font-bold text-slate-900 mb-2">{plan.name}</h3>
               <p className="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100 min-h-[4rem]">{plan.description}</p>
               
-              <div className="mb-6 flex items-baseline gap-2">
-                <span className="text-4xl font-extrabold text-slate-900">E{plan.price.monthly}</span>
-                <span className="text-slate-500 font-medium">/month</span>
-              </div>
+              {billingCycle === 'termly' && plan.price.termly ? (
+                <div className="mb-6 flex flex-col gap-2 bg-slate-50/80 p-4 rounded-2xl border border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-slate-500">Term 1 (Opening)</span>
+                    <span className="text-xl font-black text-slate-900">E{plan.price.termly.t1}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-slate-500">Term 2</span>
+                    <span className="text-xl font-black text-slate-900">E{plan.price.termly.t2}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-slate-500">Term 3 (Closing)</span>
+                    <span className="text-xl font-black text-slate-900">E{plan.price.termly.t3}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="mb-6 flex items-baseline gap-2">
+                  <span className="text-4xl font-extrabold text-slate-900">E{(plan.price as any)[billingCycle]}</span>
+                  <span className="text-slate-500 font-medium">/{billingCycle === 'annual' ? 'year' : 'month'}</span>
+                </div>
+              )}
               
               <ul className="mb-8 space-y-4 flex-1">
                 <li className="flex items-start gap-3 text-slate-700">

@@ -43,6 +43,7 @@ export function SuperAdminLayout() {
     { name: 'Verification', href: '/super/verification', icon: ShieldCheck },
     { name: 'Moderation', href: '/super/moderation', icon: ShieldAlert },
     { name: 'Announcements', href: '/super/announcements', icon: Megaphone },
+    { name: 'Marketing & 5s Scripts', href: '/marketing', icon: Megaphone },
     { name: 'CMS', href: '/super/cms', icon: FileText },
     { name: 'Social Hub', href: '/super/social', icon: Share2 },
     { name: 'Agent Center', href: '/super/agents', icon: Bot },

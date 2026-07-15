@@ -20,7 +20,7 @@ export function RegisterSchoolPage() {
   const [paymentMethod, setPaymentMethod] = useState<"card" | "momo" | "bank">("card");
   const [selectedPlanId, setSelectedPlanId] = useState("starter");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['attendance', 'admissions', 'students', 'communication', 'analytics']);
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "termly" | "annual">("monthly");
 
   const [platformPayment, setPlatformPayment] = useState({
     momoNumber: import.meta.env.VITE_MOMO_NUMBER || "7600 0000",
@@ -145,7 +145,7 @@ export function RegisterSchoolPage() {
             <div className="mt-12 bg-slate-50 border border-slate-200 rounded-2xl p-8 text-left w-full">
               <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
                 <CreditCard className="h-5 w-5 text-blue-600" />
-                How to pay E{PRICING_TIERS.find(p => p.id === selectedPlanId)?.price[billingCycle]}:
+                How to pay E{billingCycle === 'termly' ? (PRICING_TIERS.find(p => p.id === selectedPlanId)?.price as any).termly?.t1 : (PRICING_TIERS.find(p => p.id === selectedPlanId)?.price as any)[billingCycle]}:
               </h3>
               
               {paymentMethod === 'momo' ? (

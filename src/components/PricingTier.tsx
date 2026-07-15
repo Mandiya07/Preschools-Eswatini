@@ -26,7 +26,7 @@ export const PRICING_TIERS = [
   {
     id: "starter",
     name: "Starter",
-    price: { monthly: 299, annual: 2490 },
+    price: { monthly: 299, annual: 2490, termly: { t1: 1200, t2: 800, t3: 1200 } },
     features: ['attendance', 'admissions', 'students', 'communication', 'analytics'],
     limits: { students: 50, storage: 1 },
     description: "Perfect for small daycares and learning centers starting their digital journey."
@@ -34,7 +34,7 @@ export const PRICING_TIERS = [
   {
     id: "professional",
     name: "Professional",
-    price: { monthly: 599, annual: 5990 },
+    price: { monthly: 599, annual: 5990, termly: { t1: 2800, t2: 1600, t3: 2800 } },
     features: ['attendance', 'admissions', 'students', 'communication', 'analytics', 'finance', 'health', 'staff', 'transport', 'e_learning', 'marketplace'],
     limits: { students: 9999, storage: 20 },
     description: "The complete toolkit for growing preschools, daycares, and early learning centres.",
@@ -43,7 +43,7 @@ export const PRICING_TIERS = [
   {
     id: "enterprise",
     name: "Enterprise",
-    price: { monthly: 999, annual: 9990 },
+    price: { monthly: 999, annual: 9990, termly: { t1: 4800, t2: 2400, t3: 4800 } },
     features: ['attendance', 'admissions', 'students', 'communication', 'analytics', 'finance', 'health', 'staff', 'transport', 'e_learning', 'marketplace', 'advanced_analytics', 'hr', 'compliance', 'website', 'ai_tools'],
     limits: { students: 9999, storage: 100 },
     description: "Advanced features for large preschools, ECD chains, or groups of centres."
@@ -53,8 +53,8 @@ export const PRICING_TIERS = [
 interface PricingTierProps {
   selectedPlan: string;
   onSelectPlan: (plan: string, features: string[]) => void;
-  billingCycle: 'monthly' | 'annual';
-  onBillingCycleChange?: (cycle: 'monthly' | 'annual') => void;
+  billingCycle: 'monthly' | 'termly' | 'annual';
+  onBillingCycleChange?: (cycle: 'monthly' | 'termly' | 'annual') => void;
 }
 
 export function PricingTier({ selectedPlan, onSelectPlan, billingCycle, onBillingCycleChange }: PricingTierProps) {
@@ -102,12 +102,31 @@ export function PricingTier({ selectedPlan, onSelectPlan, billingCycle, onBillin
             </div>
             
             <div className="mb-6">
-              <span className="text-3xl font-black text-slate-900">
-                E{tier.price[billingCycle]}
-              </span>
-              <span className="text-xs font-bold text-slate-500 uppercase ml-1">
-                /{billingCycle === 'monthly' ? 'mo' : 'yr'}
-              </span>
+              {billingCycle === 'termly' && (tier.price as any).termly ? (
+                <div className="flex flex-col gap-1.5 bg-slate-50/80 p-3 rounded-xl border border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Term 1 (Opening)</span>
+                    <span className="text-lg font-black text-slate-900">E{(tier.price as any).termly.t1}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Term 2</span>
+                    <span className="text-lg font-black text-slate-900">E{(tier.price as any).termly.t2}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Term 3 (Closing)</span>
+                    <span className="text-lg font-black text-slate-900">E{(tier.price as any).termly.t3}</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <span className="text-3xl font-black text-slate-900">
+                    E{(tier.price as any)[billingCycle]}
+                  </span>
+                  <span className="text-xs font-bold text-slate-500 uppercase ml-1">
+                    /{billingCycle === 'monthly' ? 'mo' : 'yr'}
+                  </span>
+                </>
+              )}
               {tier.price.monthly === 0 && (
                 <div className="text-xs text-emerald-600 font-bold mt-1">Forever free</div>
               )}

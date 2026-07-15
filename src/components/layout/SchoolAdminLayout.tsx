@@ -103,8 +103,7 @@ export function SchoolAdminLayout() {
     { name: 'Teacher Onboarding', href: '/admin/teacher-onboarding', icon: UserCheck },
     { name: 'Parents', href: '/admin/parents', icon: Users },
     { name: 'Events', href: '/admin/events', icon: Calendar },
-    { name: 'Announcements', href: '/admin/announcements', icon: Megaphone },
-    { name: 'Communication', href: '/admin/communication', icon: Inbox },
+
     { name: 'AI Tools', href: '/admin/ai-tools', icon: Sparkles },
     { name: 'Website Builder', href: '/admin/website', icon: Globe },
     { name: 'E-Learning', href: '/admin/e-learning', icon: BookOpen },

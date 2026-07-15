@@ -28,7 +28,7 @@ export function SubscriptionPage() {
   const { user, activeSchoolId } = useAuth();
   const effectiveSchoolId = user?.role === 'SuperAdmin' ? activeSchoolId : user?.schoolId;
   const [currentPlanId, setCurrentPlanId] = useState("");
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "termly" | "annual">("monthly");
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -151,7 +151,7 @@ export function SubscriptionPage() {
                   </div>
                   <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-between">
                      <span className="text-sm font-medium text-slate-600">Est. Upcoming Bill</span>
-                     <span className="font-bold text-slate-900">E{billingCycle === 'monthly' ? currentPlan.price.monthly : currentPlan.price.annual}.00</span>
+                     <span className="font-bold text-slate-900">E{billingCycle === 'monthly' ? currentPlan.price.monthly : billingCycle === 'annual' ? currentPlan.price.annual : currentPlan.price.termly?.t1}.00</span>
                   </div>
                   <Button variant="outline" className="w-full text-xs h-8">View Full Report <TrendingUp className="h-3 w-3 ml-2" /></Button>
                 </CardContent>
@@ -384,12 +384,12 @@ export function SubscriptionPage() {
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
               <div>
                 <p className="text-sm font-medium text-slate-500">Selected Plan</p>
-                <p className="font-bold text-slate-900 text-lg">{selectedPlanDetails?.name} ({billingCycle === 'monthly' ? 'Monthly' : 'Annual'})</p>
+                <p className="font-bold text-slate-900 text-lg">{selectedPlanDetails?.name} ({billingCycle === 'monthly' ? 'Monthly' : billingCycle === 'annual' ? 'Annual' : 'Termly'})</p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-medium text-slate-500">Amount Due</p>
+                <p className="text-sm font-medium text-slate-500">Amount Due (First Payment)</p>
                 <p className="font-black text-slate-900 text-2xl text-blue-600">
-                  E{selectedPlanDetails?.price[billingCycle]}.00
+                  E{billingCycle === 'termly' ? selectedPlanDetails?.price.termly?.t1 : selectedPlanDetails?.price[billingCycle]}.00
                 </p>
               </div>
             </div>
