@@ -1,29 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SEO } from "@/components/SEO";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 import { Users, TrendingUp, Map, MapPin } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { fetchCollection } from "@/lib/firestoreUtils";
 
-const enrollmentTrends = [
-  { year: "2019", public: 12000, private: 8000 },
-  { year: "2020", public: 12500, private: 8200 },
-  { year: "2021", public: 11000, private: 7500 }, // COVID dip
-  { year: "2022", public: 13000, private: 9000 },
-  { year: "2023", public: 14500, private: 11000 },
-  { year: "2024", public: 16000, private: 13500 },
-];
-
-const regionDistribution = [
-  { name: "Hhohho", value: 35 },
-  { name: "Manzini", value: 40 },
-  { name: "Shiselweni", value: 10 },
-  { name: "Lubombo", value: 15 },
-];
-
-const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
+const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
 export function NationalInsightsPage() {
+  const [schools, setSchools] = useState<any[]>([]);
+  const [students, setStudents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const schoolsData = await fetchCollection('schools') || [];
+        const studentsData = await fetchCollection('students') || [];
+        setSchools(schoolsData);
+        setStudents(studentsData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
+  // Compute metrics
+  const registeredCentres = schools.length;
+  const totalEnrolled = students.length;
+
+  const regionCounts = schools.reduce((acc, school) => {
+    const region = school.region || 'Unknown';
+    acc[region] = (acc[region] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const regionDistribution = Object.entries(regionCounts).map(([name, value]) => ({
+    name,
+    value: value as number
+  }));
+
+  const trendsByYear = schools.reduce((acc, school) => {
+    const year = school.createdAt ? new Date(school.createdAt).getFullYear().toString() : new Date().getFullYear().toString();
+    const type = school.type?.toLowerCase().includes('public') ? 'public' : 'private';
+    
+    if (!acc[year]) acc[year] = { year, public: 0, private: 0 };
+    acc[year][type] += 1;
+    return acc;
+  }, {} as Record<string, { year: string, public: number, private: number }>);
+  
+  let enrollmentTrends = (Object.values(trendsByYear) as Array<{ year: string, public: number, private: number }>).sort((a, b) => a.year.localeCompare(b.year));
+
+  // If no data, provide an empty structure so chart doesn't crash
+  if (enrollmentTrends.length === 0) {
+    enrollmentTrends = [{ year: new Date().getFullYear().toString(), public: 0, private: 0 }];
+  }
+
+  // Find most underserved region (region with fewest schools, assuming they are all known regions)
+  const regionsList = Object.keys(regionCounts);
+  let underservedRegion = "N/A";
+  if (regionsList.length > 0) {
+    underservedRegion = regionsList.reduce((a, b) => regionCounts[a] < regionCounts[b] ? a : b);
+  }
+
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
       <SEO title="National Insights | Preschools Eswatini" description="National ECCDE data, preschool statistics and insights platform." />
@@ -57,12 +100,12 @@ export function NationalInsightsPage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-slate-500">Registered ECCDE Centres</p>
-                      <h3 className="text-2xl font-bold text-slate-900">482</h3>
+                      <h3 className="text-2xl font-bold text-slate-900">{loading ? "..." : registeredCentres}</h3>
                     </div>
                  </div>
                  <div className="mt-4 flex items-center text-sm font-medium text-emerald-600">
                     <TrendingUp className="h-4 w-4 mr-1" />
-                    +12% vs last year
+                    Live Data
                  </div>
               </div>
            </Card>
@@ -75,12 +118,12 @@ export function NationalInsightsPage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-slate-500">Total Enrolled Children</p>
-                      <h3 className="text-2xl font-bold text-slate-900">29,500</h3>
+                      <h3 className="text-2xl font-bold text-slate-900">{loading ? "..." : totalEnrolled}</h3>
                     </div>
                  </div>
                  <div className="mt-4 flex items-center text-sm font-medium text-emerald-600">
                     <TrendingUp className="h-4 w-4 mr-1" />
-                    +18% vs last year
+                    Live Data
                  </div>
               </div>
            </Card>
@@ -110,7 +153,7 @@ export function NationalInsightsPage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-slate-500">Underserved Regions</p>
-                      <h3 className="text-2xl font-bold text-slate-900">Shiselweni</h3>
+                      <h3 className="text-2xl font-bold text-slate-900">{loading ? "..." : underservedRegion}</h3>
                     </div>
                  </div>
                  <div className="mt-4 flex items-center text-sm font-medium text-blue-600">
@@ -126,24 +169,27 @@ export function NationalInsightsPage() {
           <div className="lg:col-span-2 space-y-8">
             <Card className="rounded-3xl border border-slate-100 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-xl">National Enrollment Trends (2019 - Present)</CardTitle>
-                <CardDescription>Public vs. private sector growth in early childhood education.</CardDescription>
+                <CardTitle className="text-xl">National ECCDE Registration Trends</CardTitle>
+                <CardDescription>Public vs. private sector growth based on live registration data.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px] w-full">
+                  {!loading && (
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={enrollmentTrends} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                       <XAxis dataKey="year" stroke="#94a3b8" />
-                      <YAxis stroke="#94a3b8" tickFormatter={(value) => `${value / 1000}k`} />
+                      <YAxis stroke="#94a3b8" />
                       <Tooltip 
                          contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                       />
                       <Legend />
-                      <Line type="monotone" dataKey="private" name="Private Enrolment" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
-                      <Line type="monotone" dataKey="public" name="Public Enrolment" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
+                      <Line type="monotone" dataKey="private" name="Private Schools" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
+                      <Line type="monotone" dataKey="public" name="Public Schools" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
                     </LineChart>
                   </ResponsiveContainer>
+                  )}
+                  {loading && <div className="flex h-full items-center justify-center text-slate-400">Loading chart data...</div>}
                 </div>
               </CardContent>
             </Card>
@@ -171,6 +217,7 @@ export function NationalInsightsPage() {
               </CardHeader>
               <CardContent className="flex flex-col items-center">
                 <div className="h-[250px] w-full mt-4">
+                  {!loading && regionDistribution.length > 0 && (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
@@ -191,6 +238,9 @@ export function NationalInsightsPage() {
                       <Legend layout="horizontal" verticalAlign="bottom" align="center" />
                     </PieChart>
                   </ResponsiveContainer>
+                  )}
+                  {loading && <div className="flex h-full items-center justify-center text-slate-400">Loading distribution...</div>}
+                  {!loading && regionDistribution.length === 0 && <div className="flex h-full items-center justify-center text-slate-400">No data available</div>}
                 </div>
               </CardContent>
             </Card>
@@ -236,3 +286,4 @@ export function NationalInsightsPage() {
     </div>
   );
 }
+
