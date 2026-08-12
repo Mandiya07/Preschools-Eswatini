@@ -77,7 +77,7 @@ interface SalesLead {
   town: string;
   websiteStatus: 'none' | 'outdated' | 'has_active';
   leadStage: LeadStage;
-  targetSubscriptionTier: 'Starter - E299.00' | 'Professional - E599.00' | 'Enterprise - E999.00';
+  targetSubscriptionTier: 'Starter - E199.00' | 'Standard - E399.00' | 'Professional - E699.00' | 'Enterprise - E1,499.00';
   estimatedValue: number;
   notes: string;
   nextFollowUp: string;
@@ -120,7 +120,7 @@ export function SuperAdminSalesCRMPage() {
   const [leadTown, setLeadTown] = useState("");
   const [websiteStatus, setWebsiteStatus] = useState<'none' | 'outdated' | 'has_active'>("none");
   const [leadStage, setLeadStage] = useState<LeadStage>("discovery");
-  const [targetTier, setTargetTier] = useState<'Starter - E299.00' | 'Professional - E599.00' | 'Enterprise - E999.00'>("Professional - E599.00");
+  const [targetTier, setTargetTier] = useState<'Starter - E199.00' | 'Standard - E399.00' | 'Professional - E699.00' | 'Enterprise - E1,499.00'>("Professional - E699.00");
   const [leadNotes, setLeadNotes] = useState("");
   const [nextFollowUp, setNextFollowUp] = useState("");
   
@@ -177,7 +177,7 @@ export function SuperAdminSalesCRMPage() {
     setLeadTown("");
     setWebsiteStatus("none");
     setLeadStage("discovery");
-    setTargetTier("Professional - E599.00");
+    setTargetTier("Professional - E699.00");
     setLeadNotes("");
     setNextFollowUp(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
     setIsFormOpen(true);
@@ -193,7 +193,7 @@ export function SuperAdminSalesCRMPage() {
     setLeadTown(lead.town);
     setWebsiteStatus(lead.websiteStatus);
     setLeadStage(lead.leadStage);
-    setTargetTier(lead.targetSubscriptionTier);
+    setTargetTier(lead.targetSubscriptionTier as any || "Professional - E699.00");
     setLeadNotes(lead.notes);
     setNextFollowUp(lead.nextFollowUp || "");
     setIsFormOpen(true);
@@ -207,9 +207,10 @@ export function SuperAdminSalesCRMPage() {
     }
 
     // Determine estimated value based on selected subscription tier
-    let estimatedVal = 599;
-    if (targetTier === "Starter - E299.00") estimatedVal = 299;
-    else if (targetTier === "Enterprise - E999.00") estimatedVal = 999;
+    let estimatedVal = 699;
+    if (targetTier === "Starter - E199.00") estimatedVal = 199;
+    else if (targetTier === "Standard - E399.00") estimatedVal = 399;
+    else if (targetTier === "Enterprise - E1,499.00") estimatedVal = 1499;
 
     const leadData: Omit<SalesLead, 'id'> = {
       preschoolName,
@@ -994,9 +995,10 @@ export function SuperAdminSalesCRMPage() {
                       onChange={(e) => setTargetTier(e.target.value as any)}
                       className="w-full h-11 rounded-xl border border-slate-200 bg-slate-50 text-xs px-3 font-semibold text-slate-700 focus:bg-white outline-none focus:border-blue-500"
                     >
-                      <option value="Starter - E299.00">Starter - E299.00</option>
-                      <option value="Professional - E599.00">Professional - E599.00</option>
-                      <option value="Enterprise - E999.00">Enterprise - E999.00</option>
+                      <option value="Starter - E199.00">Starter - E199.00</option>
+                      <option value="Standard - E399.00">Standard - E399.00</option>
+                      <option value="Professional - E699.00">Professional - E699.00</option>
+                      <option value="Enterprise - E1,499.00">Enterprise - E1,499.00</option>
                     </select>
                   </div>
                   <div>

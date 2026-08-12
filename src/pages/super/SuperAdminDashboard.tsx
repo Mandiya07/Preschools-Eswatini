@@ -29,11 +29,12 @@ import { subscribeToCollection, bulkImportPreloadedSchools } from "@/lib/firesto
 import { toast } from "sonner";
 
 const getMonthlyPlanPrice = (plan: string) => {
-  switch (plan) {
-    case 'Enterprise': return 999;
-    case 'Professional': return 599;
-    case 'Basic':
-    case 'Starter': return 299;
+  switch (plan?.toLowerCase()) {
+    case 'enterprise': return 1499;
+    case 'professional': return 699;
+    case 'standard': return 399;
+    case 'basic':
+    case 'starter': return 199;
     default: return 0;
   }
 };

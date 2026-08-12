@@ -43,92 +43,99 @@ export function LandingPage() {
         description="The modern platform for early childhood education in Eswatini. Connect parents with top preschools, list your daycare, and manage admissions easily."
       />
       
-      {/* 1. Hero Section - Warm & Welcoming */}
-      <section className="relative pt-24 pb-24 lg:pt-32 lg:pb-40 bg-white overflow-hidden rounded-b-[3rem] lg:rounded-b-[5rem] shadow-sm">
-        <div className="absolute inset-0 bg-[radial-gradient(#fcd34d_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
-        <div className="absolute top-20 left-10 text-yellow-300 opacity-50 animate-float">
-            <Sun size={64} />
+      {/* 1. Hero Section - With Background Image & Gradient Overlay */}
+      <section className="relative pt-28 pb-28 lg:pt-36 lg:pb-40 overflow-hidden rounded-b-[3rem] lg:rounded-b-[5rem] shadow-xl text-white">
+        {/* Hero Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={teacherImg} 
+            alt="Preschool Teacher and Kids in Eswatini" 
+            className="w-full h-full object-cover object-center scale-105"
+          />
+          {/* Gradient dark overlay for crystal-clear readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/85 to-slate-900/60 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30" />
         </div>
+
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-2xl"
+              className="lg:col-span-7 max-w-2xl"
             >
-              <div className="inline-flex items-center gap-2.5 mb-6 p-2 pr-5 bg-white border border-slate-200/80 rounded-2xl shadow-sm">
+              <div className="inline-flex items-center gap-2.5 mb-6 p-2 pr-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-inner">
                 <Logo variant="icon" size="sm" />
-                <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-pulse fill-amber-400" />
+                <span className="text-xs font-black uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse fill-amber-400" />
                   Eswatini's National Early Education System
                 </span>
               </div>
-              <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl leading-[1.05]">
+              <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl leading-[1.05]">
                 Run your school
-                <span className="block text-primary mt-2">beautifully.</span>
+                <span className="block text-emerald-400 mt-2 drop-shadow-md">beautifully.</span>
               </h1>
-              <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
+              <p className="mt-6 text-lg sm:text-xl text-slate-200 leading-relaxed max-w-xl font-normal">
                 Replace chaotic WhatsApp groups and paper admissions with a single, elegant platform. Launch a professional website, manage enrollments, and engage parents—all in one place. Built specifically for daycares and preschools.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="h-14 px-8 text-base shadow-lg shadow-primary/20 rounded-2xl transition-transform hover:-translate-y-1" asChild>
+                <Button size="lg" className="h-14 px-8 text-base bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black shadow-xl shadow-emerald-500/25 rounded-2xl transition-all hover:-translate-y-1" asChild>
                   <Link to="/register">Create Your School Website</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="h-14 px-8 text-base bg-white border-slate-200 rounded-2xl hover:bg-slate-50 transition-transform hover:-translate-y-1" asChild>
-                  <Link to="/directory"><Heart className="mr-2 h-5 w-5 text-secondary"/> Discover Schools</Link>
+                <Button size="lg" variant="outline" className="h-14 px-8 text-base bg-white/10 hover:bg-white/20 text-white border-white/30 rounded-2xl backdrop-blur-md transition-all hover:-translate-y-1" asChild>
+                  <Link to="/directory"><Heart className="mr-2 h-5 w-5 text-rose-400 fill-rose-400"/> Discover Schools</Link>
                 </Button>
               </div>
-              <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-4 bg-slate-50 p-4 rounded-3xl border border-slate-100 max-w-lg">
+              <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-4 bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 max-w-lg">
                 <Logo variant="standard" size="sm" />
-                <div className="text-xs text-slate-500 font-bold leading-normal border-t sm:border-t-0 sm:border-l border-slate-200 pt-2 sm:pt-0 sm:pl-4">
+                <div className="text-xs text-slate-200 font-medium leading-normal border-t sm:border-t-0 sm:border-l border-white/20 pt-2 sm:pt-0 sm:pl-4">
                   Official platform connecting preschools across the Kingdom of Eswatini.
                 </div>
               </div>
             </motion.div>
             
-            {/* Hero Visual */}
+            {/* Glassmorphism Floating Feature Cards */}
             <motion.div 
                initial={{ opacity: 0, scale: 0.95 }}
                animate={{ opacity: 1, scale: 1 }}
                transition={{ duration: 0.8, delay: 0.2 }}
-               className="relative mx-auto w-full max-w-lg lg:max-w-none"
+               className="lg:col-span-5 relative"
             >
-              <div className="absolute -inset-2 rounded-[2.5rem] bg-gradient-to-tr from-primary to-secondary opacity-20 blur-3xl"></div>
-              <div className="relative rounded-[2rem] border-4 border-white bg-white shadow-2xl shadow-primary/10 overflow-hidden aspect-[4/3] lg:aspect-[3/4] xl:aspect-[4/3] flex flex-col">
-                <div className="h-10 bg-slate-50 border-b border-slate-100 flex items-center px-4 gap-2 z-10 relative">
-                  <div className="h-3 w-3 rounded-full bg-red-400"></div>
-                  <div className="h-3 w-3 rounded-full bg-amber-400"></div>
-                  <div className="h-3 w-3 rounded-full bg-green-400"></div>
-                  <div className="ml-4 h-6 w-48 bg-white border border-slate-200 rounded-md"></div>
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5">
+                <div className="flex items-center justify-between pb-4 border-b border-white/15">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center justify-center font-bold">
+                      <Building2 className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">Live Preschool Portal</h3>
+                      <p className="text-[11px] text-slate-300">Kingdom-Wide Platform</p>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span> Active System
+                  </span>
                 </div>
-                <div className="flex-1 relative bg-slate-50 flex flex-col">
-                  {/* Fake website preview inside browser */}
-                  <div className="h-1/2 relative overflow-hidden group">
-                    <img src={teacherImg} alt="Teacher and Kids" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute inset-0 flex flex-col justify-end p-6">
-                       <div className="h-6 w-3/4 bg-white/90 rounded-full mb-2"></div>
-                       <div className="h-4 w-1/2 bg-white/70 rounded-full"></div>
-                    </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-slate-950/60 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Preschools</p>
+                    <p className="text-2xl font-black text-white mt-1">120+</p>
                   </div>
-                  <div className="flex-1 p-6 flex flex-col gap-4">
-                    <div className="h-16 bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex gap-4 items-center animate-pulse">
-                       <div className="h-8 w-8 bg-blue-100 rounded-full"></div>
-                       <div className="flex-1">
-                         <div className="h-3 w-1/2 bg-slate-200 rounded-full mb-2"></div>
-                         <div className="h-2 w-1/3 bg-slate-100 rounded-full"></div>
-                       </div>
-                    </div>
+                  <div className="bg-slate-950/60 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Regions</p>
+                    <p className="text-2xl font-black text-emerald-300 mt-1">All 4</p>
                   </div>
-                  {/* Floating element */}
-                  <div className="absolute bottom-10 right-[-20px] bg-white rounded-2xl border border-slate-200 shadow-xl p-4 w-52 rotate-[-6deg] animate-float">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center text-xl">🎉</div>
-                      <div className="h-3 w-24 bg-slate-200 rounded-full"></div>
-                    </div>
-                    <div className="h-2 w-full bg-slate-100 rounded-full mb-1.5"></div>
-                    <div className="h-2 w-2/3 bg-slate-100 rounded-full"></div>
+                </div>
+
+                <div className="bg-slate-950/60 border border-white/10 rounded-2xl p-4 flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold shrink-0">
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <div className="text-xs">
+                    <p className="font-bold text-white">Instant Mobile Website</p>
+                    <p className="text-slate-300 text-[11px] mt-0.5">Includes MoMo fees, SMS &amp; parent portal</p>
                   </div>
                 </div>
               </div>
@@ -267,42 +274,68 @@ export function LandingPage() {
       <section className="py-24 bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl tracking-tight">Simple, transparent pricing</h2>
-            <p className="mt-4 text-xl text-slate-600 font-medium">Start with our free trial. Upgrade when you need more power.</p>
+            <div className="inline-flex items-center gap-2 bg-blue-100/80 text-blue-700 font-bold px-3.5 py-1 rounded-full text-xs uppercase tracking-wider mb-3">
+              Transparent & Accessible Eswatini Pricing
+            </div>
+            <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl tracking-tight">Simple, predictable pricing for every preschool</h2>
+            <p className="mt-4 text-lg text-slate-600 font-medium">Starting from just E199/month (less than E7/day). Free 14-day trial on all standard plans.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {PRICING_TIERS.map((plan) => (
               <motion.div 
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -6 }}
                 key={plan.id} 
-                className={`bg-white rounded-[2.5rem] border p-8 sm:p-10 flex flex-col ${plan.popular ? 'border-primary ring-2 ring-primary shadow-2xl relative' : 'border-slate-200 shadow-md'}`}
+                className={`bg-white rounded-3xl border p-6 flex flex-col ${
+                  plan.popular ? 'border-primary ring-2 ring-primary shadow-xl relative scale-[1.02] z-10' : 'border-slate-200 shadow-sm hover:border-primary/40'
+                }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-white tracking-widest uppercase shadow-md">
-                    Most Popular
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3.5 py-1 text-[10px] font-black text-white tracking-widest uppercase shadow-md">
+                    Main Selling Plan
                   </div>
                 )}
-                <h3 className="text-2xl font-extrabold text-slate-900 mb-3">{plan.name}</h3>
-                <p className="text-slate-500 text-base mb-6 font-medium min-h-[3rem]">{plan.description}</p>
-                <div className="mb-8 flex items-baseline gap-2">
-                  <span className="text-5xl font-extrabold text-slate-900">E{plan.price.monthly}</span>
-                  <span className="text-slate-500 font-bold text-lg">/mo</span>
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-xl font-extrabold text-slate-900">{plan.name}</h3>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+                    {plan.bestFor}
+                  </span>
                 </div>
-                <ul className="mb-10 space-y-5 flex-1">
-                  <li className="flex items-start gap-4 text-slate-700 font-bold">
-                    <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0" />
-                    <span><strong>Up to {plan.limits.students === 9999 ? 'Unlimited' : plan.limits.students}</strong> Students</span>
+                <p className="text-xs font-semibold text-primary italic mb-2">"{plan.tagline}"</p>
+                <p className="text-slate-500 text-xs mb-4 pb-4 border-b border-slate-100 font-medium min-h-[44px] leading-relaxed">{plan.description}</p>
+                
+                <div className="mb-4">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black text-slate-900">E{plan.price.monthly}</span>
+                    <span className="text-slate-500 font-bold text-sm">/mo</span>
+                  </div>
+                  <p className="text-[11px] font-bold text-emerald-600 mt-0.5">
+                    or E{plan.price.annual.toLocaleString()}/yr (Save 20%)
+                  </p>
+                </div>
+                
+                <ul className="mb-6 space-y-2.5 flex-1 text-xs">
+                  <li className="flex items-start gap-2 text-slate-800 font-bold">
+                    <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span><strong>{plan.limits.students === 9999 ? 'Unlimited' : plan.limits.students}</strong> Student Capacity</span>
                   </li>
-                  {plan.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-4 text-slate-700 font-bold">
-                      <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0" />
-                      <span>{FEATURES[f as keyof typeof FEATURES]}</span>
+                  <li className="flex items-start gap-2 text-slate-800 font-bold">
+                    <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span><strong>{plan.limits.admins}</strong> Staff / Admin {plan.limits.admins === 1 ? 'Login' : 'Logins'}</span>
+                  </li>
+                  {plan.highlights.slice(0, 4).map((h, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-600 font-medium">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span className="leading-tight">{h}</span>
                     </li>
                   ))}
                 </ul>
-                <Button variant={plan.popular ? 'default' : 'outline'} className={`w-full h-14 text-lg font-bold rounded-2xl ${plan.popular ? 'shadow-lg shadow-primary/20' : 'border-slate-300'}`} asChild>
-                  <Link to={`/register`}>Get Started</Link>
+                <Button 
+                  variant={plan.popular ? 'default' : 'outline'} 
+                  className={`w-full h-11 text-sm font-bold rounded-xl ${plan.popular ? 'shadow-md shadow-primary/20' : 'border-slate-300'}`} 
+                  asChild
+                >
+                  <Link to={`/register?plan=${plan.id}`}>Get Started Free</Link>
                 </Button>
               </motion.div>
             ))}

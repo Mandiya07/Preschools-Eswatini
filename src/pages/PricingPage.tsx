@@ -53,57 +53,183 @@ export function PricingPage() {
           </button>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {PRICING_TIERS.map((plan, i) => (
-            <div key={plan.id} className={`rounded-3xl bg-white border p-8 flex flex-col ${plan.popular ? 'border-blue-600 shadow-xl relative' : 'border-slate-200 shadow-sm'}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {PRICING_TIERS.map((plan) => (
+            <div 
+              key={plan.id} 
+              className={`rounded-3xl bg-white border p-6 flex flex-col transition-all ${
+                plan.popular 
+                  ? 'border-blue-600 shadow-xl ring-2 ring-blue-600/20 relative scale-[1.02] z-10' 
+                  : 'border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-md'
+              }`}
+            >
               {plan.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 px-4 py-1 text-xs font-bold text-white tracking-widest uppercase shadow-sm">
-                  Most Popular
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-3.5 py-1 text-[10px] font-black text-white tracking-widest uppercase shadow-sm">
+                  Main Selling Plan
                 </div>
               )}
-              <h3 className="text-xl font-bold text-slate-900 mb-2">{plan.name}</h3>
-              <p className="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100 min-h-[4rem]">{plan.description}</p>
+              
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-xl font-black text-slate-900">{plan.name}</h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                  {plan.bestFor}
+                </span>
+              </div>
+              <p className="text-xs font-semibold text-blue-600 italic mb-2">"{plan.tagline}"</p>
+              <p className="text-slate-500 text-xs mb-4 pb-4 border-b border-slate-100 min-h-[48px] leading-relaxed">{plan.description}</p>
               
               {billingCycle === 'termly' && plan.price.termly ? (
-                <div className="mb-6 flex flex-col gap-2 bg-slate-50/80 p-4 rounded-2xl border border-slate-100">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-500">Term 1 (Opening)</span>
-                    <span className="text-xl font-black text-slate-900">E{plan.price.termly.t1}</span>
+                <div className="mb-5 flex flex-col gap-1.5 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-slate-500">Term 1 (Opening)</span>
+                    <span className="font-black text-slate-900">E{plan.price.termly.t1}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-500">Term 2</span>
-                    <span className="text-xl font-black text-slate-900">E{plan.price.termly.t2}</span>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-slate-500">Term 2</span>
+                    <span className="font-black text-slate-900">E{plan.price.termly.t2}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-500">Term 3 (Closing)</span>
-                    <span className="text-xl font-black text-slate-900">E{plan.price.termly.t3}</span>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-slate-500">Term 3 (Closing)</span>
+                    <span className="font-black text-slate-900">E{plan.price.termly.t3}</span>
                   </div>
                 </div>
+              ) : billingCycle === 'annual' ? (
+                <div className="mb-5">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-slate-900">E{plan.price.annual.toLocaleString()}</span>
+                    <span className="text-xs font-bold text-slate-500">/year</span>
+                  </div>
+                  <p className="text-[11px] font-bold text-emerald-600 mt-1">
+                    ~E{plan.price.effectiveMonthly}/mo effective (2 Months Free)
+                  </p>
+                </div>
               ) : (
-                <div className="mb-6 flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-slate-900">E{(plan.price as any)[billingCycle]}</span>
-                  <span className="text-slate-500 font-medium">/{billingCycle === 'annual' ? 'year' : 'month'}</span>
+                <div className="mb-5">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-slate-900">E{plan.price.monthly}</span>
+                    <span className="text-xs font-bold text-slate-500">/month</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-400 mt-1">
+                    Billed monthly • {plan.trial}
+                  </p>
                 </div>
               )}
               
-              <ul className="mb-8 space-y-4 flex-1">
-                <li className="flex items-start gap-3 text-slate-700">
-                  <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm"><strong>Up to {plan.limits.students === 9999 ? 'Unlimited' : plan.limits.students}</strong> Students</span>
+              <ul className="mb-6 space-y-2.5 flex-1 text-xs">
+                <li className="flex items-start gap-2 text-slate-700 font-semibold">
+                  <CheckCircle2 className="h-4 w-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <span><strong>{plan.limits.students === 9999 ? 'Unlimited' : plan.limits.students}</strong> Student Capacity</span>
                 </li>
-                {plan.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-700">
-                    <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{FEATURES[f as keyof typeof FEATURES]}</span>
+                <li className="flex items-start gap-2 text-slate-700 font-semibold">
+                  <CheckCircle2 className="h-4 w-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <span><strong>{plan.limits.admins}</strong> Staff / Admin {plan.limits.admins === 1 ? 'Login' : 'Logins'}</span>
+                </li>
+                <li className="flex items-start gap-2 text-slate-700 font-semibold">
+                  <CheckCircle2 className="h-4 w-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <span><strong>{plan.limits.storage >= 1 ? `${plan.limits.storage}GB` : '500MB'}</strong> Cloud Storage</span>
+                </li>
+                {plan.highlights.map((h, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-slate-600">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">{h}</span>
                   </li>
                 ))}
               </ul>
               
-              <Button variant={plan.popular ? 'default' : 'outline'} className={`w-full h-12 ${!plan.popular && 'border-slate-300'}`} asChild>
-                <Link to={`/register?plan=${plan.id}`}>Get Started</Link>
+              <Button 
+                variant={plan.popular ? 'default' : 'outline'} 
+                className={`w-full h-11 text-sm font-extrabold rounded-xl ${
+                  plan.popular ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'border-slate-300 hover:bg-blue-50 hover:text-blue-700'
+                }`} 
+                asChild
+              >
+                <Link to={`/register?plan=${plan.id}`}>Get Started ({plan.trial.split(' ')[0]} Free)</Link>
               </Button>
             </div>
           ))}
+        </div>
+
+        {/* Referral Reward Callout Banner */}
+        <div className="mt-16 max-w-5xl mx-auto">
+          <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white rounded-[2.5rem] p-8 sm:p-10 shadow-xl border border-emerald-500/30 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-200 text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
+                Preschool Network Referral Program
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                Refer a Preschool. <span className="text-emerald-300">Earn E100 Credit</span> for Every School.
+              </h2>
+              <p className="text-emerald-100 text-xs sm:text-sm leading-relaxed">
+                When you invite fellow directors or cluster schools to join Preschools Eswatini, your school receives <strong>E100 account credit</strong> as soon as they subscribe. Apply credits directly to your plan renewals or SMS &amp; domain add-ons!
+              </p>
+            </div>
+            <div className="shrink-0">
+              <Button size="lg" className="bg-white text-slate-900 hover:bg-emerald-50 font-black rounded-2xl shadow-lg px-6 h-12 text-sm" asChild>
+                <Link to="/register">Get Started &amp; Earn Credits</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Local Eswatini Payment Architecture Section */}
+        <div className="mt-20 max-w-5xl mx-auto">
+          <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-[2.5rem] p-8 sm:p-10 border border-slate-800 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+              <Building2 className="w-64 h-64 text-blue-400" />
+            </div>
+            <div className="relative z-10 space-y-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-yellow-400 text-yellow-950 px-3 py-1 text-xs font-black uppercase tracking-wider">
+                  🇸🇿 Eswatini-First Payments
+                </span>
+                <span className="rounded-full bg-blue-800/80 text-blue-200 px-3 py-1 text-xs font-bold border border-blue-700">
+                  Zero Card Processing Friction
+                </span>
+              </div>
+
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+                  Built For Eswatini's Local Banking & Mobile Money Reality
+                </h2>
+                <p className="text-slate-300 text-sm sm:text-base mt-2 max-w-3xl leading-relaxed">
+                  We prioritize local payment workflows designed specifically for Eswatini preschools and parents. Because international payment gateways like Stripe do not natively support Eswatini merchant accounts, our architecture emphasizes low-tariff MTN Mobile Money and direct bank transfers.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4 pt-2">
+                <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-7 w-7 bg-yellow-400 text-yellow-950 rounded-lg flex items-center justify-center font-black text-xs">Mo</div>
+                    <h3 className="font-bold text-white text-sm">MTN Mobile Money</h3>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Primary mobile money method aligned with published MTN Eswatini local MoMo tariffs. Fast and accessible to 90%+ of parents.
+                  </p>
+                </div>
+
+                <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-7 w-7 bg-blue-600 text-white rounded-lg flex items-center justify-center font-black text-xs">EFT</div>
+                    <h3 className="font-bold text-white text-sm">Local Bank EFT</h3>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Direct electronic funds transfer via FNB Eswatini, Standard Bank, and Nedbank with fast Proof of Payment (POP) verification.
+                  </p>
+                </div>
+
+                <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-7 w-7 bg-emerald-600 text-white rounded-lg flex items-center justify-center font-black text-xs">🌍</div>
+                    <h3 className="font-bold text-white text-sm">Card & Regional Ready</h3>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Integration-ready architecture for international cards & regional South African expansion when cross-border processing is needed.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Free Home-Based Care & Flatlets Offer Section */}

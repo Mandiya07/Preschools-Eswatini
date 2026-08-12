@@ -657,6 +657,129 @@
         "updatedAt": { "type": "string", "format": "date-time" }
       },
       "required": ["preschoolName", "region", "town", "leadStage"]
+    },
+    "PaymentVerification": {
+      "title": "PaymentVerification",
+      "description": "Manual bank or mobile money payment verification record for school subscriptions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "submitterId": { "type": "string" },
+        "submitterName": { "type": "string" },
+        "submitterEmail": { "type": "string" },
+        "submitterPhone": { "type": "string" },
+        "planId": { "type": "string" },
+        "planName": { "type": "string" },
+        "billingCycle": { "type": "string", "enum": ["monthly", "termly", "annual"] },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "paymentMethodLabel": { "type": "string" },
+        "senderAccountOrNumber": { "type": "string" },
+        "proofOfPaymentUrl": { "type": "string" },
+        "proofOfPaymentFileName": { "type": "string" },
+        "proofOfPaymentFileType": { "type": "string" },
+        "notes": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending_verification", "approved", "rejected"] },
+        "rejectionReason": { "type": "string" },
+        "verifiedAt": { "type": "string", "format": "date-time" },
+        "verifiedBy": { "type": "string" },
+        "submittedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["referenceNumber", "schoolName", "amount", "status", "submittedAt"]
+    },
+    "SubscriptionInvoice": {
+      "title": "SubscriptionInvoice",
+      "description": "Platform subscription invoice and receipt records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "planName": { "type": "string" },
+        "billingCycle": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending Verification", "Paid", "Overdue", "Cancelled"] },
+        "paymentMethod": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date" },
+        "paidAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["invoiceNumber", "referenceNumber", "amount", "status"]
+    },
+    "Referral": {
+      "title": "Referral",
+      "description": "Organic preschool-to-preschool referral records and tracking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "referralCode": { "type": "string" },
+        "referrerSchoolId": { "type": "string" },
+        "referrerSchoolName": { "type": "string" },
+        "referrerUserId": { "type": "string" },
+        "referrerEmail": { "type": "string" },
+        "referredSchoolName": { "type": "string" },
+        "referredPrincipalName": { "type": "string" },
+        "referredPhone": { "type": "string" },
+        "referredEmail": { "type": "string" },
+        "status": { "type": "string", "enum": ["invited", "registered", "subscribed", "rewarded"] },
+        "creditAwarded": { "type": "number" },
+        "notes": { "type": "string" },
+        "invitedAt": { "type": "string", "format": "date-time" },
+        "registeredAt": { "type": "string", "format": "date-time" },
+        "subscribedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["referralCode", "referrerSchoolId", "referredSchoolName", "status"]
+    },
+    "SchoolCredit": {
+      "title": "SchoolCredit",
+      "description": "Account credit ledger for preschool referral rewards and balance discounts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "availableCredit": { "type": "number" },
+        "totalEarned": { "type": "number" },
+        "totalRedeemed": { "type": "number" },
+        "referralCount": { "type": "number" },
+        "history": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "availableCredit"]
+    },
+    "AddonOrder": {
+      "title": "AddonOrder",
+      "description": "School add-on marketplace purchase and service fulfillment orders",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "addonId": { "type": "string" },
+        "addonTitle": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "creditApplied": { "type": "number" },
+        "netAmount": { "type": "number" },
+        "billingType": { "type": "string", "enum": ["once_off", "monthly", "annual"] },
+        "status": { "type": "string", "enum": ["pending_payment", "paid_in_fulfillment", "active", "completed", "cancelled"] },
+        "paymentMethod": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "customDetails": { "type": "object" },
+        "orderedAt": { "type": "string", "format": "date-time" },
+        "fulfilledAt": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" }
+      },
+      "required": ["orderNumber", "schoolId", "addonId", "addonTitle", "price", "status", "orderedAt"]
     }
   },
   "firestore": {
@@ -815,6 +938,26 @@
     "sales_leads": {
       "schema": "SalesLead",
       "description": "Preschool sales leads database for Eswatini"
+    },
+    "payment_verifications": {
+      "schema": "PaymentVerification",
+      "description": "Manual payment verification submissions for school subscriptions"
+    },
+    "invoices": {
+      "schema": "SubscriptionInvoice",
+      "description": "Platform subscription invoices and receipts"
+    },
+    "referrals": {
+      "schema": "Referral",
+      "description": "Preschool peer referral tracking and reward ledger"
+    },
+    "school_credits": {
+      "schema": "SchoolCredit",
+      "description": "School account credit balances and transaction histories"
+    },
+    "addon_orders": {
+      "schema": "AddonOrder",
+      "description": "Add-on marketplace orders and fulfillment requests"
     }
   }
 }

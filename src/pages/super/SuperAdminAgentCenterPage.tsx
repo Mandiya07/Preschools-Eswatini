@@ -93,7 +93,7 @@ interface ScrapedLead {
   source: string;
   description: string;
   estimatedValue: number;
-  targetSubscriptionTier: 'Starter - E299.00' | 'Professional - E599.00' | 'Enterprise - E999.00';
+  targetSubscriptionTier: 'Starter - E199.00' | 'Standard - E399.00' | 'Professional - E699.00' | 'Enterprise - E1,499.00';
   confidenceScore: number;
   imported: boolean;
 }
@@ -291,10 +291,12 @@ export function SuperAdminAgentCenterPage() {
       }
       if (agent.id === 'analyst') {
         const schoolMRR = schools.reduce((sum, s) => {
-          const tier = s.subscriptionTier || "";
-          if (tier.toLowerCase().includes("starter")) return sum + 299;
-          if (tier.toLowerCase().includes("enterprise")) return sum + 999;
-          return sum + 599; // professional
+          const tier = (s.subscriptionPlan || s.subscriptionTier || "").toLowerCase();
+          if (tier.includes("starter") || tier.includes("basic")) return sum + 199;
+          if (tier.includes("standard")) return sum + 399;
+          if (tier.includes("enterprise")) return sum + 1499;
+          if (tier.includes("professional")) return sum + 699;
+          return sum;
         }, 0);
         const leadMRR = leads.filter(l => l.leadStage === 'won').reduce((sum, l) => sum + (l.estimatedValue || 0), 0);
         const totalMRR = schoolMRR + leadMRR;
@@ -588,8 +590,8 @@ export function SuperAdminAgentCenterPage() {
           websiteStatus: "none",
           source: "Facebook Page (Updated 2 days ago)",
           description: "A newly launched premium Montessori preschool located in Ezulwini. Highly active on Facebook looking for a standard administration system to support parent registration and manage student invoices.",
-          estimatedValue: 600,
-          targetSubscriptionTier: "Professional - E599.00",
+          estimatedValue: 699,
+          targetSubscriptionTier: "Professional - E699.00",
           confidenceScore: 95,
           imported: false
         },
@@ -604,8 +606,8 @@ export function SuperAdminAgentCenterPage() {
           websiteStatus: "outdated",
           source: "Eswatini Business Directory Listing",
           description: "Well-established local preschool in Mbabane. Website listed in directories is broken (HTTP 404). Highly vulnerable to competitor outreach, seeks dynamic website builder and roster management.",
-          estimatedValue: 1000,
-          targetSubscriptionTier: "Enterprise - E999.00",
+          estimatedValue: 1499,
+          targetSubscriptionTier: "Enterprise - E1,499.00",
           confidenceScore: 92,
           imported: false
         },
@@ -620,8 +622,8 @@ export function SuperAdminAgentCenterPage() {
           websiteStatus: "none",
           source: "Facebook Public Group post",
           description: "Parent inquiry forum flagged active complaints about paper-based communication and manual receipts. Needs automated SMS updates and parent dashboard integration.",
-          estimatedValue: 600,
-          targetSubscriptionTier: "Professional - E599.00",
+          estimatedValue: 399,
+          targetSubscriptionTier: "Standard - E399.00",
           confidenceScore: 88,
           imported: false
         },
@@ -635,9 +637,9 @@ export function SuperAdminAgentCenterPage() {
           town: "Nhlangano",
           websiteStatus: "none",
           source: "Nhlangano Municipal Registry",
-          description: "Sub-urban school looking for reliable student communication framework. No current digital footprint. Perfect fit for the Starter Tier package to modernise admissions.",
-          estimatedValue: 300,
-          targetSubscriptionTier: "Starter - E299.00",
+          description: "Sub-urban school looking for reliable student communication framework. No current digital footprint. Perfect fit for the Starter Tier package to modernise admissions (less than E7/day).",
+          estimatedValue: 199,
+          targetSubscriptionTier: "Starter - E199.00",
           confidenceScore: 91,
           imported: false
         },
@@ -652,8 +654,8 @@ export function SuperAdminAgentCenterPage() {
           websiteStatus: "outdated",
           source: "Eswatini Education Yellow-pages",
           description: "Small Montessori school. Running on a standard free Google Blogspot domain from 2014. Needs responsive, professional landing page to increase local enrollment.",
-          estimatedValue: 300,
-          targetSubscriptionTier: "Starter - E299.00",
+          estimatedValue: 199,
+          targetSubscriptionTier: "Starter - E199.00",
           confidenceScore: 85,
           imported: false
         }

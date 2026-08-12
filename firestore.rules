@@ -530,5 +530,52 @@ service cloud.firestore {
     match /agent_states/{stateId} {
       allow get, list, create, update, delete: if isSignedIn();
     }
+
+    match /payment_verifications/{verificationId} {
+      allow get, list: if isSignedIn() && (
+        isSuperAdmin() ||
+        ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)) ||
+        ('submitterId' in resource.data && resource.data.submitterId == request.auth.uid) ||
+        ('submitterEmail' in resource.data && resource.data.submitterEmail == request.auth.token.email)
+      );
+      allow create: if true;
+      allow update, delete: if isSuperAdmin();
+    }
+
+    match /invoices/{invoiceId} {
+      allow get, list: if isSignedIn() && (
+        isSuperAdmin() ||
+        ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId)) ||
+        ('userId' in resource.data && resource.data.userId == request.auth.uid)
+      );
+      allow create, update, delete: if isSuperAdmin() || isSignedIn();
+    }
+
+    match /referrals/{referralId} {
+      allow get, list: if isSignedIn() && (
+        isSuperAdmin() ||
+        ('referrerSchoolId' in resource.data && isSchoolOwner(resource.data.referrerSchoolId)) ||
+        ('referrerUserId' in resource.data && resource.data.referrerUserId == request.auth.uid)
+      );
+      allow create: if true;
+      allow update, delete: if isSuperAdmin() || (isSignedIn() && 'referrerSchoolId' in existing() && isSchoolOwner(existing().referrerSchoolId));
+    }
+
+    match /school_credits/{creditId} {
+      allow get, list: if isSignedIn() && (
+        isSuperAdmin() ||
+        ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId))
+      );
+      allow create, update, delete: if isSuperAdmin() || (isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId));
+    }
+
+    match /addon_orders/{orderId} {
+      allow get, list: if isSignedIn() && (
+        isSuperAdmin() ||
+        ('schoolId' in resource.data && isSchoolOwner(resource.data.schoolId))
+      );
+      allow create: if isSignedIn() && 'schoolId' in incoming() && isSchoolOwner(incoming().schoolId);
+      allow update, delete: if isSuperAdmin() || (isSignedIn() && 'schoolId' in existing() && isSchoolOwner(existing().schoolId));
+    }
   }
 }

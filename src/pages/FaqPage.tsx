@@ -57,7 +57,7 @@ const FAQS: FaqItem[] = [
     question: "What are the administrative portal fees for formal registered preschools?",
     answer: (
       <p>
-        Registered preschools and formal daycares can use our basic portal with up to 50 students starting under the Starter Tier (E299/mo). For expanded features like high-volume Parent Portals, custom domains, deep finance ledgers, and document archives, schools can upgrade to the Standard or Professional tiers. All plans offer an obligation-free 7-day trial.
+        Registered preschools and early learning centres can start with our Starter Plan at just E199/month (E1,990/year, less than E7/day) with up to 50 students. Growing schools can select our Standard Plan (E399/mo), Professional Plan (E699/mo with full Parent Portal, finance billing &amp; AI tools), or Enterprise Plan (E1,499/mo for large academies &amp; multi-branch groups). All plans include a 14 to 30 day free trial with local MTN MoMo and Bank EFT payment options.
       </p>
     )
   },

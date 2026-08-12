@@ -125,16 +125,17 @@ const withTimeout = <T>(promise: Promise<T>, timeoutMs: number = 30000): Promise
   });
 };
 
-export const fetchCollection = async (path: string, ...queryConstraints: QueryConstraint[]) => {
+export const fetchCollection = async <T = any>(path: string, ...queryConstraints: QueryConstraint[]): Promise<T[]> => {
   if (!isFirebaseConfigured()) {
-    return getLocalCollection(path);
+    return getLocalCollection(path) as T[];
   }
   try {
     const q = query(collection(db, path), ...queryConstraints);
     const snapshot = await withTimeout(getDocs(q));
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as T[];
   } catch (error) {
     handleFirestoreError(error, OperationType.LIST, path);
+    return [] as T[];
   }
 };
 
@@ -217,9 +218,9 @@ export const deleteDocument = async (path: string, id: string) => {
   }
 };
 
-export const subscribeToCollection = (
+export const subscribeToCollection = <T = any>(
   path: string, 
-  callback: (data: any[]) => void, 
+  callback: (data: T[]) => void, 
   ...queryConstraints: QueryConstraint[]
 ) => {
   if (!isFirebaseConfigured()) {
@@ -227,7 +228,7 @@ export const subscribeToCollection = (
       listeners[path] = new Set();
     }
     listeners[path].add(callback);
-    callback(getLocalCollection(path));
+    callback(getLocalCollection(path) as T[]);
     
     return () => {
       listeners[path]?.delete(callback);
@@ -237,7 +238,7 @@ export const subscribeToCollection = (
   return onSnapshot(
     q, 
     (snapshot) => {
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as T[];
       callback(data);
     },
     (error) => {
